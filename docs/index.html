@@ -94,7 +94,7 @@ svg{display:block;width:100%;height:170px}
 </style></head><body><div class="wrap">
 <header>
   <div class="menu" id="menu"><button id="menuBtn">☰ Меню</button><div class="dd">
-    <a href="#" data-view="dash" class="on">Дашборд</a><a href="backtest.html">Тестировщик</a><a href="#" data-view="settings">Настройки бота</a><a href="#" data-view="keys">Ключи</a><a href="#" data-view="power">Питание</a></div></div>
+    <a href="#" data-view="dash" class="on">Дашборд</a><a href="backtest.html">Тестировщик</a><a href="#" data-view="settings">Настройки бота</a><a href="#" data-view="keys">Ключи</a><a href="#" data-view="power">Питание</a><a href="#" data-view="stats">Статистика · архив</a></div></div>
   <h1>POLYBOT</h1>
   <span id="modePill" class="pill">—</span>
   <span class="pill"><span id="dot" class="dot"></span><span id="botTxt">не запущен</span></span>
@@ -129,6 +129,15 @@ svg{display:block;width:100%;height:170px}
 
   <div class="card c12"><h2>Конфиг (.env)</h2><div class="kv" id="cfg"></div></div>
 </div>
+</div>
+
+<div id="v_stats" class="view">
+ <div class="card"><h2>Статистика · архив</h2>
+  <div class="sub" style="margin-bottom:10px">Снимок сохраняется автоматически при каждом «Сохранить настройки» и «Обнулить». Можно сохранить вручную.</div>
+  <div class="actions" style="margin:0 0 14px"><button class="primary" id="arcSave">Сохранить снимок сейчас</button><span class="sub" id="arcMsg"></span></div>
+  <div class="tw"><table><thead><tr><th>Дата</th><th>Название</th><th>Режим</th><th>Сделок</th><th>Winrate</th><th>PF</th><th>P&amp;L</th><th>Банкролл</th><th></th></tr></thead><tbody id="arcList"></tbody></table></div>
+  <div id="arcDetail" style="margin-top:14px"></div>
+ </div>
 </div>
 
 <div id="v_settings" class="view">
@@ -284,7 +293,7 @@ async function gh(path,opt={}){const r=await fetch(GH+path,{...opt,headers:{'Aut
 document.querySelectorAll('#menu .dd a[data-view]').forEach(a=>a.onclick=e=>{e.preventDefault();showView(a.dataset.view)});
 $('menuBtn').onclick=e=>{e.stopPropagation();$('menu').classList.toggle('open')};document.addEventListener('click',()=>$('menu').classList.remove('open'));
 function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v_'+v));document.querySelectorAll('#menu .dd a').forEach(a=>a.classList.toggle('on',a.dataset.view===v));$('menu').classList.remove('open');
- if(v==='settings')loadSettings();if(v==='keys')loadKeys();if(v==='power')loadPower()}
+ if(v==='settings')loadSettings();if(v==='keys')loadKeys();if(v==='power')loadPower();if(v==='stats')loadArchive()}
 // settings schema
 const S=[
  {k:'MODE',t:'mode',n:'Режим',d:'paper — виртуальные сделки по реальным котировкам, деньги не нужны. live — реальные ордера на Polymarket с твоего кошелька. Переключай на live только после теста и с ключами в разделе «Ключи».'},
@@ -323,7 +332,7 @@ function readSettings(){const out={};S.forEach(x=>{if(x.t==='chips')out[x.k]=[..
 async function setVar(k,v){try{await gh('/actions/variables/'+k,{method:'PATCH',body:JSON.stringify({name:k,value:String(v)})})}catch(e){await gh('/actions/variables',{method:'POST',body:JSON.stringify({name:k,value:String(v)})})}}
 $('setSave').onclick=async()=>{if(!tok())return toast('Сначала добавь токен GitHub в «Ключи»');const v=readSettings();if(!v.ASSETS||!v.WINDOWS)return toast('Выбери хотя бы один актив и одно окно');
  if(v.MODE==='live'&&VARS.POLY_ADDRESS==null&&!confirm('Ключ кошелька не сохранён — live не заработает. Всё равно сохранить?'))return;
- $('setMsg').textContent='сохраняю…';try{for(const[k,val]of Object.entries(v))if(String(VARS[k]??DEF[k])!==String(val))await setVar(k,val);await restartBot();$('setMsg').textContent='сохранено, бот перезапускается';toast('Настройки сохранены')}catch(e){$('setMsg').textContent='ошибка: '+e.message}};
+ $('setMsg').textContent='сохраняю…';try{try{await saveSnapshot('до смены настроек')}catch(e){}for(const[k,val]of Object.entries(v))if(String(VARS[k]??DEF[k])!==String(val))await setVar(k,val);await restartBot();$('setMsg').textContent='сохранено, бот перезапускается';toast('Настройки сохранены')}catch(e){$('setMsg').textContent='ошибка: '+e.message}};
 $('setCancel').onclick=()=>{loadSettings();showView('dash')};
 // keys
 async function loadKeys(){$('ghToken').value=tok();$('ghState').textContent=tok()?'сохранён':'не задан';if(!tok())return;
@@ -338,6 +347,32 @@ $('keysSave').onclick=async()=>{if(!tok())return toast('Сначала сохр�
   await setVar('POLY_FUNDER',$('k_funder').value.trim());await setVar('POLY_SIGNATURE_TYPE',document.querySelector('input[name=sig]:checked').value);
   const tg=$('k_tg').value.trim();if(tg){await setSecret('TELEGRAM_BOT_TOKEN',tg);await setVar('TG_SAVED',now);$('k_tg').value=''}if($('k_chat').value.trim())await setSecret('TELEGRAM_CHAT_ID',$('k_chat').value.trim());
   $('keysMsg').textContent='сохранено';toast('Ключи сохранены');loadKeys()}catch(e){$('keysMsg').textContent='ошибка: '+e.message}};
+// archive
+const KEYS=S.map(x=>x.k);
+async function ghPublic(path){const r=await fetch(GH+path,{headers:{'Accept':'application/vnd.github+json',...(tok()?{'Authorization':'Bearer '+tok()}:{})}});if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}
+function snapshot(label){const d=last||{};const cfg={};KEYS.forEach(k=>cfg[k]=(VARS[k]??(d.config||{})[k]??DEF[k]));
+ return {label,ts:new Date().toISOString(),mode:d.mode,settings:cfg,stats:{bankroll:d.bankroll,start_bankroll:d.start_bankroll,trades:d.trades,wins:d.wins,losses:d.losses,winrate:d.winrate,pf:d.pf,total_pnl:d.total_pnl,max_dd:d.max_dd,per_asset:d.per_asset,longs:d.longs,shorts:d.shorts},closed:d.closed||[]}}
+async function saveSnapshot(label){if(!tok())throw new Error('нужен токен GitHub');if(!Object.keys(VARS).length){try{const j=await gh('/actions/variables?per_page=100');j.variables.forEach(v=>VARS[v.name]=v.value)}catch(e){}}
+ const snap=snapshot(label);const name='archive/'+snap.ts.replace(/[:.]/g,'-').slice(0,19)+'.json';
+ await gh('/contents/'+name,{method:'PUT',body:JSON.stringify({message:'archive: '+label,content:btoa(unescape(encodeURIComponent(JSON.stringify(snap,null,1))))})});return name}
+async function loadArchive(){$('arcList').innerHTML='<tr><td colspan="9" class="empty">загрузка…</td></tr>';$('arcDetail').innerHTML='';
+ let files=[];try{files=await ghPublic('/contents/archive')}catch(e){$('arcList').innerHTML='<tr><td colspan="9" class="empty">Архив пуст — сохрани первый снимок.</td></tr>';return}
+ files=files.filter(f=>f.name.endsWith('.json')).sort((a,b)=>b.name.localeCompare(a.name));window.__arc={};
+ const rows=await Promise.all(files.map(async f=>{try{const r=await fetch(f.download_url+'?t='+Date.now());const j=await r.json();window.__arc[f.name]=j;const st=j.stats||{};
+  return `<tr><td>${j.ts.slice(0,16).replace('T',' ')}</td><td>${esc(j.label)}</td><td>${j.mode||''}</td><td>${st.trades??''}</td><td>${st.winrate==null?'—':(st.winrate*100).toFixed(0)+'%'}</td><td>${st.pf==null?'—':st.pf>=99?'∞':fmt(st.pf)}</td><td class="${cls(st.total_pnl)}">${st.total_pnl==null?'—':sgn(st.total_pnl)}</td><td>${fmt(st.bankroll)}</td><td><button onclick="arcShow('${f.name}')">открыть</button></td></tr>`}catch(e){return ''}}));
+ $('arcList').innerHTML=rows.join('')||'<tr><td colspan="9" class="empty">Архив пуст.</td></tr>'}
+function arcShow(name){const j=window.__arc[name];if(!j)return;const cur={};KEYS.forEach(k=>cur[k]=VARS[k]??(last&&last.config||{})[k]??DEF[k]);
+ $('arcDetail').innerHTML=`<div class="card" style="background:var(--panel2)"><h2>${esc(j.label)} · ${j.ts.slice(0,16).replace('T',' ')}</h2>
+ <div class="actions" style="margin:0 0 12px"><button class="primary" onclick="arcRestore('${name}')">Восстановить эти настройки</button><button onclick="arcXlsx('${name}')">Скачать Excel</button></div>
+ <table><thead><tr><th>Параметр</th><th>В снимке</th><th>Сейчас</th></tr></thead><tbody>${KEYS.map(k=>`<tr><td>${k}</td><td>${esc(j.settings[k])}</td><td class="${String(j.settings[k])!==String(cur[k])?'warn':''}">${esc(cur[k])}</td></tr>`).join('')}</tbody></table>
+ <div class="sub" style="margin-top:10px">Сделок в снимке: ${(j.closed||[]).length} · по активам: ${Object.entries(j.stats.per_asset||{}).map(([a,v])=>`${a} ${v.n} (${(v.wins/v.n*100).toFixed(0)}%)`).join(', ')||'—'}</div></div>`}
+async function arcRestore(name){if(!tok())return toast('Нужен токен GitHub');const j=window.__arc[name];if(!confirm('Применить настройки из снимка «'+j.label+'» и перезапустить бота?'))return;
+ try{for(const[k,v]of Object.entries(j.settings))await setVar(k,v);await restartBot();toast('Настройки восстановлены, бот перезапускается');VARS={...VARS,...j.settings}}catch(e){toast('Ошибка: '+e.message)}}
+function arcXlsx(name){const j=window.__arc[name];const wb=window.XLSX.utils.book_new();
+ window.XLSX.utils.book_append_sheet(wb,window.XLSX.utils.json_to_sheet((j.closed||[]).map(t=>({Открыта:t.opened,Актив:t.asset,Сторона:t.side,Вход:t.entry,Ставка:t.cost,Итог:t.won?'WIN':'LOSS',PnL:t.pnl,Рынок:t.question}))),'Сделки');
+ window.XLSX.utils.book_append_sheet(wb,window.XLSX.utils.json_to_sheet([{...j.stats,per_asset:JSON.stringify(j.stats.per_asset||{})},...Object.entries(j.settings).map(([k,v])=>({Параметр:k,Значение:v}))]),'Итоги и настройки');
+ window.XLSX.writeFile(wb,'polybot_'+j.ts.slice(0,16).replace(/[:T]/g,'-')+'.xlsx')}
+$('arcSave').onclick=async()=>{const label=prompt('Название снимка','снимок '+new Date().toLocaleString());if(label==null)return;$('arcMsg').textContent='сохраняю…';try{await saveSnapshot(label);$('arcMsg').textContent='сохранено';loadArchive()}catch(e){$('arcMsg').textContent='ошибка: '+e.message}};
 // power
 const WF='/actions/workflows/polybot.yml';
 async function runningIds(){const j=await gh('/actions/runs?per_page=10');return j.workflow_runs.filter(r=>r.path&&r.path.endsWith('polybot.yml')&&['in_progress','queued','waiting'].includes(r.status)).map(r=>r.id)}
@@ -352,6 +387,7 @@ $('pwRestart').onclick=()=>power(restartBot,'перезапускаю');
 $('pwStop').onclick=()=>confirm('Остановить бота полностью? Открытые paper-позиции закроются при следующем запуске.')&&power(async()=>{await cancelRuns();await gh(WF+'/disable',{method:'PUT'})},'останавливаю');
 $('pwReset').onclick=()=>confirm('Обнулить статистику? Сначала скачается Excel со всеми данными.')&&power(async()=>{
  const get=async p=>{try{const j=await gh('/contents/'+p);return{sha:j.sha,text:decodeURIComponent(escape(atob(j.content.replace(/\n/g,''))))}}catch(e){return null}};
+ try{await saveSnapshot('перед обнулением')}catch(e){}
  const st=await get('state.json'),tr=await get('trades.csv');const d=last||{};
  const wb=window.XLSX.utils.book_new();const closed=(st&&JSON.parse(st.text).closed)||d.closed||[];
  window.XLSX.utils.book_append_sheet(wb,window.XLSX.utils.json_to_sheet(closed.map(t=>({Открыта:t.opened,Актив:t.asset,Сторона:t.side,Вход:t.entry,Ставка:t.cost,Акций:t.shares,Уверенность:t.conf,Движение:t.move,Окно_закрыто:t.end,Итог:t.won?'WIN':'LOSS',PnL:t.pnl,Рынок:t.question}))),'Сделки');
