@@ -42,19 +42,9 @@ while True:
     try:
         d = dashboard.snapshot(); d["log"] = d["log"][-40:]; d["bot"]["running"] = True
         diag = {}
-        for name, url in [("binance", bot.BINANCE + "/api/v3/ticker/price?symbol=BTCUSDT"), ("gamma", bot.GAMMA + "/markets?limit=1"), ("clob", bot.CLOB + "/time")]:
-            try: r = requests.get(url, timeout=10); diag[name] = f"{r.status_code} {r.text[:60]}"
-            except Exception as e: diag[name] = "ERR " + str(e)[:80]
-        try:
-            from datetime import datetime, timezone
-            nowiso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-            ms = bot.get(bot.GAMMA + "/markets", closed="false", active="true", limit=100, order="endDate", ascending="true", end_date_min=nowiso)
-            diag["gamma_enddatemin"] = [(m.get("slug"), m.get("endDate")) for m in ms[:8]]
-            ev = bot.get(bot.GAMMA + "/events", closed="false", active="true", limit=50, order="endDate", ascending="true", end_date_min=nowiso)
-            diag["events"] = [(e.get("slug"), e.get("endDate"), len(e.get("markets") or [])) for e in ev[:10]]
-            ms2 = bot.get(bot.GAMMA + "/markets", closed="false", limit=20, order="id", ascending="false")
-            diag["latest_by_id"] = [(m.get("slug"), m.get("endDate"), m.get("active")) for m in ms2[:10]]
-            diag["markets_found"] = len(bot.find_updown_markets())
+        try: diag["price_source"] = f"{bot.PRICE_SOURCE} ok {bot.binance_price('BTC')}"
+        except Exception as e: diag["price_source"] = f"{bot.PRICE_SOURCE} ERR {str(e)[:80]}"
+        try: diag["markets_found"] = len(bot.find_updown_markets())
         except Exception as e: diag["markets_found"] = "ERR " + str(e)[:80]
         d["diag"] = diag
         try:

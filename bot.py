@@ -43,6 +43,8 @@ MAX_EXPOSURE      = env("MAX_EXPOSURE", 0.40, float)
 DAILY_LOSS_LIMIT  = env("DAILY_LOSS_LIMIT", 50.0, float)
 CONSEC_LOSS_LIMIT = env("CONSEC_LOSS_LIMIT", 4, int)
 RATE_LIMIT        = env("RATE_LIMIT", 20, int)
+WINDOWS           = [int(w) for w in env("WINDOWS", "15,60").split(",")]   # длины окон в минутах: 5, 15, 60
+PRICE_SOURCE      = env("PRICE_SOURCE", "coinbase").lower()               # coinbase | binance
 
 TG_TOKEN = env("TELEGRAM_BOT_TOKEN", "")
 TG_CHAT  = env("TELEGRAM_CHAT_ID", "")
@@ -50,7 +52,9 @@ TG_CHAT  = env("TELEGRAM_CHAT_ID", "")
 GAMMA = "https://gamma-api.polymarket.com"
 CLOB  = "https://clob.polymarket.com"
 BINANCE = "https://api.binance.com"
+COINBASE = "https://api.exchange.coinbase.com"
 SYMBOL = {"BTC": "BTCUSDT", "ETH": "ETHUSDT", "SOL": "SOLUSDT", "XRP": "XRPUSDT"}
+CB_PRODUCT = {"BTC": "BTC-USD", "ETH": "ETH-USD", "SOL": "SOL-USD", "XRP": "XRP-USD"}
 ASSET_WORDS = {"BTC": "bitcoin", "ETH": "ethereum", "SOL": "solana", "XRP": "xrp"}
 
 STATE_FILE = "state.json"
@@ -75,7 +79,7 @@ def notify(text):
         pass
 
 def get(url, **params):
-    r = requests.get(url, params=params, timeout=10)
+    r = requests.get(url, params=params, timeout=10, headers={"User-Agent": "polybot/1.0"})
     r.raise_for_status()
     return r.json()
 
@@ -138,39 +142,53 @@ class State:
 # ───────────────────────── market data ─────────────────────────
 
 def binance_price(asset):
-    return float(get(f"{BINANCE}/api/v3/ticker/price", symbol=SYMBOL[asset])["price"])
+    """Текущая цена (имя историческое — источник выбирается PRICE_SOURCE)."""
+    if PRICE_SOURCE == "binance":
+        return float(get(f"{BINANCE}/api/v3/ticker/price", symbol=SYMBOL[asset])["price"])
+    return float(get(f"{COINBASE}/products/{CB_PRODUCT[asset]}/ticker")["price"])
 
 def binance_open_at(asset, dt):
     """Цена открытия минутной свечи, начинающейся в dt."""
-    ms = int(dt.timestamp() * 1000)
-    k = get(f"{BINANCE}/api/v3/klines", symbol=SYMBOL[asset], interval="1m", startTime=ms, limit=1)
-    return float(k[0][1]) if k else None
+    if PRICE_SOURCE == "binance":
+        ms = int(dt.timestamp() * 1000)
+        k = get(f"{BINANCE}/api/v3/klines", symbol=SYMBOL[asset], interval="1m", startTime=ms, limit=1)
+        return float(k[0][1]) if k else None
+    start = dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    end = (dt + timedelta(minutes=2)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    k = get(f"{COINBASE}/products/{CB_PRODUCT[asset]}/candles", granularity=60, start=start, end=end)
+    if not k:
+        return None
+    k.sort(key=lambda c: c[0])           # coinbase отдаёт от новых к старым: [time, low, high, open, close, vol]
+    return float(k[0][3])
 
 def clob_ask(token_id):
     return float(get(f"{CLOB}/price", token_id=token_id, side="BUY")["price"])
 
+SLUG_RE = re.compile(r"^([a-z]+)-updown-(\d+)(m|h)-(\d+)$")
+
 def find_updown_markets():
-    """Активные рынки 'X Up or Down' по нашим активам."""
+    """Активные рынки 'X Up or Down' по нашим активам (slug вида btc-updown-15m-<unix start>)."""
     out = []
     try:
-        markets = get(f"{GAMMA}/markets", closed="false", active="true", limit=500, order="endDate", ascending="true")
+        markets = get(f"{GAMMA}/markets", closed="false", active="true", limit=200, order="endDate",
+                      ascending="true", end_date_min=now().strftime("%Y-%m-%dT%H:%M:%SZ"))
     except Exception as e:
         log.warning("Gamma error: %s", e)
         return out
     for m in markets:
-        q = (m.get("question") or "").lower()
-        if "up or down" not in q:
+        mt = SLUG_RE.match((m.get("slug") or "").lower())
+        if not mt:
             continue
-        asset = next((a for a in ASSETS if ASSET_WORDS.get(a, a.lower()) in q or a.lower() in q), None)
-        if not asset or not m.get("endDate"):
+        asset = mt.group(1).upper()
+        if asset not in ASSETS or not m.get("endDate"):
             continue
+        minutes = int(mt.group(2)) * (60 if mt.group(3) == "h" else 1)
+        if minutes not in WINDOWS:
+            continue
+        start = datetime.fromtimestamp(int(mt.group(4)), tz=timezone.utc)
         end = parse_iso(m["endDate"])
         if end <= now():
             continue
-        # длина окна: 15m если так написано в slug/question, иначе 1h
-        slug = (m.get("slug") or "").lower()
-        minutes = 15 if re.search(r"15[- ]?m", slug + " " + q) else 60
-        start = parse_iso(m["startDate"]) if m.get("startDate") and False else end - timedelta(minutes=minutes)
         try:
             tokens = json.loads(m.get("clobTokenIds") or "[]")
             outcomes = json.loads(m.get("outcomes") or '["Up","Down"]')
@@ -180,7 +198,7 @@ def find_updown_markets():
             continue
         up_idx = 0 if outcomes[0].lower().startswith("up") else 1
         out.append({
-            "id": m["id"], "asset": asset, "question": m["question"],
+            "id": m["id"], "asset": asset, "question": m.get("question") or m["slug"],
             "start": start, "end": end, "minutes": minutes,
             "up_token": tokens[up_idx], "down_token": tokens[1 - up_idx],
         })

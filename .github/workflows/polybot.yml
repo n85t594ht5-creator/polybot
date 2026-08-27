@@ -48,6 +48,8 @@ jobs:
           KELLY_FRAC: ${{ vars.KELLY_FRAC || '0.25' }}
           MAX_POSITIONS: ${{ vars.MAX_POSITIONS || '10' }}
           MAX_EXPOSURE: ${{ vars.MAX_EXPOSURE || '0.40' }}
+          WINDOWS: ${{ vars.WINDOWS || '15,60' }}
+          PRICE_SOURCE: coinbase
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
