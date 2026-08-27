@@ -29,6 +29,17 @@ def watch():
             w["reason"] = "ВХОД" if cand else reason
         except Exception as e:
             w["reason"] = "ошибка: " + str(e)[:60]
+        # потенциальная сделка: все условия кроме времени уже выполнены
+        try:
+            if not cand and w.get("move") is not None and w["elapsed"] < bot.MIN_ELAPSED:
+                side = "UP" if w["move"] > 0 else "DOWN"
+                ask = w["up_ask"] if side == "UP" else w["down_ask"]
+                need = bot.MIN_MOVE_HIGH if ask > bot.TIER_ENTRY else bot.MIN_MOVE
+                if abs(w["move"]) >= need and 0.01 < ask <= bot.MAX_ENTRY:
+                    secs = int((bot.MIN_ELAPSED - w["elapsed"]) * m["minutes"] * 60)
+                    w["potential"] = {"side": side, "ask": ask, "in_sec": secs}
+        except Exception:
+            pass
         out.append(w)
     return out, prices
 

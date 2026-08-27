@@ -290,6 +290,10 @@ button:disabled{opacity:.45;cursor:default}
 .sub{color:var(--mut);font-size:12px;margin-top:4px;font-family:var(--mono)}
 .m{font-family:var(--mono)}.mini{display:inline-block;width:54px;height:5px;background:#0a101a;border-radius:99px;vertical-align:middle;margin-right:6px}.mini i{display:block;height:100%;background:var(--acc);border-radius:99px}
 .go{color:var(--up);font-weight:700}
+tr.pot td{background:rgba(245,182,74,.07)}.pot .reason{color:var(--warn)!important;font-weight:600}
+.potbox{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.potbox div{border:1px solid var(--warn);border-radius:10px;padding:10px 12px;font-family:var(--mono);font-size:12px;background:rgba(245,182,74,.06)}
+.potbox b{font-size:15px}
 .tk{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
 .tk div{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-family:var(--mono)}
 .tk .a{font-size:11px;color:var(--mut);letter-spacing:.1em}.tk .p{font-size:20px;font-weight:600;transition:color .3s}.tk .s{font-size:11px;color:var(--mut)}
@@ -344,6 +348,8 @@ svg{display:block;width:100%;height:170px}
 
   <div class="card c8"><h2>Кривая капитала</h2><svg id="eq" viewBox="0 0 800 170" preserveAspectRatio="none"></svg><div class="sub" id="eqSub"></div></div>
   <div class="card c4"><h2>Риск-гейты</h2><div id="gates"></div></div>
+
+  <div class="card c12" id="potCard" style="display:none"><h2>Потенциальные сделки</h2><div class="potbox" id="pot"></div><div class="sub">Движение и цена уже подходят — бот войдёт, когда пройдёт нужная часть окна, если ничего не изменится.</div></div>
 
   <div class="card c12"><h2>Что видит бот <span id="watchN"></span></h2><div class="tw"><table><thead><tr><th>Актив</th><th>Окно</th><th>Прошло</th><th>Старт</th><th>Сейчас</th><th>Движение</th><th>Up / Down</th><th>Решение</th></tr></thead><tbody id="watch"></tbody></table></div><div class="sub">Вход, если прошло ≥ MIN_ELAPSED окна, движение ≥ MIN_MOVE и исход в сторону движения стоит ≤ MAX_ENTRY.</div></div>
 
@@ -419,12 +425,16 @@ function render(d){
     <span class="v">${esc(g.value)}${g.extra?'<br>'+esc(g.extra):''}</span></div>`).join('');
   renderPositions();
   const w=d.watch||[]; $('watchN').textContent=w.length?`(${w.length} рынков)`:'';
+  const pots=w.filter(x=>x.potential);$('potCard').style.display=pots.length?'':'none';
+  $('pot').innerHTML=pots.map(x=>{const t=Math.max(0,x.potential.in_sec-Math.round((Date.now()-Date.parse(d.now))/1000));
+    return `<div><b>${esc(x.asset)} <span class="side ${x.potential.side}">${x.potential.side}</span></b> @ ${fmt(x.potential.ask)}<br>окно ${x.minutes}м · move ${sgn(x.move*100)}%<br>вход через ~${Math.floor(t/60)}:${String(t%60).padStart(2,'0')}</div>`}).join('');
   $('watch').innerHTML=w.length?w.map(x=>{const end=Date.parse(x.end),left=Math.max(0,end-Date.now()),mm=Math.floor(left/60000),ss=Math.floor(left%60000/1000);
-    return `<tr><td><b>${esc(x.asset)}</b></td><td>${x.minutes}м · до ${new Date(end).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</td>
+    const pot=x.potential?` class="pot"`:'';const rs=x.potential?`⏳ ${x.potential.side} @ ${fmt(x.potential.ask)} через ~${Math.floor(x.potential.in_sec/60)}:${String(x.potential.in_sec%60).padStart(2,'0')}`:(x.error||x.reason||'');
+    return `<tr${pot}><td><b>${esc(x.asset)}</b></td><td>${x.minutes}м · до ${new Date(end).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</td>
     <td><span class="mini"><i style="width:${Math.min(100,x.elapsed*100).toFixed(0)}%"></i></span>${(x.elapsed*100).toFixed(0)}% · ${mm}:${String(ss).padStart(2,'0')}</td>
     <td>${fmt(x.ref,2)}</td><td>${fmt(x.cur,2)}</td><td class="${cls(x.move)}">${x.move==null?'—':sgn(x.move*100)+'%'}</td>
     <td><span class="pos">${fmt(x.up_ask)}</span> / <span class="neg">${fmt(x.down_ask)}</span></td>
-    <td class="${x.reason==='ВХОД'?'go':''}" style="color:var(--mut)">${esc(x.error||x.reason||'')}</td></tr>`}).join('')
+    <td class="reason ${x.reason==='ВХОД'?'go':''}" style="color:var(--mut)">${esc(rs)}</td></tr>`}).join('')
     :'<tr><td colspan="8" class="empty">Бот ещё не отсканировал рынки — подожди полминуты.</td></tr>';
   if(!window.__tick)tick();
   $('closed').innerHTML=d.closed.length?d.closed.map(t=>`<tr><td>${esc((t.opened||'').slice(5,16).replace('T',' '))}</td><td>${esc(t.asset)}</td>
