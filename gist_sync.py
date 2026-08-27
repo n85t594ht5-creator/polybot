@@ -16,6 +16,8 @@ def watch():
         w["elapsed"] = round((t - m["start"]).total_seconds() / (m["minutes"] * 60), 3)
         if w["elapsed"] < 0:
             w["reason"] = "окно ещё не началось"; out.append(w); continue
+        if w["elapsed"] < 0:
+            w["reason"] = "окно ещё не началось"; out.append(w); continue
         try:
             w["ref"] = bot.binance_open_at(m["asset"], m["start"]); w["cur"] = prices.get(m["asset"])
             w["move"] = round((w["cur"] - w["ref"]) / w["ref"], 5) if w["ref"] and w["cur"] else None

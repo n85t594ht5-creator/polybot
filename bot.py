@@ -210,6 +210,8 @@ def evaluate(mkt, state):
     """Прогоняет гейты. Возвращает кандидата или (None, причина)."""
     t = now()
     elapsed = (t - mkt["start"]).total_seconds() / (mkt["minutes"] * 60)
+    if elapsed < 0:
+        return None, "окно ещё не началось"
     if elapsed < MIN_ELAPSED:
         return None, f"elapsed {elapsed:.0%} < {MIN_ELAPSED:.0%}"
     if (mkt["end"] - t).total_seconds() < 30:
