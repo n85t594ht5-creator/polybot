@@ -1,0 +1,112 @@
+{
+ "label": "снимок 28.08.2026, 01:55:05",
+ "ts": "2026-08-27T22:55:07.157Z",
+ "mode": "paper",
+ "settings": {
+  "MODE": "paper",
+  "ASSETS": "BTC,ETH,SOL,XRP,DOGE",
+  "WINDOWS": "5,15,60",
+  "BANKROLL": "500",
+  "MIN_ELAPSED": "0.75",
+  "MIN_ENTRY": "0.5",
+  "MAX_ENTRY": "0.62",
+  "MIN_MOVE": "0.0006",
+  "TIER_ENTRY": "0.45",
+  "MIN_MOVE_HIGH": "0.0008",
+  "MIN_CONF": "0.6",
+  "KELLY_FRAC": "0.15",
+  "MAX_STAKE": "0.08",
+  "MAX_POSITIONS": "6",
+  "MAX_EXPOSURE": "0.25",
+  "DAILY_LOSS_LIMIT": "25",
+  "CONSEC_LOSS_LIMIT": "3",
+  "RATE_LIMIT": "30"
+ },
+ "stats": {
+  "bankroll": 1477.08,
+  "start_bankroll": 500,
+  "trades": 5,
+  "wins": 4,
+  "losses": 1,
+  "winrate": 0.8,
+  "pf": 44.425777777777775,
+  "total_pnl": 977.08,
+  "max_dd": 22.5,
+  "per_asset": {
+   "SOL": {
+    "n": 4,
+    "wins": 3,
+    "pnl": 851.75
+   },
+   "BTC": {
+    "n": 1,
+    "wins": 1,
+    "pnl": 125.33
+   }
+  },
+  "longs": 3,
+  "shorts": 2
+ },
+ "closed": [
+  {
+   "opened": "2026-08-27T22:14:03+00:00",
+   "asset": "SOL",
+   "side": "UP",
+   "entry": 0.09,
+   "cost": 70.65,
+   "won": true,
+   "pnl": 714.31,
+   "conf": 0.75,
+   "move": 0.0012,
+   "question": "sol-updown-5m"
+  },
+  {
+   "opened": "2026-08-27T22:09:53+00:00",
+   "asset": "BTC",
+   "side": "UP",
+   "entry": 0.31,
+   "cost": 56.31,
+   "won": true,
+   "pnl": 125.33,
+   "conf": 0.72,
+   "move": 0.0011,
+   "question": "btc-updown-15m"
+  },
+  {
+   "opened": "2026-08-27T21:10:00+00:00",
+   "asset": "SOL",
+   "side": "DOWN",
+   "entry": 0.62,
+   "cost": 24.66,
+   "won": true,
+   "pnl": 15.11,
+   "conf": 0.74,
+   "move": -0.00138,
+   "question": "sol-updown-5m"
+  },
+  {
+   "opened": "2026-08-27T21:09:00+00:00",
+   "asset": "SOL",
+   "side": "UP",
+   "entry": 0.26,
+   "cost": 50.89,
+   "won": true,
+   "pnl": 144.83,
+   "conf": 0.7,
+   "move": 0.00073,
+   "question": "sol-updown-15m"
+  },
+  {
+   "opened": "2026-08-27T20:40:02+00:00",
+   "asset": "SOL",
+   "side": "DOWN",
+   "entry": 0.6,
+   "cost": 22.5,
+   "won": false,
+   "pnl": -22.5,
+   "conf": 0.72,
+   "move": -0.00064,
+   "question": "sol-updown-5m"
+  }
+ ]
+}
