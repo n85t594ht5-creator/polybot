@@ -33,10 +33,13 @@ def slug(asset, minutes, start_ts):
     return f"{asset.lower()}-updown-{w}-{start_ts}"
 
 def fetch_window(asset, minutes, start_ts):
-    m = get(f"{GAMMA}/markets", slug=slug(asset, minutes, start_ts))
-    if not m: return None
-    m = m[0] if isinstance(m, list) else m
-    if not m.get("closed"): return None
+    ev = get(f"{GAMMA}/events", slug=slug(asset, minutes, start_ts))
+    if not ev: return None
+    ev = ev[0] if isinstance(ev, list) else ev
+    ms = ev.get("markets") or []
+    if not ms: return None
+    m = ms[0]
+    if not (m.get("closed") or ev.get("closed")): return None
     try:
         tokens = json.loads(m.get("clobTokenIds") or "[]"); outcomes = json.loads(m.get("outcomes") or '["Up","Down"]')
         prices = json.loads(m.get("outcomePrices") or "[]")
@@ -74,23 +77,8 @@ def collect_windows_paged():
 
 def collect_windows():
     now = int(time.time()); jobs = []
-    # диагностика: как достать закрытые окна
-    ts_live = (now // 900) * 900; ts_old = ts_live - 3 * 900
-    for name, url, params in [
-        ("markets_slug_live", f"{GAMMA}/markets", dict(slug=slug("BTC", 15, ts_live))),
-        ("markets_slug_old", f"{GAMMA}/markets", dict(slug=slug("BTC", 15, ts_old))),
-        ("events_slug_live", f"{GAMMA}/events", dict(slug=slug("BTC", 15, ts_live))),
-        ("events_slug_old", f"{GAMMA}/events", dict(slug=slug("BTC", 15, ts_old))),
-        ("events_closed_list", f"{GAMMA}/events", dict(closed="true", limit=20, order="endDate", ascending="false")),
-        ("markets_closed_list", f"{GAMMA}/markets", dict(closed="true", limit=20, order="endDate", ascending="false")),
-        ("events_tag_search", f"{GAMMA}/events", dict(limit=20, order="endDate", ascending="false", closed="true", tag_slug="crypto")),
-        ("public_search", f"{GAMMA}/public-search", dict(q="btc-updown-15m", limit_per_type=5)),
-    ]:
-        r = get(url, **params)
-        if isinstance(r, list):
-            DIAG[name] = {"n": len(r), "slugs": [x.get("slug") for x in r[:20]], "first": str(r[0])[:300] if r else ""}
-        else:
-            DIAG[name] = str(r)[:600]
+    ts_old = (now // 900) * 900 - 3 * 900
+    DIAG["probe_event_old"] = str(get(f"{GAMMA}/events", slug=slug("BTC", 15, ts_old)))[:500]
     for minutes in WINDOWS:
         step = minutes * 60; since = now - int(DAYS[minutes] * 86400)
         first = (since // step) * step
