@@ -25,11 +25,35 @@ def open_at(asset, ts):
     c = C.get(asset, {}); m = (ts // 60) * 60
     return c[m][0] if m in c else None
 
+import statistics
+SIG = {}   # asset -> {minute_ts: sigma of 1m returns over trailing 60 min}
+for a, c in C.items():
+    ks = sorted(c); rets = {}
+    for i in range(1, len(ks)):
+        if ks[i] - ks[i-1] == 60 and c[ks[i-1]][1]:
+            rets[ks[i]] = (c[ks[i]][1] - c[ks[i-1]][1]) / c[ks[i-1]][1]
+    buf, sg = [], {}
+    for k in ks:
+        if k in rets: buf.append(rets[k])
+        buf = buf[-60:]
+        sg[k] = statistics.pstdev(buf) if len(buf) >= 20 else None
+    SIG[a] = sg
+def sigma_at(asset, ts):
+    m = (ts // 60) * 60; sg = SIG.get(asset, {})
+    for d in (0, 60, 120): 
+        if sg.get(m - d): return sg[m - d]
+    return None
+REF_MODE = os.getenv("REF_MODE", "open")   # open | twap (средняя первой минуты)
+def ref_price(asset, ts):
+    c = C.get(asset, {}); m = (ts // 60) * 60
+    if m not in c: return None
+    return c[m][0] if REF_MODE == "open" else (c[m][0] + c[m][1]) / 2
+
 # Предрасчёт "траектории" каждого окна: список (elapsed, move, up_ask, down_ask)
 TRAJ = []
 for w in W:
     if len(w["up_hist"]) < 3: continue
-    ref = open_at(w["asset"], w["start"])
+    ref = ref_price(w["asset"], w["start"])
     if not ref: continue
     steps = []
     for t, p in w["up_hist"]:
@@ -37,27 +61,47 @@ for w in W:
         cur = price_at(w["asset"], t)
         if cur is None: continue
         el = (t - w["start"]) / (w["minutes"] * 60)
-        steps.append((el, (cur - ref) / ref, min(0.99, p + SPREAD), min(0.99, (1 - p) + SPREAD), w["end"] - t))
-    if steps: TRAJ.append({**w, "steps": steps})
+        sg = sigma_at(w["asset"], t)
+        steps.append((el, (cur - ref) / ref, min(0.99, p + SPREAD), min(0.99, (1 - p) + SPREAD), w["end"] - t, sg, t))
+    if steps: TRAJ.append({**w, "steps": steps, "hour": (w["start"] // 3600) % 24, "wday": ((w["start"] // 86400) + 4) % 7})
 print(f"windows usable: {len(TRAJ)} of {len(W)}")
 
 def run(P, assets=None, windows=None):
     """Одна конфигурация → список сделок (в хронологии) и метрики."""
-    trades = []
+    cands = []
+    skip_hours = set(P.get("SKIP_HOURS") or [])
     for w in TRAJ:
         if assets and w["asset"] not in assets: continue
         if windows and w["minutes"] not in windows: continue
-        for el, move, ua, da, left in w["steps"]:
-            if el < P["MIN_ELAPSED"] or left < 30 or abs(move) < P["MIN_MOVE"]: continue
+        if w["hour"] in skip_hours: continue
+        for el, move, ua, da, left, sg, t in w["steps"]:
+            if el < P["MIN_ELAPSED"] or left < 30: continue
             side = "UP" if move > 0 else "DOWN"; ask = ua if side == "UP" else da
             if ask > P["MAX_ENTRY"] or ask <= 0.01 or ask < P.get("MIN_ENTRY", 0): continue
-            if ask > P["TIER_ENTRY"] and abs(move) < P["MIN_MOVE_HIGH"]: continue
-            conf = min(0.95, 0.5 + el * 0.3 + min(abs(move) / 0.005, 1) * 0.15)
+            if P.get("MOVE_MODE") == "sigma":
+                if not sg: continue
+                z = abs(move) / (sg * math.sqrt(max(1, el * w["minutes"])))   # движение в сигмах за прошедшее время
+                need = P["MIN_SIGMA"] * (1.5 if ask > P["TIER_ENTRY"] else 1.0)
+                if z < need: continue
+                strength = min(z / 3, 1)
+            else:
+                if abs(move) < P["MIN_MOVE"]: continue
+                if ask > P["TIER_ENTRY"] and abs(move) < P["MIN_MOVE_HIGH"]: continue
+                strength = min(abs(move) / 0.005, 1)
+            conf = min(0.95, 0.5 + el * 0.3 + strength * 0.15)
             if conf < P["MIN_CONF"]: continue
             won = (side == "UP") == w["up_won"]
-            trades.append({"t": w["start"], "asset": w["asset"], "min": w["minutes"], "side": side, "entry": ask, "conf": conf, "won": won})
+            cands.append({"t": t, "wstart": w["start"], "end": w["end"], "asset": w["asset"], "min": w["minutes"], "side": side, "entry": ask, "conf": conf, "won": won, "hour": w["hour"]})
             break
-    trades.sort(key=lambda x: x["t"])
+    cands.sort(key=lambda x: x["t"])
+    # корреляционные лимиты: не больше N позиций на одно окно времени и M в одну сторону одновременно
+    max_win, max_dir = P.get("MAX_PER_WINDOW", 99), P.get("MAX_SAME_DIR", 99)
+    open_pos, trades = [], []
+    for c in cands:
+        open_pos = [o for o in open_pos if o["end"] > c["t"]]
+        if sum(1 for o in open_pos if o["wstart"] == c["wstart"]) >= max_win: continue
+        if sum(1 for o in open_pos if o["side"] == c["side"]) >= max_dir: continue
+        open_pos.append(c); trades.append(c)
     bank, peak, dd, wins, gp, gl = BANKROLL, BANKROLL, 0.0, 0, 0.0, 0.0
     size = BANKROLL * FLAT_STAKE
     for tr in trades:
@@ -78,23 +122,33 @@ def run(P, assets=None, windows=None):
 
 GRID = {
     "MIN_ELAPSED": [0.65, 0.75, 0.85],
-    "MIN_ENTRY": [0.0, 0.45, 0.5, 0.55],
-    "MAX_ENTRY": [0.62, 0.7, 0.8, 0.9, 0.99],
-    "MIN_MOVE": [0.0006, 0.001, 0.0015],
+    "MIN_ENTRY": [0.45, 0.5],
+    "MAX_ENTRY": [0.62, 0.7],
+    "MOVE_MODE": ["pct", "sigma"],
+    "MIN_MOVE": [0.0006, 0.001],
+    "MIN_SIGMA": [1.0, 1.5, 2.0],
     "TIER_ENTRY": [0.45],
-    "MIN_MOVE_HIGH": [0.0008, 0.0012],
+    "MIN_MOVE_HIGH": [0.0008],
     "MIN_CONF": [0.6],
     "KELLY_FRAC": [0.15],
+    "MAX_PER_WINDOW": [99, 2],
+    "MAX_SAME_DIR": [99, 3],
 }
-keys = list(GRID); rows = []
+keys = list(GRID); rows = []; seen_sig = set()
 for vals in itertools.product(*GRID.values()):
-    P = dict(zip(keys, vals)); _, m = run(P); rows.append({**P, **m})
+    P = dict(zip(keys, vals))
+    if P["MOVE_MODE"] == "sigma": P["MIN_MOVE"] = "-"
+    else: P["MIN_SIGMA"] = "-"
+    sig = tuple(P[k] for k in keys)
+    if sig in seen_sig: continue
+    seen_sig.add(sig)
+    _, m = run(P); rows.append({**P, **m})
 rows.sort(key=lambda r: (r["trades"] >= MIN_TRADES, r["score"], r["pnl"]), reverse=True)
 with open("results/grid.csv", "w", newline="") as f:
     wr = csv.DictWriter(f, fieldnames=list(rows[0].keys())); wr.writeheader(); wr.writerows(rows)
 
 # Текущие настройки бота и лучшая
-CURRENT = {"MIN_ELAPSED": 0.65, "MIN_ENTRY": 0.0, "MAX_ENTRY": 0.62, "MIN_MOVE": 0.0006, "TIER_ENTRY": 0.45, "MIN_MOVE_HIGH": 0.0012, "MIN_CONF": 0.65, "KELLY_FRAC": 0.15}
+CURRENT = {"MIN_ELAPSED": 0.75, "MIN_ENTRY": 0.5, "MAX_ENTRY": 0.62, "MOVE_MODE": "pct", "MIN_SIGMA": "-", "MAX_PER_WINDOW": 99, "MAX_SAME_DIR": 99, "MIN_MOVE": 0.0006, "TIER_ENTRY": 0.45, "MIN_MOVE_HIGH": 0.0008, "MIN_CONF": 0.65, "KELLY_FRAC": 0.15}
 cur_tr, cur = run(CURRENT)
 good = [r for r in rows if r["trades"] >= MIN_TRADES]
 best = good[0] if good else rows[0]
@@ -105,7 +159,7 @@ def breakdown(P):
     tr, _ = run(P)
     for t in tr:
         lo = int(t["entry"] * 20) / 20; eb = f"вход {lo:.2f}–{lo+0.05:.2f}"
-        for key in (t["asset"], f"{t['min']}m", f"{t['asset']}-{t['min']}m", eb):
+        for key in (t["asset"], f"{t['min']}m", f"{t['asset']}-{t['min']}m", eb, f"час {t['hour']:02d} UTC", "день " + ["пн","вт","ср","чт","пт","сб","вс"][t.get("wday", ((t["wstart"]//86400)+4)%7)]):
             o = out[key]; o["n"] += 1; o["w"] += t["won"]; o["pnl"] += t.get("pnl", 0)
     return dict(out)
 
@@ -123,6 +177,13 @@ md = [f"# Бэктест PolyBot", "", f"Окон с данными: **{nw}** ("
       "### Разбивка лучшей конфигурации", "| Срез | Сделок | Winrate | P&L |", "|---|---|---|---|"]
 md += [brow(k, v) for k, v in sorted(breakdown(BP).items())]
 WIDE = {**BP, "MIN_ENTRY": 0.5, "MAX_ENTRY": 0.99}
+# Эксперимент: лучшая конфигурация + выключенные худшие часы
+def worst_hours(P, n=4):
+    hb = {k: v for k, v in breakdown(P).items() if k.startswith("час")}
+    ranked = sorted(hb.items(), key=lambda kv: (kv[1]["w"] / kv[1]["n"], kv[1]["pnl"]))
+    return [int(k.split()[1]) for k, v in ranked[:n] if v["n"] >= 3 and v["pnl"] < 0]
+SKIP = worst_hours(BP)
+HOURS_CFG = {**BP, "SKIP_HOURS": SKIP}
 _, wm = run(WIDE)
 md += ["", "### Вход от 0.50 без верхней границы (остальное как в лучшей)", fmtm(wm), "", "| Срез | Сделок | Winrate | P&L |", "|---|---|---|---|"]
 md += [brow(k, v) for k, v in sorted(breakdown(WIDE).items()) if k.startswith("вход")]
@@ -167,12 +228,13 @@ print("equity:", {k: (v["final"], v["max_dd"]) for k, v in curves.items()})
 from datetime import datetime, timezone
 def pack(label, P):
     tr, m = run(P); wins = sum(1 for t in tr if t["won"])
-    br = breakdown(P); buckets = {k: v for k, v in br.items() if k.startswith("вход")}; other = {k: v for k, v in br.items() if not k.startswith("вход")}
+    br = breakdown(P); buckets = {k: v for k, v in br.items() if k.startswith("вход")}; hours = {k: v for k, v in br.items() if k.startswith("час")}; days = {k: v for k, v in br.items() if k.startswith("день")}
+    other = {k: v for k, v in br.items() if not (k.startswith("вход") or k.startswith("час") or k.startswith("день"))}
     cv = {}
     for name, mode, frac in [("flat", "flat", 0), ("kelly_0.10", "kelly", 0.10), ("kelly_0.15", "kelly", 0.15), ("kelly_0.25", "kelly", 0.25)]:
         c, dd = equity(tr, mode, frac); cv[name] = {"curve": c, "max_dd": round(dd, 3), "final": c[-1]}
-    return {"label": label, "params": {k: v for k, v in P.items() if k != "KELLY_FRAC"}, "metrics": {**m, "wins": wins},
-            "buckets": buckets, "breakdown": other, "curves": cv,
+    return {"label": label, "params": {k: (",".join(map(str, v)) if isinstance(v, list) else v) for k, v in P.items() if k != "KELLY_FRAC"}, "metrics": {**m, "wins": wins},
+            "buckets": buckets, "hours": hours, "days": days, "breakdown": other, "curves": cv,
             "trades": [{k: t[k] for k in ("t", "asset", "min", "side", "entry", "won")} for t in tr]}
 SHOW_COLS = [k for k in keys if len(GRID[k]) > 1]
 page = {"generated": datetime.now(timezone.utc).isoformat(), "windows": nw, "days": round((max(w["end"] for w in TRAJ) - min(w["start"] for w in TRAJ)) / 86400, 1) if TRAJ else 0,
@@ -190,6 +252,9 @@ for r in rows:
 for i, r in enumerate(top):
     page["configs"][f"top{i+1}"] = pack(f"Топ {i+1}", {k: r[k] for k in keys})
 page["top"] = [f"top{i+1}" for i in range(len(top))]
+if SKIP:
+    page["configs"]["hours"] = pack(f"Топ 1 без часов {','.join(f'{h:02d}' for h in SKIP)} UTC", HOURS_CFG)
+    page["configs"]["hours"]["params"]["SKIP_HOURS"] = ",".join(str(h) for h in SKIP)
 tpl = open("template.html", encoding="utf-8").read()
 open("docs/backtest.html", "w", encoding="utf-8").write(tpl.replace("__DATA__", json.dumps(page, ensure_ascii=False, default=str)))
 print("docs/backtest.html written")

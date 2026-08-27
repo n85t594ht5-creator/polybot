@@ -89,7 +89,7 @@ def read_env():
             v = v.split("#", 1)[0].strip()
             cfg[k.strip()] = v
     for k in ("MODE", "ASSETS", "BANKROLL", "MAX_ENTRY", "MIN_ELAPSED", "MIN_MOVE", "TIER_ENTRY", "MIN_MOVE_HIGH", "MIN_CONF",
-              "KELLY_FRAC", "MAX_POSITIONS", "MAX_EXPOSURE", "MAX_STAKE", "MIN_ENTRY", "POLY_ADDRESS", "DAILY_LOSS_LIMIT", "CONSEC_LOSS_LIMIT", "RATE_LIMIT", "WINDOWS", "PRICE_SOURCE"):
+              "KELLY_FRAC", "MAX_POSITIONS", "MAX_EXPOSURE", "MAX_STAKE", "MIN_ENTRY", "POLY_ADDRESS", "MOVE_MODE", "MIN_SIGMA", "REF_MODE", "SKIP_HOURS", "MAX_PER_WINDOW", "MAX_SAME_DIR", "LOOP_SEC", "DAILY_LOSS_LIMIT", "CONSEC_LOSS_LIMIT", "RATE_LIMIT", "WINDOWS", "PRICE_SOURCE"):
         if k not in cfg and os.getenv(k):
             cfg[k] = os.getenv(k)
     # секреты наружу не отдаём
@@ -513,6 +513,7 @@ function render(d){
   const ru=r=>{for(const[re,f]of RU){const m=re.exec(r||'');if(m)return f(m)}return r||''};
   const C=d.config||{},num=(k,dflt)=>+(C[k]??dflt);const P={el:num('MIN_ELAPSED',.5),mv:num('MIN_MOVE',.0008),mvh:num('MIN_MOVE_HIGH',.0012),tier:num('TIER_ENTRY',.45),lo:num('MIN_ENTRY',0),hi:num('MAX_ENTRY',.15)};
   $('watchLegend').innerHTML=`Бот входит, когда все три условия зелёные: <b>время</b> — прошло ≥ ${(P.el*100).toFixed(0)}% окна · <b>движение</b> — цена ушла ≥ ${(P.mv*100).toFixed(2)}% (≥ ${(P.mvh*100).toFixed(2)}% если исход дороже ${P.tier}) · <b>цена</b> — нужный исход стоит ${P.lo}–${P.hi}.`;
+  const SIGMA=(C.MOVE_MODE||'pct')==='sigma';
   const chip=(n,ok,txt)=>`<span class="${ok===true?'ok':ok===false?'no':''}" title="${n}">${txt}</span>`;
   function gates(x,raw){if(x.reason==='ВХОД')return `<span class="st in">✔ Входим</span><div class="g">${chip('время',true,'время')}${chip('движение',true,'движение')}${chip('цена',true,'цена')}</div>`;
    if(x.elapsed<0||x.error||x.move==null)return `<span class="st no">${x.error?'Ошибка данных':'Окно ещё не началось'}</span><div class="g">${chip('время',null,'время')}${chip('движение',null,'движение')}${chip('цена',null,'цена')}</div>`;
@@ -609,18 +610,24 @@ const S=[
  {k:'MIN_ENTRY',t:'range',min:0,max:0.9,step:0.01,n:'Минимальная цена исхода',d:'Не покупать исход дешевле. Дешёвый исход значит, что рынок не согласен с направлением — и на истории рынок обычно прав. Бэктест: ниже 0.45 убыточно.'},
  {k:'MAX_ENTRY',t:'range',min:0.1,max:0.99,step:0.01,n:'Максимальная цена исхода',d:'Не покупать исход дороже. Чем дороже, тем меньше выплата: за 0.62 получаешь +61% при выигрыше, за 0.9 — только +11%, а проигрыш всё равно −100%.'},
  {k:'MIN_MOVE',t:'range',min:0.0002,max:0.005,step:0.0001,pct:100,dec:2,n:'Минимальное движение цены, %',d:'Насколько цена монеты должна уйти от старта окна, чтобы это считалось сигналом, а не шумом. 0.06% для BTC по $80 000 — это $48.'},
+ {k:'MOVE_MODE',t:'chips1',opts:['pct','sigma'],n:'Как мерить движение',d:'pct — порог в процентах (ползунки ниже). sigma — порог в единицах волатильности актива за последний час: одинаково честно для спокойного BTC и дёрганого SOL.'},
+ {k:'MIN_SIGMA',t:'range',min:0.5,max:3,step:0.1,n:'Порог движения в сигмах',d:'Только для режима sigma. 1.0 — движение как обычная минутная волатильность, 2.0 — явно необычное.'},
+ {k:'REF_MODE',t:'chips1',opts:['open','twap'],n:'Цена старта окна',d:'open — цена открытия первой минуты. twap — её средняя, ближе к тому, как считает Chainlink при резолве.'},
  {k:'TIER_ENTRY',t:'range',min:0.3,max:0.9,step:0.01,n:'Порог «дорогого» входа',d:'Если исход дороже этой цены — требуется более сильное движение (следующий ползунок). Защита от покупки фаворита на слабом сигнале.'},
  {k:'MIN_MOVE_HIGH',t:'range',min:0.0002,max:0.005,step:0.0001,pct:100,dec:2,n:'Движение для дорогих входов, %',d:'Сколько должна пройти цена, если исход дороже порога выше. Обычно чуть больше обычного минимума.'},
  {k:'MIN_CONF',t:'range',min:0.5,max:0.95,step:0.01,n:'Минимальная уверенность',d:'Внутренняя оценка бота: чем позже в окне и чем сильнее движение, тем выше. Ниже этой планки сделка не открывается. Это эвристика, не предсказание.'},
  {k:'KELLY_FRAC',t:'range',min:0.05,max:0.5,step:0.01,n:'Доля Келли',d:'Формула Келли считает «идеальную» ставку для максимального роста. Мы берём её часть: 0.15 — осторожно, 0.25 — стандарт, 0.5 — агрессивно и с большими просадками.'},
  {k:'MAX_STAKE',t:'range',min:0.01,max:0.25,step:0.01,pct:1,n:'Потолок одной ставки, % банкролла',d:'Что бы ни насчитал Келли, одна сделка не больше этой доли. 8% значит: пять убытков подряд — минус ~34%, а не половина.'},
+ {k:'MAX_PER_WINDOW',t:'range',min:1,max:10,step:1,n:'Позиций на одно окно времени',d:'Крипта ходит вместе: BTC/ETH/SOL UP в одном окне — это одна ставка ×3. Лимит режет корреляционный риск. 99 — без лимита.'},
+ {k:'MAX_SAME_DIR',t:'range',min:1,max:10,step:1,n:'Одновременно в одну сторону',d:'Не больше N открытых позиций UP (или DOWN) сразу. 99 — без лимита.'},
+ {k:'SKIP_HOURS',t:'text',n:'Часы без торговли (UTC)',d:'Список часов через запятую, например 2,3,4,5. Бэктест показывает по часам, где стратегия сливает. Пусто — торгуем круглосуточно.'},
  {k:'MAX_POSITIONS',t:'range',min:1,max:20,step:1,n:'Максимум открытых сделок',d:'Сколько окон бот может держать одновременно.'},
  {k:'MAX_EXPOSURE',t:'range',min:0.05,max:0.8,step:0.05,pct:1,n:'Максимум в позициях, % банкролла',d:'Суммарно во всех открытых сделках не больше этой доли. Остальное всегда остаётся в резерве.'},
  {k:'DAILY_LOSS_LIMIT',t:'range',min:5,max:500,step:5,n:'Дневной стоп, $',d:'Как только за день потеряно столько — бот перестаёт торговать до следующего дня (UTC).'},
  {k:'CONSEC_LOSS_LIMIT',t:'range',min:1,max:10,step:1,n:'Убытков подряд до паузы',d:'После стольких убытков подряд — пауза 24 часа. Защита от дня, когда рынок «пилит» и стратегия не работает.'},
  {k:'RATE_LIMIT',t:'range',min:1,max:60,step:1,n:'Максимум сделок в час',d:'Ограничитель, чтобы бот не «разогнался» на серии одинаковых сигналов.'},
 ];
-const DEF={MODE:'paper',ASSETS:'BTC,ETH,SOL',WINDOWS:'15,60',BANKROLL:'500',MIN_ELAPSED:'0.5',MIN_ENTRY:'0',MAX_ENTRY:'0.15',MIN_MOVE:'0.0008',TIER_ENTRY:'0.45',MIN_MOVE_HIGH:'0.0012',MIN_CONF:'0.6',KELLY_FRAC:'0.25',MAX_STAKE:'0.08',MAX_POSITIONS:'10',MAX_EXPOSURE:'0.4',DAILY_LOSS_LIMIT:'50',CONSEC_LOSS_LIMIT:'4',RATE_LIMIT:'20'};
+const DEF={MOVE_MODE:'pct',MIN_SIGMA:'1.5',REF_MODE:'open',MAX_PER_WINDOW:'99',MAX_SAME_DIR:'99',SKIP_HOURS:'',MODE:'paper',ASSETS:'BTC,ETH,SOL',WINDOWS:'15,60',BANKROLL:'500',MIN_ELAPSED:'0.5',MIN_ENTRY:'0',MAX_ENTRY:'0.15',MIN_MOVE:'0.0008',TIER_ENTRY:'0.45',MIN_MOVE_HIGH:'0.0012',MIN_CONF:'0.6',KELLY_FRAC:'0.25',MAX_STAKE:'0.08',MAX_POSITIONS:'10',MAX_EXPOSURE:'0.4',DAILY_LOSS_LIMIT:'50',CONSEC_LOSS_LIMIT:'4',RATE_LIMIT:'20'};
 let VARS={};
 function showVal(x,v){if(x.t==='range'){const f=x.pct?(+v*x.pct).toFixed(x.dec??0)+'%':(+v).toString();return f}return v}
 async function loadSettings(){$('ghWarn').style.display=tok()?'none':'';let vars={};
@@ -629,11 +636,13 @@ async function loadSettings(){$('ghWarn').style.display=tok()?'none':'';let vars
  VARS=vars;
  $('setForm').innerHTML=S.map(x=>{const v=vars[x.k]??DEF[x.k];let ctl='';
   if(x.t==='mode')ctl=`<div class="seg2"><button class="${v!=='live'?'on':''}" data-k="MODE" data-v="paper" onclick="setMode(this)">paper</button><button class="live ${v==='live'?'on':''}" data-k="MODE" data-v="live" onclick="setMode(this)">live</button></div><input type="hidden" id="s_MODE" value="${v}">`;
+  else if(x.t==='chips1'){ctl=`<div class="chips">${x.opts.map(o=>`<label><input type="radio" name="s_${x.k}" value="${o}" ${String(v)===o?'checked':''}><span>${o}</span></label>`).join('')}</div>`}
+  else if(x.t==='text'){ctl=`<input type="text" id="s_${x.k}" value="${esc(v)}">`}
   else if(x.t==='chips'){const cur=String(v).split(',').map(s=>s.trim());ctl=`<div class="chips">${x.opts.map(o=>`<label><input type="checkbox" name="s_${x.k}" value="${o}" ${cur.includes(o)?'checked':''}><span>${o}${x.k==='WINDOWS'?'м':''}</span></label>`).join('')}</div>`}
   else ctl=`<input type="range" id="s_${x.k}" min="${x.min}" max="${x.max}" step="${x.step}" value="${v}" oninput="document.getElementById('sv_${x.k}').textContent=showVal(S.find(y=>y.k==='${x.k}'),this.value)">`;
   return `<div class="row"><div class="h"><span>${x.n} <span class="sub">${x.k}</span></span><b id="sv_${x.k}">${x.t==='range'?showVal(x,v):''}</b></div><div class="d">${x.d}</div>${ctl}</div>`}).join('')}
 async function setMode(b){if(b.dataset.v==='live'&&!await ask('Переключить в LIVE?','Бот начнёт выставлять реальные ордера на Polymarket с твоего кошелька.<div class="sub">Проверь: ключ сохранён в «Ключах», тест в paper пройден, на кошельке отдельная небольшая сумма.</div>','Да, live','danger'))return;document.querySelectorAll('.seg2 button').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('s_MODE').value=b.dataset.v}
-function readSettings(){const out={};S.forEach(x=>{if(x.t==='chips')out[x.k]=[...document.querySelectorAll(`input[name=s_${x.k}]:checked`)].map(i=>i.value).join(',');else out[x.k]=$('s_'+x.k).value});return out}
+function readSettings(){const out={};S.forEach(x=>{if(x.t==='chips')out[x.k]=[...document.querySelectorAll(`input[name=s_${x.k}]:checked`)].map(i=>i.value).join(',');else if(x.t==='chips1'){const r=document.querySelector(`input[name=s_${x.k}]:checked`);out[x.k]=r?r.value:DEF[x.k]}else out[x.k]=$('s_'+x.k).value});return out}
 async function setVar(k,v){try{await gh('/actions/variables/'+k,{method:'PATCH',body:JSON.stringify({name:k,value:String(v)})})}catch(e){await gh('/actions/variables',{method:'POST',body:JSON.stringify({name:k,value:String(v)})})}}
 $('setSave').onclick=async()=>{if(!tok())return toast('Сначала добавь токен GitHub в «Ключи»');const v=readSettings();if(!v.ASSETS||!v.WINDOWS)return toast('Выбери хотя бы один актив и одно окно');
  if(v.MODE==='live'&&VARS.POLY_ADDRESS==null&&!await ask('Ключ не сохранён','Приватный ключ кошелька не задан — в live бот не сможет выставлять ордера. Всё равно сохранить настройки?','Сохранить'))return;

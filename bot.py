@@ -47,6 +47,12 @@ MAX_STAKE         = env("MAX_STAKE", 0.08, float)     # одна ставка н
 DAILY_LOSS_LIMIT  = env("DAILY_LOSS_LIMIT", 50.0, float)
 CONSEC_LOSS_LIMIT = env("CONSEC_LOSS_LIMIT", 4, int)
 RATE_LIMIT        = env("RATE_LIMIT", 20, int)
+MOVE_MODE         = env("MOVE_MODE", "pct").lower()       # pct — порог в %, sigma — порог в волатильностях
+MIN_SIGMA         = env("MIN_SIGMA", 1.5, float)          # для MOVE_MODE=sigma
+REF_MODE          = env("REF_MODE", "open").lower()       # open — открытие 1-й минуты, twap — её средняя
+SKIP_HOURS        = [int(h) for h in env("SKIP_HOURS", "").split(",") if h.strip() != ""]   # часы UTC без торговли
+MAX_PER_WINDOW    = env("MAX_PER_WINDOW", 99, int)        # позиций на одно окно времени
+MAX_SAME_DIR      = env("MAX_SAME_DIR", 99, int)          # одновременных позиций в одну сторону
 LOOP_SEC          = env("LOOP_SEC", 1.5, float)          # пауза между циклами
 MARKETS_TTL       = env("MARKETS_TTL", 30, int)          # как часто обновлять список рынков, сек
 PRE_ENTRY_SEC     = env("PRE_ENTRY_SEC", 60, int)        # начинать опрашивать цены за N сек до момента входа
@@ -149,6 +155,24 @@ class State:
 # ───────────────────────── market data ─────────────────────────
 
 _price_cache = {}   # asset -> (ts, price)
+_sigma_cache = {}   # asset -> (ts, sigma)
+
+def sigma_1m(asset):
+    """Ст. отклонение минутных доходностей за последний час (Coinbase). Кэш 60 сек."""
+    c = _sigma_cache.get(asset)
+    if c and time.time() - c[0] < 60:
+        return c[1]
+    end = now(); start = end - timedelta(minutes=70)
+    k = get(f"{COINBASE}/products/{CB_PRODUCT[asset]}/candles", granularity=60,
+            start=start.strftime("%Y-%m-%dT%H:%M:%SZ"), end=end.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    k = sorted(k or [], key=lambda c: c[0])
+    closes = [float(c[4]) for c in k]
+    rets = [(closes[i] - closes[i-1]) / closes[i-1] for i in range(1, len(closes)) if closes[i-1]]
+    if len(rets) < 20:
+        return None
+    m = sum(rets) / len(rets); sg = (sum((r - m) ** 2 for r in rets) / len(rets)) ** 0.5
+    _sigma_cache[asset] = (time.time(), sg)
+    return sg
 
 def binance_price(asset):
     """Текущая цена (имя историческое — источник выбирается PRICE_SOURCE). Кэш 1 сек."""
@@ -176,7 +200,7 @@ def binance_open_at(asset, dt):
     if not k:
         return None
     k.sort(key=lambda c: c[0])           # coinbase отдаёт от новых к старым: [time, low, high, open, close, vol]
-    return float(k[0][3])
+    return float(k[0][3]) if REF_MODE == "open" else (float(k[0][3]) + float(k[0][4])) / 2
 
 def clob_ask(token_id):
     return float(get(f"{CLOB}/price", token_id=token_id, side="BUY")["price"])
@@ -226,6 +250,8 @@ def find_updown_markets():
 def evaluate(mkt, state):
     """Прогоняет гейты. Возвращает кандидата или (None, причина)."""
     t = now()
+    if t.hour in SKIP_HOURS:
+        return None, f"час {t.hour:02d} UTC выключен"
     elapsed = (t - mkt["start"]).total_seconds() / (mkt["minutes"] * 60)
     if elapsed < 0:
         return None, "окно ещё не началось"
@@ -247,8 +273,18 @@ def evaluate(mkt, state):
     if not ref:
         return None, "no reference price"
     move = (cur - ref) / ref
-    if abs(move) < MIN_MOVE:
-        return None, f"move {move:+.3%} < {MIN_MOVE:.3%}"
+    if MOVE_MODE == "sigma":
+        sg = sigma_1m(mkt["asset"])
+        if not sg:
+            return None, "no volatility data"
+        z = abs(move) / (sg * max(1.0, elapsed * mkt["minutes"]) ** 0.5)
+        if z < MIN_SIGMA:
+            return None, f"move {z:.2f}σ < {MIN_SIGMA}σ"
+        strength = min(z / 3, 1)
+    else:
+        if abs(move) < MIN_MOVE:
+            return None, f"move {move:+.3%} < {MIN_MOVE:.3%}"
+        strength = min(abs(move) / 0.005, 1)
 
     side = "UP" if move > 0 else "DOWN"
     token = mkt["up_token"] if side == "UP" else mkt["down_token"]
@@ -259,12 +295,24 @@ def evaluate(mkt, state):
         return None, "no liquidity"
     if entry < MIN_ENTRY:
         return None, f"{side} ask {entry:.2f} < MIN_ENTRY {MIN_ENTRY}"
-    if entry > TIER_ENTRY and abs(move) < MIN_MOVE_HIGH:
-        return None, f"ask {entry:.2f} > {TIER_ENTRY}: move {move:+.3%} < {MIN_MOVE_HIGH:.3%}"
+    if entry > TIER_ENTRY:
+        if MOVE_MODE == "sigma":
+            if z < MIN_SIGMA * 1.5:
+                return None, f"ask {entry:.2f} > {TIER_ENTRY}: move {z:.2f}σ < {MIN_SIGMA*1.5:.2f}σ"
+        elif abs(move) < MIN_MOVE_HIGH:
+            return None, f"ask {entry:.2f} > {TIER_ENTRY}: move {move:+.3%} < {MIN_MOVE_HIGH:.3%}"
 
-    # Уверенность: чем позже и чем больше движение — тем выше.
+    # корреляционные лимиты
+    same_win = sum(1 for p in state.positions.values() if p.get("start") == mkt["start"].isoformat())
+    if same_win >= MAX_PER_WINDOW:
+        return None, f"уже {same_win} позиций в этом окне"
+    same_dir = sum(1 for p in state.positions.values() if p.get("side") == side)
+    if same_dir >= MAX_SAME_DIR:
+        return None, f"уже {same_dir} позиций {side}"
+
+    # Уверенность: чем позже и чем сильнее движение — тем выше.
     # Это эвристика, не модель. Калибруется по логам paper-режима.
-    conf = min(0.95, 0.5 + elapsed * 0.3 + min(abs(move) / 0.005, 1) * 0.15)
+    conf = min(0.95, 0.5 + elapsed * 0.3 + strength * 0.15)
     if conf < MIN_CONF:
         return None, f"conf {conf:.2f} < {MIN_CONF}"
 
@@ -278,7 +326,7 @@ def evaluate(mkt, state):
 
     return {
         "market_id": mkt["id"], "asset": mkt["asset"], "side": side, "token": token,
-        "minutes": mkt["minutes"],
+        "minutes": mkt["minutes"], "start": mkt["start"].isoformat(),
         "entry": entry, "cost": round(size, 2), "shares": round(size / entry, 2),
         "conf": round(conf, 3), "move": round(move, 5), "elapsed": round(elapsed, 2),
         "ref": ref, "end": mkt["end"].isoformat(), "opened": now().isoformat(),

@@ -45,6 +45,12 @@ jobs:
           POLY_SIGNATURE_TYPE: ${{ vars.POLY_SIGNATURE_TYPE || '0' }}
           RATE_LIMIT: ${{ vars.RATE_LIMIT || '20' }}
           LOOP_SEC: ${{ vars.LOOP_SEC || '1.5' }}
+          MOVE_MODE: ${{ vars.MOVE_MODE || 'pct' }}
+          MIN_SIGMA: ${{ vars.MIN_SIGMA || '1.5' }}
+          REF_MODE: ${{ vars.REF_MODE || 'open' }}
+          SKIP_HOURS: ${{ vars.SKIP_HOURS }}
+          MAX_PER_WINDOW: ${{ vars.MAX_PER_WINDOW || '99' }}
+          MAX_SAME_DIR: ${{ vars.MAX_SAME_DIR || '99' }}
           ASSETS: ${{ vars.ASSETS || 'BTC,ETH,SOL' }}
           BANKROLL: ${{ vars.BANKROLL || '500' }}
           MAX_ENTRY: ${{ vars.MAX_ENTRY || '0.15' }}
