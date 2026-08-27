@@ -41,6 +41,13 @@ last = None
 while True:
     try:
         d = dashboard.snapshot(); d["log"] = d["log"][-40:]; d["bot"]["running"] = True
+        diag = {}
+        for name, url in [("binance", bot.BINANCE + "/api/v3/ticker/price?symbol=BTCUSDT"), ("gamma", bot.GAMMA + "/markets?limit=1"), ("clob", bot.CLOB + "/time")]:
+            try: r = requests.get(url, timeout=10); diag[name] = f"{r.status_code} {r.text[:60]}"
+            except Exception as e: diag[name] = "ERR " + str(e)[:80]
+        try: diag["markets_found"] = len(bot.find_updown_markets())
+        except Exception as e: diag["markets_found"] = "ERR " + str(e)[:80]
+        d["diag"] = diag
         try:
             st = dashboard.read_state() or {}
             dashboard_state.bankroll = st.get("bankroll", bot.BANKROLL)
