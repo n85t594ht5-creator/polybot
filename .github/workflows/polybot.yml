@@ -50,6 +50,8 @@ jobs:
           MAX_EXPOSURE: ${{ vars.MAX_EXPOSURE || '0.40' }}
           WINDOWS: ${{ vars.WINDOWS || '15,60' }}
           PRICE_SOURCE: coinbase
+          DAILY_LOSS_LIMIT: ${{ vars.DAILY_LOSS_LIMIT || '50' }}
+          CONSEC_LOSS_LIMIT: ${{ vars.CONSEC_LOSS_LIMIT || '4' }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
