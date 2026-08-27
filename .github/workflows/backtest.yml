@@ -24,6 +24,9 @@ on:
       min_trades:
         description: "Мин. сделок для рейтинга"
         default: "30"
+      max_stake_pct:
+        description: "Келли: потолок ставки, %"
+        default: "8"
 
 concurrency:
   group: backtest
@@ -57,6 +60,7 @@ jobs:
           SPREAD: ${{ github.event.inputs.spread || '0.04' }}
           FLAT_STAKE: ${{ github.event.inputs.stake || '0.05' }}
           MIN_TRADES: ${{ github.event.inputs.min_trades || '30' }}
+          MAX_STAKE_PCT: ${{ github.event.inputs.max_stake_pct || '8' }}
           BT_INPUTS: ${{ toJSON(github.event.inputs) }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python simulate.py

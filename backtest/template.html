@@ -46,6 +46,7 @@ button{font:600 13px var(--sans);padding:8px 14px;border-radius:8px;border:1px s
     <div><label>Спред, $</label><input id="r_spread" type="number" value="0.04" step="0.01" min="0" max="0.2"></div>
     <div><label>Ставка, доля банкролла</label><input id="r_stake" type="number" value="0.05" step="0.01" min="0.01" max="0.25"></div>
     <div><label>Мин. сделок для рейтинга</label><input id="r_min" type="number" value="30" min="5" max="500"></div>
+    <div><label>Келли: потолок ставки, %</label><input id="r_cap" type="number" value="8" min="1" max="25"></div>
     <div><label>Активы</label><div class="chips" id="r_assets"></div></div>
     <div><label>Окна</label><div class="chips" id="r_windows"></div></div>
    </div>
@@ -70,7 +71,7 @@ button{font:600 13px var(--sans);padding:8px 14px;border-radius:8px;border:1px s
 <script>
 const $=id=>document.getElementById(id),fmt=(n,d=2)=>(n==null||isNaN(n))?'—':Number(n).toFixed(d),sgn=n=>(n>0?'+':'')+fmt(n,0),cls=n=>n>0?'pos':n<0?'neg':'';
 $('when').textContent=D.generated.slice(0,16).replace('T',' ')+' UTC';$('scope').textContent=`${D.windows} окон · ${D.days} дн · спред ${D.spread} · ставка ${D.stake}$`;
-const COL={flat:'#7f8da6','kelly_0.10':'#8ab4ff','kelly_0.15':'#35d99b','kelly_0.25':'#f5b64a'};const LAB={flat:'фикс. ставка','kelly_0.10':'Келли 0.10','kelly_0.15':'Келли 0.15','kelly_0.25':'Келли 0.25'};
+const COL={flat:'#7f8da6','kelly_0.10':'#8ab4ff','kelly_0.15':'#35d99b','kelly_0.25':'#f5b64a'};const CAP=(D.inputs&&D.inputs.max_stake_pct)||8;const LAB={flat:'фикс. ставка','kelly_0.10':'Келли 10% · потолок '+CAP+'%','kelly_0.15':'Келли 15% · потолок '+CAP+'%','kelly_0.25':'Келли 25% · потолок '+CAP+'%'};
 let cur='current';
 function seg(){$('seg').innerHTML=Object.keys(D.configs).map(k=>`<button class="${k===cur?'on':''}" onclick="pick('${k}')">${D.configs[k].label}</button>`).join('')}
 function pick(k){cur=k;seg();render()}
@@ -95,13 +96,13 @@ function render(){const c=D.configs[cur],m=c.metrics;$('cfgLine').textContent=Ob
 document.addEventListener('click',()=>document.getElementById('menu').classList.remove('open'));
 const REPO=D.repo||'';const GH='https://api.github.com/repos/'+REPO;const tok=()=>localStorage.getItem('gh_token')||'';
 async function gh(path,opt={}){const r=await fetch(GH+path,{...opt,headers:{'Authorization':'Bearer '+tok(),'Accept':'application/vnd.github+json','Content-Type':'application/json'}});if(r.status===204)return{};const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.message||('HTTP '+r.status));return j}
-const inp=D.inputs||{};['r_days','r_days5','r_spread','r_stake','r_min'].forEach((id,i)=>{const k=['days_15m','days_5m','spread','stake','min_trades'][i];if(inp[k])$(id).value=inp[k]});
+const inp=D.inputs||{};['r_days','r_days5','r_spread','r_stake','r_min','r_cap'].forEach((id,i)=>{const k=['days_15m','days_5m','spread','stake','min_trades','max_stake_pct'][i];if(inp[k])$(id).value=inp[k]});
 const A=(inp.assets||'BTC,ETH,SOL').split(','),Wn=(inp.windows||'5,15,60').split(',');
 $('r_assets').innerHTML=['BTC','ETH','SOL','XRP','DOGE'].map(a=>`<label><input type="checkbox" value="${a}" ${A.includes(a)?'checked':''}>${a}</label>`).join('');
 $('r_windows').innerHTML=['5','15','60'].map(w=>`<label><input type="checkbox" value="${w}" ${Wn.includes(w)?'checked':''}>${w}м</label>`).join('');
 $('runBtn').onclick=async()=>{if(!tok())return $('runMsg').textContent='Нужен токен GitHub — добавь его в панели бота, раздел «Ключи».';
  const as=[...document.querySelectorAll('#r_assets input:checked')].map(i=>i.value).join(','),ws=[...document.querySelectorAll('#r_windows input:checked')].map(i=>i.value).join(',');if(!as||!ws)return $('runMsg').textContent='Выбери активы и окна.';
- $('runMsg').textContent='запускаю…';try{await gh('/actions/workflows/backtest.yml/dispatches',{method:'POST',body:JSON.stringify({ref:'main',inputs:{days_15m:$('r_days').value,days_5m:$('r_days5').value,spread:$('r_spread').value,stake:$('r_stake').value,min_trades:$('r_min').value,assets:as,windows:ws}})});$('runMsg').textContent='Тест запущен. Обычно 10–20 минут; страница обновится сама, когда будет готово.';localStorage.setItem('bt_started',String(Date.now()));poll()}catch(e){$('runMsg').textContent='Ошибка: '+e.message}};
+ $('runMsg').textContent='запускаю…';try{await gh('/actions/workflows/backtest.yml/dispatches',{method:'POST',body:JSON.stringify({ref:'main',inputs:{days_15m:$('r_days').value,days_5m:$('r_days5').value,spread:$('r_spread').value,stake:$('r_stake').value,min_trades:$('r_min').value,max_stake_pct:$('r_cap').value,assets:as,windows:ws}})});$('runMsg').textContent='Тест запущен. Обычно 10–20 минут; страница обновится сама, когда будет готово.';localStorage.setItem('bt_started',String(Date.now()));poll()}catch(e){$('runMsg').textContent='Ошибка: '+e.message}};
 async function poll(){try{const r=await fetch(GH+'/actions/runs?per_page=5',{headers:{'Accept':'application/vnd.github+json',...(tok()?{'Authorization':'Bearer '+tok()}:{})}});const j=await r.json();const b=(j.workflow_runs||[]).find(x=>x.path&&x.path.endsWith('backtest.yml'));if(!b)return;
  if(['in_progress','queued'].includes(b.status)){$('runState').textContent='тест идёт…';setTimeout(poll,30000)}else{$('runState').textContent='';if(localStorage.getItem('bt_started')&&Date.parse(b.updated_at)>+localStorage.getItem('bt_started')){localStorage.removeItem('bt_started');setTimeout(()=>location.reload(),20000)}}}catch(e){}}
 function top3(){const ks=D.top||[];$('top3').innerHTML=ks.length?ks.map((k,i)=>{const c=D.configs[k],m=c.metrics;return `<div class="t ${i===0?'first':''}"><h3>${i+1}. ${i===0?'Лучшая':i===1?'Вторая':'Третья'}</h3>
