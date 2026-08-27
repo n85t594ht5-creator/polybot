@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - run: pip install requests python-dotenv
+      - run: pip install requests python-dotenv py-clob-client
 
       - name: Publish live dashboard page
         env:
@@ -39,7 +39,11 @@ jobs:
           GIST_ID: ${{ secrets.GIST_ID }}
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
           STATE_AUTOSAVE: "1"
-          MODE: paper
+          MODE: ${{ vars.MODE || 'paper' }}
+          POLY_PRIVATE_KEY: ${{ secrets.POLY_PRIVATE_KEY }}
+          POLY_FUNDER: ${{ vars.POLY_FUNDER }}
+          POLY_SIGNATURE_TYPE: ${{ vars.POLY_SIGNATURE_TYPE || '0' }}
+          RATE_LIMIT: ${{ vars.RATE_LIMIT || '20' }}
           ASSETS: ${{ vars.ASSETS || 'BTC,ETH,SOL' }}
           BANKROLL: ${{ vars.BANKROLL || '500' }}
           MAX_ENTRY: ${{ vars.MAX_ENTRY || '0.15' }}

@@ -6,7 +6,7 @@ import dashboard
 
 gist = os.getenv("GIST_RAW_URL", "").strip()
 if gist:
-    inject = "<script>window.__GIST__=" + json.dumps(gist) + ";</script>\n<script>"
+    inject = "<script>window.__GIST__=" + json.dumps(gist) + ";window.__REPO__=" + json.dumps(os.getenv("GITHUB_REPOSITORY", "")) + ";</script>\n<script>"
 else:
     data = dashboard.snapshot(); data["log"] = data["log"][-40:]
     inject = "<script>window.__DATA__=" + json.dumps(data, default=str, ensure_ascii=False) + ";</script>\n<script>"
