@@ -36,6 +36,8 @@ BANKROLL          = env("BANKROLL", 500.0, float)
 MAX_ENTRY         = env("MAX_ENTRY", 0.15, float)
 MIN_ELAPSED       = env("MIN_ELAPSED", 0.50, float)
 MIN_MOVE          = env("MIN_MOVE", 0.0008, float)
+TIER_ENTRY        = env("TIER_ENTRY", 0.45, float)      # исход дороже этой цены → требуем движение MIN_MOVE_HIGH
+MIN_MOVE_HIGH     = env("MIN_MOVE_HIGH", 0.0012, float)
 MIN_CONF          = env("MIN_CONF", 0.60, float)
 KELLY_FRAC        = env("KELLY_FRAC", 0.25, float)
 MAX_POSITIONS     = env("MAX_POSITIONS", 10, int)
@@ -232,6 +234,8 @@ def evaluate(mkt, state):
         return None, f"{side} ask {entry:.2f} > {MAX_ENTRY}"
     if entry <= 0.01:
         return None, "no liquidity"
+    if entry > TIER_ENTRY and abs(move) < MIN_MOVE_HIGH:
+        return None, f"ask {entry:.2f} > {TIER_ENTRY}: move {move:+.3%} < {MIN_MOVE_HIGH:.3%}"
 
     # Уверенность: чем позже и чем больше движение — тем выше.
     # Это эвристика, не модель. Калибруется по логам paper-режима.

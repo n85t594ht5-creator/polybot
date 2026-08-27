@@ -44,6 +44,8 @@ jobs:
           MAX_ENTRY: ${{ vars.MAX_ENTRY || '0.15' }}
           MIN_ELAPSED: ${{ vars.MIN_ELAPSED || '0.50' }}
           MIN_MOVE: ${{ vars.MIN_MOVE || '0.0008' }}
+          TIER_ENTRY: ${{ vars.TIER_ENTRY || '0.45' }}
+          MIN_MOVE_HIGH: ${{ vars.MIN_MOVE_HIGH || '0.0012' }}
           MIN_CONF: ${{ vars.MIN_CONF || '0.60' }}
           KELLY_FRAC: ${{ vars.KELLY_FRAC || '0.25' }}
           MAX_POSITIONS: ${{ vars.MAX_POSITIONS || '10' }}

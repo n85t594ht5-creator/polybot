@@ -88,6 +88,10 @@ def read_env():
             k, v = line.split("=", 1)
             v = v.split("#", 1)[0].strip()
             cfg[k.strip()] = v
+    for k in ("MODE", "ASSETS", "BANKROLL", "MAX_ENTRY", "MIN_ELAPSED", "MIN_MOVE", "TIER_ENTRY", "MIN_MOVE_HIGH", "MIN_CONF",
+              "KELLY_FRAC", "MAX_POSITIONS", "MAX_EXPOSURE", "DAILY_LOSS_LIMIT", "CONSEC_LOSS_LIMIT", "RATE_LIMIT", "WINDOWS", "PRICE_SOURCE"):
+        if k not in cfg and os.getenv(k):
+            cfg[k] = os.getenv(k)
     # секреты наружу не отдаём
     for k in ("POLY_PRIVATE_KEY", "TELEGRAM_BOT_TOKEN", "DASH_PASSWORD"):
         if k in cfg:
@@ -97,7 +101,7 @@ def read_env():
 
 def cfg_num(cfg, key, default):
     try:
-        return float(cfg.get(key) or default)
+        return float(cfg.get(key) or os.getenv(key) or default)
     except ValueError:
         return default
 
