@@ -44,6 +44,7 @@ jobs:
           POLY_FUNDER: ${{ vars.POLY_FUNDER }}
           POLY_SIGNATURE_TYPE: ${{ vars.POLY_SIGNATURE_TYPE || '0' }}
           RATE_LIMIT: ${{ vars.RATE_LIMIT || '20' }}
+          LOOP_SEC: ${{ vars.LOOP_SEC || '1.5' }}
           ASSETS: ${{ vars.ASSETS || 'BTC,ETH,SOL' }}
           BANKROLL: ${{ vars.BANKROLL || '500' }}
           MAX_ENTRY: ${{ vars.MAX_ENTRY || '0.15' }}

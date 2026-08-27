@@ -47,6 +47,9 @@ MAX_STAKE         = env("MAX_STAKE", 0.08, float)     # одна ставка н
 DAILY_LOSS_LIMIT  = env("DAILY_LOSS_LIMIT", 50.0, float)
 CONSEC_LOSS_LIMIT = env("CONSEC_LOSS_LIMIT", 4, int)
 RATE_LIMIT        = env("RATE_LIMIT", 20, int)
+LOOP_SEC          = env("LOOP_SEC", 1.5, float)          # пауза между циклами
+MARKETS_TTL       = env("MARKETS_TTL", 30, int)          # как часто обновлять список рынков, сек
+PRE_ENTRY_SEC     = env("PRE_ENTRY_SEC", 60, int)        # начинать опрашивать цены за N сек до момента входа
 WINDOWS           = [int(w) for w in env("WINDOWS", "15,60").split(",")]   # длины окон в минутах: 5, 15, 60
 PRICE_SOURCE      = env("PRICE_SOURCE", "coinbase").lower()               # coinbase | binance
 
@@ -145,8 +148,18 @@ class State:
 
 # ───────────────────────── market data ─────────────────────────
 
+_price_cache = {}   # asset -> (ts, price)
+
 def binance_price(asset):
-    """Текущая цена (имя историческое — источник выбирается PRICE_SOURCE)."""
+    """Текущая цена (имя историческое — источник выбирается PRICE_SOURCE). Кэш 1 сек."""
+    c = _price_cache.get(asset)
+    if c and time.time() - c[0] < 1.0:
+        return c[1]
+    p = _fetch_price(asset)
+    _price_cache[asset] = (time.time(), p)
+    return p
+
+def _fetch_price(asset):
     if PRICE_SOURCE == "binance":
         return float(get(f"{BINANCE}/api/v3/ticker/price", symbol=SYMBOL[asset])["price"])
     return float(get(f"{COINBASE}/products/{CB_PRODUCT[asset]}/ticker")["price"])
@@ -217,11 +230,19 @@ def evaluate(mkt, state):
     if elapsed < 0:
         return None, "окно ещё не началось"
     if elapsed < MIN_ELAPSED:
+        secs_to_entry = (MIN_ELAPSED - elapsed) * mkt["minutes"] * 60
+        if secs_to_entry > PRE_ENTRY_SEC:
+            return None, f"elapsed {elapsed:.0%} < {MIN_ELAPSED:.0%}"
+        # близко к входу: прогреваем кэш цены старта, чтобы в момент входа не ждать
+        if not mkt.get("_ref"):
+            try: mkt["_ref"] = binance_open_at(mkt["asset"], mkt["start"])
+            except Exception: pass
         return None, f"elapsed {elapsed:.0%} < {MIN_ELAPSED:.0%}"
     if (mkt["end"] - t).total_seconds() < 30:
         return None, "too close to end"
 
-    ref = binance_open_at(mkt["asset"], mkt["start"])
+    ref = mkt.get("_ref") or binance_open_at(mkt["asset"], mkt["start"])
+    mkt["_ref"] = ref
     cur = binance_price(mkt["asset"])
     if not ref:
         return None, "no reference price"
@@ -257,6 +278,7 @@ def evaluate(mkt, state):
 
     return {
         "market_id": mkt["id"], "asset": mkt["asset"], "side": side, "token": token,
+        "minutes": mkt["minutes"],
         "entry": entry, "cost": round(size, 2), "shares": round(size / entry, 2),
         "conf": round(conf, 3), "move": round(move, 5), "elapsed": round(elapsed, 2),
         "ref": ref, "end": mkt["end"].isoformat(), "opened": now().isoformat(),
@@ -356,12 +378,23 @@ def main():
     state = State()
     log.info("PolyBot started mode=%s assets=%s bankroll=%.0f", MODE, ASSETS, state.bankroll)
     n = 0
+    markets, markets_ts = [], 0.0
     while True:
         try:
-            resolve_positions(state)
+            if n % 10 == 0:
+                resolve_positions(state)
+            if time.time() - markets_ts > MARKETS_TTL:
+                fresh = find_updown_markets()
+                # сохраняем прогретые кэши цены старта
+                old = {m["id"]: m.get("_ref") for m in markets}
+                for m in fresh:
+                    if old.get(m["id"]): m["_ref"] = old[m["id"]]
+                markets, markets_ts = fresh, time.time()
             ok, why = state.can_trade()
             if ok:
-                for mkt in find_updown_markets():
+                for mkt in markets:
+                    if mkt["end"] <= now():
+                        continue
                     if mkt["id"] in state.positions:
                         continue
                     cand, reason = evaluate(mkt, state)
@@ -369,16 +402,16 @@ def main():
                         open_position(cand, state)
                     else:
                         log.debug("%s %s: %s", mkt["asset"], mkt["end"].strftime("%H:%M"), reason)
-            else:
+            elif n % 40 == 0:
                 log.info("Trading paused: %s", why)
             n += 1
-            if n % 20 == 0:
+            if n % 80 == 0:
                 log.info("STATS %s", stats(state))
         except KeyboardInterrupt:
             log.info("Stopped. %s", stats(state)); state.save(); break
         except Exception as e:
             log.error("loop error: %s", e)
-        time.sleep(4 + random.random() * 2)
+        time.sleep(LOOP_SEC)
 
 if __name__ == "__main__":
     main()
