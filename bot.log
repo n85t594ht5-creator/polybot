@@ -50,3 +50,9 @@
 2026-08-27 23:32:27,083 INFO  STATS no closed trades yet
 2026-08-27 23:34:13,651 INFO  STATS no closed trades yet
 2026-08-27 23:36:01,389 INFO  STATS no closed trades yet
+2026-08-27 23:40:56,114 INFO  State loaded: bankroll=100.00, open=0
+2026-08-27 23:40:56,114 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP'] bankroll=100
+2026-08-27 23:43:53,454 INFO  STATS no closed trades yet
+2026-08-27 23:46:13,053 INFO  STATS no closed trades yet
+2026-08-27 23:48:16,557 INFO  STATS no closed trades yet
+2026-08-27 23:50:31,971 INFO  STATS no closed trades yet
