@@ -9,6 +9,21 @@ on:
       days_5m:
         description: "Дней истории для 5m"
         default: "3"
+      assets:
+        description: "Активы"
+        default: "BTC,ETH,SOL"
+      windows:
+        description: "Окна"
+        default: "5,15,60"
+      spread:
+        description: "Спред"
+        default: "0.04"
+      stake:
+        description: "Ставка, доля банкролла"
+        default: "0.05"
+      min_trades:
+        description: "Мин. сделок для рейтинга"
+        default: "30"
 
 concurrency:
   group: backtest
@@ -33,12 +48,17 @@ jobs:
           DAYS_15M: ${{ github.event.inputs.days_15m || '14' }}
           DAYS_1H: ${{ github.event.inputs.days_15m || '14' }}
           DAYS_5M: ${{ github.event.inputs.days_5m || '3' }}
+          ASSETS: ${{ github.event.inputs.assets || 'BTC,ETH,SOL' }}
+          WINDOWS: ${{ github.event.inputs.windows || '5,15,60' }}
         run: python collect.py
       - name: Simulate + grid search
         working-directory: backtest
         env:
-          SPREAD: ${{ vars.BT_SPREAD || '0.04' }}
-          FLAT_STAKE: ${{ vars.BT_FLAT_STAKE || '0.05' }}
+          SPREAD: ${{ github.event.inputs.spread || '0.04' }}
+          FLAT_STAKE: ${{ github.event.inputs.stake || '0.05' }}
+          MIN_TRADES: ${{ github.event.inputs.min_trades || '30' }}
+          BT_INPUTS: ${{ toJSON(github.event.inputs) }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: python simulate.py
       - uses: actions/upload-artifact@v4
         with:

@@ -324,6 +324,11 @@ pre .l-warn{color:var(--warn)}pre .l-err{color:var(--down)}pre .l-buy{color:var(
 svg{display:block;width:100%;height:170px}
 .kv{display:grid;grid-template-columns:1fr auto;gap:4px 12px;font:12px var(--mono)}
 .kv span:nth-child(odd){color:var(--mut)}
+.fab{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:40;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.fab button{width:48px;height:48px;border-radius:50%;font-size:20px;padding:0;background:var(--panel2);border:1px solid var(--line);box-shadow:0 4px 16px rgba(0,0,0,.4)}.fab button.acc{background:var(--acc);color:#08131f;border-color:transparent}
+.fab .dd{display:none;position:absolute;right:0;bottom:56px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;min-width:220px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.5)}.fab.open .dd{display:block}
+.fab .dd a{display:flex;gap:10px;align-items:center;padding:12px 14px;color:var(--txt);text-decoration:none;font-size:14px;border-bottom:1px solid var(--line)}.fab .dd a:last-child{border-bottom:0}.fab .dd a.on{color:var(--acc)}.fab .dd a i{font-style:normal;width:22px;text-align:center}
+#fabBack{display:none}
 .menu{position:relative}.menu .dd{display:none;position:absolute;top:110%;left:0;background:var(--panel2);border:1px solid var(--line);border-radius:10px;min-width:210px;z-index:20;overflow:hidden}
 .menu.open .dd{display:block}.menu .dd a{display:block;padding:11px 14px;color:var(--txt);text-decoration:none;font-size:14px;border-bottom:1px solid var(--line)}.menu .dd a:hover,.menu .dd a.on{background:var(--panel);color:var(--acc)}
 .view{display:none}.view.on{display:block}
@@ -346,9 +351,9 @@ svg{display:block;width:100%;height:170px}
 .toast{position:fixed;right:16px;bottom:16px;background:var(--panel2);border:1px solid var(--line);padding:10px 14px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .3s}
 .toast.show{opacity:1}
 </style></head><body><div class="wrap">
+<div class="fab" id="menu"><button id="fabBack" title="Назад" onclick="showView('dash')">←</button><button id="menuBtn" class="acc" title="Меню">☰</button><div class="dd">
+    <a href="#" data-view="dash" class="on"><i>▦</i>Дашборд</a><a href="backtest.html"><i>⚗</i>Тестировщик</a><a href="#" data-view="settings"><i>⚙</i>Настройки бота</a><a href="#" data-view="keys"><i>🔑</i>Ключи</a><a href="#" data-view="power"><i>⏻</i>Питание</a><a href="#" data-view="stats"><i>▤</i>Статистика · архив</a></div></div>
 <header>
-  <div class="menu" id="menu"><button id="menuBtn">☰ Меню</button><div class="dd">
-    <a href="#" data-view="dash" class="on">Дашборд</a><a href="backtest.html">Тестировщик</a><a href="#" data-view="settings">Настройки бота</a><a href="#" data-view="keys">Ключи</a><a href="#" data-view="power">Питание</a><a href="#" data-view="stats">Статистика · архив</a></div></div>
   <h1>POLYBOT</h1>
   <span id="modePill" class="pill">—</span>
   <span class="pill"><span id="dot" class="dot"></span><span id="botTxt">не запущен</span></span>
@@ -573,7 +578,7 @@ async function gh(path,opt={}){const r=await fetch(GH+path,{...opt,headers:{'Aut
 // views
 document.querySelectorAll('#menu .dd a[data-view]').forEach(a=>a.onclick=e=>{e.preventDefault();showView(a.dataset.view)});
 $('menuBtn').onclick=e=>{e.stopPropagation();$('menu').classList.toggle('open')};document.addEventListener('click',()=>$('menu').classList.remove('open'));
-function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v_'+v));document.querySelectorAll('#menu .dd a').forEach(a=>a.classList.toggle('on',a.dataset.view===v));$('menu').classList.remove('open');
+function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v_'+v));$('fabBack').style.display=v==='dash'?'none':'';window.scrollTo(0,0);document.querySelectorAll('#menu .dd a').forEach(a=>a.classList.toggle('on',a.dataset.view===v));$('menu').classList.remove('open');
  if(v==='settings')loadSettings();if(v==='keys')loadKeys();if(v==='power')loadPower();if(v==='stats')loadArchive()}
 // settings schema
 const S=[
@@ -680,6 +685,7 @@ $('pwReset').onclick=async()=>{if(!await ask('Обнулить статисти�
  const put=async(p,content,sha)=>gh('/contents/'+p,{method:'PUT',body:JSON.stringify({message:'reset stats',content:btoa(unescape(encodeURIComponent(content))),...(sha?{sha}:{})})});
  await put('state.json',JSON.stringify(fresh,null,1),st&&st.sha);await put('trades.csv','',tr&&tr.sha);
  await new Promise(r=>setTimeout(r,5000));await dispatch()},'обнуляю','Статистика сброшена, Excel скачан, снимок в архиве. Бот стартует заново.')};
+if(location.hash&&['settings','keys','power','stats'].includes(location.hash.slice(1)))setTimeout(()=>showView(location.hash.slice(1)),300);
 if(window.__GIST__){$('btnStart').style.display=$('btnStop').style.display='none';refresh();setInterval(refresh,15000);setInterval(renderPositions,1000)}
 else if(window.__DATA__){render(window.__DATA__);$('btnStart').style.display=$('btnStop').style.display='none';$('updated').textContent='снимок '+new Date(window.__DATA__.now).toLocaleString();setInterval(renderPositions,1000)}
 else{refresh(); setInterval(refresh,5000); setInterval(renderPositions,1000)}

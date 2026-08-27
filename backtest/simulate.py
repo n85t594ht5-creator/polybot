@@ -68,9 +68,13 @@ def run(P, assets=None, windows=None):
         if tr["won"]: wins += 1; gp += pnl
         else: gl += -pnl
     n = len(trades)
-    return trades, {"trades": n, "winrate": wins / n if n else 0, "pf": (gp / gl) if gl else (99 if gp else 0),
-                    "pnl": bank - BANKROLL, "final": bank, "max_dd": dd, "avg_entry": sum(t["entry"] for t in trades) / n if n else 0,
-                    "exp_per_trade": (bank - BANKROLL) / n / size if n else 0}
+    losses = n - wins
+    # Оценка: прибыль × доля побед, штраф за просадку и за малое число сделок.
+    score = (bank - BANKROLL) * (wins / n if n else 0) / (1 + 4 * dd) * min(1.0, n / max(MIN_TRADES, 1)) if n else 0
+    return trades, {"trades": n, "wins": wins, "losses": losses, "winrate": wins / n if n else 0, "pf": (gp / gl) if gl else (99 if gp else 0),
+                    "pnl": bank - BANKROLL, "gross_win": gp, "gross_loss": -gl, "final": bank, "max_dd": dd,
+                    "avg_entry": sum(t["entry"] for t in trades) / n if n else 0,
+                    "exp_per_trade": (bank - BANKROLL) / n / size if n else 0, "score": score}
 
 GRID = {
     "MIN_ELAPSED": [0.65, 0.75, 0.85],
@@ -85,7 +89,7 @@ GRID = {
 keys = list(GRID); rows = []
 for vals in itertools.product(*GRID.values()):
     P = dict(zip(keys, vals)); _, m = run(P); rows.append({**P, **m})
-rows.sort(key=lambda r: (r["trades"] >= MIN_TRADES, r["pf"] if r["trades"] >= MIN_TRADES else 0, r["pnl"]), reverse=True)
+rows.sort(key=lambda r: (r["trades"] >= MIN_TRADES, r["score"], r["pnl"]), reverse=True)
 with open("results/grid.csv", "w", newline="") as f:
     wr = csv.DictWriter(f, fieldnames=list(rows[0].keys())); wr.writeheader(); wr.writerows(rows)
 
@@ -173,8 +177,19 @@ def pack(label, P):
 SHOW_COLS = [k for k in keys if len(GRID[k]) > 1]
 page = {"generated": datetime.now(timezone.utc).isoformat(), "windows": nw, "days": round((max(w["end"] for w in TRAJ) - min(w["start"] for w in TRAJ)) / 86400, 1) if TRAJ else 0,
         "spread": SPREAD, "stake": round(BANKROLL * FLAT_STAKE), "bankroll": BANKROLL, "grid_cols": SHOW_COLS,
-        "grid": [{**{k: r[k] for k in SHOW_COLS}, **{k: r[k] for k in ("trades", "winrate", "pf", "pnl", "max_dd")}} for r in rows[:40]],
-        "configs": {"current": pack("Текущие настройки бота", CURRENT), "best": pack("Лучшая по сетке", BP), "wide": pack("Вход ≥0.50, без верха", WIDE)}}
+        "grid": [{**{k: r[k] for k in SHOW_COLS}, **{k: r[k] for k in ("trades", "wins", "losses", "winrate", "pf", "pnl", "gross_loss", "max_dd", "score")}} for r in rows[:40]],
+        "inputs": json.loads(os.getenv("BT_INPUTS") or "{}"), "repo": os.getenv("GITHUB_REPOSITORY", ""), "min_trades": MIN_TRADES,
+        "configs": {"current": pack("Текущие настройки бота", CURRENT)}}
+seen, top = set(), []
+for r in rows:
+    if r["trades"] < MIN_TRADES or r["score"] <= 0: continue
+    sig = (r["MIN_ELAPSED"], r["MIN_ENTRY"], r["MAX_ENTRY"], r["MIN_MOVE"])
+    if sig in seen: continue
+    seen.add(sig); top.append(r)
+    if len(top) == 3: break
+for i, r in enumerate(top):
+    page["configs"][f"top{i+1}"] = pack(f"Топ {i+1}", {k: r[k] for k in keys})
+page["top"] = [f"top{i+1}" for i in range(len(top))]
 tpl = open("template.html", encoding="utf-8").read()
 open("docs/backtest.html", "w", encoding="utf-8").write(tpl.replace("__DATA__", json.dumps(page, ensure_ascii=False, default=str)))
 print("docs/backtest.html written")

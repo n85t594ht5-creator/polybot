@@ -11,7 +11,7 @@ import requests
 
 GAMMA, CLOB, COINBASE = "https://gamma-api.polymarket.com", "https://clob.polymarket.com", "https://api.exchange.coinbase.com"
 ASSETS = [a.strip().upper() for a in os.getenv("ASSETS", "BTC,ETH,SOL").split(",")]
-DAYS = {5: float(os.getenv("DAYS_5M", "3")), 15: float(os.getenv("DAYS_15M", "14")), 60: float(os.getenv("DAYS_1H", "14"))}
+DAYS = {5: float(os.getenv("DAYS_5M", "3")), 15: float(os.getenv("DAYS_15M", "14")), 60: float(os.getenv("DAYS_1H") or os.getenv("DAYS_15M", "14"))}
 WINDOWS = [int(w) for w in os.getenv("WINDOWS", "5,15,60").split(",")]
 CB = {"BTC": "BTC-USD", "ETH": "ETH-USD", "SOL": "SOL-USD", "XRP": "XRP-USD"}
 S = requests.Session(); S.headers["User-Agent"] = "polybot-backtest/1.0"
