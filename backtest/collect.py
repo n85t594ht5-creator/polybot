@@ -74,11 +74,23 @@ def collect_windows_paged():
 
 def collect_windows():
     now = int(time.time()); jobs = []
-    # диагностика: что отдаёт gamma на slug-запрос
-    for minutes in WINDOWS:
-        ts = ((now - 3 * minutes * 60) // (minutes * 60)) * minutes * 60
-        r = get(f"{GAMMA}/markets", slug=slug(ASSETS[0], minutes, ts))
-        DIAG[f"slug_probe_{minutes}"] = {"slug": slug(ASSETS[0], minutes, ts), "resp": str(r)[:400]}
+    # диагностика: как достать закрытые окна
+    ts_live = (now // 900) * 900; ts_old = ts_live - 3 * 900
+    for name, url, params in [
+        ("markets_slug_live", f"{GAMMA}/markets", dict(slug=slug("BTC", 15, ts_live))),
+        ("markets_slug_old", f"{GAMMA}/markets", dict(slug=slug("BTC", 15, ts_old))),
+        ("events_slug_live", f"{GAMMA}/events", dict(slug=slug("BTC", 15, ts_live))),
+        ("events_slug_old", f"{GAMMA}/events", dict(slug=slug("BTC", 15, ts_old))),
+        ("events_closed_list", f"{GAMMA}/events", dict(closed="true", limit=20, order="endDate", ascending="false")),
+        ("markets_closed_list", f"{GAMMA}/markets", dict(closed="true", limit=20, order="endDate", ascending="false")),
+        ("events_tag_search", f"{GAMMA}/events", dict(limit=20, order="endDate", ascending="false", closed="true", tag_slug="crypto")),
+        ("public_search", f"{GAMMA}/public-search", dict(q="btc-updown-15m", limit_per_type=5)),
+    ]:
+        r = get(url, **params)
+        if isinstance(r, list):
+            DIAG[name] = {"n": len(r), "slugs": [x.get("slug") for x in r[:20]], "first": str(r[0])[:300] if r else ""}
+        else:
+            DIAG[name] = str(r)[:600]
     for minutes in WINDOWS:
         step = minutes * 60; since = now - int(DAYS[minutes] * 86400)
         first = (since // step) * step
