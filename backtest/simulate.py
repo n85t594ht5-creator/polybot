@@ -8,7 +8,8 @@ from collections import defaultdict
 
 W = json.load(open("data/windows.json")); C = json.load(open("data/candles.json"))
 C = {a: {int(k): v for k, v in d.items()} for a, d in C.items()}
-BANKROLL = float(os.getenv("BANKROLL", "500")); SPREAD = float(os.getenv("SPREAD", "0.01"))  # ask ≈ mid + spread
+BANKROLL = float(os.getenv("BANKROLL", "500")); SPREAD = float(os.getenv("SPREAD", "0.04"))  # ask ≈ last + spread (пессимистично)
+FLAT_STAKE = float(os.getenv("FLAT_STAKE", "0.05"))   # фиксированная ставка: доля стартового банкролла, без реинвеста
 MIN_TRADES = int(os.getenv("MIN_TRADES", "30"))
 os.makedirs("results", exist_ok=True); os.makedirs("docs", exist_ok=True)
 
@@ -58,18 +59,18 @@ def run(P, assets=None, windows=None):
             break
     trades.sort(key=lambda x: x["t"])
     bank, peak, dd, wins, gp, gl = BANKROLL, BANKROLL, 0.0, 0, 0.0, 0.0
+    size = BANKROLL * FLAT_STAKE
     for tr in trades:
-        b = (1 - tr["entry"]) / tr["entry"]; k = max(0.0, (tr["conf"] * b - (1 - tr["conf"])) / b)
-        size = min(k * P["KELLY_FRAC"] * bank, bank * 0.25)
-        if size < 1: continue
+        b = (1 - tr["entry"]) / tr["entry"]
         pnl = size * b if tr["won"] else -size
         tr["size"], tr["pnl"] = round(size, 2), round(pnl, 2)
-        bank += pnl; peak = max(peak, bank); dd = max(dd, (peak - bank) / peak)
+        bank += pnl; peak = max(peak, bank); dd = max(dd, (peak - bank) / max(peak, 1))
         if tr["won"]: wins += 1; gp += pnl
         else: gl += -pnl
     n = len(trades)
     return trades, {"trades": n, "winrate": wins / n if n else 0, "pf": (gp / gl) if gl else (99 if gp else 0),
-                    "pnl": bank - BANKROLL, "final": bank, "max_dd": dd, "avg_entry": sum(t["entry"] for t in trades) / n if n else 0}
+                    "pnl": bank - BANKROLL, "final": bank, "max_dd": dd, "avg_entry": sum(t["entry"] for t in trades) / n if n else 0,
+                    "exp_per_trade": (bank - BANKROLL) / n / size if n else 0}
 
 GRID = {
     "MIN_ELAPSED": [0.5, 0.65, 0.75, 0.85],
@@ -98,11 +99,12 @@ def breakdown(P):
     out = defaultdict(lambda: {"n": 0, "w": 0, "pnl": 0.0})
     tr, _ = run(P)
     for t in tr:
-        for key in (t["asset"], f"{t['min']}m", f"{t['asset']}-{t['min']}m"):
+        eb = "вход ≤0.35" if t["entry"] <= 0.35 else "вход 0.35–0.50" if t["entry"] <= 0.5 else "вход 0.50–0.62" if t["entry"] <= 0.62 else "вход >0.62"
+        for key in (t["asset"], f"{t['min']}m", f"{t['asset']}-{t['min']}m", eb):
             o = out[key]; o["n"] += 1; o["w"] += t["won"]; o["pnl"] += t.get("pnl", 0)
     return dict(out)
 
-def fmtm(m): return f"сделок {m['trades']} · winrate {m['winrate']:.0%} · PF {m['pf']:.2f} · P&L {m['pnl']:+.0f} $ · макс. просадка {m['max_dd']:.0%}"
+def fmtm(m): return f"сделок {m['trades']} · winrate {m['winrate']:.0%} · PF {m['pf']:.2f} · P&L {m['pnl']:+.0f} $ · макс. просадка {m['max_dd']:.0%} · ожидание {m['exp_per_trade']:+.1%} на ставку"
 def brow(k, v): return f"| {k} | {v['n']} | {v['w']/v['n']:.0%} | {v['pnl']:+.0f} |"
 
 nw = len(TRAJ); by = defaultdict(int)
@@ -110,7 +112,7 @@ for w in TRAJ: by[f"{w['asset']} {w['minutes']}m"] += 1
 base = sum(1 for w in TRAJ if w["up_won"]) / nw if nw else 0
 
 md = [f"# Бэктест PolyBot", "", f"Окон с данными: **{nw}** (" + ", ".join(f"{k}: {v}" for k, v in sorted(by.items())) + f"). Доля Up-исходов: {base:.0%}.",
-      f"Банкролл {BANKROLL:.0f} $, спред {SPREAD}, минимум сделок для рейтинга {MIN_TRADES}.", "",
+      f"Банкролл {BANKROLL:.0f} $, ставка фиксированная {FLAT_STAKE:.0%} без реинвеста, спред {SPREAD} (пессимистично), минимум сделок для рейтинга {MIN_TRADES}.", "",
       "## Текущие настройки бота", fmtm(cur), "",
       "## Лучшая конфигурация", ", ".join(f"`{k}={v}`" for k, v in BP.items()), "", fmtm(bm), "",
       "### Разбивка лучшей конфигурации", "| Срез | Сделок | Winrate | P&L |", "|---|---|---|---|"]

@@ -36,7 +36,15 @@ jobs:
         run: python collect.py
       - name: Simulate + grid search
         working-directory: backtest
+        env:
+          SPREAD: ${{ vars.BT_SPREAD || '0.04' }}
+          FLAT_STAKE: ${{ vars.BT_FLAT_STAKE || '0.05' }}
         run: python simulate.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backtest-data
+          path: backtest/data/
+          retention-days: 7
       - name: Publish
         run: |
           cp backtest/docs/backtest.html docs/backtest.html
