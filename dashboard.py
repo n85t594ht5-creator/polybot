@@ -286,6 +286,10 @@ button:disabled{opacity:.45;cursor:default}
 .sub{color:var(--mut);font-size:12px;margin-top:4px;font-family:var(--mono)}
 .m{font-family:var(--mono)}.mini{display:inline-block;width:54px;height:5px;background:#0a101a;border-radius:99px;vertical-align:middle;margin-right:6px}.mini i{display:block;height:100%;background:var(--acc);border-radius:99px}
 .go{color:var(--up);font-weight:700}
+.tk{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.tk div{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-family:var(--mono)}
+.tk .a{font-size:11px;color:var(--mut);letter-spacing:.1em}.tk .p{font-size:20px;font-weight:600;transition:color .3s}.tk .s{font-size:11px;color:var(--mut)}
+.tk .up{color:var(--up)}.tk .dn{color:var(--down)}
 .pos{color:var(--up)}.neg{color:var(--down)}.warn{color:var(--warn)}
 table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px}
 th{text-align:left;color:var(--mut);font-weight:500;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
@@ -320,13 +324,14 @@ svg{display:block;width:100%;height:170px}
   <span id="modePill" class="pill">—</span>
   <span class="pill"><span id="dot" class="dot"></span><span id="botTxt">не запущен</span></span>
   <span class="pill" id="assets">—</span>
-  <span id="ticker" class="sub m"></span>
+
   <span class="spacer"></span>
   <span class="sub" id="updated"></span>
   <button id="btnStart" class="primary">Запустить бота</button>
   <button id="btnStop" class="danger">Остановить</button>
 </header>
 
+<div id="ticker" class="tk"></div>
 <div class="grid">
   <div class="card c3"><h2>Банкролл</h2><div class="big" id="bankroll">—</div><div class="sub" id="bankrollSub"></div></div>
   <div class="card c3"><h2>P&amp;L сегодня</h2><div class="big" id="dayPnl">—</div><div class="sub" id="totalPnl"></div></div>
@@ -417,7 +422,7 @@ function render(d){
     <td><span class="pos">${fmt(x.up_ask)}</span> / <span class="neg">${fmt(x.down_ask)}</span></td>
     <td class="${x.reason==='ВХОД'?'go':''}" style="color:var(--mut)">${esc(x.error||x.reason||'')}</td></tr>`}).join('')
     :'<tr><td colspan="8" class="empty">Бот ещё не отсканировал рынки — подожди полминуты.</td></tr>';
-  if(d.prices&&!window.__tick)$('ticker').innerHTML=Object.entries(d.prices).map(([a,p])=>`${a} ${fmt(p,a==='SOL'?2:0)}`).join(' · ');
+  if(!window.__tick)tick();
   $('closed').innerHTML=d.closed.length?d.closed.map(t=>`<tr><td>${esc((t.opened||'').slice(5,16).replace('T',' '))}</td><td>${esc(t.asset)}</td>
     <td class="side ${esc(t.side)}">${esc(t.side)}</td><td>${fmt(t.entry)}</td><td>${fmt(t.cost)}</td>
     <td class="${t.won?'pos':'neg'}">${t.won?'WIN':'LOSS'}</td><td class="${cls(t.pnl)}">${sgn(t.pnl)}</td></tr>`).join('')
@@ -437,11 +442,18 @@ async function refresh(){try{const u=window.__GIST__?window.__GIST__+'?t='+Date.
  catch(e){$('updated').textContent=window.__GIST__?'gist недоступен':'нет связи с dashboard.py'}}
 async function act(a){try{const r=await fetch('/api/'+a,{method:'POST'});const j=await r.json();toast(j.msg);setTimeout(refresh,800)}catch(e){toast('Ошибка: '+e)}}
 $('btnStart').onclick=()=>act('start'); $('btnStop').onclick=()=>act('stop');
-const SYM={BTC:'BTCUSDT',ETH:'ETHUSDT',SOL:'SOLUSDT',XRP:'XRPUSDT'};
-async function tick(){try{const as=(last?last.assets:'BTC,ETH,SOL').split(',').map(s=>s.trim()).filter(a=>SYM[a]);
-  const r=await fetch('https://api.binance.com/api/v3/ticker/price?symbols='+encodeURIComponent(JSON.stringify(as.map(a=>SYM[a]))));const j=await r.json();
-  window.__tick=true;$('ticker').innerHTML=j.map(x=>{const a=Object.keys(SYM).find(k=>SYM[k]===x.symbol);return `${a} <b>${fmt(+x.price,a==='SOL'||a==='XRP'?2:0)}</b>`}).join(' · ');
-  if(last&&last.watch)last.watch.forEach(w=>{const p=j.find(x=>x.symbol===SYM[w.asset]);if(p&&w.ref){w.cur=+p.price;w.move=(w.cur-w.ref)/w.ref}});}catch(e){}}
+const SYM={BTC:'BTCUSDT',ETH:'ETHUSDT',SOL:'SOLUSDT',XRP:'XRPUSDT'},CB={BTC:'BTC-USD',ETH:'ETH-USD',SOL:'SOL-USD',XRP:'XRP-USD'};
+let prev={},src='';
+function assets(){return (last?last.assets:'BTC,ETH,SOL').split(',').map(s=>s.trim()).filter(a=>SYM[a])}
+async function viaBinance(as){const r=await fetch('https://api.binance.com/api/v3/ticker/price?symbols='+encodeURIComponent(JSON.stringify(as.map(a=>SYM[a]))));const j=await r.json();const o={};j.forEach(x=>{const a=Object.keys(SYM).find(k=>SYM[k]===x.symbol);if(a)o[a]=+x.price});return o}
+async function viaCoinbase(as){const o={};await Promise.all(as.map(async a=>{const r=await fetch('https://api.coinbase.com/v2/prices/'+CB[a]+'/spot');o[a]=+(await r.json()).data.amount}));return o}
+function showPrices(p,label){$('ticker').innerHTML=Object.entries(p).map(([a,v])=>{const c=prev[a]==null?'':v>prev[a]?'up':v<prev[a]?'dn':'';prev[a]=v;
+  return `<div><div class="a">${a}/USD</div><div class="p ${c}">${fmt(v,a==='SOL'||a==='XRP'?2:0)}</div><div class="s">${label}</div></div>`}).join('');
+  if(last&&last.watch)last.watch.forEach(w=>{if(p[w.asset]&&w.ref){w.cur=p[w.asset];w.move=(w.cur-w.ref)/w.ref}})}
+async function tick(){const as=assets();if(!as.length)return;
+  try{showPrices(await viaBinance(as),'Binance · live');window.__tick=true;return}catch(e){}
+  try{showPrices(await viaCoinbase(as),'Coinbase · live');window.__tick=true;return}catch(e){}
+  if(last&&last.prices&&Object.keys(last.prices).length)showPrices(last.prices,'из снимка бота')}
 setInterval(tick,3000);tick();
 if(window.__GIST__){$('btnStart').style.display=$('btnStop').style.display='none';refresh();setInterval(refresh,15000);setInterval(renderPositions,1000)}
 else if(window.__DATA__){render(window.__DATA__);$('btnStart').style.display=$('btnStop').style.display='none';$('updated').textContent='снимок '+new Date(window.__DATA__.now).toLocaleString();setInterval(renderPositions,1000)}
