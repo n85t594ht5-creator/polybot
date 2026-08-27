@@ -40,6 +40,8 @@ button:disabled{opacity:.45;cursor:default}
 @media(max-width:600px){.c3,.c4{grid-column:span 12}.wrap{padding:10px;padding-top:calc(10px + env(safe-area-inset-top))}header h1{font-size:17px}.big{font-size:26px}button{padding:10px 12px}.tw{max-height:300px}}
 .big{font:600 30px/1.1 var(--mono);letter-spacing:-.01em}
 .sub{color:var(--mut);font-size:12px;margin-top:4px;font-family:var(--mono)}
+.m{font-family:var(--mono)}.mini{display:inline-block;width:54px;height:5px;background:#0a101a;border-radius:99px;vertical-align:middle;margin-right:6px}.mini i{display:block;height:100%;background:var(--acc);border-radius:99px}
+.go{color:var(--up);font-weight:700}
 .pos{color:var(--up)}.neg{color:var(--down)}.warn{color:var(--warn)}
 table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px}
 th{text-align:left;color:var(--mut);font-weight:500;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
@@ -74,6 +76,7 @@ svg{display:block;width:100%;height:170px}
   <span id="modePill" class="pill">—</span>
   <span class="pill"><span id="dot" class="dot"></span><span id="botTxt">не запущен</span></span>
   <span class="pill" id="assets">—</span>
+  <span id="ticker" class="sub m"></span>
   <span class="spacer"></span>
   <span class="sub" id="updated"></span>
   <button id="btnStart" class="primary">Запустить бота</button>
@@ -89,6 +92,8 @@ svg{display:block;width:100%;height:170px}
   <div class="card c8"><h2>Кривая капитала</h2><svg id="eq" viewBox="0 0 800 170" preserveAspectRatio="none"></svg><div class="sub" id="eqSub"></div></div>
   <div class="card c4"><h2>Риск-гейты</h2><div id="gates"></div></div>
 
+  <div class="card c12"><h2>Что видит бот <span id="watchN"></span></h2><div class="tw"><table><thead><tr><th>Актив</th><th>Окно</th><th>Прошло</th><th>Старт</th><th>Сейчас</th><th>Движение</th><th>Up / Down</th><th>Решение</th></tr></thead><tbody id="watch"></tbody></table></div><div class="sub">Вход, если прошло ≥ MIN_ELAPSED окна, движение ≥ MIN_MOVE и исход в сторону движения стоит ≤ MAX_ENTRY.</div></div>
+
   <div class="card c6"><h2>Открытые позиции <span id="posN"></span></h2><div id="positions"></div></div>
   <div class="card c6"><h2>Закрытые сделки</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Сторона</th><th>Вход</th><th>Ставка</th><th>Итог</th><th>P&amp;L</th></tr></thead><tbody id="closed"></tbody></table></div></div>
 
@@ -99,7 +104,7 @@ svg{display:block;width:100%;height:170px}
 </div>
 </div>
 <div id="toast" class="toast"></div>
-<script>window.__GIST__="https://gist.githubusercontent.com/n85t594ht5-creator/abd926ec1255969b62fd4a279b60fb09/raw/state.json";</script>
+<script>window.__GIST__="x";</script>
 <script>
 const $=id=>document.getElementById(id);
 const fmt=(n,d=2)=>(n==null||isNaN(n))?'—':Number(n).toFixed(d);
@@ -161,6 +166,15 @@ function render(d){
     <div class="bar"><i class="${g.blocked?'blocked':g.pct>=.75?'hot':''}" style="width:${Math.min(100,g.pct*100).toFixed(0)}%"></i></div>
     <span class="v">${esc(g.value)}${g.extra?'<br>'+esc(g.extra):''}</span></div>`).join('');
   renderPositions();
+  const w=d.watch||[]; $('watchN').textContent=w.length?`(${w.length} рынков)`:'';
+  $('watch').innerHTML=w.length?w.map(x=>{const end=Date.parse(x.end),left=Math.max(0,end-Date.now()),mm=Math.floor(left/60000),ss=Math.floor(left%60000/1000);
+    return `<tr><td><b>${esc(x.asset)}</b></td><td>${x.minutes}м · до ${new Date(end).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</td>
+    <td><span class="mini"><i style="width:${Math.min(100,x.elapsed*100).toFixed(0)}%"></i></span>${(x.elapsed*100).toFixed(0)}% · ${mm}:${String(ss).padStart(2,'0')}</td>
+    <td>${fmt(x.ref,2)}</td><td>${fmt(x.cur,2)}</td><td class="${cls(x.move)}">${x.move==null?'—':sgn(x.move*100)+'%'}</td>
+    <td><span class="pos">${fmt(x.up_ask)}</span> / <span class="neg">${fmt(x.down_ask)}</span></td>
+    <td class="${x.reason==='ВХОД'?'go':''}" style="color:var(--mut)">${esc(x.error||x.reason||'')}</td></tr>`}).join('')
+    :'<tr><td colspan="8" class="empty">Бот ещё не отсканировал рынки — подожди полминуты.</td></tr>';
+  if(d.prices&&!window.__tick)$('ticker').innerHTML=Object.entries(d.prices).map(([a,p])=>`${a} ${fmt(p,a==='SOL'?2:0)}`).join(' · ');
   $('closed').innerHTML=d.closed.length?d.closed.map(t=>`<tr><td>${esc((t.opened||'').slice(5,16).replace('T',' '))}</td><td>${esc(t.asset)}</td>
     <td class="side ${esc(t.side)}">${esc(t.side)}</td><td>${fmt(t.entry)}</td><td>${fmt(t.cost)}</td>
     <td class="${t.won?'pos':'neg'}">${t.won?'WIN':'LOSS'}</td><td class="${cls(t.pnl)}">${sgn(t.pnl)}</td></tr>`).join('')
@@ -180,6 +194,12 @@ async function refresh(){try{const u=window.__GIST__?window.__GIST__+'?t='+Date.
  catch(e){$('updated').textContent=window.__GIST__?'gist недоступен':'нет связи с dashboard.py'}}
 async function act(a){try{const r=await fetch('/api/'+a,{method:'POST'});const j=await r.json();toast(j.msg);setTimeout(refresh,800)}catch(e){toast('Ошибка: '+e)}}
 $('btnStart').onclick=()=>act('start'); $('btnStop').onclick=()=>act('stop');
+const SYM={BTC:'BTCUSDT',ETH:'ETHUSDT',SOL:'SOLUSDT',XRP:'XRPUSDT'};
+async function tick(){try{const as=(last?last.assets:'BTC,ETH,SOL').split(',').map(s=>s.trim()).filter(a=>SYM[a]);
+  const r=await fetch('https://api.binance.com/api/v3/ticker/price?symbols='+encodeURIComponent(JSON.stringify(as.map(a=>SYM[a]))));const j=await r.json();
+  window.__tick=true;$('ticker').innerHTML=j.map(x=>{const a=Object.keys(SYM).find(k=>SYM[k]===x.symbol);return `${a} <b>${fmt(+x.price,a==='SOL'||a==='XRP'?2:0)}</b>`}).join(' · ');
+  if(last&&last.watch)last.watch.forEach(w=>{const p=j.find(x=>x.symbol===SYM[w.asset]);if(p&&w.ref){w.cur=+p.price;w.move=(w.cur-w.ref)/w.ref}});}catch(e){}}
+setInterval(tick,3000);tick();
 if(window.__GIST__){$('btnStart').style.display=$('btnStop').style.display='none';refresh();setInterval(refresh,15000);setInterval(renderPositions,1000)}
 else if(window.__DATA__){render(window.__DATA__);$('btnStart').style.display=$('btnStop').style.display='none';$('updated').textContent='снимок '+new Date(window.__DATA__.now).toLocaleString();setInterval(renderPositions,1000)}
 else{refresh(); setInterval(refresh,5000); setInterval(renderPositions,1000)}

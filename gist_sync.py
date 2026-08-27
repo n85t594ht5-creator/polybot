@@ -2,6 +2,36 @@
 """Каждые 30 сек выкладывает снимок состояния бота в GitHub Gist — для живого дашборда на Pages."""
 import json, os, sys, time, requests
 import dashboard
+import bot
+
+def watch():
+    """Рынки, которые бот сейчас сканирует, и почему (не) входит."""
+    out, prices = [], {}
+    for a in bot.ASSETS:
+        try: prices[a] = bot.binance_price(a)
+        except Exception: pass
+    for m in bot.find_updown_markets()[:12]:
+        t = bot.now(); w = {"asset": m["asset"], "question": m["question"], "end": m["end"].isoformat(),
+                            "start": m["start"].isoformat(), "minutes": m["minutes"]}
+        w["elapsed"] = round((t - m["start"]).total_seconds() / (m["minutes"] * 60), 3)
+        try:
+            w["ref"] = bot.binance_open_at(m["asset"], m["start"]); w["cur"] = prices.get(m["asset"])
+            w["move"] = round((w["cur"] - w["ref"]) / w["ref"], 5) if w["ref"] and w["cur"] else None
+            w["up_ask"] = bot.clob_ask(m["up_token"]); w["down_ask"] = bot.clob_ask(m["down_token"])
+        except Exception as e:
+            w["error"] = str(e)[:80]
+        try:
+            cand, reason = bot.evaluate(m, dashboard_state)
+            w["reason"] = "ВХОД" if cand else reason
+        except Exception as e:
+            w["reason"] = "ошибка: " + str(e)[:60]
+        out.append(w)
+    return out, prices
+
+class _S:  # минимальный state для evaluate()
+    bankroll = bot.BANKROLL
+    def exposure(self): return 0.0
+dashboard_state = _S()
 
 GIST_ID, TOKEN = os.getenv("GIST_ID", ""), os.getenv("GIST_TOKEN", "")
 if not (GIST_ID and TOKEN):
@@ -11,6 +41,12 @@ last = None
 while True:
     try:
         d = dashboard.snapshot(); d["log"] = d["log"][-40:]; d["bot"]["running"] = True
+        try:
+            st = dashboard.read_state() or {}
+            dashboard_state.bankroll = st.get("bankroll", bot.BANKROLL)
+            d["watch"], d["prices"] = watch()
+        except Exception as e:
+            d["watch"], d["prices"] = [], {}; print("watch:", e)
         body = json.dumps(d, default=str, ensure_ascii=False)
         if body != last:
             r = requests.patch(f"https://api.github.com/gists/{GIST_ID}",
