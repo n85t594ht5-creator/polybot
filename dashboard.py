@@ -349,7 +349,8 @@ svg{display:block;width:100%;height:170px}
 .rh{color:var(--txt)}.rr{color:var(--mut);font-size:11px}
 .g{display:inline-flex;gap:4px;margin:2px 0}.g span{font:600 10px var(--mono);padding:3px 7px;border-radius:999px;border:1px solid var(--line);color:var(--mut);white-space:nowrap}
 .g span.ok{border-color:var(--up);color:var(--up);background:rgba(53,217,155,.08)}.g span.no{border-color:var(--down);color:var(--down);background:rgba(255,107,122,.08)}
-.st{font:600 12px var(--sans);display:block;margin-bottom:3px}.st.in{color:var(--up)}.st.soon{color:var(--warn)}.st.no{color:var(--mut)}
+.st{font:600 12px var(--sans);display:block;margin-bottom:3px}
+tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--acc);padding:8px}.st.in{color:var(--up)}.st.soon{color:var(--warn)}.st.no{color:var(--mut)}
 .alink{cursor:pointer;color:var(--acc);border-bottom:1px dotted var(--acc)}.tk div{cursor:pointer}.chs{display:flex;gap:6px;margin-bottom:8px}.chs button{padding:5px 10px;font-size:12px}.chs button.on{border-color:var(--acc);color:var(--acc)}
 .toast{position:fixed;right:16px;bottom:16px;background:var(--panel2);border:1px solid var(--line);padding:10px 14px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .3s}
 .toast.show{opacity:1}
@@ -522,13 +523,16 @@ function render(d){
    else if(left<30)st=`<span class="st no">Окно закрывается</span>`;
    else{const why=!mOk?`движение ${sgn(x.move*100)}% < ${(need*100).toFixed(2)}%`:!pOk?(ask<P.lo?`${side} по ${fmt(ask)} — рынок не согласен`:`${side} по ${fmt(ask)} — дорого`):'ждём';st=`<span class="st no">${side}: ${why}</span>`}
    return st+`<div class="g">${chip('время',tOk,'время '+(x.elapsed*100).toFixed(0)+'%')}${chip('движение',mOk,'движение '+sgn(x.move*100)+'%')}${chip('цена',pOk,side+' '+fmt(ask))}</div>`}
-  $('watch').innerHTML=w.length?w.map(x=>{const end=Date.parse(x.end),left=Math.max(0,end-Date.now()),mm=Math.floor(left/60000),ss=Math.floor(left%60000/1000);
+  const WIN=String(C.WINDOWS||'15,60').split(',').map(v=>+v.trim()).filter(Boolean);const grp={};w.filter(x=>WIN.includes(+x.minutes)).forEach(x=>(grp[x.minutes]=grp[x.minutes]||[]).push(x));
+  const row=x=>{const end=Date.parse(x.end),left=Math.max(0,end-Date.now()),mm=Math.floor(left/60000),ss=Math.floor(left%60000/1000);
     const pot=x.potential?` class="pot"`:'';const raw=x.error||x.reason||'';const rs=gates(x,raw);
     return `<tr${pot}><td><span class="alink" onclick="openChart('${esc(x.asset)}',${x.start?Date.parse(x.start):0},${x.ref||0})"><b>${esc(x.asset)}</b></span></td><td>${x.minutes}м · до ${new Date(end).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</td>
     <td><span class="mini"><i style="width:${Math.min(100,x.elapsed*100).toFixed(0)}%"></i></span>${(x.elapsed*100).toFixed(0)}% · ${mm}:${String(ss).padStart(2,'0')}</td>
     <td>${fmt(x.ref,2)}</td><td>${fmt(x.cur,2)}</td><td class="${cls(x.move)}">${x.move==null?'—':sgn(x.move*100)+'%'}</td>
     <td><span class="pos">${fmt(x.up_ask)}</span> / <span class="neg">${fmt(x.down_ask)}</span></td>
-    <td style="white-space:normal;min-width:240px">${rs}</td></tr>`}).join('')
+    <td style="white-space:normal;min-width:240px">${rs}</td></tr>`};
+  const order=x=>(x.elapsed<0?1:0)*1e6+(x.elapsed<0?Date.parse(x.start):-Date.parse(x.end));
+  $('watch').innerHTML=w.length?WIN.map(m=>{const list=(grp[m]||[]).sort((a,b)=>order(a)-order(b));return `<tr class="sec"><td colspan="8">Окно ${m===60?'1 час':m+' минут'} · ${list.filter(x=>x.elapsed>=0).length} идёт / ${list.filter(x=>x.elapsed<0).length} ждёт</td></tr>`+(list.map(row).join('')||'<tr><td colspan="8" class="empty">нет рынков</td></tr>')}).join('')
     :'<tr><td colspan="8" class="empty">Бот ещё не отсканировал рынки — подожди полминуты.</td></tr>';
   if(!window.__tick)tick();
   $('closed').innerHTML=d.closed.length?d.closed.map(t=>`<tr><td>${esc((t.opened||'').slice(5,16).replace('T',' '))}</td><td>${esc(t.asset)}</td>
