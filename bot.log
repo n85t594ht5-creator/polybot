@@ -1,0 +1,7 @@
+2026-08-27 22:29:53,853 INFO  State loaded: bankroll=1477.08, open=0
+2026-08-27 22:29:53,853 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL'] bankroll=1477
+2026-08-27 22:31:37,762 INFO  STATS trades=5 winrate=80% pnl=+977.08 PF=44.43 bankroll=1477.08
+2026-08-27 22:33:20,842 INFO  STATS trades=5 winrate=80% pnl=+977.08 PF=44.43 bankroll=1477.08
+2026-08-27 22:35:14,089 INFO  STATS trades=5 winrate=80% pnl=+977.08 PF=44.43 bankroll=1477.08
+2026-08-27 22:37:04,023 INFO  STATS trades=5 winrate=80% pnl=+977.08 PF=44.43 bankroll=1477.08
+2026-08-27 22:38:49,773 INFO  STATS trades=5 winrate=80% pnl=+977.08 PF=44.43 bankroll=1477.08
