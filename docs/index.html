@@ -94,6 +94,7 @@ svg{display:block;width:100%;height:170px}
 .md h3{margin:0 0 10px;font:600 16px var(--sans)}.md .body{font-size:14px;line-height:1.55}.md .body .sub{margin-top:8px}.md .foot{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
 .md input[type=text]{width:100%;font:13px var(--mono);padding:9px 10px;border-radius:8px;border:1px solid var(--line);background:#0a101a;color:var(--txt)}
 .rh{color:var(--txt)}.rr{color:var(--mut);font-size:11px}
+.alink{cursor:pointer;color:var(--acc);border-bottom:1px dotted var(--acc)}.tk div{cursor:pointer}.chs{display:flex;gap:6px;margin-bottom:8px}.chs button{padding:5px 10px;font-size:12px}.chs button.on{border-color:var(--acc);color:var(--acc)}
 .toast{position:fixed;right:16px;bottom:16px;background:var(--panel2);border:1px solid var(--line);padding:10px 14px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .3s}
 .toast.show{opacity:1}
 </style></head><body><div class="wrap">
@@ -256,7 +257,7 @@ function render(d){
   const ru=r=>{for(const[re,f]of RU){const m=re.exec(r||'');if(m)return f(m)}return r||''};
   $('watch').innerHTML=w.length?w.map(x=>{const end=Date.parse(x.end),left=Math.max(0,end-Date.now()),mm=Math.floor(left/60000),ss=Math.floor(left%60000/1000);
     const pot=x.potential?` class="pot"`:'';const raw=x.error||x.reason||'';const rs=x.potential?`<span class="rh">Готовится вход ${x.potential.side} по ${fmt(x.potential.ask)} через ~${Math.floor(x.potential.in_sec/60)}:${String(x.potential.in_sec%60).padStart(2,'0')}</span><br><span class="rr">waiting elapsed ≥ MIN_ELAPSED</span>`:`<span class="rh">${esc(x.error?'Ошибка данных':ru(raw))}</span><br><span class="rr">${esc(raw)}</span>`;
-    return `<tr${pot}><td><b>${esc(x.asset)}</b></td><td>${x.minutes}м · до ${new Date(end).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</td>
+    return `<tr${pot}><td><span class="alink" onclick="openChart('${esc(x.asset)}',${x.start?Date.parse(x.start):0},${x.ref||0})"><b>${esc(x.asset)}</b></span></td><td>${x.minutes}м · до ${new Date(end).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</td>
     <td><span class="mini"><i style="width:${Math.min(100,x.elapsed*100).toFixed(0)}%"></i></span>${(x.elapsed*100).toFixed(0)}% · ${mm}:${String(ss).padStart(2,'0')}</td>
     <td>${fmt(x.ref,2)}</td><td>${fmt(x.cur,2)}</td><td class="${cls(x.move)}">${x.move==null?'—':sgn(x.move*100)+'%'}</td>
     <td><span class="pos">${fmt(x.up_ask)}</span> / <span class="neg">${fmt(x.down_ask)}</span></td>
@@ -288,7 +289,7 @@ function assets(){return (last?last.assets:'BTC,ETH,SOL').split(',').map(s=>s.tr
 async function viaBinance(as){const r=await fetch('https://api.binance.com/api/v3/ticker/price?symbols='+encodeURIComponent(JSON.stringify(as.map(a=>SYM[a]))));const j=await r.json();const o={};j.forEach(x=>{const a=Object.keys(SYM).find(k=>SYM[k]===x.symbol);if(a)o[a]=+x.price});return o}
 async function viaCoinbase(as){const o={};await Promise.all(as.map(async a=>{const r=await fetch('https://api.coinbase.com/v2/prices/'+CB[a]+'/spot');o[a]=+(await r.json()).data.amount}));return o}
 function showPrices(p,label){$('ticker').innerHTML=Object.entries(p).map(([a,v])=>{const c=prev[a]==null?'':v>prev[a]?'up':v<prev[a]?'dn':'';prev[a]=v;
-  return `<div><div class="a">${a}/USD</div><div class="p ${c}">${fmt(v,a==='SOL'||a==='XRP'?2:0)}</div><div class="s">${label}</div></div>`}).join('');
+  return `<div onclick="openChart('${a}',0,0)"><div class="a">${a}/USD</div><div class="p ${c}">${fmt(v,a==='SOL'||a==='XRP'?2:0)}</div><div class="s">${label}</div></div>`}).join('');
   if(last&&last.watch)last.watch.forEach(w=>{if(p[w.asset]&&w.ref){w.cur=p[w.asset];w.move=(w.cur-w.ref)/w.ref}})}
 async function tick(){const as=assets();if(!as.length)return;
   try{showPrices(await viaBinance(as),'Binance · live');window.__tick=true;return}catch(e){}
@@ -301,6 +302,23 @@ function modal(title,body,buttons){return new Promise(res=>{$('mdT').textContent
 const info=(t,b)=>modal(t,b);const ask=(t,b,ok='Да',cls='primary')=>modal(t,b,[{t:'Отмена',v:false},{t:ok,v:true,cls}]);
 async function askText(t,b,def){const v=await modal(t,b+`<input type="text" id="mdIn" value="${esc(def||'')}" style="margin-top:10px">`,[{t:'Отмена',v:false},{t:'Сохранить',v:true,cls:'primary'}]);return v?document.getElementById('mdIn').value:null}
 $('ov').onclick=e=>{if(e.target===$('ov'))$('ov').classList.remove('on')};
+// ───── mini chart ─────
+let chTimer=null,chState={};
+async function candles(a,n){try{const r=await fetch(`https://api.binance.com/api/v3/klines?symbol=${SYM[a]}&interval=1m&limit=${n}`);const j=await r.json();return{src:'Binance',c:j.map(k=>({t:k[0],o:+k[1],h:+k[2],l:+k[3],c:+k[4]}))}}catch(e){}
+ const r=await fetch(`https://api.exchange.coinbase.com/products/${CB[a]}/candles?granularity=60`);const j=await r.json();return{src:'Coinbase',c:j.slice(0,n).reverse().map(k=>({t:k[0]*1000,o:k[3],h:k[2],l:k[1],c:k[4]}))}}
+function drawCandles(d,winStart,ref){const W=680,H=260,p=10,pr=54;const c=d.c;if(!c.length)return '<div class="empty">нет данных</div>';
+ const lo=Math.min(...c.map(x=>x.l),ref||Infinity),hi=Math.max(...c.map(x=>x.h),ref||-Infinity),r=(hi-lo)||1;const bw=(W-p-pr)/c.length;const x=i=>p+i*bw,y=v=>p+(hi-v)*(H-2*p)/r;
+ let g='';for(let k=0;k<=4;k++){const v=lo+r*k/4;g+=`<line x1="${p}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="#243248" stroke-dasharray="2 4"/><text x="${W-pr+4}" y="${y(v)+4}" fill="#7f8da6" font-size="10" font-family="monospace">${v.toFixed(v>100?0:v>1?2:4)}</text>`}
+ c.forEach((k,i)=>{const up=k.c>=k.o,col=up?'#35d99b':'#ff6b7a';g+=`<line x1="${x(i)+bw/2}" x2="${x(i)+bw/2}" y1="${y(k.h)}" y2="${y(k.l)}" stroke="${col}" stroke-width="1"/><rect x="${x(i)+1}" y="${y(Math.max(k.o,k.c))}" width="${Math.max(1,bw-2)}" height="${Math.max(1,Math.abs(y(k.o)-y(k.c)))}" fill="${col}"/>`});
+ if(winStart){const i=c.findIndex(k=>k.t>=winStart);if(i>=0)g+=`<line x1="${x(i)}" x2="${x(i)}" y1="${p}" y2="${H-p}" stroke="#f5b64a" stroke-dasharray="4 3"/><text x="${x(i)+3}" y="${p+10}" fill="#f5b64a" font-size="10" font-family="monospace">старт окна</text>`}
+ if(ref){g+=`<line x1="${p}" x2="${W-pr}" y1="${y(ref)}" y2="${y(ref)}" stroke="#8ab4ff" stroke-dasharray="4 3"/><text x="${p+3}" y="${y(ref)-3}" fill="#8ab4ff" font-size="10" font-family="monospace">цена старта ${ref}</text>`}
+ const lastC=c[c.length-1];g+=`<line x1="${p}" x2="${W-pr}" y1="${y(lastC.c)}" y2="${y(lastC.c)}" stroke="#e4ebf5" stroke-width=".6" opacity=".5"/><rect x="${W-pr+1}" y="${y(lastC.c)-7}" width="${pr-2}" height="14" fill="#e4ebf5"/><text x="${W-pr+4}" y="${y(lastC.c)+4}" fill="#0d1420" font-size="10" font-family="monospace">${lastC.c.toFixed(lastC.c>100?0:lastC.c>1?2:4)}</text>`;
+ return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">${g}</svg>`}
+async function renderChart(){const{a,n,winStart,ref}=chState;try{const d=await candles(a,n);const first=d.c[0],lastC=d.c[d.c.length-1];const chg=first?(lastC.c-first.o)/first.o*100:0;
+ $('chBody').innerHTML=drawCandles(d,winStart,ref)+`<div class="sub" style="margin-top:6px">${d.src} · 1 мин · последние ${n} свечей · за период <span class="${cls(chg)}">${chg>=0?'+':''}${chg.toFixed(2)}%</span>${winStart?' · жёлтая линия — старт окна, синяя — цена, от которой считается движение':''}</div>`}catch(e){$('chBody').innerHTML='<div class="empty">Не удалось загрузить котировки: '+esc(e.message)+'</div>'}}
+function openChart(a,winStart,ref){chState={a,n:60,winStart,ref};
+ modal(a+'/USD · 1 минута',`<div class="chs">${[30,60,120].map(n=>`<button class="${n===60?'on':''}" onclick="chState.n=${n};document.querySelectorAll('.chs button').forEach(b=>b.classList.toggle('on',+b.textContent.replace(/\D/g,'')===${n}));renderChart()">${n} мин</button>`).join('')}</div><div id="chBody"><div class="empty">загрузка…</div></div>`).then(()=>{clearInterval(chTimer);chTimer=null});
+ renderChart();clearInterval(chTimer);chTimer=setInterval(()=>{if($('ov').classList.contains('on'))renderChart();else clearInterval(chTimer)},5000)}
 // ───── control panel ─────
 const REPO=window.__REPO__||'';const GH='https://api.github.com/repos/'+REPO;
 const tok=()=>localStorage.getItem('gh_token')||'';
