@@ -11,3 +11,27 @@
 2026-08-27 22:45:56,078 INFO  STATS trades=5 winrate=80% pnl=+977.08 PF=44.43 bankroll=1477.08
 2026-08-27 22:47:43,132 INFO  STATS trades=5 winrate=80% pnl=+977.08 PF=44.43 bankroll=1477.08
 2026-08-27 22:49:33,749 INFO  STATS trades=5 winrate=80% pnl=+977.08 PF=44.43 bankroll=1477.08
+2026-08-27 23:00:47,728 INFO  State loaded: bankroll=1477.08, open=0
+2026-08-27 23:00:47,728 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP', 'DOGE'] bankroll=1477
+2026-08-27 23:02:30,275 INFO  STATS trades=5 winrate=80% pnl=+977.08 PF=44.43 bankroll=1477.08
+2026-08-27 23:03:48,105 ERROR loop error: 'DOGE'
+2026-08-27 23:03:54,612 ERROR loop error: 'DOGE'
+2026-08-27 23:04:00,517 ERROR loop error: 'DOGE'
+2026-08-27 23:04:04,806 ERROR loop error: 'DOGE'
+2026-08-27 23:04:09,353 ERROR loop error: 'DOGE'
+2026-08-27 23:04:13,704 ERROR loop error: 'DOGE'
+2026-08-27 23:04:19,540 ERROR loop error: 'DOGE'
+2026-08-27 23:04:25,204 ERROR loop error: 'DOGE'
+2026-08-27 23:04:56,001 INFO  STATS trades=5 winrate=80% pnl=+977.08 PF=44.43 bankroll=1477.08
+2026-08-27 23:06:44,086 INFO  STATS trades=5 winrate=80% pnl=+977.08 PF=44.43 bankroll=1477.08
+2026-08-27 23:08:29,584 INFO  STATS trades=5 winrate=80% pnl=+977.08 PF=44.43 bankroll=1477.08
+2026-08-27 23:08:46,713 ERROR loop error: 'DOGE'
+2026-08-27 23:08:52,746 ERROR loop error: 'DOGE'
+2026-08-27 23:08:58,095 ERROR loop error: 'DOGE'
+2026-08-27 23:09:02,684 ERROR loop error: 'DOGE'
+2026-08-27 23:09:07,225 ERROR loop error: 'DOGE'
+2026-08-27 23:09:12,852 ERROR loop error: 'DOGE'
+2026-08-27 23:09:17,731 ERROR loop error: 'DOGE'
+2026-08-27 23:09:22,620 ERROR loop error: 'DOGE'
+2026-08-27 23:09:28,865 ERROR loop error: 'DOGE'
+2026-08-27 23:11:02,938 INFO  STATS trades=5 winrate=80% pnl=+977.08 PF=44.43 bankroll=1477.08
