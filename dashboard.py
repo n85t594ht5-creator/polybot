@@ -347,6 +347,9 @@ svg{display:block;width:100%;height:170px}
 .md h3{margin:0 0 10px;font:600 16px var(--sans)}.md .body{font-size:14px;line-height:1.55}.md .body .sub{margin-top:8px}.md .foot{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
 .md input[type=text]{width:100%;font:13px var(--mono);padding:9px 10px;border-radius:8px;border:1px solid var(--line);background:#0a101a;color:var(--txt)}
 .rh{color:var(--txt)}.rr{color:var(--mut);font-size:11px}
+.g{display:inline-flex;gap:4px;margin:2px 0}.g span{font:600 10px var(--mono);padding:3px 7px;border-radius:999px;border:1px solid var(--line);color:var(--mut);white-space:nowrap}
+.g span.ok{border-color:var(--up);color:var(--up);background:rgba(53,217,155,.08)}.g span.no{border-color:var(--down);color:var(--down);background:rgba(255,107,122,.08)}
+.st{font:600 12px var(--sans);display:block;margin-bottom:3px}.st.in{color:var(--up)}.st.soon{color:var(--warn)}.st.no{color:var(--mut)}
 .alink{cursor:pointer;color:var(--acc);border-bottom:1px dotted var(--acc)}.tk div{cursor:pointer}.chs{display:flex;gap:6px;margin-bottom:8px}.chs button{padding:5px 10px;font-size:12px}.chs button.on{border-color:var(--acc);color:var(--acc)}
 .toast{position:fixed;right:16px;bottom:16px;background:var(--panel2);border:1px solid var(--line);padding:10px 14px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .3s}
 .toast.show{opacity:1}
@@ -378,7 +381,7 @@ svg{display:block;width:100%;height:170px}
 
   <div class="card c12" id="potCard" style="display:none"><h2>Потенциальные сделки</h2><div class="potbox" id="pot"></div><div class="sub">Движение и цена уже подходят — бот войдёт, когда пройдёт нужная часть окна, если ничего не изменится.</div></div>
 
-  <div class="card c12"><h2>Что видит бот <span id="watchN"></span></h2><div class="tw"><table><thead><tr><th>Актив</th><th>Окно</th><th>Прошло</th><th>Старт</th><th>Сейчас</th><th>Движение</th><th>Up / Down</th><th>Решение</th></tr></thead><tbody id="watch"></tbody></table></div><div class="sub">Вход, если прошло ≥ MIN_ELAPSED окна, движение ≥ MIN_MOVE и исход в сторону движения стоит ≤ MAX_ENTRY.</div></div>
+  <div class="card c12"><h2>Что видит бот <span id="watchN"></span></h2><div class="tw"><table><thead><tr><th>Актив</th><th>Окно</th><th>Прошло</th><th>Старт</th><th>Сейчас</th><th>Движение</th><th>Up / Down</th><th>Условия входа</th></tr></thead><tbody id="watch"></tbody></table></div><div class="sub" id="watchLegend"></div></div>
 
   <div class="card c6"><h2>Открытые позиции <span id="posN"></span></h2><div id="positions"></div></div>
   <div class="card c6"><h2>Закрытые сделки</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Сторона</th><th>Вход</th><th>Ставка</th><th>Итог</th><th>P&amp;L</th></tr></thead><tbody id="closed"></tbody></table></div></div>
@@ -507,13 +510,25 @@ function render(d){
    [/^move ([+-][\d.]+)% < ([\d.]+)%/,m=>`Слабое движение ${m[1]}%, нужно ≥ ${m[2]}%`],[/^(UP|DOWN) ask ([\d.]+) > ([\d.]+)/,m=>`${m[1]} слишком дорог: ${m[2]}, потолок ${m[3]}`],[/^(UP|DOWN) ask ([\d.]+) < MIN_ENTRY ([\d.]+)/,m=>`${m[1]} слишком дёшев: ${m[2]} — рынок не согласен`],
    [/^ask ([\d.]+) > ([\d.]+): move ([+-][\d.]+)% < ([\d.]+)%/,m=>`Дорогой вход ${m[1]}: движение ${m[3]}% мало, нужно ≥ ${m[4]}%`],[/no liquidity/,()=>'Нет ликвидности'],[/^conf ([\d.]+) < ([\d.]+)/,m=>`Уверенность ${m[1]} ниже порога ${m[2]}`],[/size too small/,()=>'Ставка вышла бы меньше $1']];
   const ru=r=>{for(const[re,f]of RU){const m=re.exec(r||'');if(m)return f(m)}return r||''};
+  const C=d.config||{},num=(k,dflt)=>+(C[k]??dflt);const P={el:num('MIN_ELAPSED',.5),mv:num('MIN_MOVE',.0008),mvh:num('MIN_MOVE_HIGH',.0012),tier:num('TIER_ENTRY',.45),lo:num('MIN_ENTRY',0),hi:num('MAX_ENTRY',.15)};
+  $('watchLegend').innerHTML=`Бот входит, когда все три условия зелёные: <b>время</b> — прошло ≥ ${(P.el*100).toFixed(0)}% окна · <b>движение</b> — цена ушла ≥ ${(P.mv*100).toFixed(2)}% (≥ ${(P.mvh*100).toFixed(2)}% если исход дороже ${P.tier}) · <b>цена</b> — нужный исход стоит ${P.lo}–${P.hi}.`;
+  const chip=(n,ok,txt)=>`<span class="${ok===true?'ok':ok===false?'no':''}" title="${n}">${txt}</span>`;
+  function gates(x,raw){if(x.reason==='ВХОД')return `<span class="st in">✔ Входим</span><div class="g">${chip('время',true,'время')}${chip('движение',true,'движение')}${chip('цена',true,'цена')}</div>`;
+   if(x.elapsed<0||x.error||x.move==null)return `<span class="st no">${x.error?'Ошибка данных':'Окно ещё не началось'}</span><div class="g">${chip('время',null,'время')}${chip('движение',null,'движение')}${chip('цена',null,'цена')}</div>`;
+   const left=Math.max(0,Date.parse(x.end)-Date.now())/1000;const tOk=x.elapsed>=P.el&&left>=30;const side=x.move>0?'UP':'DOWN',ask=side==='UP'?x.up_ask:x.down_ask;
+   const need=ask>P.tier?P.mvh:P.mv;const mOk=Math.abs(x.move)>=need;const pOk=ask>=Math.max(.01,P.lo)&&ask<=P.hi;
+   const all=mOk&&pOk;const secs=Math.max(0,Math.round((P.el-x.elapsed)*x.minutes*60));
+   let st;if(all&&!tOk&&left>=30)st=`<span class="st soon">⏳ Готовится ${side} по ${fmt(ask)} · через ~${Math.floor(secs/60)}:${String(secs%60).padStart(2,'0')}</span>`;
+   else if(left<30)st=`<span class="st no">Окно закрывается</span>`;
+   else{const why=!mOk?`движение ${sgn(x.move*100)}% < ${(need*100).toFixed(2)}%`:!pOk?(ask<P.lo?`${side} по ${fmt(ask)} — рынок не согласен`:`${side} по ${fmt(ask)} — дорого`):'ждём';st=`<span class="st no">${side}: ${why}</span>`}
+   return st+`<div class="g">${chip('время',tOk,'время '+(x.elapsed*100).toFixed(0)+'%')}${chip('движение',mOk,'движение '+sgn(x.move*100)+'%')}${chip('цена',pOk,side+' '+fmt(ask))}</div>`}
   $('watch').innerHTML=w.length?w.map(x=>{const end=Date.parse(x.end),left=Math.max(0,end-Date.now()),mm=Math.floor(left/60000),ss=Math.floor(left%60000/1000);
-    const pot=x.potential?` class="pot"`:'';const raw=x.error||x.reason||'';const rs=x.potential?`<span class="rh">Готовится вход ${x.potential.side} по ${fmt(x.potential.ask)} через ~${Math.floor(x.potential.in_sec/60)}:${String(x.potential.in_sec%60).padStart(2,'0')}</span><br><span class="rr">waiting elapsed ≥ MIN_ELAPSED</span>`:`<span class="rh">${esc(x.error?'Ошибка данных':ru(raw))}</span><br><span class="rr">${esc(raw)}</span>`;
+    const pot=x.potential?` class="pot"`:'';const raw=x.error||x.reason||'';const rs=gates(x,raw);
     return `<tr${pot}><td><span class="alink" onclick="openChart('${esc(x.asset)}',${x.start?Date.parse(x.start):0},${x.ref||0})"><b>${esc(x.asset)}</b></span></td><td>${x.minutes}м · до ${new Date(end).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</td>
     <td><span class="mini"><i style="width:${Math.min(100,x.elapsed*100).toFixed(0)}%"></i></span>${(x.elapsed*100).toFixed(0)}% · ${mm}:${String(ss).padStart(2,'0')}</td>
     <td>${fmt(x.ref,2)}</td><td>${fmt(x.cur,2)}</td><td class="${cls(x.move)}">${x.move==null?'—':sgn(x.move*100)+'%'}</td>
     <td><span class="pos">${fmt(x.up_ask)}</span> / <span class="neg">${fmt(x.down_ask)}</span></td>
-    <td class="reason ${x.reason==='ВХОД'?'go':''}" style="white-space:normal;min-width:220px">${rs}</td></tr>`}).join('')
+    <td style="white-space:normal;min-width:240px">${rs}</td></tr>`}).join('')
     :'<tr><td colspan="8" class="empty">Бот ещё не отсканировал рынки — подожди полминуты.</td></tr>';
   if(!window.__tick)tick();
   $('closed').innerHTML=d.closed.length?d.closed.map(t=>`<tr><td>${esc((t.opened||'').slice(5,16).replace('T',' '))}</td><td>${esc(t.asset)}</td>
