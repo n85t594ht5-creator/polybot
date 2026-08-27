@@ -131,24 +131,8 @@ md += ["", "## Как читать", "- PF > 1.3 и просадка < 20% пр�
        "- Если лучшие конфигурации дают мало сделок — преимущество узкое и хрупкое."]
 open("results/report.md", "w").write("\n".join(md))
 
-html = "<!doctype html><html lang=ru><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>PolyBot backtest</title><style>body{background:#0d1420;color:#e4ebf5;font:14px/1.5 system-ui;max-width:1100px;margin:0 auto;padding:16px}table{border-collapse:collapse;font:12px monospace;width:100%;overflow:auto;display:block}td,th{padding:5px 8px;border-bottom:1px solid #243248;white-space:nowrap;text-align:left}th{color:#7f8da6}code{color:#8ab4ff}h1,h2,h3{font-weight:600}a{color:#8ab4ff}</style>"
-import re
-body = "\n".join(md)
-body = re.sub(r"^# (.*)$", r"<h1>\1</h1>", body, flags=re.M); body = re.sub(r"^## (.*)$", r"<h2>\1</h2>", body, flags=re.M); body = re.sub(r"^### (.*)$", r"<h3>\1</h3>", body, flags=re.M)
-body = re.sub(r"\*\*(.*?)\*\*", r"<b>\1</b>", body); body = re.sub(r"`(.*?)`", r"<code>\1</code>", body)
-lines, out, intable = body.split("\n"), [], False
-for l in lines:
-    if l.startswith("|"):
-        cells = [c.strip() for c in l.strip("|").split("|")]
-        if set("".join(cells)) <= set("-: "): continue
-        if not intable: out.append("<table>"); intable = True; out.append("<tr>" + "".join(f"<th>{c}</th>" for c in cells) + "</tr>"); continue
-        out.append("<tr>" + "".join(f"<td>{c}</td>" for c in cells) + "</tr>")
-    else:
-        if intable: out.append("</table>"); intable = False
-        out.append(f"<p>{l[2:]}</p>" if l.startswith("- ") else (l if l.startswith("<") else f"<p>{l}</p>" if l.strip() else ""))
-if intable: out.append("</table>")
-open("docs/backtest.html", "w").write(html + "<p><a href='./'>← дашборд</a></p>" + "\n".join(out))
 print("\n".join(md[:12]))
+
 
 # ── Кривые капитала: фиксированная ставка vs дробный Келли ──
 def equity(trades, mode, frac=0.15, cap=0.10, bank0=BANKROLL):
@@ -173,3 +157,24 @@ for name, mode, frac in [("flat", "flat", 0), ("kelly_0.10", "kelly", 0.10), ("k
 json.dump({"trades": [{k: t[k] for k in ("t", "asset", "min", "side", "entry", "conf", "won")} for t in base_trades], "curves": curves},
           open("results/equity.json", "w"))
 print("equity:", {k: (v["final"], v["max_dd"]) for k, v in curves.items()})
+
+
+# ── Страница бэктеста ──
+from datetime import datetime, timezone
+def pack(label, P):
+    tr, m = run(P); wins = sum(1 for t in tr if t["won"])
+    br = breakdown(P); buckets = {k: v for k, v in br.items() if k.startswith("вход")}; other = {k: v for k, v in br.items() if not k.startswith("вход")}
+    cv = {}
+    for name, mode, frac in [("flat", "flat", 0), ("kelly_0.10", "kelly", 0.10), ("kelly_0.15", "kelly", 0.15), ("kelly_0.25", "kelly", 0.25)]:
+        c, dd = equity(tr, mode, frac); cv[name] = {"curve": c, "max_dd": round(dd, 3), "final": c[-1]}
+    return {"label": label, "params": {k: v for k, v in P.items() if k != "KELLY_FRAC"}, "metrics": {**m, "wins": wins},
+            "buckets": buckets, "breakdown": other, "curves": cv,
+            "trades": [{k: t[k] for k in ("t", "asset", "min", "side", "entry", "won")} for t in tr]}
+SHOW_COLS = [k for k in keys if len(GRID[k]) > 1]
+page = {"generated": datetime.now(timezone.utc).isoformat(), "windows": nw, "days": round((max(w["end"] for w in TRAJ) - min(w["start"] for w in TRAJ)) / 86400, 1) if TRAJ else 0,
+        "spread": SPREAD, "stake": round(BANKROLL * FLAT_STAKE), "bankroll": BANKROLL, "grid_cols": SHOW_COLS,
+        "grid": [{**{k: r[k] for k in SHOW_COLS}, **{k: r[k] for k in ("trades", "winrate", "pf", "pnl", "max_dd")}} for r in rows[:40]],
+        "configs": {"current": pack("Текущие настройки бота", CURRENT), "best": pack("Лучшая по сетке", BP), "wide": pack("Вход ≥0.50, без верха", WIDE)}}
+tpl = open("template.html", encoding="utf-8").read()
+open("docs/backtest.html", "w", encoding="utf-8").write(tpl.replace("__DATA__", json.dumps(page, ensure_ascii=False, default=str)))
+print("docs/backtest.html written")
