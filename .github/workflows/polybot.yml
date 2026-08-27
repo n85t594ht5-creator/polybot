@@ -52,6 +52,7 @@ jobs:
           KELLY_FRAC: ${{ vars.KELLY_FRAC || '0.25' }}
           MAX_POSITIONS: ${{ vars.MAX_POSITIONS || '10' }}
           MAX_EXPOSURE: ${{ vars.MAX_EXPOSURE || '0.40' }}
+          MAX_STAKE: ${{ vars.MAX_STAKE || '0.08' }}
           WINDOWS: ${{ vars.WINDOWS || '15,60' }}
           PRICE_SOURCE: coinbase
           DAILY_LOSS_LIMIT: ${{ vars.DAILY_LOSS_LIMIT || '50' }}

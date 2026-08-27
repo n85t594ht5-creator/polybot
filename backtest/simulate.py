@@ -135,7 +135,7 @@ print("\n".join(md[:12]))
 
 
 # ── Кривые капитала: фиксированная ставка vs дробный Келли ──
-def equity(trades, mode, frac=0.15, cap=0.10, bank0=BANKROLL):
+def equity(trades, mode, frac=0.15, cap=float(os.getenv("MAX_STAKE", "0.08")), bank0=BANKROLL):
     bank, curve, peak, dd = bank0, [bank0], bank0, 0.0
     for tr in trades:
         b = (1 - tr["entry"]) / tr["entry"]

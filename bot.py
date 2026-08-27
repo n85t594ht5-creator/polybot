@@ -43,6 +43,7 @@ MIN_CONF          = env("MIN_CONF", 0.60, float)
 KELLY_FRAC        = env("KELLY_FRAC", 0.25, float)
 MAX_POSITIONS     = env("MAX_POSITIONS", 10, int)
 MAX_EXPOSURE      = env("MAX_EXPOSURE", 0.40, float)
+MAX_STAKE         = env("MAX_STAKE", 0.08, float)     # одна ставка не больше этой доли банкролла
 DAILY_LOSS_LIMIT  = env("DAILY_LOSS_LIMIT", 50.0, float)
 CONSEC_LOSS_LIMIT = env("CONSEC_LOSS_LIMIT", 4, int)
 RATE_LIMIT        = env("RATE_LIMIT", 20, int)
@@ -250,7 +251,7 @@ def evaluate(mkt, state):
     b = (1 - entry) / entry
     kelly = (conf * b - (1 - conf)) / b
     size = max(0.0, kelly) * KELLY_FRAC * state.bankroll
-    size = min(size, state.bankroll * MAX_EXPOSURE - state.exposure())
+    size = min(size, state.bankroll * MAX_STAKE, state.bankroll * MAX_EXPOSURE - state.exposure())
     if size < 1.0:
         return None, "size too small"
 
