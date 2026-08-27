@@ -143,3 +143,27 @@ for l in lines:
 if intable: out.append("</table>")
 open("docs/backtest.html", "w").write(html + "<p><a href='./'>← дашборд</a></p>" + "\n".join(out))
 print("\n".join(md[:12]))
+
+# ── Кривые капитала: фиксированная ставка vs дробный Келли ──
+def equity(trades, mode, frac=0.15, cap=0.10, bank0=BANKROLL):
+    bank, curve, peak, dd = bank0, [bank0], bank0, 0.0
+    for tr in trades:
+        b = (1 - tr["entry"]) / tr["entry"]
+        if mode == "flat":
+            size = bank0 * FLAT_STAKE
+        else:
+            k = max(0.0, (tr["conf"] * b - (1 - tr["conf"])) / b)
+            size = min(k * frac * bank, bank * cap)
+        if size < 1 or size > bank: size = min(size, bank)
+        bank += size * b if tr["won"] else -size
+        peak = max(peak, bank); dd = max(dd, (peak - bank) / peak); curve.append(round(bank, 2))
+    return curve, dd
+
+# базовый набор сделок: текущие настройки бота (честнее, чем лучшая по сетке)
+base_trades, _ = run(CURRENT)
+curves = {}
+for name, mode, frac in [("flat", "flat", 0), ("kelly_0.10", "kelly", 0.10), ("kelly_0.15", "kelly", 0.15), ("kelly_0.25", "kelly", 0.25)]:
+    c, dd = equity(base_trades, mode, frac); curves[name] = {"curve": c, "max_dd": round(dd, 3), "final": c[-1]}
+json.dump({"trades": [{k: t[k] for k in ("t", "asset", "min", "side", "entry", "conf", "won")} for t in base_trades], "curves": curves},
+          open("results/equity.json", "w"))
+print("equity:", {k: (v["final"], v["max_dd"]) for k, v in curves.items()})
