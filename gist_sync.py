@@ -52,7 +52,17 @@ GIST_ID, TOKEN = os.getenv("GIST_ID", ""), os.getenv("GIST_TOKEN", "")
 if not (GIST_ID and TOKEN):
     print("GIST_ID / GIST_TOKEN не заданы — синхронизация выключена"); sys.exit(0)
 INTERVAL = int(os.getenv("GIST_INTERVAL", "30"))
-last = None
+COMMIT_EVERY = int(os.getenv("STATE_COMMIT_SEC", "600"))
+last = None; last_commit = time.time()
+
+def commit_state():
+    """Сохраняем состояние в репозиторий, чтобы прерванный запуск ничего не терял."""
+    import subprocess
+    try:
+        subprocess.run("git add state.json trades.csv bot.log && git -c user.name=polybot -c user.email=polybot@users.noreply.github.com commit -qm 'state autosave' && git pull -q --rebase && git push -q",
+                       shell=True, timeout=60, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception as e:
+        print("autosave:", e)
 while True:
     try:
         d = dashboard.snapshot(); d["log"] = d["log"][-40:]; d["bot"]["running"] = True
@@ -76,4 +86,6 @@ while True:
             r.raise_for_status(); last = body
     except Exception as e:
         print("gist sync:", e)
+    if os.getenv("STATE_AUTOSAVE") == "1" and time.time() - last_commit > COMMIT_EVERY:
+        commit_state(); last_commit = time.time()
     time.sleep(INTERVAL)

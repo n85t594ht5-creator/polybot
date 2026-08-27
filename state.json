@@ -1,0 +1,59 @@
+{
+ "bankroll": 637.44,
+ "positions": {},
+ "closed": [
+  {
+   "market_id": "lost-1",
+   "asset": "SOL",
+   "side": "DOWN",
+   "entry": 0.6,
+   "cost": 22.5,
+   "shares": 37.5,
+   "conf": 0.72,
+   "move": -0.00064,
+   "elapsed": 0.66,
+   "end": "2026-08-27T20:45:00+00:00",
+   "opened": "2026-08-27T20:40:02+00:00",
+   "question": "sol-updown-5m",
+   "won": false,
+   "pnl": -22.5
+  },
+  {
+   "market_id": "w-1",
+   "asset": "SOL",
+   "side": "UP",
+   "entry": 0.26,
+   "cost": 50.89,
+   "shares": 195.73,
+   "conf": 0.7,
+   "move": 0.00073,
+   "elapsed": 0.7,
+   "end": "2026-08-27T21:15:00+00:00",
+   "opened": "2026-08-27T21:09:00+00:00",
+   "question": "sol-updown-15m",
+   "won": true,
+   "pnl": 144.83
+  },
+  {
+   "market_id": "w-2",
+   "asset": "SOL",
+   "side": "DOWN",
+   "entry": 0.62,
+   "cost": 24.66,
+   "shares": 39.77,
+   "conf": 0.74,
+   "move": -0.00138,
+   "elapsed": 0.7,
+   "end": "2026-08-27T21:15:00+00:00",
+   "opened": "2026-08-27T21:10:00+00:00",
+   "question": "sol-updown-5m",
+   "won": true,
+   "pnl": 15.11
+  }
+ ],
+ "day": "2026-08-27",
+ "day_pnl": 137.44,
+ "consec_losses": 0,
+ "cooldown_until": null,
+ "trade_times": []
+}

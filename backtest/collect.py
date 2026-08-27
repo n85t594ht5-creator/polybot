@@ -50,8 +50,35 @@ def fetch_window(asset, minutes, start_ts):
     return {"asset": asset, "minutes": minutes, "start": start_ts, "end": end_ts, "up_won": up_won,
             "up_hist": pts, "slug": slug(asset, minutes, start_ts)}
 
+DIAG = {}
+
+def collect_windows_paged():
+    """Запасной способ: листаем закрытые рынки по endDate и фильтруем по slug."""
+    pat = re.compile(r"^([a-z]+)-updown-(\d+)(m|h)-(\d+)$"); out = []; offset = 0
+    oldest = time.time() - max(DAYS.values()) * 86400
+    while offset < 20000:
+        page = get(f"{GAMMA}/markets", closed="true", limit=500, offset=offset, order="endDate", ascending="false")
+        if not page: break
+        for m in page:
+            mt = pat.match((m.get("slug") or "").lower())
+            if not mt: continue
+            a = mt.group(1).upper(); minutes = int(mt.group(2)) * (60 if mt.group(3) == "h" else 1)
+            if a not in ASSETS or minutes not in WINDOWS: continue
+            out.append((a, minutes, int(mt.group(4)), m))
+        try: last_end = datetime.fromisoformat(page[-1]["endDate"].replace("Z", "+00:00")).timestamp()
+        except Exception: last_end = 0
+        offset += 500
+        if last_end < oldest: break
+    DIAG["paged_found"] = len(out); DIAG["paged_pages"] = offset // 500
+    return out
+
 def collect_windows():
     now = int(time.time()); jobs = []
+    # диагностика: что отдаёт gamma на slug-запрос
+    for minutes in WINDOWS:
+        ts = ((now - 3 * minutes * 60) // (minutes * 60)) * minutes * 60
+        r = get(f"{GAMMA}/markets", slug=slug(ASSETS[0], minutes, ts))
+        DIAG[f"slug_probe_{minutes}"] = {"slug": slug(ASSETS[0], minutes, ts), "resp": str(r)[:400]}
     for minutes in WINDOWS:
         step = minutes * 60; since = now - int(DAYS[minutes] * 86400)
         first = (since // step) * step
@@ -66,8 +93,30 @@ def collect_windows():
             r = f.result()
             if r: out.append(r)
             if i % 500 == 0: print(f"  {i}/{len(jobs)} found={len(out)}")
+    DIAG["slug_found"] = len(out)
+    if len(out) < 50:
+        print("slug lookup weak, trying paged listing")
+        pairs = collect_windows_paged(); print("  paged found:", len(pairs))
+        have = {w["slug"] for w in out}
+        def fw(t):
+            a, minutes, ts, m = t
+            try:
+                tokens = json.loads(m.get("clobTokenIds") or "[]"); outcomes = json.loads(m.get("outcomes") or '["Up","Down"]'); prices = json.loads(m.get("outcomePrices") or "[]")
+                if len(tokens) != 2 or len(prices) != 2: return None
+                up_idx = 0 if outcomes[0].lower().startswith("up") else 1
+                hist = get(f"{CLOB}/prices-history", market=tokens[up_idx], startTs=ts - 60, endTs=ts + minutes * 60 + 60, fidelity=1)
+                pts = [(int(h["t"]), float(h["p"])) for h in (hist or {}).get("history", [])]
+                return {"asset": a, "minutes": minutes, "start": ts, "end": ts + minutes * 60, "up_won": float(prices[up_idx]) > 0.5, "up_hist": pts, "slug": slug(a, minutes, ts)}
+            except Exception as e:
+                return None
+        with ThreadPoolExecutor(8) as ex:
+            for r in ex.map(fw, [p for p in pairs if slug(p[0], p[1], p[2]) not in have]):
+                if r: out.append(r)
+        if pairs:
+            DIAG["hist_probe"] = str(get(f"{CLOB}/prices-history", market=json.loads(pairs[0][3].get("clobTokenIds") or "[\"\"]")[0], startTs=pairs[0][2]-60, endTs=pairs[0][2]+pairs[0][1]*60, fidelity=1))[:300]
     out.sort(key=lambda w: w["start"])
     json.dump(out, open("data/windows.json", "w"))
+    os.makedirs("results", exist_ok=True); json.dump(DIAG, open("results/collect_diag.json", "w"), indent=1, default=str)
     print("windows saved:", len(out), "with price history:", sum(1 for w in out if len(w["up_hist"]) > 3))
     return out
 
