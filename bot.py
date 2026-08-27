@@ -34,6 +34,7 @@ MODE              = env("MODE", "paper").lower()
 ASSETS            = [a.strip().upper() for a in env("ASSETS", "BTC,ETH,SOL").split(",")]
 BANKROLL          = env("BANKROLL", 500.0, float)
 MAX_ENTRY         = env("MAX_ENTRY", 0.15, float)
+MIN_ENTRY         = env("MIN_ENTRY", 0.0, float)      # не покупать исход дешевле (дешёвые исходы = рынок не согласен)
 MIN_ELAPSED       = env("MIN_ELAPSED", 0.50, float)
 MIN_MOVE          = env("MIN_MOVE", 0.0008, float)
 TIER_ENTRY        = env("TIER_ENTRY", 0.45, float)      # исход дороже этой цены → требуем движение MIN_MOVE_HIGH
@@ -234,6 +235,8 @@ def evaluate(mkt, state):
         return None, f"{side} ask {entry:.2f} > {MAX_ENTRY}"
     if entry <= 0.01:
         return None, "no liquidity"
+    if entry < MIN_ENTRY:
+        return None, f"{side} ask {entry:.2f} < MIN_ENTRY {MIN_ENTRY}"
     if entry > TIER_ENTRY and abs(move) < MIN_MOVE_HIGH:
         return None, f"ask {entry:.2f} > {TIER_ENTRY}: move {move:+.3%} < {MIN_MOVE_HIGH:.3%}"
 

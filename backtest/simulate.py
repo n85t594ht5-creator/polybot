@@ -50,7 +50,7 @@ def run(P, assets=None, windows=None):
         for el, move, ua, da, left in w["steps"]:
             if el < P["MIN_ELAPSED"] or left < 30 or abs(move) < P["MIN_MOVE"]: continue
             side = "UP" if move > 0 else "DOWN"; ask = ua if side == "UP" else da
-            if ask > P["MAX_ENTRY"] or ask <= 0.01: continue
+            if ask > P["MAX_ENTRY"] or ask <= 0.01 or ask < P.get("MIN_ENTRY", 0): continue
             if ask > P["TIER_ENTRY"] and abs(move) < P["MIN_MOVE_HIGH"]: continue
             conf = min(0.95, 0.5 + el * 0.3 + min(abs(move) / 0.005, 1) * 0.15)
             if conf < P["MIN_CONF"]: continue
@@ -73,12 +73,13 @@ def run(P, assets=None, windows=None):
                     "exp_per_trade": (bank - BANKROLL) / n / size if n else 0}
 
 GRID = {
-    "MIN_ELAPSED": [0.5, 0.65, 0.75, 0.85],
-    "MAX_ENTRY": [0.35, 0.5, 0.62, 0.75],
-    "MIN_MOVE": [0.0004, 0.0006, 0.001],
+    "MIN_ELAPSED": [0.65, 0.75, 0.85],
+    "MIN_ENTRY": [0.0, 0.45, 0.5, 0.55],
+    "MAX_ENTRY": [0.62, 0.7, 0.8, 0.9, 0.99],
+    "MIN_MOVE": [0.0006, 0.001, 0.0015],
     "TIER_ENTRY": [0.45],
-    "MIN_MOVE_HIGH": [0.0008, 0.0012, 0.002],
-    "MIN_CONF": [0.6, 0.65, 0.72],
+    "MIN_MOVE_HIGH": [0.0008, 0.0012],
+    "MIN_CONF": [0.6],
     "KELLY_FRAC": [0.15],
 }
 keys = list(GRID); rows = []
@@ -89,7 +90,7 @@ with open("results/grid.csv", "w", newline="") as f:
     wr = csv.DictWriter(f, fieldnames=list(rows[0].keys())); wr.writeheader(); wr.writerows(rows)
 
 # Текущие настройки бота и лучшая
-CURRENT = {"MIN_ELAPSED": 0.65, "MAX_ENTRY": 0.62, "MIN_MOVE": 0.0006, "TIER_ENTRY": 0.45, "MIN_MOVE_HIGH": 0.0012, "MIN_CONF": 0.65, "KELLY_FRAC": 0.15}
+CURRENT = {"MIN_ELAPSED": 0.65, "MIN_ENTRY": 0.0, "MAX_ENTRY": 0.62, "MIN_MOVE": 0.0006, "TIER_ENTRY": 0.45, "MIN_MOVE_HIGH": 0.0012, "MIN_CONF": 0.65, "KELLY_FRAC": 0.15}
 cur_tr, cur = run(CURRENT)
 good = [r for r in rows if r["trades"] >= MIN_TRADES]
 best = good[0] if good else rows[0]
@@ -99,7 +100,7 @@ def breakdown(P):
     out = defaultdict(lambda: {"n": 0, "w": 0, "pnl": 0.0})
     tr, _ = run(P)
     for t in tr:
-        eb = "вход ≤0.35" if t["entry"] <= 0.35 else "вход 0.35–0.50" if t["entry"] <= 0.5 else "вход 0.50–0.62" if t["entry"] <= 0.62 else "вход >0.62"
+        lo = int(t["entry"] * 20) / 20; eb = f"вход {lo:.2f}–{lo+0.05:.2f}"
         for key in (t["asset"], f"{t['min']}m", f"{t['asset']}-{t['min']}m", eb):
             o = out[key]; o["n"] += 1; o["w"] += t["won"]; o["pnl"] += t.get("pnl", 0)
     return dict(out)
@@ -117,9 +118,14 @@ md = [f"# Бэктест PolyBot", "", f"Окон с данными: **{nw}** ("
       "## Лучшая конфигурация", ", ".join(f"`{k}={v}`" for k, v in BP.items()), "", fmtm(bm), "",
       "### Разбивка лучшей конфигурации", "| Срез | Сделок | Winrate | P&L |", "|---|---|---|---|"]
 md += [brow(k, v) for k, v in sorted(breakdown(BP).items())]
-md += ["", "## Топ-15 конфигураций", "| " + " | ".join(keys[:6]) + " | сделок | winrate | PF | P&L | просадка |", "|" + "---|" * 11]
-for r in rows[:15]:
-    md.append("| " + " | ".join(str(r[k]) for k in keys[:6]) + f" | {r['trades']} | {r['winrate']:.0%} | {r['pf']:.2f} | {r['pnl']:+.0f} | {r['max_dd']:.0%} |")
+WIDE = {**BP, "MIN_ENTRY": 0.5, "MAX_ENTRY": 0.99}
+_, wm = run(WIDE)
+md += ["", "### Вход от 0.50 без верхней границы (остальное как в лучшей)", fmtm(wm), "", "| Срез | Сделок | Winrate | P&L |", "|---|---|---|---|"]
+md += [brow(k, v) for k, v in sorted(breakdown(WIDE).items()) if k.startswith("вход")]
+SHOW = ["MIN_ELAPSED", "MIN_ENTRY", "MAX_ENTRY", "MIN_MOVE", "MIN_MOVE_HIGH"]
+md += ["", "## Топ-20 конфигураций", "| " + " | ".join(SHOW) + " | сделок | winrate | PF | P&L | просадка |", "|" + "---|" * 10]
+for r in rows[:20]:
+    md.append("| " + " | ".join(str(r[k]) for k in SHOW) + f" | {r['trades']} | {r['winrate']:.0%} | {r['pf']:.2f} | {r['pnl']:+.0f} | {r['max_dd']:.0%} |")
 md += ["", "## Как читать", "- PF > 1.3 и просадка < 20% при ≥ 30 сделках — есть о чём говорить. PF около 1 — монетка.",
        "- Бэктест не учитывает проскальзывание и то, что по нужной цене могло не быть объёма. Реальный результат хуже.",
        "- Если лучшие конфигурации дают мало сделок — преимущество узкое и хрупкое."]

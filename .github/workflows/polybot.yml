@@ -43,6 +43,7 @@ jobs:
           ASSETS: ${{ vars.ASSETS || 'BTC,ETH,SOL' }}
           BANKROLL: ${{ vars.BANKROLL || '500' }}
           MAX_ENTRY: ${{ vars.MAX_ENTRY || '0.15' }}
+          MIN_ENTRY: ${{ vars.MIN_ENTRY || '0' }}
           MIN_ELAPSED: ${{ vars.MIN_ELAPSED || '0.50' }}
           MIN_MOVE: ${{ vars.MIN_MOVE || '0.0008' }}
           TIER_ENTRY: ${{ vars.TIER_ENTRY || '0.45' }}
