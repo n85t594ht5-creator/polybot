@@ -58,9 +58,12 @@ last = None; last_commit = time.time()
 def commit_state():
     """Сохраняем состояние в репозиторий, чтобы прерванный запуск ничего не терял."""
     import subprocess
+    cmd = ("git add state.json trades.csv bot.log && git -c user.name=polybot -c user.email=polybot@users.noreply.github.com commit -qm 'state autosave' ; "
+           "git fetch -q origin main && git rebase -q -X theirs origin/main ; git push -q origin HEAD:main")
     try:
-        subprocess.run("git add state.json trades.csv bot.log && git -c user.name=polybot -c user.email=polybot@users.noreply.github.com commit -qm 'state autosave' && git pull -q --rebase && git push -q",
-                       shell=True, timeout=60, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        r = subprocess.run(cmd, shell=True, timeout=90, capture_output=True, text=True)
+        if r.returncode != 0:
+            subprocess.run("git rebase --abort", shell=True, capture_output=True); print("autosave failed:", r.stderr[-300:])
     except Exception as e:
         print("autosave:", e)
 while True:
