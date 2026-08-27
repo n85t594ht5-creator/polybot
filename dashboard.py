@@ -328,7 +328,7 @@ svg{display:block;width:100%;height:170px}
 .fab button{width:48px;height:48px;border-radius:50%;font-size:20px;padding:0;background:var(--panel2);border:1px solid var(--line);box-shadow:0 4px 16px rgba(0,0,0,.4)}.fab button.acc{background:var(--acc);color:#08131f;border-color:transparent}
 .fab .dd{display:none;position:absolute;right:0;bottom:56px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;min-width:220px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.5)}.fab.open .dd{display:block}
 .fab .dd a{display:flex;gap:10px;align-items:center;padding:12px 14px;color:var(--txt);text-decoration:none;font-size:14px;border-bottom:1px solid var(--line)}.fab .dd a:last-child{border-bottom:0}.fab .dd a.on{color:var(--acc)}.fab .dd a i{font-style:normal;width:22px;text-align:center}
-#fabBack{display:none}
+#fabBack{display:none}.fab button:hover{border-color:var(--acc)}
 .menu{position:relative}.menu .dd{display:none;position:absolute;top:110%;left:0;background:var(--panel2);border:1px solid var(--line);border-radius:10px;min-width:210px;z-index:20;overflow:hidden}
 .menu.open .dd{display:block}.menu .dd a{display:block;padding:11px 14px;color:var(--txt);text-decoration:none;font-size:14px;border-bottom:1px solid var(--line)}.menu .dd a:hover,.menu .dd a.on{background:var(--panel);color:var(--acc)}
 .view{display:none}.view.on{display:block}
@@ -598,7 +598,7 @@ async function gh(path,opt={}){const r=await fetch(GH+path,{...opt,headers:{'Aut
 // views
 document.querySelectorAll('#menu .dd a[data-view]').forEach(a=>a.onclick=e=>{e.preventDefault();showView(a.dataset.view)});
 $('menuBtn').onclick=e=>{e.stopPropagation();$('menu').classList.toggle('open')};document.addEventListener('click',()=>$('menu').classList.remove('open'));
-function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v_'+v));$('fabBack').style.display=v==='dash'?'none':'';window.scrollTo(0,0);document.querySelectorAll('#menu .dd a').forEach(a=>a.classList.toggle('on',a.dataset.view===v));$('menu').classList.remove('open');
+function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v_'+v));$('fabBack').style.display=v==='dash'?'none':'block';window.scrollTo(0,0);document.querySelectorAll('#menu .dd a').forEach(a=>a.classList.toggle('on',a.dataset.view===v));$('menu').classList.remove('open');
  if(v==='settings')loadSettings();if(v==='keys')loadKeys();if(v==='power')loadPower();if(v==='stats')loadArchive()}
 // settings schema
 const S=[
