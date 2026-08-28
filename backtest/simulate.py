@@ -6,6 +6,7 @@
 import csv, itertools, json, math, os, sys
 from collections import defaultdict
 
+from datetime import datetime as _dt, timezone as _tz
 W = json.load(open("data/windows.json")); C = json.load(open("data/candles.json"))
 C = {a: {int(k): v for k, v in d.items()} for a, d in C.items()}
 BANKROLL = float(os.getenv("BANKROLL", "500")); SPREAD = float(os.getenv("SPREAD", "0.04"))  # ask ≈ last + spread (пессимистично)
