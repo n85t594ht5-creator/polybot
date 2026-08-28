@@ -94,7 +94,7 @@ jobs:
           tail -n 2000 bot.log > bot.tmp && mv bot.tmp bot.log
           python report.py
 
-          git add state.json trades.csv missed.csv bot.log docs/index.html reports/
+          git add state.json trades.csv missed.csv signals.csv bot.log docs/index.html reports/
           git commit -m "paper run $(date -u +'%Y-%m-%d %H:%M')" || echo "nothing to commit"
           git pull --rebase
           git push

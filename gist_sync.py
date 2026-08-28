@@ -65,7 +65,7 @@ last = None; last_commit = time.time()
 def commit_state():
     """Сохраняем состояние в репозиторий, чтобы прерванный запуск ничего не терял."""
     import subprocess
-    cmd = ("git add state.json trades.csv missed.csv bot.log && git -c user.name=polybot -c user.email=polybot@users.noreply.github.com commit -qm 'state autosave' ; "
+    cmd = ("git add state.json trades.csv missed.csv signals.csv bot.log && git -c user.name=polybot -c user.email=polybot@users.noreply.github.com commit -qm 'state autosave' ; "
            "git fetch -q origin main && git rebase -q -X theirs origin/main ; git push -q origin HEAD:main")
     try:
         r = subprocess.run(cmd, shell=True, timeout=90, capture_output=True, text=True)
@@ -94,6 +94,7 @@ while True:
         except Exception as e:
             print("live pos:", e)
         d["missed"] = dashboard.read_missed()
+        d["signals"] = dashboard.read_signals(1200)
         try:
             st = dashboard.read_state() or {}
             dashboard_state.bankroll = st.get("bankroll", bot.BANKROLL)

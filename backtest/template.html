@@ -57,8 +57,13 @@ button{font:600 13px var(--sans);padding:8px 14px;border-radius:8px;border:1px s
    </div>
    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px"><button class="primary" id="runBtn">Запустить тест</button><span class="sub" id="runMsg">Сбор истории и перебор занимают 10–20 минут. Страница обновится сама.</span></div>
   </div>
+  <div class="card c12" style="border-color:var(--warn)"><h2 style="color:var(--warn)">Предупреждение</h2>
+   <div class="note" style="font-size:13px;color:var(--txt)">Результат <b>IN-SAMPLE не является доказательством прибыльности</b>: параметры подбирались на этих же данных.
+   Смотри OUT-OF-SAMPLE и FORWARD (реальные paper-сигналы). Если результат держится на одном-двух днях — это событие, а не стратегия.</div></div>
   <div class="card c12"><h2>Проверка на нетронутых данных</h2><div id="oosBox"></div>
    <div class="note" style="margin-top:8px">Параметры подбираются на in-sample. Out-of-sample — данные, которых подбор не видел: если там результат резко хуже, конфигурация подогнана под историю.</div></div>
+  <div class="card c12"><h2>FORWARD · реальные paper-сигналы</h2><div id="fwdBox"><div class="sub">загрузка…</div></div>
+   <div class="note" style="margin-top:8px">Это данные, собранные ботом уже после фиксации baseline. Единственный источник, который не мог быть подогнан под историю.</div></div>
   <div class="card c12"><h2>Топ-3 стратегии</h2><div class="top3" id="top3"></div><div class="note" style="margin-top:8px">Рейтинг: прибыль × доля побед, со штрафом за просадку и за малое число сделок. Убыточные сделки учтены полностью: в P&amp;L, в PF и в просадке.</div></div>
   <div class="card c12"><div class="seg" id="seg"></div><div id="cfgLine" class="sub"></div></div>
   <div class="card c3"><h2>Сделок</h2><div class="big" id="m_trades">—</div><div class="sub" id="m_wl"></div><div class="sub" id="m_gl"></div></div>
@@ -118,6 +123,21 @@ $('runBtn').onclick=async()=>{if(!tok())return $('runMsg').textContent='Нуже
  $('runMsg').textContent='запускаю…';try{await gh('/actions/workflows/backtest.yml/dispatches',{method:'POST',body:JSON.stringify({ref:'main',inputs:{days_15m:$('r_days').value,days_5m:$('r_days5').value,spread:$('r_spread').value,stake:$('r_stake').value,min_trades:$('r_min').value,max_stake_pct:$('r_cap').value,exclude_dates:$('r_excl').value,assets:as,windows:ws}})});$('runMsg').textContent='Тест запущен. Обычно 10–20 минут; страница обновится сама, когда будет готово.';localStorage.setItem('bt_started',String(Date.now()));poll()}catch(e){$('runMsg').textContent='Ошибка: '+e.message}};
 async function poll(){try{const r=await fetch(GH+'/actions/runs?per_page=5',{headers:{'Accept':'application/vnd.github+json',...(tok()?{'Authorization':'Bearer '+tok()}:{})}});const j=await r.json();const b=(j.workflow_runs||[]).find(x=>x.path&&x.path.endsWith('backtest.yml'));if(!b)return;
  if(['in_progress','queued'].includes(b.status)){$('runState').textContent='тест идёт…';setTimeout(poll,30000)}else{$('runState').textContent='';if(localStorage.getItem('bt_started')&&Date.parse(b.updated_at)>+localStorage.getItem('bt_started')){localStorage.removeItem('bt_started');setTimeout(()=>location.reload(),20000)}}}catch(e){}}
+async function loadForward(){
+ try{const r=await fetch(`https://raw.githubusercontent.com/${D.repo}/main/signals.csv?t=`+Date.now());
+  if(!r.ok)throw 0; const txt=await r.text(); const lines=txt.trim().split('\n'); const hdr=lines.shift().split(',');
+  const rows=lines.map(l=>{const c=l.split(',');const o={};hdr.forEach((h,i)=>o[h]=c[i]);return o}).filter(x=>x.resolution);
+  if(!rows.length){$('fwdBox').innerHTML='<div class="sub">Сигналов с известным исходом пока нет — бот только начал собирать forward-данные.</div>';return}
+  const g=(f)=>{const o={};rows.forEach(r=>{const k=f(r);const x=o[k]=o[k]||{n:0,w:0,hyp:0,real:0};x.n++;x.w+=r.resolution==='WIN'?1:0;x.hyp+=parseFloat(r.hypothetical_pnl||0)||0;x.real+=parseFloat(r.realized_pnl||0)||0});return o};
+  const ex=rows.filter(r=>r.signal_status==='EXECUTED');
+  const tbl=(t,o)=>`<div class="sub" style="margin-top:8px">${t}</div><table><thead><tr><th>Срез</th><th>Сигналов</th><th>Winrate</th><th>Hypothetical P&L</th><th>Realized P&L</th></tr></thead><tbody>`+
+   Object.entries(o).sort().map(([k,v])=>`<tr><td>${k}</td><td>${v.n}</td><td class="${v.w/v.n>=.6?'pos':v.w/v.n<.5?'neg':''}">${(v.w/v.n*100).toFixed(0)}%</td><td class="${cls(v.hyp)}">${sgn(v.hyp)}</td><td class="${cls(v.real)}">${v.real?sgn(v.real):'—'}</td></tr>`).join('')+'</tbody></table>';
+  const hyp=rows.reduce((s,r)=>s+(parseFloat(r.hypothetical_pnl||0)||0),0), real=rows.reduce((s,r)=>s+(parseFloat(r.realized_pnl||0)||0),0);
+  const wins=rows.filter(r=>r.resolution==='WIN').length;
+  $('fwdBox').innerHTML=`<div class="top3"><div class="t first"><h3>REALIZED</h3><div class="m">${ex.length} исполненных сделок<br>P&L <b class="${cls(real)}">${sgn(real)} $</b></div></div>
+   <div class="t"><h3>HYPOTHETICAL</h3><div class="m">${rows.length} qualifying signals · winrate ${(wins/rows.length*100).toFixed(0)}%<br>P&L <b class="${cls(hyp)}">${sgn(hyp)} $</b></div></div></div>`
+   +tbl('По окнам',g(r=>r.window))+tbl('По активам',g(r=>r.asset))+tbl('По цене входа',g(r=>r.entry_bucket))+tbl('По дням',g(r=>(r.timestamp||'').slice(0,10)));
+ }catch(e){$('fwdBox').innerHTML='<div class="sub">Forward-данные появятся, когда бот запишет первые сигналы с известным исходом.</div>'}}
 function top3(){const ks=D.top||[];$('top3').innerHTML=ks.length?ks.map((k,i)=>{const c=D.configs[k],m=c.metrics;return `<div class="t ${i===0?'first':''}"><h3>${i+1}. ${i===0?'Лучшая':i===1?'Вторая':'Третья'}</h3>
  <div class="m">${m.trades} сделок · <span class="pos">${m.wins} побед</span> / <span class="neg">${m.losses} убытков</span><br>winrate <b>${(m.winrate*100).toFixed(0)}%</b> · PF <b>${m.pf>=99?'∞':fmt(m.pf)}</b> · P&amp;L <b class="${cls(m.pnl)}">${sgn(m.pnl)} $</b> · просадка ${(m.max_dd*100).toFixed(0)}%</div>
  <div class="p">${Object.entries(c.params).map(([a,b])=>a+'='+b).join('<br>')}</div>
@@ -126,5 +146,5 @@ async function apply(k){if(!tok())return alert('Нужен токен GitHub —
  try{for(const[a,b]of Object.entries(c.params)){try{await gh('/actions/variables/'+a,{method:'PATCH',body:JSON.stringify({name:a,value:String(b)})})}catch(e){await gh('/actions/variables',{method:'POST',body:JSON.stringify({name:a,value:String(b)})})}}
   const j=await gh('/actions/runs?per_page=10');for(const r of j.workflow_runs.filter(x=>x.path&&x.path.endsWith('polybot.yml')&&['in_progress','queued'].includes(x.status)))await gh('/actions/runs/'+r.id+'/cancel',{method:'POST'});
   await new Promise(r=>setTimeout(r,8000));await gh('/actions/workflows/polybot.yml/dispatches',{method:'POST',body:JSON.stringify({ref:'main'})});alert('Применено, бот перезапускается.')}catch(e){alert('Ошибка: '+e.message)}}
-if(D.top&&D.top.length)cur=D.top[0];seg();render();top3();poll();
+if(D.top&&D.top.length)cur=D.top[0];seg();render();top3();poll();loadForward();
 </script></body></html>

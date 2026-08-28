@@ -45,7 +45,11 @@ header h1{font-size:17px}.big{font-size:24px}.tw{max-height:320px}
 header button{flex:1 1 auto;padding:9px 10px;font-size:12px}
 .card{padding:12px}.run,.set{gap:8px}.brow{grid-template-columns:minmax(58px,84px) 1fr minmax(88px,auto);font-size:11px}
 .cal .d{font-size:10px}.cal .d small{display:none}.hgrid{grid-template-columns:repeat(8,1fr)}
-.ev{grid-template-columns:22px 1fr auto;font-size:12px}.pw button{padding:13px}}
+.ev{grid-template-columns:22px 1fr auto;font-size:12px}.pw button{padding:13px}
+.fn .s{grid-template-columns:minmax(0,92px) minmax(0,1fr) minmax(0,auto);font-size:11px}.fn .s i{height:16px}
+.tabs button{padding:6px 9px;font-size:11px}.tabs{gap:4px}
+#stFilters button{padding:5px 8px}
+.mc{padding:10px}.hyp{padding-left:6px}}
 .big{font:600 30px/1.1 var(--mono);letter-spacing:-.01em}
 .sub{color:var(--mut);font-size:12px;margin-top:4px;font-family:var(--mono)}
 .m{font-family:var(--mono)}.mini{display:inline-block;width:54px;height:5px;background:#0a101a;border-radius:99px;vertical-align:middle;margin-right:6px}.mini i{display:block;height:100%;background:var(--acc);border-radius:99px}
@@ -114,6 +118,12 @@ svg{display:block;width:100%;height:170px}
 .tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}.tabs button{white-space:nowrap}.tabs button{font-size:12px;padding:6px 12px}.tabs button.on{border-color:var(--acc);color:var(--acc)}
 details.logbox{margin-top:8px}details.logbox summary{cursor:pointer;color:var(--mut);font-size:12px;padding:6px 0}
 .book{font:11px var(--mono)}.book .r{display:grid;grid-template-columns:44px minmax(0,1fr) 58px;gap:6px;align-items:center;padding:1px 0}.book .r i{display:block;height:8px;background:rgba(138,180,255,.35);border-radius:2px}
+.fn{display:grid;gap:6px}.fn .s{display:grid;grid-template-columns:minmax(0,124px) minmax(0,1fr) minmax(0,auto);gap:8px;align-items:center;font:12px var(--mono)}
+.fn .s i{display:block;height:20px;border-radius:4px;background:linear-gradient(90deg,var(--acc),rgba(138,180,255,.25))}
+.fn .s.drop i{background:linear-gradient(90deg,var(--warn),rgba(245,182,74,.2))}.fn .s.fill i{background:linear-gradient(90deg,var(--up),rgba(53,217,155,.25))}
+.fn .s span:last-child{text-align:right;color:var(--mut);white-space:nowrap}
+.hyp{border-left:2px solid var(--warn);padding-left:8px}
+.mc{background:var(--surface-1,var(--panel2));border-radius:10px;padding:12px}.mc .lab{font-size:13px;color:var(--mut);margin:0 0 4px}
 .brow{display:grid;grid-template-columns:minmax(0,96px) minmax(0,1fr) minmax(0,auto);gap:8px;align-items:center;padding:5px 0;font:12px var(--mono);border-bottom:1px solid rgba(36,50,72,.5)}
 .brow>*{min-width:0}
 .brow:last-child{border-bottom:0}.brow .k{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -136,7 +146,7 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
 .toast{position:fixed;right:16px;bottom:16px;background:var(--panel2);border:1px solid var(--line);padding:10px 14px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .3s}
 .toast.show{opacity:1}
 </style></head><body><div class="wrap">
-<div class="fab" id="menu"><button id="fabBack" title="Назад" onclick="showView('dash')">←</button><button id="menuBtn" class="acc" title="Меню">☰</button><div class="dd"><a href="#" data-view="dash" class="on"><i>▦</i>Дашборд</a><a href="backtest.html"><i>⚗</i>Тестировщик</a><a href="#" data-view="statistics"><i>📊</i>Статистика</a><a href="#" data-view="signals"><i>⚡</i>Журнал сигналов</a><a href="#" data-view="reports"><i>📄</i>Отчёты</a><a href="#" data-view="settings"><i>⚙</i>Настройки бота</a><a href="#" data-view="keys"><i>🔑</i>Ключи</a><a href="#" data-view="power"><i>⏻</i>Питание</a><a href="#" data-view="stats"><i>▤</i>Архив настроек</a></div></div>
+<div class="fab" id="menu"><button id="fabBack" title="Назад" onclick="showView('dash')">←</button><button id="menuBtn" class="acc" title="Меню">☰</button><div class="dd"><a href="#" data-view="dash" class="on"><i>▦</i>Дашборд</a><a href="backtest.html"><i>⚗</i>Тестировщик</a><a href="#" data-view="statistics"><i>📊</i>Статистика</a><a href="#" data-view="signals"><i>⚡</i>Журнал сигналов</a><a href="#" data-view="execution"><i>⚙️</i>Исполнение</a><a href="#" data-view="reports"><i>📄</i>Отчёты</a><a href="#" data-view="settings"><i>⚙</i>Настройки бота</a><a href="#" data-view="keys"><i>🔑</i>Ключи</a><a href="#" data-view="power"><i>⏻</i>Питание</a><a href="#" data-view="stats"><i>▤</i>Архив настроек</a></div></div>
 <header>
   <h1>POLYBOT <span class="ver" id="ver"></span></h1>
   <span id="modePill" class="pill">—</span>
@@ -167,8 +177,8 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
   <div class="card c6"><h2>Открытые позиции <span id="posN"></span></h2><div id="positions"></div></div>
   <div class="card c6"><h2>Закрытые сделки</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Сторона</th><th>Вход</th><th>Ставка</th><th>Итог</th><th>P&amp;L</th></tr></thead><tbody id="closed"></tbody></table></div></div>
 
-  <div class="card c6"><h2>5m против 15m</h2><div id="perWindow"></div><div class="sub">Считаем как две отдельные стратегии внутри одной системы.</div></div>
-  <div class="card c6"><h2>Исполнение</h2><div class="kv" id="execBox"></div><div class="sub" id="execSub"></div></div>
+  <div class="card c6"><h2>Воронка сигналов</h2><div id="funnel"></div><div class="sub" id="funnelSub"></div></div>
+  <div class="card c6"><h2>5m против 15m · realized</h2><div id="perWindow"></div><div class="sub">Две отдельные стратегии внутри одной системы. Подробности — в Статистике и Исполнении.</div></div>
   <div class="card c4"><h2>По активам</h2><div id="perAsset"></div></div>
   <div class="card c8"><h2>Лента событий</h2><div class="feed" id="feed"></div>
     <details class="logbox"><summary>Показать технический лог</summary><pre id="log"></pre></details></div>
@@ -188,8 +198,11 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
 </div>
 
 <div id="v_statistics" class="view">
- <div class="tabs" id="stTabs" style="margin-bottom:12px"></div>
+ <div class="tabs" id="stMode" style="margin-bottom:8px"></div>
+ <div class="tabs" id="stTabs" style="margin-bottom:8px"></div>
+ <div class="tabs" id="stFilters" style="margin-bottom:12px"></div>
   <div class="grid">
+   <div class="card c12" id="modeNote" style="display:none"></div>
    <div class="card c4"><h2>За период</h2><div class="big" id="st_pnl">—</div><div class="sub" id="st_sub"></div></div>
    <div class="card c4"><h2>Winrate</h2><div class="big" id="st_wr">—</div><div class="sub" id="st_wl"></div></div>
    <div class="card c4"><h2>Profit factor</h2><div class="big" id="st_pf">—</div><div class="sub" id="st_pfs"></div></div>
@@ -199,6 +212,7 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
    <div class="card c6"><h2>По силе движения</h2><div id="st_move"></div></div>
    <div class="card c6"><h2>5m против 15m</h2><div id="st_win"></div></div>
    <div class="card c6"><h2>По активам</h2><div id="st_asset"></div></div>
+   <div class="card c12"><h2>Концентрация результата</h2><div id="st_conc"></div><div class="sub">Если один день или один срез даёт непропорционально много — это событие, а не стратегия.</div></div>
    <div class="card c12"><h2>Просадка</h2><svg id="st_dd" viewBox="0 0 800 120" preserveAspectRatio="none" style="height:120px"></svg><div class="sub" id="st_dds"></div></div>
    <div class="card c12"><h2>Банкролл</h2><svg id="st_eq" viewBox="0 0 800 200" preserveAspectRatio="none" style="height:200px"></svg><div class="sub" id="st_eqs"></div></div>
    <div class="card c12"><h2>Сделки периода</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Окно</th><th>Сторона</th><th>Вход</th><th>Ставка</th><th>Итог</th><th>P&amp;L</th></tr></thead><tbody id="st_trades"></tbody></table></div></div>
@@ -212,6 +226,19 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
    <div class="card c4"><h2>Всего</h2><div class="big" id="sg_n">—</div><div class="sub">за последние часы</div></div>
    <div class="card c8"><h2>Причины</h2><div id="sg_reasons"></div></div>
    <div class="card c12"><h2>Записи</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Окно</th><th>Сторона</th><th>Цена</th><th>Причина</th><th>Детали</th></tr></thead><tbody id="sg_list"></tbody></table></div></div>
+ </div>
+</div>
+
+<div id="v_execution" class="view">
+ <div class="sub" style="margin-bottom:10px">Отвечает на вопрос: проблема в стратегии или в исполнении? Слева — путь сигнала, справа — почему сигналы теряются.</div>
+ <div class="grid">
+  <div class="card c6"><h2>Воронка</h2><div id="ex_funnel"></div><div class="sub" id="ex_funnelSub"></div></div>
+  <div class="card c6"><h2>Причины потерь</h2><div id="ex_reasons"></div><div class="sub">Риск-гейты и неисполненные ордера.</div></div>
+  <div class="card c4"><h2>Execution rate</h2><div class="big" id="ex_rate">—</div><div class="sub" id="ex_rateSub"></div></div>
+  <div class="card c4"><h2>Среднее проскальзывание</h2><div class="big" id="ex_slip">—</div><div class="sub">средняя цена исполнения минус лучшая цена</div></div>
+  <div class="card c4"><h2>Качество исполнения</h2><div id="ex_quality"></div><div class="sub">GOOD — запас времени и объёма, MARGINAL — впритык, UNEXECUTABLE — исполнить было нельзя</div></div>
+  <div class="card c12"><h2>5m против 15m</h2><div class="tw"><table><thead><tr><th>Окно</th><th>Сигналов</th><th>Прошли риск</th><th>Исполнено</th><th>Частично</th><th>Не исполнено</th><th>Execution rate</th><th>Ср. остаток времени</th><th>GOOD / MARGINAL / UNEXEC</th></tr></thead><tbody id="ex_win"></tbody></table></div></div>
+  <div class="card c12"><h2>Последние сигналы</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Окно</th><th>Сторона</th><th>Вход</th><th>Статус</th><th>Риск-гейт</th><th>Ордер</th><th>Качество</th><th>Осталось, с</th></tr></thead><tbody id="ex_list"></tbody></table></div></div>
  </div>
 </div>
 
@@ -261,7 +288,7 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
 <script src="https://cdnjs.cloudflare.com/ajax/libs/libsodium-wrappers/0.7.13/sodium.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script>window.__GIST__="https://gist.githubusercontent.com/n85t594ht5-creator/abd926ec1255969b62fd4a279b60fb09/raw/state.json";window.__REPO__="n85t594ht5-creator/polybot";window.__VER__="1.5.0";</script>
+<script>window.__GIST__="https://gist.githubusercontent.com/n85t594ht5-creator/abd926ec1255969b62fd4a279b60fb09/raw/state.json";window.__REPO__="n85t594ht5-creator/polybot";window.__VER__="1.6.0";</script>
 <script>
 const $=id=>document.getElementById(id);
 document.addEventListener('DOMContentLoaded',()=>{const v=$('ver');if(v)v.textContent='v'+(window.__VER__||'')});
@@ -361,18 +388,22 @@ function render(d){
     <td class="side ${esc(t.side)}">${esc(t.side)}</td><td>${fmt(t.entry)}</td><td>${fmt(t.cost)}</td>
     <td class="${t.won?'pos':'neg'}">${t.won?'WIN':'LOSS'}</td><td class="${cls(t.pnl)}">${sgn(t.pnl)}</td></tr>`).join('')
     :'<tr><td colspan="7" class="empty">Закрытых сделок ещё нет.</td></tr>';
+  // воронка сигналов
+  const sg=d.signals||[];
+  const nSig=sg.length+(d.pending_signals||0), nRisk=sg.filter(s=>!s.risk_gate).length,
+        nOrd=sg.filter(s=>s.signal_status&&s.signal_status.indexOf('ORDER_')===0||s.signal_status==='EXECUTED').length,
+        nFill=sg.filter(s=>s.signal_status==='EXECUTED').length,
+        nBlock=sg.filter(s=>s.signal_status==='BLOCKED_BY_RISK').length;
+  const mx=Math.max(nSig,1);
+  const step=(lbl,v,cl)=>`<div class="s ${cl||''}"><span>${lbl}</span><i style="width:${Math.max(2,v/mx*100).toFixed(0)}%"></i><span>${v}</span></div>`;
+  $('funnel').innerHTML=`<div class="fn">${step('Сигналов',nSig)}${step('Прошли риск',nRisk)}${step('Ордеров',nOrd)}${step('Исполнено',nFill,'fill')}${nBlock?step('Заблокировано',nBlock,'drop'):''}</div>`;
+  const gateCnt={};sg.forEach(s=>{if(s.risk_gate)gateCnt[s.risk_gate]=(gateCnt[s.risk_gate]||0)+1});
+  $('funnelSub').innerHTML=nSig?`исполнение ${(nFill/Math.max(nSig,1)*100).toFixed(0)}%${Object.keys(gateCnt).length?' · блокировки: '+Object.entries(gateCnt).map(([k,v])=>k+' '+v).join(', '):''}${d.pending_signals?' · ждут резолва: '+d.pending_signals:''}`:'Сигналов пока нет — бот ждёт подходящее окно.';
   // 5m vs 15m
   const pw=Object.entries(d.per_window||{});
   $('perWindow').innerHTML=pw.length?`<div class="tw" style="max-height:220px"><table><thead><tr><th>Окно</th><th>Сделок</th><th>W/L</th><th>Winrate</th><th>PF</th><th>Ср. вход</th><th>P&amp;L</th></tr></thead><tbody>`+
    pw.sort().map(([k,v])=>`<tr><td><b>${esc(k)}</b></td><td>${v.n}</td><td><span class="pos">${v.wins}</span>/<span class="neg">${v.n-v.wins}</span></td><td class="${v.winrate>=.6?'pos':v.winrate<.5?'neg':''}">${(v.winrate*100).toFixed(0)}%</td><td class="${v.pf>=1.3?'pos':v.pf<1?'neg':''}">${v.pf>=99?'∞':fmt(v.pf)}</td><td>${fmt(v.avg_entry)}</td><td class="${cls(v.pnl)}">${sgn(v.pnl)}</td></tr>`).join('')+'</tbody></table></div>'
    :'<div class="empty">Появится после первых сделок.</div>';
-  // исполнение
-  const es=d.execstats||{},bw=es.by_window||{};
-  const slip=es.slip_n?es.slip_sum/es.slip_n:null;
-  $('execBox').innerHTML=[['Ордеров отправлено',es.submitted||0],['Исполнено полностью',es.filled||0],['Исполнено частично',es.partial||0],
-   ['Не исполнено',es.unfilled||0],['Снято',es.cancelled||0],['Среднее проскальзывание',slip==null?'—':(slip>=0?'+':'')+fmt(slip,4)]]
-   .map(([k,v])=>`<span>${k}</span><span>${v}</span>`).join('');
-  $('execSub').innerHTML=Object.keys(bw).length?Object.entries(bw).sort().map(([k,v])=>`${k}: сигналов ${v.signal||0} → отправлено ${v.submitted||0} → исполнено ${v.filled||0}${v.partial?', частично '+v.partial:''}${v.unfilled?', не исполнено '+v.unfilled:''}`).join(' · '):'В paper-режиме ордера исполняются мгновенно — метрики наполнятся в live.';
   // стратегия
   const C2=d.config||{},sv=k=>C2[k]??'—';
   $('strategyBox').innerHTML=[['Окна',sv('WINDOWS')],['Активы',d.assets],['Вход после',(sv('MIN_ELAPSED')*100).toFixed(0)+'% окна'],
@@ -444,8 +475,18 @@ function openChart(a,winStart,ref){chState={a,n:60,winStart,ref};
  renderChart();clearInterval(chTimer);chTimer=setInterval(()=>{if($('ov').classList.contains('on'))renderChart();else clearInterval(chTimer)},5000)}
 
 // ───── статистика ─────
-let stMode='month', stDay=null;
-function allTrades(){return (last&&last.closed||[]).slice().sort((a,b)=>Date.parse(a.opened)-Date.parse(b.opened))}
+let stMode='month', stDay=null, stView='realized', stF={window:'',asset:'',dir:'',bucket:''};
+// REALIZED — реальные сделки; SIGNALS — все qualifying signals (гипотетический P&L)
+function allTrades(){
+ if(stView==='realized')return (last&&last.closed||[]).map(t=>({...t,_pnl:t.pnl,_when:t.opened,_win:t.won})).sort((a,b)=>Date.parse(a._when)-Date.parse(b._when));
+ return ((last&&last.signals)||[]).filter(s=>s.resolution).map(s=>({
+   opened:s.timestamp,_when:s.timestamp,asset:s.asset,side:s.direction,minutes:parseInt(s.window)||0,
+   entry:s.entry_price,cost:s.hyp_cost,entry_bucket:s.entry_bucket,move_bucket:s.move_bucket,
+   elapsed_bucket:s.elapsed_bucket,won:s.resolution==='WIN',_win:s.resolution==='WIN',
+   pnl:s.hypothetical_pnl,_pnl:s.hypothetical_pnl,status:s.signal_status,gate:s.risk_gate
+ })).sort((a,b)=>Date.parse(a._when)-Date.parse(b._when));
+}
+function applyF(l){return l.filter(t=>(!stF.window||String(t.minutes)+'m'===stF.window)&&(!stF.asset||t.asset===stF.asset)&&(!stF.dir||t.side===stF.dir)&&(!stF.bucket||t.entry_bucket===stF.bucket))}
 function inPeriod(t){const d=new Date(Date.parse(t.opened));const now=new Date();
  if(stMode==='day'){const sel=stDay||now.toISOString().slice(0,10);return t.opened.slice(0,10)===sel}
  if(stMode==='week')return (now-d)/864e5<=7;
@@ -454,8 +495,17 @@ function grp(list,fn){const o={};list.forEach(t=>{const k=fn(t);(o[k]=o[k]||{n:0
 function barList(id,obj,fmtk){const e=$(id);const rows=Object.entries(obj).sort();
  e.innerHTML=rows.map(([k,v])=>{const wr=v.w/v.n;return `<div class="brow"><span class="k">${fmtk?fmtk(k):k}</span><span class="t"><i style="width:${(wr*100).toFixed(0)}%;background:${v.pnl>=0?'var(--up)':'var(--down)'}"></i></span><span class="v">${(wr*100).toFixed(0)}% · ${v.n} · <span class="${cls(v.pnl)}">${sgn(v.pnl)}</span></span></div>`}).join('')||'<div class="empty">нет сделок</div>'}
 function renderStats(){
+ $('stMode').innerHTML=[['realized','REALIZED · реальные сделки'],['signals','SIGNALS · гипотетический P&L'],['comparison','СРАВНЕНИЕ']]
+  .map(([k,n])=>`<button class="${k===stView?'on':''}" onclick="stView='${k}';renderStats()">${n}</button>`).join('');
  $('stTabs').innerHTML=[['month','Месяц'],['week','Неделя'],['day','День']].map(([k,n])=>`<button class="${k===stMode?'on':''}" onclick="stMode='${k}';renderStats()">${n}</button>`).join('');
- const all=allTrades(),list=all.filter(inPeriod);
+ const sgAll=((last&&last.signals)||[]).filter(s=>s.resolution);
+ const opts=(key,vals)=>vals.map(v=>`<button class="${stF[key]===v?'on':''}" onclick="stF.${key}=stF.${key}==='${v}'?'':'${v}';renderStats()">${v||'все'}</button>`).join('');
+ $('stFilters').innerHTML='<span class="sub" style="align-self:center;margin-right:4px">фильтры:</span>'
+  +opts('window',['5m','15m'])+opts('asset',['BTC','ETH','SOL','XRP'])+opts('dir',['UP','DOWN'])+opts('bucket',['0.50–0.55','0.55–0.60','0.60–0.62']);
+ if(stView==='comparison'){renderComparison();return}
+ $('modeNote').style.display=stView==='signals'?'':'none';
+ if(stView==='signals')$('modeNote').innerHTML='<div class="warnbox" style="margin:0">Это <b>HYPOTHETICAL P&amp;L</b> по всем qualifying signals, включая заблокированные риск-гейтами и неисполненные ордера. Реальными деньгами это не подтверждено — переключись на REALIZED, чтобы увидеть фактический результат.</div>';
+ const all=applyF(allTrades()),list=all.filter(inPeriod);
  const wins=list.filter(t=>t.won),gp=wins.reduce((s,t)=>s+t.pnl,0),gl=-list.filter(t=>!t.won).reduce((s,t)=>s+t.pnl,0),pnl=list.reduce((s,t)=>s+t.pnl,0);
  $('st_pnl').textContent=sgn(pnl)+' $';$('st_pnl').className='big '+cls(pnl);
  $('st_sub').textContent=`${list.length} сделок · ${stMode==='day'?(stDay||'сегодня'):stMode==='week'?'7 дней':'31 день'}`;
@@ -484,6 +534,21 @@ function renderStats(){
  barList('st_move',grp(list,t=>t.move_bucket||'—'));
  barList('st_win',grp(list,t=>(t.minutes||'?')+'m'));
  barList('st_asset',grp(list,t=>t.asset));
+ // концентрация
+ const byDay=grp(list,t=>t.opened.slice(0,10));
+ const days=Object.entries(byDay).map(([k,v])=>[k,v.pnl]).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
+ const totAbs=days.reduce((s,[,p])=>s+Math.abs(p),0)||1;
+ const totPnl=list.reduce((s,t)=>s+t.pnl,0);
+ const share=(arr)=>arr.reduce((s,[,p])=>s+Math.abs(p),0)/totAbs*100;
+ const conc=[];
+ if(days.length){conc.push(['Лучший день: '+days[0][0],share(days.slice(0,1))]);
+  if(days.length>2)conc.push(['Топ-3 дня',share(days.slice(0,3))]);}
+ const byA=grp(list,t=>t.asset),byW=grp(list,t=>(t.minutes||'?')+'m'),byB=grp(list,t=>t.entry_bucket||'—');
+ const topOf=o=>{const e=Object.entries(o).sort((a,b)=>Math.abs(b[1].pnl)-Math.abs(a[1].pnl));return e.length?[e[0][0],Math.abs(e[0][1].pnl)/totAbs*100]:null};
+ [['Топ актив',topOf(byA)],['Топ окно',topOf(byW)],['Топ бакет входа',topOf(byB)]].forEach(([lbl,v])=>{if(v)conc.push([lbl+': '+v[0],v[1]])});
+ $('st_conc').innerHTML=days.length?conc.map(([k,p])=>`<div class="brow"><span class="k">${esc(k)}</span><span class="t"><i style="width:${Math.min(100,p).toFixed(0)}%;background:${p>60?'var(--down)':p>35?'var(--warn)':'var(--up)'}"></i></span><span class="v">${p.toFixed(0)}% результата</span></div>`).join('')
+   +`<div class="sub" style="margin-top:6px">${days.length} дней со сделками · итог ${sgn(totPnl)} $${days.length&&share(days.slice(0,1))>60?' · <span class="neg">результат держится на одном дне</span>':''}</div>`
+   :'<div class="empty">нет данных за период</div>';
  // просадка
  const dd=$('st_dd');
  if(list.length){let b=(last.start_bankroll||100),peak=b,cur=[0];list.forEach(t=>{b+=t.pnl;peak=Math.max(peak,b);cur.push(+((peak-b)/peak*100).toFixed(2))});
@@ -499,6 +564,34 @@ function renderStats(){
   $('st_eqs').textContent=`${fmt(eq[0])} → ${fmt(eq[eq.length-1])} $ за период`}else{s.innerHTML='';$('st_eqs').textContent='нет сделок за период'}
  $('st_trades').innerHTML=list.slice().reverse().map(t=>`<tr><td>${t.opened.slice(5,16).replace('T',' ')}</td><td>${esc(t.asset)}</td><td>${t.minutes||''}м</td><td class="${t.side==='UP'?'pos':'neg'}">${esc(t.side)}</td><td>${fmt(t.entry)}</td><td>${fmt(t.cost)}</td><td class="${t.won?'pos':'neg'}">${t.won?'WIN':'LOSS'}</td><td class="${cls(t.pnl)}">${sgn(t.pnl)}</td></tr>`).join('')||'<tr><td colspan="8" class="empty">нет сделок</td></tr>';
 }
+function renderComparison(){
+ $('modeNote').style.display='';
+ $('modeNote').innerHTML='<div class="warnbox" style="margin:0">Слева — <b>REALIZED</b>: деньги, которые бот действительно заработал или потерял. Справа — <b>HYPOTHETICAL</b>: что было бы, если бы исполнялись все qualifying signals, включая заблокированные риском. Это разные метрики, складывать их нельзя.</div>';
+ const sv=stView; stView='realized'; const real=applyF(allTrades()).filter(inPeriod);
+ stView='signals'; const sig=applyF(allTrades()).filter(inPeriod); stView=sv;
+ const agg=l=>{const w=l.filter(t=>t.won),gp=w.reduce((s,t)=>s+t.pnl,0),gl=-l.filter(t=>!t.won).reduce((s,t)=>s+t.pnl,0);
+  return{n:l.length,w:w.length,wr:l.length?w.length/l.length:0,pf:gl?gp/gl:(gp?99:0),pnl:l.reduce((s,t)=>s+t.pnl,0)}};
+ const a=agg(real),b=agg(sig);
+ const card=(t,m,cls2)=>`<div class="mc"><p class="lab">${t}</p><div class="big m ${cls(m.pnl)}">${sgn(m.pnl)} $</div><div class="sub">${m.n} шт · winrate ${(m.wr*100).toFixed(0)}% · PF ${m.pf>=99?'∞':fmt(m.pf)}</div></div>`;
+ $('st_pnl').textContent=sgn(a.pnl)+' $';$('st_pnl').className='big '+cls(a.pnl);$('st_sub').textContent=`REALIZED · ${a.n} сделок`;
+ $('st_wr').textContent=a.n?(a.wr*100).toFixed(0)+'%':'—';$('st_wl').textContent=`${a.w} побед / ${a.n-a.w} убытков`;
+ $('st_pf').textContent=a.pf>=99?'∞':fmt(a.pf);$('st_pf').className='big '+(a.pf>=1.3?'pos':a.pf>=1?'warn':'neg');
+ $('st_pfs').innerHTML=`<span class="hyp">HYPOTHETICAL: ${b.n} сигналов · winrate ${(b.wr*100).toFixed(0)}% · PF ${b.pf>=99?'∞':fmt(b.pf)} · <span class="${cls(b.pnl)}">${sgn(b.pnl)} $</span></span>`;
+ $('calTitle').textContent='Realized против Hypothetical по дням';
+ const dr=grp(real,t=>t.opened.slice(0,10)),ds=grp(sig,t=>t.opened.slice(0,10));
+ const keys=[...new Set([...Object.keys(dr),...Object.keys(ds)])].sort();
+ $('calBox').innerHTML=keys.length?`<div class="tw" style="max-height:280px"><table><thead><tr><th>День</th><th>Realized сделок</th><th>Realized P&L</th><th>Сигналов</th><th>Hypothetical P&L</th></tr></thead><tbody>`+
+  keys.map(k=>`<tr><td>${k}</td><td>${dr[k]?dr[k].n:0}</td><td class="${cls(dr[k]?dr[k].pnl:0)}">${dr[k]?sgn(dr[k].pnl):'—'}</td><td>${ds[k]?ds[k].n:0}</td><td class="${cls(ds[k]?ds[k].pnl:0)}">${ds[k]?sgn(ds[k].pnl):'—'}</td></tr>`).join('')+'</tbody></table></div>':'<div class="empty">нет данных</div>';
+ $('calHint').textContent='Расхождение показывает, сколько мы теряем на риск-гейтах и исполнении.';
+ const pair=(id,fn)=>{const A=grp(real,fn),B=grp(sig,fn);const ks=[...new Set([...Object.keys(A),...Object.keys(B)])].sort();
+  $(id).innerHTML=ks.length?`<table><thead><tr><th>Срез</th><th>Real</th><th>Real P&L</th><th>Сигн.</th><th>Hyp P&L</th></tr></thead><tbody>`+
+   ks.map(k=>`<tr><td>${esc(k)}</td><td>${A[k]?A[k].n:0}</td><td class="${cls(A[k]?A[k].pnl:0)}">${A[k]?sgn(A[k].pnl):'—'}</td><td>${B[k]?B[k].n:0}</td><td class="${cls(B[k]?B[k].pnl:0)}">${B[k]?sgn(B[k].pnl):'—'}</td></tr>`).join('')+'</tbody></table>':'<div class="empty">нет данных</div>'};
+ pair('st_win',t=>(t.minutes||'?')+'m'); pair('st_asset',t=>t.asset);
+ pair('st_entry',t=>t.entry_bucket||'—'); pair('st_move',t=>t.move_bucket||'—');
+ $('st_hours').innerHTML='';$('st_conc').innerHTML='<div class="sub">Переключись на REALIZED или SIGNALS, чтобы увидеть концентрацию.</div>';
+ $('st_dd').innerHTML='';$('st_dds').textContent='';
+ $('st_trades').innerHTML=sig.slice().reverse().slice(0,80).map(t=>`<tr><td>${t.opened.slice(5,16).replace('T',' ')}</td><td>${esc(t.asset)}</td><td>${t.minutes}м</td><td class="${t.side==='UP'?'pos':'neg'}">${esc(t.side)}</td><td>${fmt(t.entry)}</td><td>${fmt(t.cost)}</td><td class="${t.won?'pos':'neg'}">${t.won?'WIN':'LOSS'}</td><td class="${cls(t.pnl)}">${sgn(t.pnl)}</td></tr>`).join('')||'<tr><td colspan="8" class="empty">нет сигналов</td></tr>';
+}
 // ───── журнал сигналов ─────
 let sgFilter='all';
 function renderSignals(){const m=(last&&last.missed)||[];
@@ -509,6 +602,35 @@ function renderSignals(){const m=(last&&last.missed)||[];
  const cnt={};m.forEach(x=>cnt[x.reason]=(cnt[x.reason]||0)+1);const tot=m.length||1;
  $('sg_reasons').innerHTML=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="brow"><span class="k">${esc(k)}</span><span class="t"><i style="width:${(v/tot*100).toFixed(0)}%;background:var(--warn)"></i></span><span class="v">${v}</span></div>`).join('')||'<div class="empty">Пока пусто — бот не пропустил ни одного готового сигнала.</div>';
  $('sg_list').innerHTML=list.slice(0,80).map(x=>`<tr><td>${x.ts.slice(5,16).replace('T',' ')}</td><td>${esc(x.asset)}</td><td>${esc(x.minutes)}м</td><td class="${x.side==='UP'?'pos':'neg'}">${esc(x.side)}</td><td>${esc(x.price)}</td><td class="warn">${esc(x.reason)}</td><td class="rr">${esc(x.note)}</td></tr>`).join('')||'<tr><td colspan="7" class="empty">нет записей</td></tr>';
+}
+// ───── исполнение ─────
+function sigList(){return (last&&last.signals)||[]}
+function renderExec(){const sg=sigList();
+ const nSig=sg.length,nRisk=sg.filter(s=>!s.risk_gate).length,
+  nFill=sg.filter(s=>s.signal_status==='EXECUTED').length,
+  nPart=sg.filter(s=>s.order_status==='PARTIAL').length,
+  nUnf=sg.filter(s=>s.signal_status==='ORDER_UNFILLED').length,
+  nCan=sg.filter(s=>s.signal_status==='ORDER_CANCELLED').length;
+ const mx=Math.max(nSig,1),step=(l,v,c)=>`<div class="s ${c||''}"><span>${l}</span><i style="width:${Math.max(2,v/mx*100).toFixed(0)}%"></i><span>${v}</span></div>`;
+ $('ex_funnel').innerHTML=`<div class="fn">${step('Сигналов',nSig)}${step('Прошли риск',nRisk)}${step('Ордеров',nRisk)}${step('Исполнено',nFill,'fill')}</div>`;
+ $('ex_funnelSub').textContent=nSig?`из ${nSig} сигналов исполнено ${nFill}`:'нет данных';
+ const rs={};sg.forEach(s=>{if(s.risk_gate)rs[s.risk_gate]=(rs[s.risk_gate]||0)+1});
+ if(nUnf)rs['ОРДЕР НЕ ИСПОЛНЕН']=nUnf; if(nCan)rs['ОРДЕР СНЯТ']=nCan; if(nPart)rs['ЧАСТИЧНОЕ ИСПОЛНЕНИЕ']=nPart;
+ const tot=Object.values(rs).reduce((a,b)=>a+b,0)||1;
+ $('ex_reasons').innerHTML=Object.entries(rs).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="brow"><span class="k">${esc(k)}</span><span class="t"><i style="width:${(v/tot*100).toFixed(0)}%;background:var(--warn)"></i></span><span class="v">${v}</span></div>`).join('')||'<div class="empty">Потерь не было.</div>';
+ $('ex_rate').textContent=nSig?(nFill/nSig*100).toFixed(0)+'%':'—';
+ $('ex_rate').className='big '+(nSig?(nFill/nSig>=.7?'pos':nFill/nSig>=.4?'warn':'neg'):'');
+ $('ex_rateSub').textContent=`${nFill} исполнено из ${nSig} сигналов`;
+ const sl=sg.filter(s=>s.slippage!=null);
+ $('ex_slip').textContent=sl.length?(sl.reduce((a,s)=>a+s.slippage,0)/sl.length).toFixed(4):'—';
+ const q={};sg.forEach(s=>{const k=s.execution_quality||'—';q[k]=(q[k]||0)+1});
+ const qt=Object.values(q).reduce((a,b)=>a+b,0)||1;
+ $('ex_quality').innerHTML=Object.entries(q).sort().map(([k,v])=>`<div class="brow"><span class="k">${esc(k)}</span><span class="t"><i style="width:${(v/qt*100).toFixed(0)}%;background:${k==='GOOD'?'var(--up)':k==='MARGINAL'?'var(--warn)':'var(--down)'}"></i></span><span class="v">${v}</span></div>`).join('')||'<div class="empty">нет данных</div>';
+ const byW={};sg.forEach(s=>{const k=s.window||'?';const o=byW[k]=byW[k]||{n:0,risk:0,fill:0,part:0,unf:0,rem:0,q:{}};o.n++;if(!s.risk_gate)o.risk++;if(s.signal_status==='EXECUTED')o.fill++;if(s.order_status==='PARTIAL')o.part++;if(s.signal_status==='ORDER_UNFILLED')o.unf++;o.rem+=s.remaining_seconds||0;o.q[s.execution_quality||'—']=(o.q[s.execution_quality||'—']||0)+1});
+ $('ex_win').innerHTML=Object.entries(byW).sort().map(([k,v])=>`<tr><td><b>${esc(k)}</b></td><td>${v.n}</td><td>${v.risk}</td><td class="pos">${v.fill}</td><td>${v.part}</td><td class="${v.unf?'neg':''}">${v.unf}</td><td class="${v.fill/v.n>=.7?'pos':'warn'}">${(v.fill/v.n*100).toFixed(0)}%</td><td>${(v.rem/v.n).toFixed(0)} с</td><td>${(v.q.GOOD||0)} / ${(v.q.MARGINAL||0)} / ${(v.q.UNEXECUTABLE||0)}</td></tr>`).join('')||'<tr><td colspan="9" class="empty">нет сигналов</td></tr>';
+ $('ex_list').innerHTML=sg.slice(-60).reverse().map(s=>`<tr><td>${(s.timestamp||'').slice(5,16).replace('T',' ')}</td><td>${esc(s.asset)}</td><td>${esc(s.window)}</td><td class="${s.direction==='UP'?'pos':'neg'}">${esc(s.direction)}</td><td>${fmt(s.entry_price)}</td>
+  <td class="${s.signal_status==='EXECUTED'?'pos':'warn'}">${esc(s.signal_status)}</td><td class="${s.risk_gate?'neg':''}">${esc(s.risk_gate||'—')}</td><td>${esc(s.order_status||'—')}</td>
+  <td class="${s.execution_quality==='GOOD'?'pos':s.execution_quality==='UNEXECUTABLE'?'neg':'warn'}">${esc(s.execution_quality||'—')}</td><td>${s.remaining_seconds==null?'—':Math.round(s.remaining_seconds)}</td></tr>`).join('')||'<tr><td colspan="10" class="empty">нет сигналов</td></tr>';
 }
 // ───── отчёты ─────
 async function loadReports(){$('rpList').innerHTML='<tr><td colspan="7" class="empty">загрузка…</td></tr>';
@@ -528,7 +650,7 @@ async function gh(path,opt={}){const r=await fetch(GH+path,{...opt,headers:{'Aut
 document.querySelectorAll('#menu .dd a[data-view]').forEach(a=>a.onclick=e=>{e.preventDefault();history.replaceState(null,'',a.dataset.view==='dash'?'#':'#'+a.dataset.view);showView(a.dataset.view)});
 $('menuBtn').onclick=e=>{e.stopPropagation();$('menu').classList.toggle('open')};document.addEventListener('click',()=>$('menu').classList.remove('open'));
 function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v_'+v));$('fabBack').style.display=v==='dash'?'none':'block';window.scrollTo(0,0);document.querySelectorAll('#menu .dd a').forEach(a=>a.classList.toggle('on',a.dataset.view===v));$('menu').classList.remove('open');
- if(v==='settings')loadSettings();if(v==='keys')loadKeys();if(v==='power')loadPower();if(v==='stats')loadArchive();if(v==='statistics')renderStats();if(v==='signals')renderSignals();if(v==='reports')loadReports()}
+ if(v==='settings')loadSettings();if(v==='keys')loadKeys();if(v==='power')loadPower();if(v==='stats')loadArchive();if(v==='statistics')renderStats();if(v==='signals')renderSignals();if(v==='reports')loadReports();if(v==='execution')renderExec()}
 // settings schema
 const S=[
  {k:'MODE',t:'mode',n:'Режим',d:'paper — виртуальные сделки по реальным котировкам, деньги не нужны. live — реальные ордера на Polymarket с твоего кошелька. Переключай на live только после теста и с ключами в разделе «Ключи».'},
@@ -645,7 +767,7 @@ $('pwReset').onclick=async()=>{if(!await ask('Обнулить статисти�
  const put=async(p,content,sha)=>gh('/contents/'+p,{method:'PUT',body:JSON.stringify({message:'reset stats',content:btoa(unescape(encodeURIComponent(content))),...(sha?{sha}:{})})});
  await put('state.json',JSON.stringify(fresh,null,1),st&&st.sha);await put('trades.csv','',tr&&tr.sha);
  await new Promise(r=>setTimeout(r,5000));await dispatch()},'обнуляю','Статистика сброшена, Excel скачан, снимок в архиве. Бот стартует заново.')};
-const VIEWS=['dash','settings','keys','power','stats','statistics','signals','reports'];
+const VIEWS=['dash','settings','keys','power','stats','statistics','signals','reports','execution'];
 if(location.hash&&VIEWS.includes(location.hash.slice(1)))setTimeout(()=>showView(location.hash.slice(1)),300);
 window.addEventListener('hashchange',()=>{const v=location.hash.slice(1);if(VIEWS.includes(v))showView(v)});
 if(window.__GIST__){$('btnStart').style.display=$('btnStop').style.display='none';refresh();setInterval(refresh,15000);setInterval(renderPositions,1000)}

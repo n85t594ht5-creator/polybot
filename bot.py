@@ -77,6 +77,20 @@ ASSET_WORDS = {"BTC": "bitcoin", "ETH": "ethereum", "SOL": "solana", "XRP": "xrp
 STATE_FILE = "state.json"
 TRADES_FILE = "trades.csv"
 MISSED_FILE = "missed.csv"
+SIGNALS_FILE = "signals.csv"
+
+# Единый журнал qualifying signals. Порядок колонок фиксирован — не менять,
+# только дописывать в конец, иначе сломается чтение старых строк.
+SIGNAL_FIELDS = [
+    "timestamp", "asset", "window", "market_id", "elapsed", "remaining_seconds",
+    "reference_price", "current_price", "move_pct", "direction", "entry_price",
+    "bid", "ask", "spread", "confidence", "required_move", "entry_bucket", "move_bucket",
+    "elapsed_bucket", "risk_gate", "signal_status", "order_status", "execution_quality",
+    "requested_shares", "filled_shares", "remaining_shares", "average_fill_price",
+    "best_ask", "slippage", "hyp_cost", "hyp_shares", "resolution", "hypothetical_pnl",
+    "realized_pnl", "bankroll_at_signal", "daily_pnl", "exposure_at_signal",
+    "consecutive_losses", "end",
+]
 
 logging.basicConfig(
     level=logging.INFO,
@@ -97,12 +111,38 @@ def entry_bucket(p):
             return name
     return "прочее"
 
+def elapsed_bucket(e):
+    for hi, name in ((0.80, "75–80%"), (0.85, "80–85%"), (0.90, "85–90%"), (0.95, "90–95%")):
+        if e < hi:
+            return name
+    return "95%+"
+
 def move_bucket(m):
     a = abs(m)
     if a < 0.0012: return "0.10–0.12%"
     if a < 0.0020: return "0.12–0.20%"
     if a < 0.0035: return "0.20–0.35%"
     return "≥0.35%"
+
+def write_signal(row):
+    """Дописывает строку в signals.csv (создаёт с заголовком, если файла нет)."""
+    try:
+        new = not os.path.exists(SIGNALS_FILE)
+        with open(SIGNALS_FILE, "a", encoding="utf-8") as f:
+            if new:
+                f.write(",".join(SIGNAL_FIELDS) + "\n")
+            f.write(",".join(str(row.get(k, "")).replace(",", ";") for k in SIGNAL_FIELDS) + "\n")
+    except Exception as e:
+        log.warning("write_signal: %s", e)
+
+def exec_quality(remaining_sec, depth_usd, want_usd):
+    """Насколько реалистично было бы исполнить этот сигнал."""
+    if depth_usd is not None and depth_usd < 1.0:
+        return "UNEXECUTABLE"
+    if remaining_sec < 30:
+        return "UNEXECUTABLE"
+    marginal = remaining_sec < 60 or (depth_usd is not None and want_usd and depth_usd < want_usd * 0.99)
+    return "MARGINAL" if marginal else "GOOD"
 
 def log_missed(mkt, side, entry, reason, extra=""):
     """Журнал упущенных сигналов: условия сошлись, но войти не удалось."""
@@ -144,6 +184,7 @@ class State:
         self.day_start_bankroll = BANKROLL
         self.execstats = {"submitted": 0, "filled": 0, "partial": 0, "unfilled": 0, "cancelled": 0,
                           "slip_sum": 0.0, "slip_n": 0, "by_window": {}}
+        self.pending_signals = []   # qualifying signals, ждущие резолва окна
         self.consec_losses = 0
         self.cooldown_until = None
         self.trade_times = []
@@ -370,16 +411,6 @@ def evaluate(mkt, state):
         elif abs(move) < MIN_MOVE_HIGH:
             return None, f"ask {entry:.2f} > {TIER_ENTRY}: move {move:+.3%} < {MIN_MOVE_HIGH:.3%}"
 
-    # корреляционные лимиты
-    same_win = sum(1 for p in state.positions.values() if p.get("start") == mkt["start"].isoformat())
-    if same_win >= MAX_PER_WINDOW:
-        log_missed(mkt, side, entry, "лимит окна", f"{same_win} позиций")
-        return None, f"уже {same_win} позиций в этом окне"
-    same_dir = sum(1 for p in state.positions.values() if p.get("side") == side)
-    if same_dir >= MAX_SAME_DIR:
-        log_missed(mkt, side, entry, "лимит стороны", f"{same_dir} позиций {side}")
-        return None, f"уже {same_dir} позиций {side}"
-
     # Уверенность: чем позже и чем сильнее движение — тем выше.
     # Это эвристика, не модель. Калибруется по логам paper-режима.
     conf = min(0.95, 0.5 + elapsed * 0.3 + strength * 0.15)
@@ -392,30 +423,55 @@ def evaluate(mkt, state):
     if kelly <= 0:                      # нет положительного edge — сделки нет
         log_missed(mkt, side, entry, "нет edge", f"kelly {kelly:.3f}")
         return None, f"kelly {kelly:.3f} <= 0"
-    size = kelly * KELLY_FRAC * state.bankroll
-    size = min(size, state.bankroll * MAX_STAKE, state.bankroll * MAX_EXPOSURE - state.exposure())
-    if size < 1.0:
-        log_missed(mkt, side, entry, "мало места", f"размер {size:.2f}$")
-        return None, "size too small"
+    # Гипотетический размер: Келли с потолком MAX_STAKE, БЕЗ учёта занятой экспозиции.
+    # Нужен, чтобы честно оценить сигнал, который не был исполнен из-за риск-гейта.
+    hyp_size = min(kelly * KELLY_FRAC * state.bankroll, state.bankroll * MAX_STAKE)
+    size = min(hyp_size, state.bankroll * MAX_EXPOSURE - state.exposure())
+
+    # Риск-гейты: сигнал остаётся qualifying, но помечается как заблокированный.
+    risk_gate = ""
+    ok_trade, why_gate = state.can_trade()
+    if not ok_trade:
+        risk_gate = {"cooldown": "COOLDOWN", "daily loss limit": "DAILY_LOSS_LIMIT",
+                     "max positions": "MAX_POSITIONS", "max exposure": "MAX_EXPOSURE",
+                     "rate limit": "RATE_LIMIT"}.get(why_gate, why_gate.upper())
+    elif sum(1 for p in state.positions.values() if p.get("start") == mkt["start"].isoformat()) >= MAX_PER_WINDOW:
+        risk_gate = "MAX_PER_WINDOW"
+    elif sum(1 for p in state.positions.values() if p.get("side") == side) >= MAX_SAME_DIR:
+        risk_gate = "MAX_SAME_DIR"
+    elif size < 1.0:
+        risk_gate = "MAX_EXPOSURE"
 
     # Стакан: сколько реально можно купить, не разгоняя цену
-    avg, shares, depth_note = entry, round(size / entry, 2), ""
+    want = size if size >= 1.0 else hyp_size
+    avg, shares, depth_note, depth_usd = entry, round(max(size, 0) / entry, 2), "", None
+    cap = min(MAX_ENTRY, entry + MAX_SLIP)
     if USE_BOOK:
         book = clob_book(token)
         if book:
-            cap = min(MAX_ENTRY, entry + MAX_SLIP)
-            spent, sh, avg_p = fillable(book, size, cap)
-            if spent < 1.0:
-                log_missed(mkt, side, entry, "нет объёма", f"в стакане до {cap:.2f} меньше 1$")
-                return None, f"нет объёма до {cap:.2f}"
-            if spent < size * 0.99:
-                depth_note = f"стакан дал {spent:.2f}$ из {size:.2f}$"
-                log_missed(mkt, side, entry, "частичный объём", depth_note)
-            size, shares, avg = spent, sh, round(avg_p, 4)
+            depth_usd = fillable(book, 1e9, cap)[0]
+            spent, sh, avg_p = fillable(book, want, cap)
+            if not risk_gate:
+                if spent < 1.0:
+                    log_missed(mkt, side, entry, "нет объёма", f"в стакане до {cap:.2f} меньше 1$")
+                    risk_gate = "NO_LIQUIDITY"
+                elif spent < size * 0.99:
+                    depth_note = f"стакан дал {spent:.2f}$ из {size:.2f}$"
+                    log_missed(mkt, side, entry, "частичный объём", depth_note)
+            if spent >= 1.0:
+                size, shares, avg = spent, sh, round(avg_p, 4)
+    hyp_shares = round(hyp_size / avg, 2) if avg else 0.0
+    remaining_sec = (mkt["end"] - t).total_seconds()
 
     return {
         "market_id": mkt["id"], "asset": mkt["asset"], "side": side, "token": token,
         "minutes": mkt["minutes"], "start": mkt["start"].isoformat(),
+        "risk_gate": risk_gate, "hyp_cost": round(hyp_size, 2), "hyp_shares": hyp_shares,
+        "depth_usd": None if depth_usd is None else round(depth_usd, 2),
+        "remaining_sec": round(remaining_sec, 1),
+        "execution_quality": exec_quality(remaining_sec, depth_usd, want),
+        "required_move": MIN_MOVE_HIGH if entry > TIER_ENTRY else MIN_MOVE,
+        "elapsed_bucket": elapsed_bucket(elapsed), "cur": cur,
         "entry": avg, "best_ask": entry, "cost": round(size, 2), "shares": shares, "depth_note": depth_note,
         "conf": round(conf, 3), "move": round(move, 5), "elapsed": round(elapsed, 2),
         "entry_bucket": entry_bucket(avg), "move_bucket": move_bucket(move),
@@ -493,8 +549,75 @@ def place_order(cand):
     return {"order_id": oid, "status": status, "filled_shares": round(filled, 2),
             "filled_cost": round(cost, 2), "avg_fill_price": round(avg, 4)}
 
+def register_signal(cand, state, signal_status, order=None):
+    """Кладёт qualifying signal в очередь на резолв. Пишется в журнал после окончания окна."""
+    row = {
+        "timestamp": cand["opened"], "asset": cand["asset"], "window": f"{cand['minutes']}m",
+        "market_id": cand["market_id"], "elapsed": cand["elapsed"],
+        "remaining_seconds": cand.get("remaining_sec"), "reference_price": cand["ref"],
+        "current_price": cand.get("cur"), "move_pct": round(cand["move"] * 100, 4),
+        "direction": cand["side"], "entry_price": cand["entry"],
+        "bid": "", "ask": cand.get("best_ask", cand["entry"]),
+        "spread": "" if cand.get("depth_usd") is None else "",
+        "confidence": cand["conf"], "required_move": round(cand.get("required_move", 0) * 100, 4),
+        "entry_bucket": cand["entry_bucket"], "move_bucket": cand["move_bucket"],
+        "elapsed_bucket": cand.get("elapsed_bucket", ""), "risk_gate": cand.get("risk_gate", ""),
+        "signal_status": signal_status, "order_status": (order or {}).get("status", ""),
+        "execution_quality": cand.get("execution_quality", ""),
+        "requested_shares": cand.get("requested_shares", cand.get("shares", "")),
+        "filled_shares": (order or {}).get("filled_shares", ""),
+        "remaining_shares": cand.get("remaining_shares", ""),
+        "average_fill_price": (order or {}).get("avg_fill_price", ""),
+        "best_ask": cand.get("best_ask", cand["entry"]),
+        "slippage": round((order or {}).get("avg_fill_price", cand["entry"]) - cand.get("best_ask", cand["entry"]), 4) if order else "",
+        "hyp_cost": cand.get("hyp_cost", ""), "hyp_shares": cand.get("hyp_shares", ""),
+        "resolution": "", "hypothetical_pnl": "", "realized_pnl": "",
+        "bankroll_at_signal": round(state.bankroll, 2), "daily_pnl": round(state.day_pnl, 2),
+        "exposure_at_signal": round(state.exposure(), 2), "consecutive_losses": state.consec_losses,
+        "end": cand["end"],
+    }
+    state.pending_signals.append({"row": row, "side": cand["side"], "ref": cand["ref"],
+                                 "asset": cand["asset"], "end": cand["end"],
+                                 "executed": signal_status == "EXECUTED"})
+    state.save()
+    return row
+
+def resolve_signals(state):
+    """После окончания окна дописывает в журнал исход и гипотетический P&L."""
+    for sig in list(state.pending_signals):
+        end = parse_iso(sig["end"])
+        if now() < end + timedelta(seconds=90):
+            continue
+        try:
+            final = binance_open_at(sig["asset"], end)
+        except Exception as e:
+            log.warning("resolve_signal %s: %s", sig["asset"], e); continue
+        if not final:
+            continue
+        went_up = final > sig["ref"]
+        won = (sig["side"] == "UP") == went_up
+        r = sig["row"]
+        r["resolution"] = "WIN" if won else "LOSS"
+        try:
+            hs, hc = float(r["hyp_shares"] or 0), float(r["hyp_cost"] or 0)
+            r["hypothetical_pnl"] = round(hs - hc, 2) if won else round(-hc, 2)
+        except (TypeError, ValueError):
+            r["hypothetical_pnl"] = ""
+        write_signal(r)
+        state.pending_signals.remove(sig)
+    state.save()
+
 def open_position(cand, state):
-    """Открывает позицию ТОЛЬКО на фактически исполненный объём."""
+    """Открывает позицию ТОЛЬКО на фактически исполненный объём.
+
+    Защита: сигнал с непустым risk_gate НИКОГДА не превращается в сделку,
+    даже если вызывающий код забыл проверить это сам.
+    """
+    if cand.get("risk_gate"):
+        log.warning("open_position отклонён: сигнал %s %s заблокирован (%s)",
+                    cand.get("asset"), cand.get("side"), cand["risk_gate"])
+        register_signal(cand, state, "BLOCKED_BY_RISK")
+        return False
     es = state.execstats
     es["submitted"] = es.get("submitted", 0) + 1
     wkey = f"{cand['minutes']}m"
@@ -510,6 +633,8 @@ def open_position(cand, state):
     if r["status"] in ("UNFILLED", "CANCELLED"):
         es[r["status"].lower()] = es.get(r["status"].lower(), 0) + 1
         w["unfilled" if r["status"] == "UNFILLED" else "cancelled"] += 1
+        cand["requested_shares"] = requested_shares
+        register_signal(cand, state, "ORDER_" + r["status"], r)
         state.save()
         msg = f"[{MODE.upper()}] {cand['asset']} {cand['side']} ордер не исполнен ({r['status']}) — позиции нет"
         log.warning(msg); notify(msg)
@@ -530,6 +655,7 @@ def open_position(cand, state):
 
     state.positions[cand["market_id"]] = cand
     state.trade_times.append(time.time())
+    register_signal(cand, state, "EXECUTED", r)
     state.save()
     msg = (f"[{MODE.upper()}] BUY {cand['asset']} {cand['side']} @ {cand['entry']:.3f} "
            f"${cand['cost']:.2f} ({r['status']}) conf={cand['conf']} move={cand['move']:+.3%}")
@@ -561,6 +687,9 @@ def resolve_positions(state):
         state.day_pnl += pnl
         state.consec_losses = 0 if won else state.consec_losses + 1
         p.update({"won": won, "pnl": round(pnl, 2), "final": final})
+        for sig in state.pending_signals:
+            if sig["row"].get("market_id") == mid and sig.get("executed"):
+                sig["row"]["realized_pnl"] = round(pnl, 2)
         state.closed.append(p)
         del state.positions[mid]
         with open(TRADES_FILE, "a") as f:
@@ -598,6 +727,7 @@ def main():
         try:
             if n % 10 == 0:
                 resolve_positions(state)
+                resolve_signals(state)
             if time.time() - markets_ts > MARKETS_TTL:
                 fresh = find_updown_markets()
                 # сохраняем прогретые кэши цены старта
@@ -606,21 +736,25 @@ def main():
                     if old.get(m["id"]): m["_ref"] = old[m["id"]]
                 markets, markets_ts = fresh, time.time()
             ok, why = state.can_trade()
-            if ok:
-                for mkt in markets:
-                    if mkt["end"] <= now():
-                        continue
-                    if mkt["id"] in state.positions:
-                        continue
-                    cand, reason = evaluate(mkt, state)
-                    if cand:
-                        wk = f"{mkt['minutes']}m"
-                        state.execstats.setdefault("by_window", {}).setdefault(
-                            wk, {"signal": 0, "submitted": 0, "filled": 0, "partial": 0, "unfilled": 0, "cancelled": 0})["signal"] += 1
-                        open_position(cand, state)
-                    else:
-                        log.debug("%s %s: %s", mkt["asset"], mkt["end"].strftime("%H:%M"), reason)
-            elif n % 40 == 0:
+            seen = {s["row"]["market_id"] for s in state.pending_signals}
+            for mkt in markets:
+                if mkt["end"] <= now() or mkt["id"] in state.positions or mkt["id"] in seen:
+                    continue
+                cand, reason = evaluate(mkt, state)
+                if not cand:
+                    log.debug("%s %s: %s", mkt["asset"], mkt["end"].strftime("%H:%M"), reason)
+                    continue
+                wk = f"{mkt['minutes']}m"
+                state.execstats.setdefault("by_window", {}).setdefault(
+                    wk, {"signal": 0, "submitted": 0, "filled": 0, "partial": 0, "unfilled": 0, "cancelled": 0})["signal"] += 1
+                if cand.get("risk_gate"):
+                    # Сигнал валиден, но исполнять его нельзя — записываем как заблокированный.
+                    register_signal(cand, state, "BLOCKED_BY_RISK")
+                    log.info("SIGNAL %s %s @ %.3f заблокирован (%s)", cand["asset"], cand["side"],
+                             cand["entry"], cand["risk_gate"])
+                else:
+                    open_position(cand, state)
+            if not ok and n % 40 == 0:
                 log.info("Trading paused: %s", why)
             n += 1
             if n % 80 == 0:

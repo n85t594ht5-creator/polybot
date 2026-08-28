@@ -10,6 +10,23 @@ os.makedirs("reports", exist_ok=True)
 day = sys.argv[1] if len(sys.argv) > 1 else (datetime.now(timezone.utc) - timedelta(days=0)).strftime("%Y-%m-%d")
 
 state = json.load(open("state.json")) if os.path.exists("state.json") else {}
+signals = []
+if os.path.exists("signals.csv"):
+    import csv as _csv
+    with open("signals.csv", encoding="utf-8", errors="ignore") as _f:
+        signals = [r for r in _csv.DictReader(_f) if str(r.get("timestamp", ""))[:10] == day]
+
+def _f(v):
+    try: return float(v)
+    except (TypeError, ValueError): return 0.0
+
+def sig_agg(key):
+    out = collections.defaultdict(lambda: {"n": 0, "w": 0, "hyp": 0.0, "real": 0.0})
+    for s in signals:
+        k = key(s); o = out[k]; o["n"] += 1
+        o["w"] += 1 if s.get("resolution") == "WIN" else 0
+        o["hyp"] += _f(s.get("hypothetical_pnl")); o["real"] += _f(s.get("realized_pnl"))
+    return {k: {**v, "hyp": round(v["hyp"], 2), "real": round(v["real"], 2)} for k, v in out.items()}
 closed = state.get("closed") or []
 trades = [t for t in closed if str(t.get("opened", ""))[:10] == day]
 
@@ -36,6 +53,14 @@ rep = {
     "by_move": agg(lambda t: t.get("move_bucket") or "—"),
     "by_side": agg(lambda t: t.get("side", "?")),
     "execstats": state.get("execstats") or {},
+    "signals": len(signals),
+    "signals_executed": sum(1 for s in signals if s.get("signal_status") == "EXECUTED"),
+    "signals_blocked": sum(1 for s in signals if s.get("signal_status") == "BLOCKED_BY_RISK"),
+    "hypothetical_pnl": round(sum(_f(s.get("hypothetical_pnl")) for s in signals), 2),
+    "signals_by_window": sig_agg(lambda s: s.get("window", "?")),
+    "signals_by_asset": sig_agg(lambda s: s.get("asset", "?")),
+    "signals_by_entry": sig_agg(lambda s: s.get("entry_bucket", "?")),
+    "signals_by_gate": sig_agg(lambda s: s.get("risk_gate") or "—"),
     "trade_list": [{k: t.get(k) for k in ("opened", "asset", "side", "minutes", "entry", "cost", "shares", "conf", "move", "won", "pnl", "question")} for t in trades],
 }
 json.dump(rep, open(f"reports/{day}.json", "w"), ensure_ascii=False, indent=1)
@@ -50,6 +75,14 @@ try:
     w2 = wb.create_sheet("Итоги")
     for k in ("day", "trades", "wins", "losses", "winrate", "pnl", "gross_win", "gross_loss", "pf", "bankroll_end"):
         w2.append([k, rep[k]])
+    w2.append([]); w2.append(["QUALIFYING SIGNALS (hypothetical — не реальные деньги)"])
+    w2.append(["Срез", "сигналов", "побед", "hypothetical P&L", "realized P&L"])
+    for nm, key in (("По окнам", "signals_by_window"), ("По активам", "signals_by_asset"),
+                    ("По цене входа", "signals_by_entry"), ("По риск-гейтам", "signals_by_gate")):
+        w2.append([nm])
+        for k, v in sorted(rep[key].items()):
+            w2.append([k, v["n"], v["w"], v["hyp"], v["real"]])
+    w2.append([]); w2.append(["REALIZED (реальные сделки)"])
     for name, key in (("По активам", "by_asset"), ("По окнам", "by_window"), ("По часам", "by_hour"),
                       ("По цене входа", "by_entry"), ("По силе движения", "by_move"), ("По направлению", "by_side")):
         w2.append([]); w2.append([name, "сделок", "побед", "P&L"])
