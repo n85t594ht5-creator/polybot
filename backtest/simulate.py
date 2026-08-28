@@ -221,6 +221,63 @@ open("results/report.md", "w").write("\n".join(md))
 print("\n".join(md[:12]))
 
 
+# ── Move Analysis: что было бы с сигналами, которые отсекает MIN_MOVE ──
+# Берём ту же точку входа, что и стратегия (elapsed >= MIN_ELAPSED, цена в зоне),
+# но НЕ применяем порог движения. Торговая логика не меняется — это только замер.
+MOVE_BUCKETS = ((0.0005, "0.00–0.05%"), (0.0010, "0.05–0.10%"), (0.0012, "0.10–0.12%"),
+                (0.0015, "0.12–0.15%"), (0.0020, "0.15–0.20%"))
+
+def mv_bucket(m):
+    a = abs(m)
+    for hi, name in MOVE_BUCKETS:
+        if a < hi:
+            return name
+    return "0.20%+"
+
+def move_analysis(P, stake=None):
+    """Наблюдения по всем окнам без фильтра MIN_MOVE. Возвращает срезы ALL/5m/15m/по активам."""
+    stake = stake or BANKROLL * FLAT_STAKE
+    cuts = {"ALL": lambda w: True, "5m": lambda w: w["minutes"] == 5, "15m": lambda w: w["minutes"] == 15}
+    for a in sorted({w["asset"] for w in TRAJ}):
+        cuts[a] = (lambda x: (lambda w: w["asset"] == x))(a)
+    out = {k: {} for k in cuts}
+    for w in TRAJ:
+        obs = None
+        for el, move, ua, da, left, sg, t in w["steps"]:
+            if el < P["MIN_ELAPSED"] or left < 30 or move == 0:
+                continue
+            side = "UP" if move > 0 else "DOWN"
+            ask = ua if side == "UP" else da
+            if ask > P["MAX_ENTRY"] or ask <= 0.01 or ask < P.get("MIN_ENTRY", 0):
+                continue
+            won = (side == "UP") == w["up_won"]
+            b = (1 - ask) / ask
+            obs = {"bucket": mv_bucket(move), "won": won, "entry": ask, "move": abs(move),
+                   "pnl": stake * b if won else -stake, "passes": abs(move) >= (P["MIN_MOVE_HIGH"] if ask > P["TIER_ENTRY"] else P["MIN_MOVE"])}
+            break
+        if not obs:
+            continue
+        for name, f in cuts.items():
+            if not f(w):
+                continue
+            d = out[name].setdefault(obs["bucket"], {"n": 0, "wins": 0, "losses": 0, "pnl": 0.0,
+                                                     "gp": 0.0, "gl": 0.0, "entry_sum": 0.0,
+                                                     "move_sum": 0.0, "passes": 0})
+            d["n"] += 1; d["wins"] += obs["won"]; d["losses"] += (not obs["won"])
+            d["pnl"] += obs["pnl"]; d["entry_sum"] += obs["entry"]; d["move_sum"] += obs["move"]
+            d["passes"] += obs["passes"]
+            if obs["won"]: d["gp"] += obs["pnl"]
+            else: d["gl"] += -obs["pnl"]
+    for name, buckets in out.items():
+        for b, d in buckets.items():
+            d["winrate"] = d["wins"] / d["n"] if d["n"] else 0
+            d["pf"] = (d["gp"] / d["gl"]) if d["gl"] else (99.0 if d["gp"] else 0)
+            d["avg_entry"] = round(d["entry_sum"] / d["n"], 3) if d["n"] else 0
+            d["avg_move"] = round(d["move_sum"] / d["n"] * 100, 3) if d["n"] else 0
+            d["pnl"] = round(d["pnl"], 2)
+            for k in ("gp", "gl", "entry_sum", "move_sum"): d.pop(k, None)
+    return out
+
 # ── Кривые капитала: фиксированная ставка vs дробный Келли ──
 def equity(trades, mode, frac=0.15, cap=float(os.getenv("MAX_STAKE_PCT", "8")) / 100, bank0=BANKROLL):
     bank, curve, peak, dd = bank0, [bank0], bank0, 0.0
@@ -270,7 +327,10 @@ page = {"generated": datetime.now(timezone.utc).isoformat(), "windows": nw, "day
         "grid": [{**{k: r[k] for k in SHOW_COLS}, **{k: r[k] for k in ("trades", "wins", "losses", "winrate", "pf", "pnl", "gross_loss", "max_dd", "score", "oos_trades", "oos_winrate", "oos_pf", "oos_pnl")}} for r in rows[:40]],
         "split": {"ts": SPLIT_TS, "is_windows": len(IS), "oos_windows": len(OOS), "oos_split": OOS_SPLIT},
         "inputs": json.loads(os.getenv("BT_INPUTS") or "{}"), "excluded": sorted(EXCLUDE), "repo": os.getenv("GITHUB_REPOSITORY", ""), "min_trades": MIN_TRADES,
-        "configs": {"current": pack("Текущие настройки бота", CURRENT)}}
+        "configs": {"current": pack("Текущие настройки бота", CURRENT)},
+        "move_analysis": move_analysis(CURRENT),
+        "move_thresholds": {"MIN_MOVE": CURRENT["MIN_MOVE"], "MIN_MOVE_HIGH": CURRENT["MIN_MOVE_HIGH"],
+                            "TIER_ENTRY": CURRENT["TIER_ENTRY"]}}
 seen, top = set(), []
 for r in rows:
     if r["trades"] < MIN_TRADES or r["score"] <= 0: continue

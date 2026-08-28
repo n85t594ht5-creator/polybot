@@ -209,7 +209,7 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
    <div class="card c8"><h2 id="calTitle">Календарь</h2><div id="calBox" style="max-width:560px"></div><div class="sub" id="calHint"></div></div>
    <div class="card c4"><h2>По часам (UTC)</h2><div class="hgrid" id="st_hours"></div><div class="sub" style="margin-top:10px">Зелёный — час в плюсе, красный — в минусе. Цифра — число сделок.</div></div>
    <div class="card c6"><h2>По цене входа</h2><div id="st_entry"></div></div>
-   <div class="card c6"><h2>По силе движения</h2><div id="st_move"></div></div>
+   <div class="card c6"><h2>По силе движения</h2><div id="st_move"></div><div class="sub" id="st_moveNote"></div></div>
    <div class="card c6"><h2>5m против 15m</h2><div id="st_win"></div></div>
    <div class="card c6"><h2>По активам</h2><div id="st_asset"></div></div>
    <div class="card c12"><h2>Концентрация результата</h2><div id="st_conc"></div><div class="sub">Если один день или один срез даёт непропорционально много — это событие, а не стратегия.</div></div>
@@ -288,7 +288,7 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
 <script src="https://cdnjs.cloudflare.com/ajax/libs/libsodium-wrappers/0.7.13/sodium.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script>window.__GIST__="https://gist.githubusercontent.com/n85t594ht5-creator/abd926ec1255969b62fd4a279b60fb09/raw/state.json";window.__REPO__="n85t594ht5-creator/polybot";window.__VER__="1.6.0";</script>
+<script>window.__GIST__="https://gist.githubusercontent.com/n85t594ht5-creator/abd926ec1255969b62fd4a279b60fb09/raw/state.json";window.__REPO__="n85t594ht5-creator/polybot";window.__VER__="1.6.1";</script>
 <script>
 const $=id=>document.getElementById(id);
 document.addEventListener('DOMContentLoaded',()=>{const v=$('ver');if(v)v.textContent='v'+(window.__VER__||'')});
@@ -531,7 +531,14 @@ function renderStats(){
  const byh2=grp(list,t=>t.opened.slice(11,13));
  $('st_hours').innerHTML=Array.from({length:24},(_,h)=>{const k=String(h).padStart(2,'0'),v=byh2[k];return `<div class="${v?(v.pnl>=0?'win':'loss'):''}" title="${k}:00 · ${v?v.n+' сделок · '+sgn(v.pnl)+'$':'нет'}">${k}</div>`}).join('');
  barList('st_entry',grp(list,t=>t.entry_bucket||(()=>{const lo=Math.floor(t.entry*20)/20;return lo.toFixed(2)+'–'+(lo+0.05).toFixed(2)})()));
- barList('st_move',grp(list,t=>t.move_bucket||'—'));
+ const MB=['0.00–0.05%','0.05–0.10%','0.10–0.12%','0.12–0.15%','0.15–0.20%','0.20%+'];
+ const mvg=grp(list,t=>t.move_bucket||'—');
+ MB.forEach(k=>{if(!mvg[k])mvg[k]={n:0,w:0,pnl:0}});
+ $('st_move').innerHTML=MB.map(k=>{const v=mvg[k],below=k==='0.00–0.05%'||k==='0.05–0.10%';
+  if(!v.n)return `<div class="brow"><span class="k">${k}</span><span class="t"></span><span class="v" style="opacity:.6">${below?'отсекается фильтром':'нет сделок'}</span></div>`;
+  const wr=v.w/v.n;return `<div class="brow"><span class="k">${k}</span><span class="t"><i style="width:${(wr*100).toFixed(0)}%;background:${v.pnl>=0?'var(--up)':'var(--down)'}"></i></span><span class="v">${(wr*100).toFixed(0)}% · ${v.n} · <span class="${cls(v.pnl)}">${sgn(v.pnl)}</span></span></div>`}).join('');
+ const C3=(last&&last.config)||{};
+ $('st_moveNote').innerHTML=`Движение ниже ${((C3.MIN_MOVE||0.001)*100).toFixed(2)}% бот не торгует, поэтому два верхних бакета здесь всегда пусты. Чтобы увидеть, что происходило бы с отсечёнными сигналами — <a href="backtest.html">Тестировщик → Move Analysis</a>.`;
  barList('st_win',grp(list,t=>(t.minutes||'?')+'m'));
  barList('st_asset',grp(list,t=>t.asset));
  // концентрация

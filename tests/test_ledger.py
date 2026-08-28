@@ -105,7 +105,11 @@ for el,exp in ((0.76,"75–80%"),(0.82,"80–85%"),(0.87,"85–90%")):
 CUR["BTC"]=REF["BTC"]*1.0011
 c,_=bot.evaluate(mkt("BTC",15,0.80,mid="mb1"),st); ck("move bucket 0.11% ", c and c["move_bucket"]=="0.10–0.12%", c["move_bucket"] if c else "")
 CUR["BTC"]=REF["BTC"]*1.0025
-c,_=bot.evaluate(mkt("BTC",15,0.80,mid="mb2"),st); ck("move bucket 0.25%", c and c["move_bucket"]=="0.20–0.35%", c["move_bucket"] if c else "")
+c,_=bot.evaluate(mkt("BTC",15,0.80,mid="mb2"),st); ck("move bucket 0.25%", c and c["move_bucket"]=="0.20%+", c["move_bucket"] if c else "")
+CUR["BTC"]=REF["BTC"]*1.0013
+c,_=bot.evaluate(mkt("BTC",15,0.80,mid="mb3"),st); ck("move bucket 0.13%", c and c["move_bucket"]=="0.12–0.15%", c["move_bucket"] if c else "")
+CUR["BTC"]=REF["BTC"]*1.0017
+c,_=bot.evaluate(mkt("BTC",15,0.80,mid="mb4"),st); ck("move bucket 0.17%", c and c["move_bucket"]=="0.15–0.20%", c["move_bucket"] if c else "")
 CUR["BTC"]=REF["BTC"]*1.0015
 
 print("\n11) restart не теряет сигналы")
