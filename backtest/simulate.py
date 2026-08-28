@@ -50,9 +50,13 @@ def ref_price(asset, ts):
     if m not in c: return None
     return c[m][0] if REF_MODE == "open" else (c[m][0] + c[m][1]) / 2
 
+# Исключённые даты (YYYY-MM-DD через запятую) — проверка устойчивости без аномальных дней
+EXCLUDE = set(d.strip() for d in os.getenv("EXCLUDE_DATES", "").split(",") if d.strip())
+
 # Предрасчёт "траектории" каждого окна: список (elapsed, move, up_ask, down_ask)
 TRAJ = []
 for w in W:
+    if EXCLUDE and _dt.fromtimestamp(w["start"], _tz.utc).strftime("%Y-%m-%d") in EXCLUDE: continue
     if len(w["up_hist"]) < 3: continue
     ref = ref_price(w["asset"], w["start"])
     if not ref: continue
