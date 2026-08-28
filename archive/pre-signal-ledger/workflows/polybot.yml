@@ -1,0 +1,100 @@
+name: PolyBot paper test
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "5 */6 * * *"
+
+concurrency:
+  group: polybot
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install requests python-dotenv py-clob-client
+
+      - name: Publish live dashboard page
+        env:
+          GIST_RAW_URL: ${{ vars.GIST_RAW_URL }}
+        run: |
+          python report.py
+          git config user.name "polybot"
+          git config user.email "polybot@users.noreply.github.com"
+          git add docs/index.html && (git commit -m "dashboard page" && git push) || true
+
+      - name: Run bot (5h40m) + gist sync
+        env:
+          GIST_ID: ${{ secrets.GIST_ID }}
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+          STATE_AUTOSAVE: "1"
+          MODE: ${{ vars.MODE || 'paper' }}
+          POLY_PRIVATE_KEY: ${{ secrets.POLY_PRIVATE_KEY }}
+          POLY_FUNDER: ${{ vars.POLY_FUNDER }}
+          POLY_SIGNATURE_TYPE: ${{ vars.POLY_SIGNATURE_TYPE || '0' }}
+          RATE_LIMIT: ${{ vars.RATE_LIMIT || '20' }}
+          MAX_SLIP: ${{ vars.MAX_SLIP || '0.01' }}
+          USE_BOOK: ${{ vars.USE_BOOK || '1' }}
+          ORDER_WAIT_SEC: ${{ vars.ORDER_WAIT_SEC || '20' }}
+          LOOP_SEC: ${{ vars.LOOP_SEC || '1.5' }}
+          MOVE_MODE: ${{ vars.MOVE_MODE || 'pct' }}
+          MIN_SIGMA: ${{ vars.MIN_SIGMA || '1.5' }}
+          REF_MODE: ${{ vars.REF_MODE || 'twap' }}
+          SKIP_HOURS: ${{ vars.SKIP_HOURS }}
+          MAX_PER_WINDOW: ${{ vars.MAX_PER_WINDOW || '1' }}
+          MAX_SAME_DIR: ${{ vars.MAX_SAME_DIR || '2' }}
+          ASSETS: ${{ vars.ASSETS || 'BTC,ETH,SOL,XRP' }}
+          BANKROLL: ${{ vars.BANKROLL || '100' }}
+          MAX_ENTRY: ${{ vars.MAX_ENTRY || '0.62' }}
+          MIN_ENTRY: ${{ vars.MIN_ENTRY || '0.50' }}
+          MIN_ELAPSED: ${{ vars.MIN_ELAPSED || '0.75' }}
+          MIN_MOVE: ${{ vars.MIN_MOVE || '0.0010' }}
+          TIER_ENTRY: ${{ vars.TIER_ENTRY || '0.55' }}
+          MIN_MOVE_HIGH: ${{ vars.MIN_MOVE_HIGH || '0.0012' }}
+          MIN_CONF: ${{ vars.MIN_CONF || '0.70' }}
+          KELLY_FRAC: ${{ vars.KELLY_FRAC || '0.10' }}
+          MAX_POSITIONS: ${{ vars.MAX_POSITIONS || '3' }}
+          MAX_EXPOSURE: ${{ vars.MAX_EXPOSURE || '0.15' }}
+          MAX_STAKE: ${{ vars.MAX_STAKE || '0.05' }}
+          WINDOWS: ${{ vars.WINDOWS || '5,15' }}
+          PRICE_SOURCE: coinbase
+          DAILY_LOSS_LIMIT: ${{ vars.DAILY_LOSS_LIMIT || '0.30' }}
+          CONSEC_LOSS_LIMIT: ${{ vars.CONSEC_LOSS_LIMIT || '5' }}
+          COOLDOWN_MIN: ${{ vars.COOLDOWN_MIN || '30' }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          git config user.name "polybot"
+          git config user.email "polybot@users.noreply.github.com"
+          python gist_sync.py &
+          timeout -s INT 340m python bot.py || true
+          kill %1 2>/dev/null || true
+
+      - name: Daily report
+        run: |
+          pip install openpyxl -q
+          python daily_report.py "$(date -u +%Y-%m-%d)"
+          python daily_report.py "$(date -u -d yesterday +%Y-%m-%d)" || true
+
+      - name: Save state back to repo
+        env:
+          GIST_RAW_URL: ${{ vars.GIST_RAW_URL }}
+        run: |
+          tail -n 2000 bot.log > bot.tmp && mv bot.tmp bot.log
+          python report.py
+
+          git add state.json trades.csv missed.csv bot.log docs/index.html reports/
+          git commit -m "paper run $(date -u +'%Y-%m-%d %H:%M')" || echo "nothing to commit"
+          git pull --rebase
+          git push
