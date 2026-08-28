@@ -274,3 +274,9 @@
 2026-08-28 17:33:02,305 INFO  STATS trades=15 winrate=53% pnl=-13.49 PF=0.72 bankroll=86.51
 2026-08-28 17:35:12,675 INFO  STATS trades=15 winrate=53% pnl=-13.49 PF=0.72 bankroll=86.51
 2026-08-28 17:37:13,699 INFO  STATS trades=15 winrate=53% pnl=-13.49 PF=0.72 bankroll=86.51
+2026-08-28 17:39:29,688 INFO  STATS trades=15 winrate=53% pnl=-13.49 PF=0.72 bankroll=86.51
+2026-08-28 17:41:41,358 INFO  STATS trades=15 winrate=53% pnl=-13.49 PF=0.72 bankroll=86.51
+2026-08-28 17:43:58,102 INFO  [PAPER] BUY XRP UP @ 0.52 $3.12 conf=0.764 move=+0.087%
+2026-08-28 17:44:49,790 INFO  STATS trades=15 winrate=53% pnl=-13.49 PF=0.72 bankroll=86.51
+2026-08-28 17:46:37,056 INFO  WIN  XRP UP pnl=+2.88 bankroll=89.39
+2026-08-28 17:46:50,847 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
