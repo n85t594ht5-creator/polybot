@@ -40,8 +40,7 @@ button{font:600 13px var(--sans);padding:8px 14px;border-radius:8px;border:1px s
 .top3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.top3 .t{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px}.top3 .t.first{border-color:var(--up)}
 .top3 .t h3{margin:0 0 6px;font:600 15px var(--sans)}.top3 .t .p{font:11px var(--mono);color:var(--mut);line-height:1.7}.top3 .t .m{font:12px var(--mono);margin:8px 0}
 </style></head><body><div class="wrap">
-<div class="fab" id="menu"><button title="На главную" onclick="location.href='./'" style="display:block">←</button><button class="acc" title="Меню" onclick="event.stopPropagation();this.parentNode.classList.toggle('open')">☰</button><div class="dd">
- <a href="./"><i>▦</i>Дашборд</a><a href="backtest.html"><i>⚗</i>Тестировщик</a><a href="./#settings"><i>⚙</i>Настройки бота</a><a href="./#keys"><i>🔑</i>Ключи</a><a href="./#power"><i>⏻</i>Питание</a><a href="./#stats"><i>▤</i>Статистика · архив</a></div></div>
+<div class="fab" id="menu"><button title="На главную" onclick="location.href='./'" style="display:block">←</button><button class="acc" title="Меню" onclick="event.stopPropagation();this.parentNode.classList.toggle('open')">☰</button><div class="dd"><a href="./"><i>▦</i>Дашборд</a><a href="backtest.html" class="on"><i>⚗</i>Тестировщик</a><a href="./#statistics"><i>📊</i>Статистика</a><a href="./#signals"><i>⚡</i>Журнал сигналов</a><a href="./#reports"><i>📄</i>Отчёты</a><a href="./#settings"><i>⚙</i>Настройки бота</a><a href="./#keys"><i>🔑</i>Ключи</a><a href="./#power"><i>⏻</i>Питание</a><a href="./#stats"><i>▤</i>Архив настроек</a></div></div>
 <header><h1>POLYBOT <span class="ver">v__VERSION__</span> · BACKTEST</h1><span class="pill" id="when">—</span><span class="pill" id="scope">—</span><span class="spacer"></span><span class="pill" id="runState"></span></header>
 <div class="grid">
   <div class="card c12"><h2>Запустить тест</h2>

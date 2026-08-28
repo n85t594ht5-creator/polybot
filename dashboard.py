@@ -396,8 +396,7 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
 .toast{position:fixed;right:16px;bottom:16px;background:var(--panel2);border:1px solid var(--line);padding:10px 14px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .3s}
 .toast.show{opacity:1}
 </style></head><body><div class="wrap">
-<div class="fab" id="menu"><button id="fabBack" title="Назад" onclick="showView('dash')">←</button><button id="menuBtn" class="acc" title="Меню">☰</button><div class="dd">
-    <a href="#" data-view="dash" class="on"><i>▦</i>Дашборд</a><a href="backtest.html"><i>⚗</i>Тестировщик</a><a href="#" data-view="settings"><i>⚙</i>Настройки бота</a><a href="#" data-view="keys"><i>🔑</i>Ключи</a><a href="#" data-view="power"><i>⏻</i>Питание</a><a href="#" data-view="statistics"><i>📊</i>Статистика</a><a href="#" data-view="signals"><i>⚡</i>Журнал сигналов</a><a href="#" data-view="reports"><i>📄</i>Отчёты</a><a href="#" data-view="stats"><i>▤</i>Архив настроек</a></div></div>
+<div class="fab" id="menu"><button id="fabBack" title="Назад" onclick="showView('dash')">←</button><button id="menuBtn" class="acc" title="Меню">☰</button><div class="dd"><a href="#" data-view="dash" class="on"><i>▦</i>Дашборд</a><a href="backtest.html"><i>⚗</i>Тестировщик</a><a href="#" data-view="statistics"><i>📊</i>Статистика</a><a href="#" data-view="signals"><i>⚡</i>Журнал сигналов</a><a href="#" data-view="reports"><i>📄</i>Отчёты</a><a href="#" data-view="settings"><i>⚙</i>Настройки бота</a><a href="#" data-view="keys"><i>🔑</i>Ключи</a><a href="#" data-view="power"><i>⏻</i>Питание</a><a href="#" data-view="stats"><i>▤</i>Архив настроек</a></div></div>
 <header>
   <h1>POLYBOT <span class="ver" id="ver"></span></h1>
   <span id="modePill" class="pill">—</span>
@@ -747,7 +746,7 @@ const REPO=window.__REPO__||'';const GH='https://api.github.com/repos/'+REPO;
 const tok=()=>localStorage.getItem('gh_token')||'';
 async function gh(path,opt={}){const r=await fetch(GH+path,{...opt,headers:{'Authorization':'Bearer '+tok(),'Accept':'application/vnd.github+json','Content-Type':'application/json',...(opt.headers||{})}});if(r.status===204)return{};const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.message||('HTTP '+r.status));return j}
 // views
-document.querySelectorAll('#menu .dd a[data-view]').forEach(a=>a.onclick=e=>{e.preventDefault();showView(a.dataset.view)});
+document.querySelectorAll('#menu .dd a[data-view]').forEach(a=>a.onclick=e=>{e.preventDefault();history.replaceState(null,'',a.dataset.view==='dash'?'#':'#'+a.dataset.view);showView(a.dataset.view)});
 $('menuBtn').onclick=e=>{e.stopPropagation();$('menu').classList.toggle('open')};document.addEventListener('click',()=>$('menu').classList.remove('open'));
 function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v_'+v));$('fabBack').style.display=v==='dash'?'none':'block';window.scrollTo(0,0);document.querySelectorAll('#menu .dd a').forEach(a=>a.classList.toggle('on',a.dataset.view===v));$('menu').classList.remove('open');
  if(v==='settings')loadSettings();if(v==='keys')loadKeys();if(v==='power')loadPower();if(v==='stats')loadArchive();if(v==='statistics')renderStats();if(v==='signals')renderSignals();if(v==='reports')loadReports()}
@@ -864,7 +863,9 @@ $('pwReset').onclick=async()=>{if(!await ask('Обнулить статисти�
  const put=async(p,content,sha)=>gh('/contents/'+p,{method:'PUT',body:JSON.stringify({message:'reset stats',content:btoa(unescape(encodeURIComponent(content))),...(sha?{sha}:{})})});
  await put('state.json',JSON.stringify(fresh,null,1),st&&st.sha);await put('trades.csv','',tr&&tr.sha);
  await new Promise(r=>setTimeout(r,5000));await dispatch()},'обнуляю','Статистика сброшена, Excel скачан, снимок в архиве. Бот стартует заново.')};
-if(location.hash&&['settings','keys','power','stats'].includes(location.hash.slice(1)))setTimeout(()=>showView(location.hash.slice(1)),300);
+const VIEWS=['dash','settings','keys','power','stats','statistics','signals','reports'];
+if(location.hash&&VIEWS.includes(location.hash.slice(1)))setTimeout(()=>showView(location.hash.slice(1)),300);
+window.addEventListener('hashchange',()=>{const v=location.hash.slice(1);if(VIEWS.includes(v))showView(v)});
 if(window.__GIST__){$('btnStart').style.display=$('btnStop').style.display='none';refresh();setInterval(refresh,15000);setInterval(renderPositions,1000)}
 else if(window.__DATA__){render(window.__DATA__);$('btnStart').style.display=$('btnStop').style.display='none';$('updated').textContent='снимок '+new Date(window.__DATA__.now).toLocaleString();setInterval(renderPositions,1000)}
 else{refresh(); setInterval(refresh,5000); setInterval(renderPositions,1000)}
