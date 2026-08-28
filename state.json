@@ -1,5 +1,5 @@
 {
- "bankroll": 98.64000000000001,
+ "bankroll": 83.79000000000002,
  "positions": {},
  "closed": [
   {
@@ -218,13 +218,63 @@
    "won": true,
    "pnl": 5.75,
    "final": 1.4192
+  },
+  {
+   "market_id": "3931714",
+   "asset": "ETH",
+   "side": "DOWN",
+   "token": "35690936817072127965697712964996638827615372538286924277629712700359140551126",
+   "minutes": 5,
+   "start": "2026-08-28T14:25:00+00:00",
+   "entry": 0.55,
+   "best_ask": 0.54,
+   "cost": 7.52,
+   "shares": 13.67,
+   "depth_note": "",
+   "conf": 0.774,
+   "move": -0.00159,
+   "elapsed": 0.75,
+   "ref": 2487.85,
+   "end": "2026-08-28T14:30:00+00:00",
+   "opened": "2026-08-28T14:28:46.183771+00:00",
+   "question": "Ethereum Up or Down - August 28, 10:25AM-10:30AM ET",
+   "order_id": "PAPER",
+   "won": false,
+   "pnl": -7.52,
+   "final": 2492.49
+  },
+  {
+   "market_id": "3931718",
+   "asset": "BTC",
+   "side": "DOWN",
+   "token": "113465278805630240977844957969245606114730012172698287154824906657561384508133",
+   "minutes": 5,
+   "start": "2026-08-28T14:25:00+00:00",
+   "entry": 0.54,
+   "best_ask": 0.53,
+   "cost": 7.33,
+   "shares": 13.58,
+   "depth_note": "",
+   "conf": 0.763,
+   "move": -0.00122,
+   "elapsed": 0.75,
+   "ref": 78810.94,
+   "end": "2026-08-28T14:30:00+00:00",
+   "opened": "2026-08-28T14:28:46.646557+00:00",
+   "question": "Bitcoin Up or Down - August 28, 10:25AM-10:30AM ET",
+   "order_id": "PAPER",
+   "won": false,
+   "pnl": -7.33,
+   "final": 78945.69
   }
  ],
  "day": "2026-08-28",
- "day_pnl": -1.360000000000002,
- "consec_losses": 0,
+ "day_pnl": -16.21,
+ "consec_losses": 2,
  "cooldown_until": null,
  "trade_times": [
-  1787925528.9977295
+  1787925528.9977295,
+  1787927326.1837854,
+  1787927326.6465702
  ]
 }
