@@ -159,7 +159,7 @@ def breakdown(P):
     tr, _ = run(P)
     for t in tr:
         lo = int(t["entry"] * 20) / 20; eb = f"вход {lo:.2f}–{lo+0.05:.2f}"
-        for key in (t["asset"], f"{t['min']}m", f"{t['asset']}-{t['min']}m", eb, f"час {t['hour']:02d} UTC", "день " + ["пн","вт","ср","чт","пт","сб","вс"][t.get("wday", ((t["wstart"]//86400)+4)%7)]):
+        for key in (t["asset"], f"{t['min']}m", f"{t['asset']}-{t['min']}m", eb, f"час {t['hour']:02d} UTC", "дата " + _dt.fromtimestamp(t["t"], _tz.utc).strftime("%m-%d"), "день " + ["пн","вт","ср","чт","пт","сб","вс"][t.get("wday", ((t["wstart"]//86400)+4)%7)]):
             o = out[key]; o["n"] += 1; o["w"] += t["won"]; o["pnl"] += t.get("pnl", 0)
     return dict(out)
 
@@ -229,18 +229,19 @@ from datetime import datetime, timezone
 def pack(label, P):
     tr, m = run(P); wins = sum(1 for t in tr if t["won"])
     br = breakdown(P); buckets = {k: v for k, v in br.items() if k.startswith("вход")}; hours = {k: v for k, v in br.items() if k.startswith("час")}; days = {k: v for k, v in br.items() if k.startswith("день")}
-    other = {k: v for k, v in br.items() if not (k.startswith("вход") or k.startswith("час") or k.startswith("день"))}
+    dates = {k: v for k, v in br.items() if k.startswith("дата")}
+    other = {k: v for k, v in br.items() if not (k.startswith("вход") or k.startswith("час") or k.startswith("день") or k.startswith("дата"))}
     cv = {}
     for name, mode, frac in [("flat", "flat", 0), ("kelly_0.10", "kelly", 0.10), ("kelly_0.15", "kelly", 0.15), ("kelly_0.25", "kelly", 0.25)]:
         c, dd = equity(tr, mode, frac); cv[name] = {"curve": c, "max_dd": round(dd, 3), "final": c[-1]}
     return {"label": label, "params": {k: (",".join(map(str, v)) if isinstance(v, list) else v) for k, v in P.items() if k != "KELLY_FRAC"}, "metrics": {**m, "wins": wins},
-            "buckets": buckets, "hours": hours, "days": days, "breakdown": other, "curves": cv,
+            "buckets": buckets, "hours": hours, "days": days, "dates": dates, "breakdown": other, "curves": cv,
             "trades": [{k: t[k] for k in ("t", "asset", "min", "side", "entry", "won")} for t in tr]}
 SHOW_COLS = [k for k in keys if len(GRID[k]) > 1]
 page = {"generated": datetime.now(timezone.utc).isoformat(), "windows": nw, "days": round((max(w["end"] for w in TRAJ) - min(w["start"] for w in TRAJ)) / 86400, 1) if TRAJ else 0,
         "spread": SPREAD, "stake": round(BANKROLL * FLAT_STAKE), "bankroll": BANKROLL, "grid_cols": SHOW_COLS,
         "grid": [{**{k: r[k] for k in SHOW_COLS}, **{k: r[k] for k in ("trades", "wins", "losses", "winrate", "pf", "pnl", "gross_loss", "max_dd", "score")}} for r in rows[:40]],
-        "inputs": json.loads(os.getenv("BT_INPUTS") or "{}"), "repo": os.getenv("GITHUB_REPOSITORY", ""), "min_trades": MIN_TRADES,
+        "inputs": json.loads(os.getenv("BT_INPUTS") or "{}"), "excluded": sorted(EXCLUDE), "repo": os.getenv("GITHUB_REPOSITORY", ""), "min_trades": MIN_TRADES,
         "configs": {"current": pack("Текущие настройки бота", CURRENT)}}
 seen, top = set(), []
 for r in rows:
