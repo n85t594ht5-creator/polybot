@@ -45,7 +45,8 @@ MAX_POSITIONS     = env("MAX_POSITIONS", 10, int)
 MAX_EXPOSURE      = env("MAX_EXPOSURE", 0.40, float)
 MAX_STAKE         = env("MAX_STAKE", 0.08, float)     # одна ставка не больше этой доли банкролла
 DAILY_LOSS_LIMIT  = env("DAILY_LOSS_LIMIT", 50.0, float)
-CONSEC_LOSS_LIMIT = env("CONSEC_LOSS_LIMIT", 4, int)
+CONSEC_LOSS_LIMIT = env("CONSEC_LOSS_LIMIT", 7, int)
+COOLDOWN_MIN      = env("COOLDOWN_MIN", 30, int)      # длительность паузы после серии убытков, минут
 RATE_LIMIT        = env("RATE_LIMIT", 20, int)
 MOVE_MODE         = env("MOVE_MODE", "pct").lower()       # pct — порог в %, sigma — порог в волатильностях
 MIN_SIGMA         = env("MIN_SIGMA", 1.5, float)          # для MOVE_MODE=sigma
@@ -453,8 +454,10 @@ def resolve_positions(state):
         msg = f"{'WIN ' if won else 'LOSS'} {p['asset']} {p['side']} pnl={pnl:+.2f} bankroll={state.bankroll:.2f}"
         log.info(msg); notify(msg)
         if state.consec_losses >= CONSEC_LOSS_LIMIT:
-            state.cooldown_until = (now() + timedelta(hours=24)).isoformat()
-            log.warning("Consecutive loss limit hit — cooldown 24h"); notify("⚠ Cooldown 24h")
+            state.cooldown_until = (now() + timedelta(minutes=COOLDOWN_MIN)).isoformat()
+            state.consec_losses = 0          # после паузы счёт начинается заново
+            log.warning("Серия из %d убытков — пауза %d мин", CONSEC_LOSS_LIMIT, COOLDOWN_MIN)
+            notify(f"⚠ {CONSEC_LOSS_LIMIT} убытков подряд — пауза {COOLDOWN_MIN} мин")
         state.save()
 
 # ───────────────────────── main loop ─────────────────────────

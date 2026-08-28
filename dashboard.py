@@ -90,7 +90,7 @@ def read_env():
             v = v.split("#", 1)[0].strip()
             cfg[k.strip()] = v
     for k in ("MODE", "ASSETS", "BANKROLL", "MAX_ENTRY", "MIN_ELAPSED", "MIN_MOVE", "TIER_ENTRY", "MIN_MOVE_HIGH", "MIN_CONF",
-              "KELLY_FRAC", "MAX_POSITIONS", "MAX_EXPOSURE", "MAX_STAKE", "MIN_ENTRY", "POLY_ADDRESS", "MOVE_MODE", "MIN_SIGMA", "REF_MODE", "SKIP_HOURS", "MAX_PER_WINDOW", "MAX_SAME_DIR", "LOOP_SEC", "DAILY_LOSS_LIMIT", "CONSEC_LOSS_LIMIT", "RATE_LIMIT", "WINDOWS", "PRICE_SOURCE"):
+              "KELLY_FRAC", "MAX_POSITIONS", "MAX_EXPOSURE", "MAX_STAKE", "MIN_ENTRY", "POLY_ADDRESS", "MOVE_MODE", "MIN_SIGMA", "REF_MODE", "SKIP_HOURS", "MAX_PER_WINDOW", "MAX_SAME_DIR", "LOOP_SEC", "COOLDOWN_MIN", "DAILY_LOSS_LIMIT", "CONSEC_LOSS_LIMIT", "RATE_LIMIT", "WINDOWS", "PRICE_SOURCE"):
         if k not in cfg and os.getenv(k):
             cfg[k] = os.getenv(k)
     # секреты наружу не отдаём
@@ -224,7 +224,7 @@ def snapshot():
          "pct": len(trade_times) / rate_limit if rate_limit else 0, "blocked": len(trade_times) >= rate_limit},
         {"name": "Убытков подряд", "value": f"{state.get('consec_losses', 0)} / {consec_limit}",
          "pct": state.get("consec_losses", 0) / consec_limit if consec_limit else 0,
-         "blocked": in_cooldown, "extra": f"пауза до {cooldown}" if in_cooldown else ""},
+         "blocked": in_cooldown, "extra": (f"пауза до {str(cooldown)[11:16]} UTC" if in_cooldown else "")},
     ]
 
     longs = sum(1 for t in closed_src if t["side"] == "UP") + sum(1 for p in positions if p.get("side") == "UP")
@@ -778,10 +778,11 @@ const S=[
  {k:'MAX_POSITIONS',t:'range',min:1,max:20,step:1,n:'Максимум открытых сделок',d:'Сколько окон бот может держать одновременно.'},
  {k:'MAX_EXPOSURE',t:'range',min:0.05,max:0.8,step:0.05,pct:1,n:'Максимум в позициях, % банкролла',d:'Суммарно во всех открытых сделках не больше этой доли. Остальное всегда остаётся в резерве.'},
  {k:'DAILY_LOSS_LIMIT',t:'range',min:5,max:500,step:5,n:'Дневной стоп, $',d:'Как только за день потеряно столько — бот перестаёт торговать до следующего дня (UTC).'},
- {k:'CONSEC_LOSS_LIMIT',t:'range',min:1,max:10,step:1,n:'Убытков подряд до паузы',d:'После стольких убытков подряд — пауза 24 часа. Защита от дня, когда рынок «пилит» и стратегия не работает.'},
+ {k:'CONSEC_LOSS_LIMIT',t:'range',min:1,max:15,step:1,n:'Убытков подряд до паузы',d:'После стольких убытков подряд бот берёт паузу (длительность — следующий ползунок), затем счётчик обнуляется и работа продолжается. Чем больше число, тем реже срабатывает защита.'},
+ {k:'COOLDOWN_MIN',t:'range',min:5,max:1440,step:5,n:'Длительность паузы, минут',d:'Сколько бот стоит после серии убытков. 30 минут — переждать локальный «пилообразный» участок; несколько часов — переждать плохую сессию.'},
  {k:'RATE_LIMIT',t:'range',min:1,max:60,step:1,n:'Максимум сделок в час',d:'Ограничитель, чтобы бот не «разогнался» на серии одинаковых сигналов.'},
 ];
-const DEF={MOVE_MODE:'pct',MIN_SIGMA:'1.5',REF_MODE:'open',MAX_PER_WINDOW:'99',MAX_SAME_DIR:'99',SKIP_HOURS:'',MODE:'paper',ASSETS:'BTC,ETH,SOL',WINDOWS:'15,60',BANKROLL:'500',MIN_ELAPSED:'0.5',MIN_ENTRY:'0',MAX_ENTRY:'0.15',MIN_MOVE:'0.0008',TIER_ENTRY:'0.45',MIN_MOVE_HIGH:'0.0012',MIN_CONF:'0.6',KELLY_FRAC:'0.25',MAX_STAKE:'0.08',MAX_POSITIONS:'10',MAX_EXPOSURE:'0.4',DAILY_LOSS_LIMIT:'50',CONSEC_LOSS_LIMIT:'4',RATE_LIMIT:'20'};
+const DEF={COOLDOWN_MIN:'30',MOVE_MODE:'pct',MIN_SIGMA:'1.5',REF_MODE:'open',MAX_PER_WINDOW:'99',MAX_SAME_DIR:'99',SKIP_HOURS:'',MODE:'paper',ASSETS:'BTC,ETH,SOL',WINDOWS:'15,60',BANKROLL:'500',MIN_ELAPSED:'0.5',MIN_ENTRY:'0',MAX_ENTRY:'0.15',MIN_MOVE:'0.0008',TIER_ENTRY:'0.45',MIN_MOVE_HIGH:'0.0012',MIN_CONF:'0.6',KELLY_FRAC:'0.25',MAX_STAKE:'0.08',MAX_POSITIONS:'10',MAX_EXPOSURE:'0.4',DAILY_LOSS_LIMIT:'50',CONSEC_LOSS_LIMIT:'4',RATE_LIMIT:'20'};
 let VARS={};
 function showVal(x,v){if(x.t==='range'){const f=x.pct?(+v*x.pct).toFixed(x.dec??0)+'%':(+v).toString();return f}return v}
 async function loadSettings(){$('ghWarn').style.display=tok()?'none':'';let vars={};

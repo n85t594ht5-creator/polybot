@@ -67,7 +67,8 @@ jobs:
           WINDOWS: ${{ vars.WINDOWS || '15,60' }}
           PRICE_SOURCE: coinbase
           DAILY_LOSS_LIMIT: ${{ vars.DAILY_LOSS_LIMIT || '50' }}
-          CONSEC_LOSS_LIMIT: ${{ vars.CONSEC_LOSS_LIMIT || '4' }}
+          CONSEC_LOSS_LIMIT: ${{ vars.CONSEC_LOSS_LIMIT || '7' }}
+          COOLDOWN_MIN: ${{ vars.COOLDOWN_MIN || '30' }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
