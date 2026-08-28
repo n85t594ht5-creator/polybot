@@ -1,6 +1,25 @@
 {
  "bankroll": 93.93,
- "positions": {},
+ "positions": {
+  "3920609": {
+   "market_id": "3920609",
+   "asset": "SOL",
+   "side": "DOWN",
+   "token": "28172427968864638893808456379532732653540163026500332287595592391705789946716",
+   "minutes": 15,
+   "entry": 0.54,
+   "cost": 6.81,
+   "shares": 12.6,
+   "conf": 0.762,
+   "move": -0.00109,
+   "elapsed": 0.76,
+   "ref": 109.82,
+   "end": "2026-08-28T00:45:00+00:00",
+   "opened": "2026-08-28T00:41:28.543894+00:00",
+   "question": "Solana Up or Down - August 27, 8:30PM-8:45PM ET",
+   "order_id": "PAPER"
+  }
+ },
  "closed": [
   {
    "market_id": "3919352",
@@ -29,6 +48,7 @@
  "consec_losses": 1,
  "cooldown_until": null,
  "trade_times": [
-  1787876626.6459713
+  1787876626.6459713,
+  1787877688.5439074
  ]
 }
