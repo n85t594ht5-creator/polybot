@@ -30,10 +30,13 @@ on:
       exclude_dates:
         description: "Исключить даты"
         default: ""
+      custom_config:
+        description: "Доп. конфигурация (JSON)"
+        default: ""
 
 concurrency:
   group: backtest
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -65,6 +68,7 @@ jobs:
           MIN_TRADES: ${{ github.event.inputs.min_trades || '30' }}
           MAX_STAKE_PCT: ${{ github.event.inputs.max_stake_pct || '8' }}
           EXCLUDE_DATES: ${{ github.event.inputs.exclude_dates }}
+          CUSTOM_CONFIG: ${{ github.event.inputs.custom_config }}
           BT_INPUTS: ${{ toJSON(github.event.inputs) }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python simulate.py

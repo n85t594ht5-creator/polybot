@@ -253,6 +253,13 @@ for r in rows:
 for i, r in enumerate(top):
     page["configs"][f"top{i+1}"] = pack(f"Топ {i+1}", {k: r[k] for k in keys})
 page["top"] = [f"top{i+1}" for i in range(len(top))]
+custom = os.getenv("CUSTOM_CONFIG", "").strip()
+if custom:
+    try:
+        cp = {**CURRENT, **json.loads(custom)}
+        page["configs"]["custom"] = pack(cp.pop("LABEL", "Заданные настройки"), cp)
+    except Exception as e:
+        print("custom config error:", e)
 if SKIP:
     page["configs"]["hours"] = pack(f"Топ 1 без часов {','.join(f'{h:02d}' for h in SKIP)} UTC", HOURS_CFG)
     page["configs"]["hours"]["params"]["SKIP_HOURS"] = ",".join(str(h) for h in SKIP)
