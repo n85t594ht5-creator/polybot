@@ -87,7 +87,7 @@ def collect_windows():
                 jobs.append((a, minutes, ts))
     print(f"windows to fetch: {len(jobs)}")
     out = []
-    with ThreadPoolExecutor(8) as ex:
+    with ThreadPoolExecutor(16) as ex:
         futs = {ex.submit(fetch_window, *j): j for j in jobs}
         for i, f in enumerate(as_completed(futs)):
             r = f.result()
@@ -109,7 +109,7 @@ def collect_windows():
                 return {"asset": a, "minutes": minutes, "start": ts, "end": ts + minutes * 60, "up_won": float(prices[up_idx]) > 0.5, "up_hist": pts, "slug": slug(a, minutes, ts)}
             except Exception as e:
                 return None
-        with ThreadPoolExecutor(8) as ex:
+        with ThreadPoolExecutor(16) as ex:
             for r in ex.map(fw, [p for p in pairs if slug(p[0], p[1], p[2]) not in have]):
                 if r: out.append(r)
         if pairs:
