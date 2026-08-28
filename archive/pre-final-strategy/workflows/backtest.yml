@@ -1,0 +1,88 @@
+name: PolyBot backtest
+
+on:
+  workflow_dispatch:
+    inputs:
+      days_15m:
+        description: "Дней истории для 15m и 1h"
+        default: "14"
+      days_5m:
+        description: "Дней истории для 5m"
+        default: "3"
+      assets:
+        description: "Активы"
+        default: "BTC,ETH,SOL"
+      windows:
+        description: "Окна"
+        default: "5,15,60"
+      spread:
+        description: "Спред"
+        default: "0.04"
+      stake:
+        description: "Ставка, доля банкролла"
+        default: "0.05"
+      min_trades:
+        description: "Мин. сделок для рейтинга"
+        default: "30"
+      max_stake_pct:
+        description: "Келли: потолок ставки, %"
+        default: "8"
+      exclude_dates:
+        description: "Исключить даты"
+        default: ""
+      custom_config:
+        description: "Доп. конфигурация (JSON)"
+        default: ""
+
+concurrency:
+  group: backtest
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Collect history
+        working-directory: backtest
+        env:
+          DAYS_15M: ${{ github.event.inputs.days_15m || '14' }}
+          DAYS_1H: ${{ github.event.inputs.days_15m || '14' }}
+          DAYS_5M: ${{ github.event.inputs.days_5m || '3' }}
+          ASSETS: ${{ github.event.inputs.assets || 'BTC,ETH,SOL' }}
+          WINDOWS: ${{ github.event.inputs.windows || '5,15,60' }}
+        run: python collect.py
+      - name: Simulate + grid search
+        working-directory: backtest
+        env:
+          SPREAD: ${{ github.event.inputs.spread || '0.04' }}
+          FLAT_STAKE: ${{ github.event.inputs.stake || '0.05' }}
+          MIN_TRADES: ${{ github.event.inputs.min_trades || '30' }}
+          MAX_STAKE_PCT: ${{ github.event.inputs.max_stake_pct || '8' }}
+          EXCLUDE_DATES: ${{ github.event.inputs.exclude_dates }}
+          CUSTOM_CONFIG: ${{ github.event.inputs.custom_config }}
+          BT_INPUTS: ${{ toJSON(github.event.inputs) }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python simulate.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backtest-data
+          path: backtest/data/
+          retention-days: 7
+      - name: Publish
+        run: |
+          cp backtest/docs/backtest.html docs/backtest.html
+          git config user.name "polybot"
+          git config user.email "polybot@users.noreply.github.com"
+          git add backtest/results docs/backtest.html
+          git commit -m "backtest $(date -u +'%Y-%m-%d %H:%M')" || true
+          git pull --rebase
+          git push
