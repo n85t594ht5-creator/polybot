@@ -10,8 +10,8 @@ header{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;margin-bottom
 body{overflow-wrap:anywhere}
 .pill{font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid var(--line);color:var(--mut)}
 .btn{font:600 13px var(--sans);padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--txt)}.btn:hover{border-color:var(--acc)}
-.spacer{flex:1}.grid{display:grid;gap:12px;grid-template-columns:repeat(12,1fr)}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
+.spacer{flex:1}.grid{display:grid;gap:12px;grid-template-columns:repeat(12,minmax(0,1fr))}.grid>*{min-width:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0;overflow:hidden}
 .card h2{margin:0 0 10px;font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
 .c3{grid-column:span 3}.c4{grid-column:span 4}.c6{grid-column:span 6}.c8{grid-column:span 8}.c12{grid-column:span 12}
 @media(max-width:1000px){.c3,.c4{grid-column:span 6}.c6,.c8{grid-column:span 12}}@media(max-width:600px){.c3,.c4{grid-column:span 12}.wrap{padding:10px;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
@@ -24,7 +24,7 @@ td{padding:6px 8px;border-bottom:1px solid rgba(36,50,72,.6);white-space:nowrap}
 tr.hi td{background:rgba(53,217,155,.08)}
 svg{display:block;width:100%}
 .leg{display:flex;gap:14px;flex-wrap:wrap;font:11px var(--mono);color:var(--mut);margin-top:6px}.leg i{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:5px;border-radius:2px}
-.bar{display:grid;grid-template-columns:minmax(70px,110px) 1fr minmax(96px,auto);gap:8px;align-items:center;padding:5px 0;font:12px var(--mono);border-bottom:1px solid rgba(36,50,72,.5)}
+.bar{display:grid;grid-template-columns:minmax(0,96px) minmax(0,1fr) minmax(0,auto);gap:8px;align-items:center;padding:5px 0;font:12px var(--mono);border-bottom:1px solid rgba(36,50,72,.5)}
 .bar:last-child{border-bottom:0}.bar>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bar>span:last-child{text-align:right;color:var(--mut);white-space:nowrap}
 .bar .t{height:10px;background:#0a101a;border-radius:99px;overflow:hidden}.bar .t i{display:block;height:100%;border-radius:99px}
 .seg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.seg button{font:600 12px var(--sans);padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--mut);cursor:pointer}.seg button.on{color:var(--txt);border-color:var(--acc)}
@@ -69,7 +69,7 @@ button{font:600 13px var(--sans);padding:8px 14px;border-radius:8px;border:1px s
   <div class="card c6"><h2>По часам (UTC)</h2><div class="tw" style="max-height:340px">
    <div id="hours"></div></div><div class="note" style="margin-top:6px">Красные часы — кандидаты на отключение. Твоё время = UTC+3.</div></div>
   <div class="card c6"><h2>По дням недели</h2><div id="days"></div></div>
-  <div class="card c6"><h2>По активам и окнам</h2><table><thead><tr><th>Срез</th><th>Сделок</th><th>Winrate</th><th>P&amp;L</th></tr></thead><tbody id="brk"></tbody></table></div>
+  <div class="card c6"><h2>По активам и окнам</h2><div class="tw" style="max-height:340px"><table><thead><tr><th>Срез</th><th>Сделок</th><th>Winrate</th><th>P&amp;L</th></tr></thead><tbody id="brk"></tbody></table></div></div>
   <div class="card c6"><h2>Сделки конфигурации</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Окно</th><th>Сторона</th><th>Вход</th><th>Итог</th></tr></thead><tbody id="trades"></tbody></table></div></div>
   <div class="card c12"><h2>Топ конфигураций (по PF при ≥ мин. сделок)</h2><div class="tw"><table><thead id="gridH"></thead><tbody id="gridB"></tbody></table></div></div>
   <div class="card c12"><h2>Как читать</h2><div class="note">PF &gt; 1.3 и просадка &lt; 20% при 30+ сделках — есть о чём говорить, PF около 1 — монетка. Бэктест берёт цену «последней сделки» на Polymarket плюс пессимистичный спред, но не знает, был ли объём по этой цене. Реальный результат будет хуже. Кривые Келли — с реинвестом: ставка растёт с банкроллом и уверенностью и уменьшается после убытков; кривая «фикс» — одинаковая ставка без реинвеста.</div></div>
