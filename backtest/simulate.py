@@ -234,6 +234,67 @@ def mv_bucket(m):
             return name
     return "0.20%+"
 
+def _mstats(obs, stake):
+    """Метрики по набору наблюдений."""
+    n = len(obs)
+    if not n:
+        return {"n": 0, "wins": 0, "losses": 0, "winrate": 0, "pf": 0, "pnl": 0.0}
+    wins = sum(1 for o in obs if o["won"])
+    gp = sum(o["pnl"] for o in obs if o["won"]); gl = -sum(o["pnl"] for o in obs if not o["won"])
+    return {"n": n, "wins": wins, "losses": n - wins, "winrate": wins / n,
+            "pf": round(gp / gl, 2) if gl else (99.0 if gp else 0), "pnl": round(gp - gl, 2)}
+
+
+def move_concentration(P, stake=None):
+    """Дневная разбивка Move Analysis + концентрация результата.
+
+    Отвечает на вопрос: остаётся ли бакет прибыльным, если убрать лучший день
+    и 26 августа. Торговая логика не участвует — это замер по истории.
+    """
+    stake = stake or BANKROLL * FLAT_STAKE
+    raw = {"ALL": [], "5m": [], "15m": []}
+    for w in TRAJ:
+        for el, move, ua, da, left, sg, t in w["steps"]:
+            if el < P["MIN_ELAPSED"] or left < 30 or move == 0:
+                continue
+            side = "UP" if move > 0 else "DOWN"
+            ask = ua if side == "UP" else da
+            if ask > P["MAX_ENTRY"] or ask <= 0.01 or ask < P.get("MIN_ENTRY", 0):
+                continue
+            won = (side == "UP") == w["up_won"]
+            b = (1 - ask) / ask
+            o = {"day": _dt.fromtimestamp(t, _tz.utc).strftime("%m-%d"),
+                 "bucket": mv_bucket(move), "won": won,
+                 "pnl": stake * b if won else -stake}
+            raw["ALL"].append(o)
+            raw[f"{w['minutes']}m"] = raw.get(f"{w['minutes']}m", [])
+            raw[f"{w['minutes']}m"].append(o)
+            break
+    out = {}
+    for cut, obs in raw.items():
+        buckets = {}
+        for b in sorted({o["bucket"] for o in obs}):
+            sel = [o for o in obs if o["bucket"] == b]
+            days = sorted({o["day"] for o in sel})
+            by_day = {d: _mstats([o for o in sel if o["day"] == d], stake) for d in days}
+            ranked = sorted(by_day.items(), key=lambda kv: -kv[1]["pnl"])
+            best = ranked[0][0] if ranked else None
+            total = _mstats(sel, stake)
+            no_best = _mstats([o for o in sel if o["day"] != best], stake) if best else total
+            no_26 = _mstats([o for o in sel if o["day"] != "08-26"], stake)
+            top3 = sum(v["pnl"] for _, v in ranked[:3])
+            buckets[b] = {
+                "total": total, "by_day": by_day,
+                "best_day": best, "best_day_pnl": ranked[0][1]["pnl"] if ranked else 0,
+                "best_share": round(abs(ranked[0][1]["pnl"]) / abs(total["pnl"]) * 100, 1) if ranked and total["pnl"] else 0,
+                "top3_pnl": round(top3, 2),
+                "top3_share": round(abs(top3) / abs(total["pnl"]) * 100, 1) if total["pnl"] else 0,
+                "no_best": no_best, "no_26aug": no_26, "days": len(days),
+            }
+        out[cut] = buckets
+    return out
+
+
 def move_analysis(P, stake=None):
     """Наблюдения по всем окнам без фильтра MIN_MOVE. Возвращает срезы ALL/5m/15m/по активам."""
     stake = stake or BANKROLL * FLAT_STAKE
@@ -329,6 +390,7 @@ page = {"generated": datetime.now(timezone.utc).isoformat(), "windows": nw, "day
         "inputs": json.loads(os.getenv("BT_INPUTS") or "{}"), "excluded": sorted(EXCLUDE), "repo": os.getenv("GITHUB_REPOSITORY", ""), "min_trades": MIN_TRADES,
         "configs": {"current": pack("Текущие настройки бота", CURRENT)},
         "move_analysis": move_analysis(CURRENT),
+        "move_concentration": move_concentration(CURRENT),
         "move_thresholds": {"MIN_MOVE": CURRENT["MIN_MOVE"], "MIN_MOVE_HIGH": CURRENT["MIN_MOVE_HIGH"],
                             "TIER_ENTRY": CURRENT["TIER_ENTRY"]}}
 seen, top = set(), []

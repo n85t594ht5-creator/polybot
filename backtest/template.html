@@ -67,7 +67,12 @@ button{font:600 13px var(--sans);padding:8px 14px;border-radius:8px;border:1px s
   <div class="card c12"><h2>Move Analysis · где начинается edge</h2>
    <div class="tabs" id="maTabs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"></div>
    <div class="tw"><table><thead><tr><th>Движение</th><th>Наблюдений</th><th>W</th><th>L</th><th>Winrate</th><th>PF</th><th>Hypothetical P&L</th><th>Ср. вход</th><th>Ср. move</th><th>Проходит фильтр</th></tr></thead><tbody id="maBody"></tbody></table></div>
-   <div class="note" style="margin-top:8px" id="maNote"></div></div>
+   <div class="note" style="margin-top:8px" id="maNote"></div>
+   <h2 style="margin-top:18px">Устойчивость по дням</h2>
+   <div class="tabs" id="mcTabs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"></div>
+   <div id="mcSummary"></div>
+   <div class="tw" style="margin-top:10px"><table><thead><tr><th>День</th><th>Набл.</th><th>W</th><th>L</th><th>Winrate</th><th>PF</th><th>Hypothetical P&L</th></tr></thead><tbody id="mcBody"></tbody></table></div>
+   <div class="note" style="margin-top:8px">Если убрать лучший день и 26 августа, а зона остаётся прибыльной — это признак устойчивости. Если рассыпается — снова событие, а не edge.</div></div>
   <div class="card c12"><h2>Топ-3 стратегии</h2><div class="top3" id="top3"></div><div class="note" style="margin-top:8px">Рейтинг: прибыль × доля побед, со штрафом за просадку и за малое число сделок. Убыточные сделки учтены полностью: в P&amp;L, в PF и в просадке.</div></div>
   <div class="card c12"><div class="seg" id="seg"></div><div id="cfgLine" class="sub"></div></div>
   <div class="card c3"><h2>Сделок</h2><div class="big" id="m_trades">—</div><div class="sub" id="m_wl"></div><div class="sub" id="m_gl"></div></div>
@@ -142,10 +147,10 @@ async function loadForward(){
    <div class="t"><h3>HYPOTHETICAL</h3><div class="m">${rows.length} qualifying signals · winrate ${(wins/rows.length*100).toFixed(0)}%<br>P&L <b class="${cls(hyp)}">${sgn(hyp)} $</b></div></div></div>`
    +tbl('По окнам',g(r=>r.window))+tbl('По активам',g(r=>r.asset))+tbl('По цене входа',g(r=>r.entry_bucket))+tbl('По дням',g(r=>(r.timestamp||'').slice(0,10)));
  }catch(e){$('fwdBox').innerHTML='<div class="sub">Forward-данные появятся, когда бот запишет первые сигналы с известным исходом.</div>'}}
-let maCut='ALL';
+let maCut='ALL', mcBucket='0.05–0.10%';
 function renderMove(){const ma=D.move_analysis||{};const cuts=Object.keys(ma);
  if(!cuts.length){$('maBody').innerHTML='<tr><td colspan="10" class="empty">нет данных</td></tr>';return}
- $('maTabs').innerHTML=cuts.map(k=>`<button class="${k===maCut?'on':''}" onclick="maCut='${k}';renderMove()">${k}</button>`).join('');
+ $('maTabs').innerHTML=cuts.map(k=>`<button class="${k===maCut?'on':''}" onclick="maCut='${k}';renderMove();renderConc()">${k}</button>`).join('');
  const order=['0.00–0.05%','0.05–0.10%','0.10–0.12%','0.12–0.15%','0.15–0.20%','0.20%+'];
  const b=ma[maCut]||{};const th=D.move_thresholds||{};
  $('maBody').innerHTML=order.map(k=>{const v=b[k];
@@ -159,6 +164,20 @@ function renderMove(){const ma=D.move_analysis||{};const cuts=Object.keys(ma);
   Текущий фильтр: ${(th.MIN_MOVE*100).toFixed(2)}% (вход ≤ ${th.TIER_ENTRY}) и ${(th.MIN_MOVE_HIGH*100).toFixed(2)}% (дороже). Два верхних бакета сейчас отсекаются целиком — колонка «проходит фильтр» показывает, сколько наблюдений реально доходит до сделки.
   Смотри, растёт ли winrate/PF монотонно с ростом движения: если нижние бакеты не хуже — порог избыточно строг; если заметно хуже — порог оправдан.`;
 }
+function renderConc(){const mc=(D.move_concentration||{})[maCut in (D.move_concentration||{})?maCut:'ALL'];
+ if(!mc){$('mcBody').innerHTML='<tr><td colspan="7" class="empty">нет данных</td></tr>';return}
+ const order=['0.00–0.05%','0.05–0.10%','0.10–0.12%','0.12–0.15%','0.15–0.20%','0.20%+'].filter(k=>mc[k]);
+ if(!order.includes(mcBucket))mcBucket=order[0];
+ $('mcTabs').innerHTML=order.map(k=>`<button class="${k===mcBucket?'on':''}" onclick="mcBucket='${k}';renderConc()">${k}</button>`).join('');
+ const b=mc[mcBucket]; if(!b){$('mcBody').innerHTML='';return}
+ const m=(t,v,c)=>`<div class="t"><h3>${t}</h3><div class="m">${v}</div></div>`;
+ $('mcSummary').innerHTML=`<div class="top3">
+  ${m('Всего',`${b.total.n} набл. · winrate <b>${(b.total.winrate*100).toFixed(0)}%</b> · PF <b>${b.total.pf>=99?'∞':fmt(b.total.pf)}</b><br>P&L <b class="${cls(b.total.pnl)}">${sgn(b.total.pnl)} $</b> за ${b.days} дней`)}
+  ${m('Концентрация',`лучший день <b>${b.best_day||'—'}</b>: ${sgn(b.best_day_pnl)} $<br>его доля: <b class="${b.best_share>60?'neg':b.best_share>35?'warn':'pos'}">${b.best_share}%</b> · топ-3: ${b.top3_share}%`)}
+  ${m('Без лучшего дня',`${b.no_best.n} набл. · winrate ${(b.no_best.winrate*100).toFixed(0)}% · PF <b class="${b.no_best.pf>=1.3?'pos':b.no_best.pf<1?'neg':'warn'}">${b.no_best.pf>=99?'∞':fmt(b.no_best.pf)}</b><br>P&L <b class="${cls(b.no_best.pnl)}">${sgn(b.no_best.pnl)} $</b>`)}
+  ${m('Без 26 августа',`${b.no_26aug.n} набл. · winrate ${(b.no_26aug.winrate*100).toFixed(0)}% · PF <b class="${b.no_26aug.pf>=1.3?'pos':b.no_26aug.pf<1?'neg':'warn'}">${b.no_26aug.pf>=99?'∞':fmt(b.no_26aug.pf)}</b><br>P&L <b class="${cls(b.no_26aug.pnl)}">${sgn(b.no_26aug.pnl)} $</b>`)}</div>`;
+ $('mcBody').innerHTML=Object.entries(b.by_day).sort().map(([d,v])=>`<tr${d===b.best_day?' style="background:rgba(245,182,74,.08)"':''}><td>${d}${d===b.best_day?' ★':''}</td><td>${v.n}</td><td class="pos">${v.wins}</td><td class="neg">${v.losses}</td><td class="${v.winrate>=.6?'pos':v.winrate<.5?'neg':''}">${(v.winrate*100).toFixed(0)}%</td><td class="${v.pf>=1.3?'pos':v.pf<1?'neg':''}">${v.pf>=99?'∞':fmt(v.pf)}</td><td class="${cls(v.pnl)}">${sgn(v.pnl)}</td></tr>`).join('');
+}
 function top3(){const ks=D.top||[];$('top3').innerHTML=ks.length?ks.map((k,i)=>{const c=D.configs[k],m=c.metrics;return `<div class="t ${i===0?'first':''}"><h3>${i+1}. ${i===0?'Лучшая':i===1?'Вторая':'Третья'}</h3>
  <div class="m">${m.trades} сделок · <span class="pos">${m.wins} побед</span> / <span class="neg">${m.losses} убытков</span><br>winrate <b>${(m.winrate*100).toFixed(0)}%</b> · PF <b>${m.pf>=99?'∞':fmt(m.pf)}</b> · P&amp;L <b class="${cls(m.pnl)}">${sgn(m.pnl)} $</b> · просадка ${(m.max_dd*100).toFixed(0)}%</div>
  <div class="p">${Object.entries(c.params).map(([a,b])=>a+'='+b).join('<br>')}</div>
@@ -167,5 +186,5 @@ async function apply(k){if(!tok())return alert('Нужен токен GitHub —
  try{for(const[a,b]of Object.entries(c.params)){try{await gh('/actions/variables/'+a,{method:'PATCH',body:JSON.stringify({name:a,value:String(b)})})}catch(e){await gh('/actions/variables',{method:'POST',body:JSON.stringify({name:a,value:String(b)})})}}
   const j=await gh('/actions/runs?per_page=10');for(const r of j.workflow_runs.filter(x=>x.path&&x.path.endsWith('polybot.yml')&&['in_progress','queued'].includes(x.status)))await gh('/actions/runs/'+r.id+'/cancel',{method:'POST'});
   await new Promise(r=>setTimeout(r,8000));await gh('/actions/workflows/polybot.yml/dispatches',{method:'POST',body:JSON.stringify({ref:'main'})});alert('Применено, бот перезапускается.')}catch(e){alert('Ошибка: '+e.message)}}
-if(D.top&&D.top.length)cur=D.top[0];seg();render();top3();poll();loadForward();renderMove();
+if(D.top&&D.top.length)cur=D.top[0];seg();render();top3();poll();loadForward();renderMove();renderConc();
 </script></body></html>
