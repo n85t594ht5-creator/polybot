@@ -336,3 +336,9 @@
 2026-08-28 21:34:37,491 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
 2026-08-28 21:36:38,472 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
 2026-08-28 21:38:44,574 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:40:55,029 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:41:16,635 INFO  [PAPER] BUY SOL DOWN @ 0.600 $4.05 (PAPER) conf=0.776 move=-0.168%
+2026-08-28 21:41:41,074 INFO  SIGNAL XRP DOWN @ 0.540 заблокирован (MAX_PER_WINDOW)
+2026-08-28 21:43:05,077 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:45:20,174 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:47:21,382 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
