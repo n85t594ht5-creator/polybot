@@ -279,8 +279,9 @@ HTML = r"""<!doctype html>
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 var(--sans)}
 a{color:var(--acc)}
-.wrap{max-width:1360px;margin:0 auto;padding:18px;padding-top:calc(18px + env(safe-area-inset-top))}
-header{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.wrap{max-width:1360px;margin:0 auto;padding:18px;padding-top:calc(18px + env(safe-area-inset-top));padding-bottom:calc(90px + env(safe-area-inset-bottom))}
+header{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;margin-bottom:16px}
+header .sub{flex-basis:100%;margin:0}
 header h1{font:600 20px var(--mono);letter-spacing:.04em;margin:0}
 .pill{font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid var(--line);color:var(--mut)}
 .pill.live{border-color:var(--down);color:var(--down)}
@@ -300,7 +301,12 @@ button:disabled{opacity:.45;cursor:default}
 .card h2{margin:0 0 10px;font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
 .c3{grid-column:span 3}.c4{grid-column:span 4}.c6{grid-column:span 6}.c8{grid-column:span 8}.c12{grid-column:span 12}
 @media(max-width:1000px){.c3{grid-column:span 6}.c4{grid-column:span 6}.c8{grid-column:span 12}.c6{grid-column:span 12}}
-@media(max-width:600px){.c3,.c4{grid-column:span 12}.wrap{padding:10px;padding-top:calc(10px + env(safe-area-inset-top))}header h1{font-size:17px}.big{font-size:26px}button{padding:10px 12px}.tw{max-height:300px}}
+@media(max-width:600px){.c3,.c4{grid-column:span 12}.wrap{padding:10px;padding-top:calc(10px + env(safe-area-inset-top));padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+header h1{font-size:17px}.big{font-size:24px}.tw{max-height:320px}
+header button{flex:1 1 auto;padding:9px 10px;font-size:12px}
+.card{padding:12px}.run,.set{gap:8px}.brow{grid-template-columns:minmax(58px,84px) 1fr minmax(88px,auto);font-size:11px}
+.cal .d{font-size:10px}.cal .d small{display:none}.hgrid{grid-template-columns:repeat(8,1fr)}
+.ev{grid-template-columns:22px 1fr auto;font-size:12px}.pw button{padding:13px}}
 .big{font:600 30px/1.1 var(--mono);letter-spacing:-.01em}
 .sub{color:var(--mut);font-size:12px;margin-top:4px;font-family:var(--mono)}
 .m{font-family:var(--mono)}.mini{display:inline-block;width:54px;height:5px;background:#0a101a;border-radius:99px;vertical-align:middle;margin-right:6px}.mini i{display:block;height:100%;background:var(--acc);border-radius:99px}
@@ -319,9 +325,9 @@ th{text-align:left;color:var(--mut);font-weight:500;padding:6px 8px;border-botto
 td{padding:7px 8px;border-bottom:1px solid rgba(36,50,72,.6);white-space:nowrap}
 tr:last-child td{border-bottom:0}
 .tw{overflow:auto;max-height:420px}
-.gate{display:grid;grid-template-columns:150px 1fr auto;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid rgba(36,50,72,.6)}
+.gate{display:grid;grid-template-columns:minmax(90px,140px) 1fr minmax(90px,auto);gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid rgba(36,50,72,.6)}
 .gate:last-child{border-bottom:0}
-.gate .n{font-size:12px}
+.gate .n{font-size:12px;overflow:hidden;text-overflow:ellipsis}
 .gate .v{font:12px var(--mono);color:var(--mut);text-align:right}
 .bar{height:6px;background:#0a101a;border-radius:99px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--acc);border-radius:99px;transition:width .4s}
@@ -366,6 +372,13 @@ svg{display:block;width:100%;height:170px}
 .tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}.tabs button{font-size:12px;padding:6px 12px}.tabs button.on{border-color:var(--acc);color:var(--acc)}
 details.logbox{margin-top:8px}details.logbox summary{cursor:pointer;color:var(--mut);font-size:12px;padding:6px 0}
 .book{font:11px var(--mono)}.book .r{display:grid;grid-template-columns:44px 1fr 58px;gap:6px;align-items:center;padding:1px 0}.book .r i{display:block;height:8px;background:rgba(138,180,255,.35);border-radius:2px}
+.brow{display:grid;grid-template-columns:minmax(70px,110px) 1fr minmax(96px,auto);gap:8px;align-items:center;padding:5px 0;font:12px var(--mono);border-bottom:1px solid rgba(36,50,72,.5)}
+.brow:last-child{border-bottom:0}.brow .k{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brow .t{display:block;height:8px;background:#0a101a;border-radius:99px;overflow:hidden}.brow .t i{display:block;height:100%;border-radius:99px}
+.brow .v{text-align:right;color:var(--mut);white-space:nowrap}
+a.btn{display:inline-block;font:600 12px var(--sans);padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--txt);text-decoration:none}
+a.btn:hover{border-color:var(--acc)}
+.md table{width:100%;border-collapse:collapse;font:12px var(--mono);margin-top:4px}.md td{padding:5px 8px;border-bottom:1px solid rgba(36,50,72,.6);white-space:nowrap}
 .warnbox{border:1px solid var(--warn);background:rgba(245,182,74,.08);border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:12px}
 .ov{position:fixed;inset:0;background:rgba(5,9,16,.7);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}.ov.on{display:flex}
 .md{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:720px;width:100%;max-height:90vh;overflow:auto;padding:18px 20px}
@@ -430,9 +443,8 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
 </div>
 
 <div id="v_statistics" class="view">
- <div class="card"><h2>Статистика</h2>
-  <div class="tabs" id="stTabs"></div>
-  <div class="grid" style="gap:12px">
+ <div class="tabs" id="stTabs" style="margin-bottom:12px"></div>
+  <div class="grid">
    <div class="card c4"><h2>За период</h2><div class="big" id="st_pnl">—</div><div class="sub" id="st_sub"></div></div>
    <div class="card c4"><h2>Winrate</h2><div class="big" id="st_wr">—</div><div class="sub" id="st_wl"></div></div>
    <div class="card c4"><h2>Profit factor</h2><div class="big" id="st_pf">—</div><div class="sub" id="st_pfs"></div></div>
@@ -443,25 +455,22 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
    <div class="card c12"><h2>Банкролл</h2><svg id="st_eq" viewBox="0 0 800 200" preserveAspectRatio="none" style="height:200px"></svg><div class="sub" id="st_eqs"></div></div>
    <div class="card c12"><h2>Сделки периода</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Окно</th><th>Сторона</th><th>Вход</th><th>Ставка</th><th>Итог</th><th>P&amp;L</th></tr></thead><tbody id="st_trades"></tbody></table></div></div>
   </div>
- </div>
 </div>
 
 <div id="v_signals" class="view">
- <div class="card"><h2>Журнал упущенных сигналов</h2>
-  <div class="sub" style="margin-bottom:10px">Моменты, когда движение и время подошли, но сделки не было. Показывает, что именно мешает: цена ушла, не хватило объёма в стакане или сработал лимит.</div>
-  <div class="tabs" id="sigTabs"></div>
-  <div class="grid" style="gap:12px">
+ <div class="sub" style="margin-bottom:10px">Моменты, когда движение и время подошли, но сделки не было: цена ушла, не хватило объёма в стакане или сработал лимит.</div>
+ <div class="tabs" id="sigTabs"></div>
+ <div class="grid">
    <div class="card c4"><h2>Всего</h2><div class="big" id="sg_n">—</div><div class="sub">за последние часы</div></div>
    <div class="card c8"><h2>Причины</h2><div id="sg_reasons"></div></div>
-   <div class="card c12"><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Окно</th><th>Сторона</th><th>Цена</th><th>Причина</th><th>Детали</th></tr></thead><tbody id="sg_list"></tbody></table></div></div>
-  </div>
+   <div class="card c12"><h2>Записи</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Окно</th><th>Сторона</th><th>Цена</th><th>Причина</th><th>Детали</th></tr></thead><tbody id="sg_list"></tbody></table></div></div>
  </div>
 </div>
 
 <div id="v_reports" class="view">
  <div class="card"><h2>Ежедневные отчёты</h2>
   <div class="sub" style="margin-bottom:10px">Формируются автоматически. Excel — со всеми сделками дня и разбивками.</div>
-  <div class="tw"><table><thead><tr><th>День</th><th>Сделок</th><th>Winrate</th><th>P&amp;L</th><th>PF</th><th>Банкролл</th><th></th></tr></thead><tbody id="rpList"></tbody></table></div>
+  <div class="tw"><table><thead><tr><th>День</th><th>Сделок</th><th>Winrate</th><th>P&amp;L</th><th>PF</th><th>Банкролл</th><th>Файлы</th></tr></thead><tbody id="rpList"></tbody></table></div>
  </div>
 </div>
 
@@ -670,7 +679,7 @@ function inPeriod(t){const d=new Date(Date.parse(t.opened));const now=new Date()
  return (now-d)/864e5<=31}
 function grp(list,fn){const o={};list.forEach(t=>{const k=fn(t);(o[k]=o[k]||{n:0,w:0,pnl:0});o[k].n++;o[k].w+=t.won?1:0;o[k].pnl+=t.pnl});return o}
 function barList(id,obj,fmtk){const e=$(id);const rows=Object.entries(obj).sort();
- e.innerHTML=rows.map(([k,v])=>{const wr=v.w/v.n;return `<div class="bar"><span>${fmtk?fmtk(k):k}</span><div class="t"><i style="width:${(wr*100).toFixed(0)}%;background:${v.pnl>=0?'var(--up)':'var(--down)'}"></i></div><span style="text-align:right;color:var(--mut)">${(wr*100).toFixed(0)}% · ${v.n} · <span class="${cls(v.pnl)}">${sgn(v.pnl)}</span></span></div>`}).join('')||'<div class="empty">нет сделок</div>'}
+ e.innerHTML=rows.map(([k,v])=>{const wr=v.w/v.n;return `<div class="brow"><span class="k">${fmtk?fmtk(k):k}</span><span class="t"><i style="width:${(wr*100).toFixed(0)}%;background:${v.pnl>=0?'var(--up)':'var(--down)'}"></i></span><span class="v">${(wr*100).toFixed(0)}% · ${v.n} · <span class="${cls(v.pnl)}">${sgn(v.pnl)}</span></span></div>`}).join('')||'<div class="empty">нет сделок</div>'}
 function renderStats(){
  $('stTabs').innerHTML=[['month','Месяц'],['week','Неделя'],['day','День']].map(([k,n])=>`<button class="${k===stMode?'on':''}" onclick="stMode='${k}';renderStats()">${n}</button>`).join('');
  const all=allTrades(),list=all.filter(inPeriod);
@@ -716,14 +725,14 @@ function renderSignals(){const m=(last&&last.missed)||[];
  const list=m.filter(x=>sgFilter==='all'||x.reason===sgFilter);
  $('sg_n').textContent=list.length;
  const cnt={};m.forEach(x=>cnt[x.reason]=(cnt[x.reason]||0)+1);const tot=m.length||1;
- $('sg_reasons').innerHTML=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="bar"><span>${esc(k)}</span><div class="t"><i style="width:${(v/tot*100).toFixed(0)}%;background:var(--warn)"></i></div><span style="text-align:right;color:var(--mut)">${v}</span></div>`).join('')||'<div class="empty">Пока пусто — бот не пропустил ни одного готового сигнала.</div>';
+ $('sg_reasons').innerHTML=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="brow"><span class="k">${esc(k)}</span><span class="t"><i style="width:${(v/tot*100).toFixed(0)}%;background:var(--warn)"></i></span><span class="v">${v}</span></div>`).join('')||'<div class="empty">Пока пусто — бот не пропустил ни одного готового сигнала.</div>';
  $('sg_list').innerHTML=list.slice(0,80).map(x=>`<tr><td>${x.ts.slice(5,16).replace('T',' ')}</td><td>${esc(x.asset)}</td><td>${esc(x.minutes)}м</td><td class="${x.side==='UP'?'pos':'neg'}">${esc(x.side)}</td><td>${esc(x.price)}</td><td class="warn">${esc(x.reason)}</td><td class="rr">${esc(x.note)}</td></tr>`).join('')||'<tr><td colspan="7" class="empty">нет записей</td></tr>';
 }
 // ───── отчёты ─────
 async function loadReports(){$('rpList').innerHTML='<tr><td colspan="7" class="empty">загрузка…</td></tr>';
  try{const r=await fetch(`https://raw.githubusercontent.com/${REPO}/main/reports/index.json?t=`+Date.now());const j=await r.json();
   $('rpList').innerHTML=j.slice().reverse().map(x=>`<tr><td>${x.day}</td><td>${x.trades}</td><td>${x.winrate==null?'—':(x.winrate*100).toFixed(0)+'%'}</td><td class="${cls(x.pnl)}">${sgn(x.pnl)}</td><td>${x.pf==null?'—':fmt(x.pf)}</td><td>${fmt(x.bankroll_end)}</td>
-   <td><a class="btn" href="https://github.com/${REPO}/raw/main/reports/${x.day}.xlsx" download>Excel</a> <button onclick="showReport('${x.day}')">Открыть</button></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Отчётов пока нет — первый появится после суточного цикла.</td></tr>'}
+   <td style="display:flex;gap:6px"><a class="btn" href="https://github.com/${REPO}/raw/main/reports/${x.day}.xlsx" download>Excel</a><button style="padding:6px 10px;font-size:12px" onclick="showReport('${x.day}')">Открыть</button></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Отчётов пока нет — первый появится после суточного цикла.</td></tr>'}
  catch(e){$('rpList').innerHTML='<tr><td colspan="7" class="empty">Отчётов пока нет.</td></tr>'}}
 async function showReport(day){try{const r=await fetch(`https://raw.githubusercontent.com/${REPO}/main/reports/${day}.json?t=`+Date.now());const j=await r.json();
  const tbl=(t,o)=>`<div class="sub" style="margin-top:10px">${t}</div><table>${Object.entries(o).sort().map(([k,v])=>`<tr><td>${k}</td><td>${v.n}</td><td>${(v.w/v.n*100).toFixed(0)}%</td><td class="${cls(v.pnl)}">${sgn(v.pnl)}</td></tr>`).join('')}</table>`;

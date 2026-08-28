@@ -4,15 +4,17 @@
 :root{--bg:#0d1420;--panel:#131d2e;--panel2:#182437;--line:#243248;--txt:#e4ebf5;--mut:#7f8da6;--up:#35d99b;--down:#ff6b7a;--warn:#f5b64a;--acc:#8ab4ff;--pink:#e08ad8;
 --mono:"JetBrains Mono","SF Mono",Consolas,monospace;--sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 var(--sans)}a{color:var(--acc);text-decoration:none}
-.wrap{max-width:1360px;margin:0 auto;padding:18px}
-header{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}header h1{font:600 20px var(--mono);letter-spacing:.04em;margin:0}
+.wrap{max-width:1360px;margin:0 auto;padding:18px;padding-top:calc(18px + env(safe-area-inset-top));padding-bottom:calc(90px + env(safe-area-inset-bottom))}
+header{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;margin-bottom:16px}header h1{font:600 20px var(--mono);letter-spacing:.04em;margin:0}
 .pill{font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid var(--line);color:var(--mut)}
 .btn{font:600 13px var(--sans);padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--txt)}.btn:hover{border-color:var(--acc)}
 .spacer{flex:1}.grid{display:grid;gap:12px;grid-template-columns:repeat(12,1fr)}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
 .card h2{margin:0 0 10px;font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
 .c3{grid-column:span 3}.c4{grid-column:span 4}.c6{grid-column:span 6}.c8{grid-column:span 8}.c12{grid-column:span 12}
-@media(max-width:1000px){.c3,.c4{grid-column:span 6}.c6,.c8{grid-column:span 12}}@media(max-width:600px){.c3,.c4{grid-column:span 12}.wrap{padding:10px}}
+@media(max-width:1000px){.c3,.c4{grid-column:span 6}.c6,.c8{grid-column:span 12}}@media(max-width:600px){.c3,.c4{grid-column:span 12}.wrap{padding:10px;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+.card{padding:12px}header h1{font-size:16px}.big{font-size:24px}.bar{grid-template-columns:minmax(58px,84px) 1fr minmax(88px,auto);font-size:11px}
+.run{grid-template-columns:1fr 1fr}.top3 .t{padding:12px}}
 .big{font:600 28px/1.1 var(--mono)}.sub{color:var(--mut);font-size:12px;margin-top:4px;font-family:var(--mono)}
 .pos{color:var(--up)}.neg{color:var(--down)}.warn{color:var(--warn)}
 table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px}th{text-align:left;color:var(--mut);font-weight:500;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
@@ -20,7 +22,8 @@ td{padding:6px 8px;border-bottom:1px solid rgba(36,50,72,.6);white-space:nowrap}
 tr.hi td{background:rgba(53,217,155,.08)}
 svg{display:block;width:100%}
 .leg{display:flex;gap:14px;flex-wrap:wrap;font:11px var(--mono);color:var(--mut);margin-top:6px}.leg i{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:5px;border-radius:2px}
-.bar{display:grid;grid-template-columns:96px 1fr 120px;gap:8px;align-items:center;padding:4px 0;font:12px var(--mono)}
+.bar{display:grid;grid-template-columns:minmax(70px,110px) 1fr minmax(96px,auto);gap:8px;align-items:center;padding:5px 0;font:12px var(--mono);border-bottom:1px solid rgba(36,50,72,.5)}
+.bar:last-child{border-bottom:0}.bar>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bar>span:last-child{text-align:right;color:var(--mut);white-space:nowrap}
 .bar .t{height:10px;background:#0a101a;border-radius:99px;overflow:hidden}.bar .t i{display:block;height:100%;border-radius:99px}
 .seg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.seg button{font:600 12px var(--sans);padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--mut);cursor:pointer}.seg button.on{color:var(--txt);border-color:var(--acc)}
 .note{font-size:12px;color:var(--mut);line-height:1.5}
@@ -62,7 +65,8 @@ button{font:600 13px var(--sans);padding:8px 14px;border-radius:8px;border:1px s
   <div class="card c8"><h2>Кривая капитала: фиксированная ставка vs дробный Келли</h2><svg id="eq" viewBox="0 0 800 260" preserveAspectRatio="none"></svg><div class="leg" id="leg"></div><div class="sub" id="eqSub"></div></div>
   <div class="card c4"><h2>Winrate по цене входа</h2><div id="buckets"></div><div class="note" style="margin-top:8px">Линия — цена входа + спред: столько побед нужно, чтобы выйти в ноль. Зелёный — выше порога, красный — ниже.</div></div>
   <div class="card c12"><h2>По дням — на скольких днях держится результат</h2><div id="dates"></div><div class="note" style="margin-top:6px">Если почти вся прибыль в одном-двух днях — это событие, а не стратегия. Исключённые даты: <span id="excl">—</span></div></div>
-  <div class="card c6"><h2>По часам (UTC)</h2><div id="hours"></div><div class="note" style="margin-top:6px">Красные часы — кандидаты на отключение. Твоё время = UTC+3.</div></div>
+  <div class="card c6"><h2>По часам (UTC)</h2><div class="tw" style="max-height:340px">
+   <div id="hours"></div></div><div class="note" style="margin-top:6px">Красные часы — кандидаты на отключение. Твоё время = UTC+3.</div></div>
   <div class="card c6"><h2>По дням недели</h2><div id="days"></div></div>
   <div class="card c6"><h2>По активам и окнам</h2><table><thead><tr><th>Срез</th><th>Сделок</th><th>Winrate</th><th>P&amp;L</th></tr></thead><tbody id="brk"></tbody></table></div>
   <div class="card c6"><h2>Сделки конфигурации</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Окно</th><th>Сторона</th><th>Вход</th><th>Итог</th></tr></thead><tbody id="trades"></tbody></table></div></div>
