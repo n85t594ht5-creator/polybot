@@ -1,25 +1,6 @@
 {
- "bankroll": 99.72000000000001,
- "positions": {
-  "3922559": {
-   "market_id": "3922559",
-   "asset": "SOL",
-   "side": "UP",
-   "token": "41374121032242594408814265973036048886101079398827885068045955989239975601895",
-   "minutes": 15,
-   "entry": 0.52,
-   "cost": 7.97,
-   "shares": 15.33,
-   "conf": 0.776,
-   "move": 0.00082,
-   "elapsed": 0.84,
-   "ref": 109.14,
-   "end": "2026-08-28T01:15:00+00:00",
-   "opened": "2026-08-28T01:12:33.448531+00:00",
-   "question": "Solana Up or Down - August 27, 9:00PM-9:15PM ET",
-   "order_id": "PAPER"
-  }
- },
+ "bankroll": 91.75000000000001,
+ "positions": {},
  "closed": [
   {
    "market_id": "3919352",
@@ -62,11 +43,32 @@
    "won": true,
    "pnl": 5.79,
    "final": 109.47
+  },
+  {
+   "market_id": "3922559",
+   "asset": "SOL",
+   "side": "UP",
+   "token": "41374121032242594408814265973036048886101079398827885068045955989239975601895",
+   "minutes": 15,
+   "entry": 0.52,
+   "cost": 7.97,
+   "shares": 15.33,
+   "conf": 0.776,
+   "move": 0.00082,
+   "elapsed": 0.84,
+   "ref": 109.14,
+   "end": "2026-08-28T01:15:00+00:00",
+   "opened": "2026-08-28T01:12:33.448531+00:00",
+   "question": "Solana Up or Down - August 27, 9:00PM-9:15PM ET",
+   "order_id": "PAPER",
+   "won": false,
+   "pnl": -7.97,
+   "final": 109.0
   }
  ],
  "day": "2026-08-28",
- "day_pnl": -0.28000000000000025,
- "consec_losses": 0,
+ "day_pnl": -8.25,
+ "consec_losses": 1,
  "cooldown_until": null,
  "trade_times": [
   1787876626.6459713,
