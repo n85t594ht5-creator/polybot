@@ -77,6 +77,12 @@ jobs:
           timeout -s INT 340m python bot.py || true
           kill %1 2>/dev/null || true
 
+      - name: Daily report
+        run: |
+          pip install openpyxl -q
+          python daily_report.py "$(date -u +%Y-%m-%d)"
+          python daily_report.py "$(date -u -d yesterday +%Y-%m-%d)" || true
+
       - name: Save state back to repo
         env:
           GIST_RAW_URL: ${{ vars.GIST_RAW_URL }}
@@ -84,7 +90,7 @@ jobs:
           tail -n 2000 bot.log > bot.tmp && mv bot.tmp bot.log
           python report.py
 
-          git add state.json trades.csv bot.log docs/index.html
+          git add state.json trades.csv missed.csv bot.log docs/index.html reports/
           git commit -m "paper run $(date -u +'%Y-%m-%d %H:%M')" || echo "nothing to commit"
           git pull --rebase
           git push

@@ -1,0 +1,209 @@
+{
+ "day": "2026-08-28",
+ "generated": "2026-08-28T13:33:36.248191+00:00",
+ "trades": 9,
+ "wins": 5,
+ "losses": 4,
+ "winrate": 0.5555555555555556,
+ "pnl": -7.11,
+ "gross_win": 20.46,
+ "gross_loss": -27.57,
+ "pf": 0.74,
+ "bankroll_end": 92.89000000000001,
+ "by_asset": {
+  "SOL": {
+   "n": 7,
+   "w": 3,
+   "pnl": -13.45
+  },
+  "XRP": {
+   "n": 2,
+   "w": 2,
+   "pnl": 6.34
+  }
+ },
+ "by_window": {
+  "5m": {
+   "n": 4,
+   "w": 2,
+   "pnl": -5.72
+  },
+  "15m": {
+   "n": 5,
+   "w": 3,
+   "pnl": -1.39
+  }
+ },
+ "by_hour": {
+  "00": {
+   "n": 2,
+   "w": 1,
+   "pnl": -0.28
+  },
+  "01": {
+   "n": 2,
+   "w": 0,
+   "pnl": -14.87
+  },
+  "02": {
+   "n": 1,
+   "w": 0,
+   "pnl": -6.63
+  },
+  "09": {
+   "n": 2,
+   "w": 2,
+   "pnl": 6.34
+  },
+  "12": {
+   "n": 2,
+   "w": 2,
+   "pnl": 8.33
+  }
+ },
+ "by_entry": {
+  "0.60": {
+   "n": 4,
+   "w": 3,
+   "pnl": 4.33
+  },
+  "0.50": {
+   "n": 4,
+   "w": 1,
+   "pnl": -15.71
+  },
+  "0.55": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.27
+  }
+ },
+ "trade_list": [
+  {
+   "opened": "2026-08-28T00:23:46.645958+00:00",
+   "asset": "SOL",
+   "side": "UP",
+   "minutes": 5,
+   "entry": 0.6,
+   "cost": 6.07,
+   "shares": 10.12,
+   "conf": 0.762,
+   "move": 0.00119,
+   "won": false,
+   "pnl": -6.07,
+   "question": "Solana Up or Down - August 27, 8:20PM-8:25PM ET"
+  },
+  {
+   "opened": "2026-08-28T00:41:28.543894+00:00",
+   "asset": "SOL",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.54,
+   "cost": 6.81,
+   "shares": 12.6,
+   "conf": 0.762,
+   "move": -0.00109,
+   "won": true,
+   "pnl": 5.79,
+   "question": "Solana Up or Down - August 27, 8:30PM-8:45PM ET"
+  },
+  {
+   "opened": "2026-08-28T01:12:33.448531+00:00",
+   "asset": "SOL",
+   "side": "UP",
+   "minutes": 15,
+   "entry": 0.52,
+   "cost": 7.97,
+   "shares": 15.33,
+   "conf": 0.776,
+   "move": 0.00082,
+   "won": false,
+   "pnl": -7.97,
+   "question": "Solana Up or Down - August 27, 9:00PM-9:15PM ET"
+  },
+  {
+   "opened": "2026-08-28T01:33:46.431012+00:00",
+   "asset": "SOL",
+   "side": "UP",
+   "minutes": 5,
+   "entry": 0.5,
+   "cost": 6.9,
+   "shares": 13.81,
+   "conf": 0.751,
+   "move": 0.00082,
+   "won": false,
+   "pnl": -6.9,
+   "question": "Solana Up or Down - August 27, 9:30PM-9:35PM ET"
+  },
+  {
+   "opened": "2026-08-28T02:27:09.823377+00:00",
+   "asset": "SOL",
+   "side": "UP",
+   "minutes": 15,
+   "entry": 0.528,
+   "cost": 6.63,
+   "shares": 12.56,
+   "conf": 0.774,
+   "move": 0.00102,
+   "won": false,
+   "pnl": -6.63,
+   "question": "Solana Up or Down - August 27, 10:15PM-10:30PM ET"
+  },
+  {
+   "opened": "2026-08-28T09:28:51.659916+00:00",
+   "asset": "XRP",
+   "side": "DOWN",
+   "minutes": 5,
+   "entry": 0.61,
+   "cost": 4.68,
+   "shares": 7.66,
+   "conf": 0.765,
+   "move": -0.00113,
+   "won": true,
+   "pnl": 2.98,
+   "question": "XRP Up or Down - August 28, 5:25AM-5:30AM ET"
+  },
+  {
+   "opened": "2026-08-28T09:57:32.396847+00:00",
+   "asset": "XRP",
+   "side": "UP",
+   "minutes": 15,
+   "entry": 0.61,
+   "cost": 5.26,
+   "shares": 8.62,
+   "conf": 0.778,
+   "move": 0.00092,
+   "won": true,
+   "pnl": 3.36,
+   "question": "XRP Up or Down - August 28, 5:45AM-6:00AM ET"
+  },
+  {
+   "opened": "2026-08-28T12:49:03.040311+00:00",
+   "asset": "SOL",
+   "side": "DOWN",
+   "minutes": 5,
+   "entry": 0.59,
+   "cost": 6.14,
+   "shares": 10.41,
+   "conf": 0.789,
+   "move": -0.00152,
+   "won": true,
+   "pnl": 4.27,
+   "question": "Solana Up or Down - August 28, 8:45AM-8:50AM ET"
+  },
+  {
+   "opened": "2026-08-28T12:57:39.995903+00:00",
+   "asset": "SOL",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.61,
+   "cost": 6.36,
+   "shares": 10.42,
+   "conf": 0.796,
+   "move": -0.00143,
+   "won": true,
+   "pnl": 4.06,
+   "question": "Solana Up or Down - August 28, 8:45AM-9:00AM ET"
+  }
+ ]
+}

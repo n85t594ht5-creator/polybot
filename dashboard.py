@@ -131,6 +131,20 @@ def read_trades():
     return rows
 
 
+MISSED_FILE = "missed.csv"
+
+def read_missed(n=120):
+    """Журнал упущенных сигналов (последние n)."""
+    rows = []
+    if os.path.exists(MISSED_FILE):
+        with open(MISSED_FILE, encoding="utf-8", errors="ignore") as f:
+            for r in csv.reader(f):
+                if len(r) < 8:
+                    continue
+                rows.append({"ts": r[0], "asset": r[1], "minutes": r[2], "side": r[3],
+                             "price": r[4], "reason": r[5], "note": r[6], "end": r[7]})
+    return rows[-n:][::-1]
+
 def tail_log(n=60):
     if not os.path.exists(LOG_FILE):
         return []
@@ -241,6 +255,7 @@ def snapshot():
         "per_asset": per_asset,
         "longs": longs, "shorts": shorts,
         "log": tail_log(),
+        "missed": read_missed(),
     }
 
 
@@ -341,6 +356,16 @@ svg{display:block;width:100%;height:170px}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .pw{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}.pw button{padding:16px;font-size:14px;text-align:left;border-radius:10px}.pw button small{display:block;font-weight:400;color:var(--mut);margin-top:4px;font-size:12px}
 .kbox{font-family:var(--mono);font-size:12px;color:var(--mut);background:#0a101a;border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:6px}.kbox b{color:var(--up)}
+.feed{max-height:420px;overflow:auto}.ev{display:grid;grid-template-columns:26px 1fr auto;gap:10px;padding:9px 4px;border-bottom:1px solid rgba(36,50,72,.6);font-size:13px;align-items:center}
+.ev .ic{font-size:15px;text-align:center}.ev .tm{font:11px var(--mono);color:var(--mut)}.ev b{font-weight:600}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.cal .d{aspect-ratio:1;border-radius:6px;background:var(--panel2);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;font:11px var(--mono);cursor:pointer;padding:2px}
+.cal .d small{font-size:9px;color:var(--mut)}.cal .d.win{background:rgba(53,217,155,.18);border-color:var(--up)}.cal .d.loss{background:rgba(255,107,122,.18);border-color:var(--down)}.cal .d.sel{outline:2px solid var(--acc)}
+.cal .hd{text-align:center;font:10px var(--mono);color:var(--mut);letter-spacing:.08em}
+.hgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:3px}.hgrid div{aspect-ratio:1;border-radius:4px;background:var(--panel2);border:1px solid var(--line);font:9px var(--mono);display:flex;align-items:center;justify-content:center;color:var(--mut)}
+.hgrid div.win{background:rgba(53,217,155,.25);color:var(--up)}.hgrid div.loss{background:rgba(255,107,122,.25);color:var(--down)}
+.tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}.tabs button{font-size:12px;padding:6px 12px}.tabs button.on{border-color:var(--acc);color:var(--acc)}
+details.logbox{margin-top:8px}details.logbox summary{cursor:pointer;color:var(--mut);font-size:12px;padding:6px 0}
+.book{font:11px var(--mono)}.book .r{display:grid;grid-template-columns:44px 1fr 58px;gap:6px;align-items:center;padding:1px 0}.book .r i{display:block;height:8px;background:rgba(138,180,255,.35);border-radius:2px}
 .warnbox{border:1px solid var(--warn);background:rgba(245,182,74,.08);border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:12px}
 .ov{position:fixed;inset:0;background:rgba(5,9,16,.7);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}.ov.on{display:flex}
 .md{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:720px;width:100%;max-height:90vh;overflow:auto;padding:18px 20px}
@@ -356,7 +381,7 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
 .toast.show{opacity:1}
 </style></head><body><div class="wrap">
 <div class="fab" id="menu"><button id="fabBack" title="Назад" onclick="showView('dash')">←</button><button id="menuBtn" class="acc" title="Меню">☰</button><div class="dd">
-    <a href="#" data-view="dash" class="on"><i>▦</i>Дашборд</a><a href="backtest.html"><i>⚗</i>Тестировщик</a><a href="#" data-view="settings"><i>⚙</i>Настройки бота</a><a href="#" data-view="keys"><i>🔑</i>Ключи</a><a href="#" data-view="power"><i>⏻</i>Питание</a><a href="#" data-view="stats"><i>▤</i>Статистика · архив</a></div></div>
+    <a href="#" data-view="dash" class="on"><i>▦</i>Дашборд</a><a href="backtest.html"><i>⚗</i>Тестировщик</a><a href="#" data-view="settings"><i>⚙</i>Настройки бота</a><a href="#" data-view="keys"><i>🔑</i>Ключи</a><a href="#" data-view="power"><i>⏻</i>Питание</a><a href="#" data-view="statistics"><i>📊</i>Статистика</a><a href="#" data-view="signals"><i>⚡</i>Журнал сигналов</a><a href="#" data-view="reports"><i>📄</i>Отчёты</a><a href="#" data-view="stats"><i>▤</i>Архив настроек</a></div></div>
 <header>
   <h1>POLYBOT</h1>
   <span id="modePill" class="pill">—</span>
@@ -388,7 +413,8 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
   <div class="card c6"><h2>Закрытые сделки</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Сторона</th><th>Вход</th><th>Ставка</th><th>Итог</th><th>P&amp;L</th></tr></thead><tbody id="closed"></tbody></table></div></div>
 
   <div class="card c4"><h2>По активам</h2><div id="perAsset"></div></div>
-  <div class="card c8"><h2>Лог</h2><pre id="log"></pre></div>
+  <div class="card c8"><h2>Лента событий</h2><div class="feed" id="feed"></div>
+    <details class="logbox"><summary>Показать технический лог</summary><pre id="log"></pre></details></div>
 
   <div class="card c12"><h2>Конфиг (.env)</h2><div class="kv" id="cfg"></div></div>
 </div>
@@ -400,6 +426,42 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
   <div class="actions" style="margin:0 0 14px"><button class="primary" id="arcSave">Сохранить снимок сейчас</button><span class="sub" id="arcMsg"></span></div>
   <div class="tw"><table><thead><tr><th>Дата</th><th>Название</th><th>Режим</th><th>Сделок</th><th>Winrate</th><th>PF</th><th>P&amp;L</th><th>Банкролл</th><th></th></tr></thead><tbody id="arcList"></tbody></table></div>
   <div id="arcDetail" style="margin-top:14px"></div>
+ </div>
+</div>
+
+<div id="v_statistics" class="view">
+ <div class="card"><h2>Статистика</h2>
+  <div class="tabs" id="stTabs"></div>
+  <div class="grid" style="gap:12px">
+   <div class="card c4"><h2>За период</h2><div class="big" id="st_pnl">—</div><div class="sub" id="st_sub"></div></div>
+   <div class="card c4"><h2>Winrate</h2><div class="big" id="st_wr">—</div><div class="sub" id="st_wl"></div></div>
+   <div class="card c4"><h2>Profit factor</h2><div class="big" id="st_pf">—</div><div class="sub" id="st_pfs"></div></div>
+   <div class="card c8"><h2 id="calTitle">Календарь</h2><div id="calBox"></div><div class="sub" id="calHint"></div></div>
+   <div class="card c4"><h2>По часам (UTC)</h2><div class="hgrid" id="st_hours"></div><div class="sub">Зелёный — час в плюсе, красный — в минусе. Цифра — число сделок.</div></div>
+   <div class="card c6"><h2>По цене входа</h2><div id="st_entry"></div></div>
+   <div class="card c6"><h2>По активам и окнам</h2><div id="st_asset"></div></div>
+   <div class="card c12"><h2>Банкролл</h2><svg id="st_eq" viewBox="0 0 800 200" preserveAspectRatio="none" style="height:200px"></svg><div class="sub" id="st_eqs"></div></div>
+   <div class="card c12"><h2>Сделки периода</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Окно</th><th>Сторона</th><th>Вход</th><th>Ставка</th><th>Итог</th><th>P&amp;L</th></tr></thead><tbody id="st_trades"></tbody></table></div></div>
+  </div>
+ </div>
+</div>
+
+<div id="v_signals" class="view">
+ <div class="card"><h2>Журнал упущенных сигналов</h2>
+  <div class="sub" style="margin-bottom:10px">Моменты, когда движение и время подошли, но сделки не было. Показывает, что именно мешает: цена ушла, не хватило объёма в стакане или сработал лимит.</div>
+  <div class="tabs" id="sigTabs"></div>
+  <div class="grid" style="gap:12px">
+   <div class="card c4"><h2>Всего</h2><div class="big" id="sg_n">—</div><div class="sub">за последние часы</div></div>
+   <div class="card c8"><h2>Причины</h2><div id="sg_reasons"></div></div>
+   <div class="card c12"><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Окно</th><th>Сторона</th><th>Цена</th><th>Причина</th><th>Детали</th></tr></thead><tbody id="sg_list"></tbody></table></div></div>
+  </div>
+ </div>
+</div>
+
+<div id="v_reports" class="view">
+ <div class="card"><h2>Ежедневные отчёты</h2>
+  <div class="sub" style="margin-bottom:10px">Формируются автоматически. Excel — со всеми сделками дня и разбивками.</div>
+  <div class="tw"><table><thead><tr><th>День</th><th>Сделок</th><th>Winrate</th><th>P&amp;L</th><th>PF</th><th>Банкролл</th><th></th></tr></thead><tbody id="rpList"></tbody></table></div>
  </div>
 </div>
 
@@ -477,7 +539,7 @@ function renderPositions(){
       <div class="top"><span><b>${esc(p.asset)}</b> <span class="side ${esc(p.side)}">${esc(p.side)}</span> @ ${fmt(p.entry)}</span>
       <span>${fmt(p.cost)} $ · ${fmt(p.shares,1)} шт · выплата ${fmt(p.shares)} $</span></div>
       <div class="track"><div class="e" style="width:${(el*100).toFixed(1)}%"></div><div class="m" style="left:${(((open-start)/total)*100).toFixed(1)}%" title="вход"></div></div>
-      <div class="foot"><span>conf ${fmt(p.conf)} · move ${sgn(p.move*100)}% · ref ${fmt(p.ref,2)}</span><span>${status}</span></div>
+      <div class="foot"><span>conf ${fmt(p.conf)} · move ${sgn(p.move*100)}% ${p.cur_price!=null?`· сейчас ${fmt(p.cur_price)} → <span class="${cls(p.unreal)}">${sgn(p.unreal)} $</span>`:''}</span><span>${status}</span></div>
     </div>`}).join('');
 }
 
@@ -530,7 +592,7 @@ function render(d){
     return `<tr${pot}><td><span class="alink" onclick="openChart('${esc(x.asset)}',${x.start?Date.parse(x.start):0},${x.ref||0})"><b>${esc(x.asset)}</b></span></td><td>${x.minutes}м · до ${new Date(end).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</td>
     <td><span class="mini"><i style="width:${Math.min(100,x.elapsed*100).toFixed(0)}%"></i></span>${(x.elapsed*100).toFixed(0)}% · ${mm}:${String(ss).padStart(2,'0')}</td>
     <td>${fmt(x.ref,2)}</td><td>${fmt(x.cur,2)}</td><td class="${cls(x.move)}">${x.move==null?'—':sgn(x.move*100)+'%'}</td>
-    <td><span class="pos">${fmt(x.up_ask)}</span> / <span class="neg">${fmt(x.down_ask)}</span></td>
+    <td><span class="pos">${fmt(x.up_ask)}</span> / <span class="neg">${fmt(x.down_ask)}</span>${x.depth_usd!=null?`<div class="rr">объём ${fmt(x.depth_usd,0)} $</div>`:''}${x.book&&x.book.length?`<div class="book">${x.book.slice(0,3).map(([pp,sz])=>{const w=Math.min(100,sz*pp/20*100);return `<div class="r"><span>${fmt(pp)}</span><i style="width:${w}%"></i><span>${fmt(sz*pp,0)}$</span></div>`}).join('')}</div>`:''}</td>
     <td style="white-space:normal;min-width:240px">${rs}</td></tr>`};
   const order=x=>(x.elapsed<0?1:0)*1e6+(x.elapsed<0?Date.parse(x.start):-Date.parse(x.end));
   $('watch').innerHTML=w.length?WIN.map(m=>{const list=(grp[m]||[]).sort((a,b)=>order(a)-order(b));return `<tr class="sec"><td colspan="8">Окно ${m===60?'1 час':m+' минут'} · ${list.filter(x=>x.elapsed>=0).length} идёт / ${list.filter(x=>x.elapsed<0).length} ждёт</td></tr>`+(list.map(row).join('')||'<tr><td colspan="8" class="empty">нет рынков</td></tr>')}).join('')
@@ -544,6 +606,13 @@ function render(d){
   $('perAsset').innerHTML=pa.length?`<table><thead><tr><th>Актив</th><th>Сделок</th><th>Winrate</th><th>P&amp;L</th></tr></thead><tbody>`+
     pa.map(([a,s])=>`<tr><td><b>${esc(a)}</b></td><td>${s.n}</td><td>${(s.wins/s.n*100).toFixed(0)}%</td><td class="${cls(s.pnl)}">${sgn(s.pnl)}</td></tr>`).join('')+'</tbody></table>'
     :'<div class="empty">Появится после первых сделок.</div>';
+  // лента событий
+  const ev=[];
+  (d.closed||[]).forEach(t=>ev.push({t:Date.parse(t.opened),ic:t.won?'✅':'❌',txt:`<b>${esc(t.asset)} ${esc(t.side)}</b> по ${fmt(t.entry)} · ставка ${fmt(t.cost)} $`,r:`<span class="${cls(t.pnl)}">${sgn(t.pnl)} $</span>`}));
+  (d.positions||[]).forEach(p=>ev.push({t:Date.parse(p.opened),ic:'🟡',txt:`<b>${esc(p.asset)} ${esc(p.side)}</b> открыта по ${fmt(p.entry)} · ${fmt(p.cost)} $`,r:p.unreal==null?'в игре':`<span class="${cls(p.unreal)}">${sgn(p.unreal)} $</span>`}));
+  (d.missed||[]).slice(0,25).forEach(m=>ev.push({t:Date.parse(m.ts),ic:'⚡',txt:`пропуск <b>${esc(m.asset)} ${esc(m.side)}</b> по ${esc(m.price)} · ${esc(m.reason)}`,r:''}));
+  ev.sort((a,b)=>b.t-a.t);
+  $('feed').innerHTML=ev.slice(0,40).map(e=>`<div class="ev"><span class="ic">${e.ic}</span><span>${e.txt}<div class="tm">${new Date(e.t).toLocaleString([],{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})}</div></span><span>${e.r}</span></div>`).join('')||'<div class="empty">Событий пока нет.</div>';
   $('log').innerHTML=d.log.length?d.log.map(l=>{const c=/ERROR/.test(l)?'l-err':/WARN/.test(l)?'l-warn':/ BUY /.test(l)?'l-buy':/ WIN /.test(l)?'l-win':/ LOSS /.test(l)?'l-loss':'';return `<span class="${c}">${esc(l.trimEnd())}</span>`}).join('\n'):'bot.log пуст — запусти бота.';
   $('log').scrollTop=$('log').scrollHeight;
   const hide=new Set(['POLY_FUNDER']);
@@ -591,6 +660,75 @@ async function renderChart(){const{a,n,winStart,ref}=chState;try{const d=await c
 function openChart(a,winStart,ref){chState={a,n:60,winStart,ref};
  modal(a+'/USD · 1 минута',`<div class="chs">${[30,60,120].map(n=>`<button class="${n===60?'on':''}" onclick="chState.n=${n};document.querySelectorAll('.chs button').forEach(b=>b.classList.toggle('on',+b.textContent.replace(/\D/g,'')===${n}));renderChart()">${n} мин</button>`).join('')}</div><div id="chBody"><div class="empty">загрузка…</div></div>`).then(()=>{clearInterval(chTimer);chTimer=null});
  renderChart();clearInterval(chTimer);chTimer=setInterval(()=>{if($('ov').classList.contains('on'))renderChart();else clearInterval(chTimer)},5000)}
+
+// ───── статистика ─────
+let stMode='month', stDay=null;
+function allTrades(){return (last&&last.closed||[]).slice().sort((a,b)=>Date.parse(a.opened)-Date.parse(b.opened))}
+function inPeriod(t){const d=new Date(Date.parse(t.opened));const now=new Date();
+ if(stMode==='day'){const sel=stDay||now.toISOString().slice(0,10);return t.opened.slice(0,10)===sel}
+ if(stMode==='week')return (now-d)/864e5<=7;
+ return (now-d)/864e5<=31}
+function grp(list,fn){const o={};list.forEach(t=>{const k=fn(t);(o[k]=o[k]||{n:0,w:0,pnl:0});o[k].n++;o[k].w+=t.won?1:0;o[k].pnl+=t.pnl});return o}
+function barList(id,obj,fmtk){const e=$(id);const rows=Object.entries(obj).sort();
+ e.innerHTML=rows.map(([k,v])=>{const wr=v.w/v.n;return `<div class="bar"><span>${fmtk?fmtk(k):k}</span><div class="t"><i style="width:${(wr*100).toFixed(0)}%;background:${v.pnl>=0?'var(--up)':'var(--down)'}"></i></div><span style="text-align:right;color:var(--mut)">${(wr*100).toFixed(0)}% · ${v.n} · <span class="${cls(v.pnl)}">${sgn(v.pnl)}</span></span></div>`}).join('')||'<div class="empty">нет сделок</div>'}
+function renderStats(){
+ $('stTabs').innerHTML=[['month','Месяц'],['week','Неделя'],['day','День']].map(([k,n])=>`<button class="${k===stMode?'on':''}" onclick="stMode='${k}';renderStats()">${n}</button>`).join('');
+ const all=allTrades(),list=all.filter(inPeriod);
+ const wins=list.filter(t=>t.won),gp=wins.reduce((s,t)=>s+t.pnl,0),gl=-list.filter(t=>!t.won).reduce((s,t)=>s+t.pnl,0),pnl=list.reduce((s,t)=>s+t.pnl,0);
+ $('st_pnl').textContent=sgn(pnl)+' $';$('st_pnl').className='big '+cls(pnl);
+ $('st_sub').textContent=`${list.length} сделок · ${stMode==='day'?(stDay||'сегодня'):stMode==='week'?'7 дней':'31 день'}`;
+ $('st_wr').textContent=list.length?(wins.length/list.length*100).toFixed(0)+'%':'—';$('st_wl').textContent=`${wins.length} побед / ${list.length-wins.length} убытков`;
+ const pf=gl?gp/gl:(gp?99:null);$('st_pf').textContent=pf==null?'—':pf>=99?'∞':fmt(pf);$('st_pf').className='big '+(pf==null?'':pf>=1.3?'pos':pf>=1?'warn':'neg');
+ $('st_pfs').innerHTML=`выиграно <span class="pos">+${fmt(gp,0)}</span> · проиграно <span class="neg">-${fmt(gl,0)}</span>`;
+ // календарь / часы
+ if(stMode==='day'){
+  const byh=grp(list,t=>t.opened.slice(11,13));
+  $('calTitle').textContent='Часы дня '+(stDay||new Date().toISOString().slice(0,10));
+  $('calBox').innerHTML=`<div class="hgrid">${Array.from({length:24},(_,h)=>{const k=String(h).padStart(2,'0'),v=byh[k];return `<div class="${v?(v.pnl>=0?'win':'loss'):''}" title="${k}:00 UTC">${k}<br>${v?v.n:''}</div>`}).join('')}</div>`;
+  $('calHint').innerHTML='Выбери другой день: <input type="date" id="dpick" value="'+(stDay||new Date().toISOString().slice(0,10))+'" style="font:12px var(--mono);padding:6px;border-radius:6px;border:1px solid var(--line);background:#0a101a;color:var(--txt)">';
+  setTimeout(()=>{const p=$('dpick');if(p)p.onchange=e=>{stDay=e.target.value;renderStats()}},0);
+ }else{
+  const days=stMode==='week'?7:31,byd=grp(all,t=>t.opened.slice(0,10));
+  const today=new Date();const cells=[];
+  for(let i=days-1;i>=0;i--){const dt=new Date(today-i*864e5),k=dt.toISOString().slice(0,10),v=byd[k];
+   cells.push(`<div class="d ${v?(v.pnl>=0?'win':'loss'):''} ${stDay===k?'sel':''}" onclick="stMode='day';stDay='${k}';renderStats()" title="${k}">${dt.getDate()}<small>${v?sgn(v.pnl):''}</small></div>`)}
+  $('calTitle').textContent=stMode==='week'?'Последние 7 дней':'Последний месяц';
+  $('calBox').innerHTML=`<div class="cal">${['пн','вт','ср','чт','пт','сб','вс'].map(x=>`<div class="hd">${x}</div>`).join('')}${cells.join('')}</div>`;
+  $('calHint').textContent='Нажми на день, чтобы посмотреть его по часам.';
+ }
+ const byh2=grp(list,t=>t.opened.slice(11,13));
+ $('st_hours').innerHTML=Array.from({length:24},(_,h)=>{const k=String(h).padStart(2,'0'),v=byh2[k];return `<div class="${v?(v.pnl>=0?'win':'loss'):''}" title="${k}:00 · ${v?v.n+' сделок · '+sgn(v.pnl)+'$':'нет'}">${k}</div>`}).join('');
+ barList('st_entry',grp(list,t=>{const lo=Math.floor(t.entry*20)/20;return lo.toFixed(2)+'–'+(lo+0.05).toFixed(2)}));
+ barList('st_asset',grp(list,t=>t.asset+(t.minutes?' '+t.minutes+'м':'')));
+ // кривая
+ const s=$('st_eq');if(list.length){let b=(last.start_bankroll||100),eq=[b];list.forEach(t=>{b+=t.pnl;eq.push(+b.toFixed(2))});
+  const W=800,H=200,p=8,mn=Math.min(...eq),mx=Math.max(...eq),r=(mx-mn)||1,x=i=>p+i*(W-2*p)/(eq.length-1),y=v=>H-p-(v-mn)*(H-2*p)/r;
+  const col=eq[eq.length-1]>=eq[0]?'var(--up)':'var(--down)';
+  s.innerHTML=`<polyline points="${eq.map((v,i)=>x(i).toFixed(1)+','+y(v).toFixed(1)).join(' ')}" fill="none" stroke="${col}" stroke-width="2" vector-effect="non-scaling-stroke"/>`;
+  $('st_eqs').textContent=`${fmt(eq[0])} → ${fmt(eq[eq.length-1])} $ за период`}else{s.innerHTML='';$('st_eqs').textContent='нет сделок за период'}
+ $('st_trades').innerHTML=list.slice().reverse().map(t=>`<tr><td>${t.opened.slice(5,16).replace('T',' ')}</td><td>${esc(t.asset)}</td><td>${t.minutes||''}м</td><td class="${t.side==='UP'?'pos':'neg'}">${esc(t.side)}</td><td>${fmt(t.entry)}</td><td>${fmt(t.cost)}</td><td class="${t.won?'pos':'neg'}">${t.won?'WIN':'LOSS'}</td><td class="${cls(t.pnl)}">${sgn(t.pnl)}</td></tr>`).join('')||'<tr><td colspan="8" class="empty">нет сделок</td></tr>';
+}
+// ───── журнал сигналов ─────
+let sgFilter='all';
+function renderSignals(){const m=(last&&last.missed)||[];
+ const reasons=[...new Set(m.map(x=>x.reason))];
+ $('sigTabs').innerHTML=[['all','Все']].concat(reasons.map(r=>[r,r])).map(([k,n])=>`<button class="${k===sgFilter?'on':''}" onclick="sgFilter='${k}';renderSignals()">${n}</button>`).join('');
+ const list=m.filter(x=>sgFilter==='all'||x.reason===sgFilter);
+ $('sg_n').textContent=list.length;
+ const cnt={};m.forEach(x=>cnt[x.reason]=(cnt[x.reason]||0)+1);const tot=m.length||1;
+ $('sg_reasons').innerHTML=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="bar"><span>${esc(k)}</span><div class="t"><i style="width:${(v/tot*100).toFixed(0)}%;background:var(--warn)"></i></div><span style="text-align:right;color:var(--mut)">${v}</span></div>`).join('')||'<div class="empty">Пока пусто — бот не пропустил ни одного готового сигнала.</div>';
+ $('sg_list').innerHTML=list.slice(0,80).map(x=>`<tr><td>${x.ts.slice(5,16).replace('T',' ')}</td><td>${esc(x.asset)}</td><td>${esc(x.minutes)}м</td><td class="${x.side==='UP'?'pos':'neg'}">${esc(x.side)}</td><td>${esc(x.price)}</td><td class="warn">${esc(x.reason)}</td><td class="rr">${esc(x.note)}</td></tr>`).join('')||'<tr><td colspan="7" class="empty">нет записей</td></tr>';
+}
+// ───── отчёты ─────
+async function loadReports(){$('rpList').innerHTML='<tr><td colspan="7" class="empty">загрузка…</td></tr>';
+ try{const r=await fetch(`https://raw.githubusercontent.com/${REPO}/main/reports/index.json?t=`+Date.now());const j=await r.json();
+  $('rpList').innerHTML=j.slice().reverse().map(x=>`<tr><td>${x.day}</td><td>${x.trades}</td><td>${x.winrate==null?'—':(x.winrate*100).toFixed(0)+'%'}</td><td class="${cls(x.pnl)}">${sgn(x.pnl)}</td><td>${x.pf==null?'—':fmt(x.pf)}</td><td>${fmt(x.bankroll_end)}</td>
+   <td><a class="btn" href="https://github.com/${REPO}/raw/main/reports/${x.day}.xlsx" download>Excel</a> <button onclick="showReport('${x.day}')">Открыть</button></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Отчётов пока нет — первый появится после суточного цикла.</td></tr>'}
+ catch(e){$('rpList').innerHTML='<tr><td colspan="7" class="empty">Отчётов пока нет.</td></tr>'}}
+async function showReport(day){try{const r=await fetch(`https://raw.githubusercontent.com/${REPO}/main/reports/${day}.json?t=`+Date.now());const j=await r.json();
+ const tbl=(t,o)=>`<div class="sub" style="margin-top:10px">${t}</div><table>${Object.entries(o).sort().map(([k,v])=>`<tr><td>${k}</td><td>${v.n}</td><td>${(v.w/v.n*100).toFixed(0)}%</td><td class="${cls(v.pnl)}">${sgn(v.pnl)}</td></tr>`).join('')}</table>`;
+ info('Отчёт за '+day,`<div class="sub">${j.trades} сделок · winrate ${j.winrate==null?'—':(j.winrate*100).toFixed(0)+'%'} · P&L <span class="${cls(j.pnl)}">${sgn(j.pnl)} $</span> · PF ${j.pf??'—'} · банкролл ${fmt(j.bankroll_end)} $</div>`
+  +tbl('По активам',j.by_asset)+tbl('По окнам',j.by_window)+tbl('По цене входа',j.by_entry)+tbl('По часам',j.by_hour))}catch(e){info('Отчёт',esc(e.message))}}
 // ───── control panel ─────
 const REPO=window.__REPO__||'';const GH='https://api.github.com/repos/'+REPO;
 const tok=()=>localStorage.getItem('gh_token')||'';
@@ -599,7 +737,7 @@ async function gh(path,opt={}){const r=await fetch(GH+path,{...opt,headers:{'Aut
 document.querySelectorAll('#menu .dd a[data-view]').forEach(a=>a.onclick=e=>{e.preventDefault();showView(a.dataset.view)});
 $('menuBtn').onclick=e=>{e.stopPropagation();$('menu').classList.toggle('open')};document.addEventListener('click',()=>$('menu').classList.remove('open'));
 function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v_'+v));$('fabBack').style.display=v==='dash'?'none':'block';window.scrollTo(0,0);document.querySelectorAll('#menu .dd a').forEach(a=>a.classList.toggle('on',a.dataset.view===v));$('menu').classList.remove('open');
- if(v==='settings')loadSettings();if(v==='keys')loadKeys();if(v==='power')loadPower();if(v==='stats')loadArchive()}
+ if(v==='settings')loadSettings();if(v==='keys')loadKeys();if(v==='power')loadPower();if(v==='stats')loadArchive();if(v==='statistics')renderStats();if(v==='signals')renderSignals();if(v==='reports')loadReports()}
 // settings schema
 const S=[
  {k:'MODE',t:'mode',n:'Режим',d:'paper — виртуальные сделки по реальным котировкам, деньги не нужны. live — реальные ордера на Polymarket с твоего кошелька. Переключай на live только после теста и с ключами в разделе «Ключи».'},

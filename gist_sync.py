@@ -22,6 +22,13 @@ def watch():
             w["ref"] = bot.binance_open_at(m["asset"], m["start"]); w["cur"] = prices.get(m["asset"])
             w["move"] = round((w["cur"] - w["ref"]) / w["ref"], 5) if w["ref"] and w["cur"] else None
             w["up_ask"] = bot.clob_ask(m["up_token"]); w["down_ask"] = bot.clob_ask(m["down_token"])
+            if w["elapsed"] > 0.4 and w.get("move") is not None:
+                tok = m["up_token"] if w["move"] > 0 else m["down_token"]
+                bk = bot.clob_book(tok)[:6]
+                w["book"] = [[p, s] for p, s in bk]
+                cap = min(bot.MAX_ENTRY, (w["up_ask"] if w["move"] > 0 else w["down_ask"]) + bot.MAX_SLIP)
+                sp, sh, av = bot.fillable(bk, 1e9, cap)
+                w["depth_usd"] = round(sp, 2)
         except Exception as e:
             w["error"] = str(e)[:80]
         try:
@@ -58,7 +65,7 @@ last = None; last_commit = time.time()
 def commit_state():
     """Сохраняем состояние в репозиторий, чтобы прерванный запуск ничего не терял."""
     import subprocess
-    cmd = ("git add state.json trades.csv bot.log && git -c user.name=polybot -c user.email=polybot@users.noreply.github.com commit -qm 'state autosave' ; "
+    cmd = ("git add state.json trades.csv missed.csv bot.log && git -c user.name=polybot -c user.email=polybot@users.noreply.github.com commit -qm 'state autosave' ; "
            "git fetch -q origin main && git rebase -q -X theirs origin/main ; git push -q origin HEAD:main")
     try:
         r = subprocess.run(cmd, shell=True, timeout=90, capture_output=True, text=True)
@@ -75,6 +82,18 @@ while True:
         try: diag["markets_found"] = len(bot.find_updown_markets())
         except Exception as e: diag["markets_found"] = "ERR " + str(e)[:80]
         d["diag"] = diag
+        # живая стоимость открытых позиций + журнал упущенных
+        try:
+            for p in d.get("positions", []):
+                tok = p.get("token")
+                if tok:
+                    cur = bot.clob_ask(tok)
+                    p["cur_price"] = cur
+                    p["cur_value"] = round(p.get("shares", 0) * cur, 2)
+                    p["unreal"] = round(p["cur_value"] - p.get("cost", 0), 2)
+        except Exception as e:
+            print("live pos:", e)
+        d["missed"] = dashboard.read_missed()
         try:
             st = dashboard.read_state() or {}
             dashboard_state.bankroll = st.get("bankroll", bot.BANKROLL)

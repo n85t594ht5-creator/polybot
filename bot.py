@@ -53,6 +53,8 @@ REF_MODE          = env("REF_MODE", "open").lower()       # open — откры�
 SKIP_HOURS        = [int(h) for h in env("SKIP_HOURS", "").split(",") if h.strip() != ""]   # часы UTC без торговли
 MAX_PER_WINDOW    = env("MAX_PER_WINDOW", 99, int)        # позиций на одно окно времени
 MAX_SAME_DIR      = env("MAX_SAME_DIR", 99, int)          # одновременных позиций в одну сторону
+USE_BOOK          = env("USE_BOOK", "1") == "1"          # учитывать стакан: входить на доступный объём
+MAX_SLIP          = env("MAX_SLIP", 0.02, float)          # допустимое проскальзывание от лучшей цены
 LOOP_SEC          = env("LOOP_SEC", 1.5, float)          # пауза между циклами
 MARKETS_TTL       = env("MARKETS_TTL", 30, int)          # как часто обновлять список рынков, сек
 PRE_ENTRY_SEC     = env("PRE_ENTRY_SEC", 60, int)        # начинать опрашивать цены за N сек до момента входа
@@ -72,6 +74,7 @@ ASSET_WORDS = {"BTC": "bitcoin", "ETH": "ethereum", "SOL": "solana", "XRP": "xrp
 
 STATE_FILE = "state.json"
 TRADES_FILE = "trades.csv"
+MISSED_FILE = "missed.csv"
 
 logging.basicConfig(
     level=logging.INFO,
@@ -81,6 +84,14 @@ logging.basicConfig(
 log = logging.getLogger("polybot")
 
 # ───────────────────────── helpers ─────────────────────────
+
+def log_missed(mkt, side, entry, reason, extra=""):
+    """Журнал упущенных сигналов: условия сошлись, но войти не удалось."""
+    try:
+        with open(MISSED_FILE, "a") as f:
+            f.write(f"{now().isoformat()},{mkt['asset']},{mkt['minutes']},{side},{entry},{reason},{extra},{mkt['end'].isoformat()}\n")
+    except Exception:
+        pass
 
 def notify(text):
     if not (TG_TOKEN and TG_CHAT):
@@ -205,6 +216,25 @@ def binance_open_at(asset, dt):
 def clob_ask(token_id):
     return float(get(f"{CLOB}/price", token_id=token_id, side="BUY")["price"])
 
+def clob_book(token_id):
+    """Стакан: [(цена, размер в шт.), ...] по возрастанию цены — что можно купить."""
+    try:
+        b = get(f"{CLOB}/book", token_id=token_id)
+    except Exception:
+        return []
+    asks = [(float(x["price"]), float(x["size"])) for x in (b.get("asks") or [])]
+    return sorted(asks, key=lambda x: x[0])
+
+def fillable(book, budget, max_price):
+    """Сколько $ и по какой средней цене реально купить в пределах max_price."""
+    spent = shares = 0.0
+    for price, size in book:
+        if price > max_price or spent >= budget:
+            break
+        take = min(size, (budget - spent) / price)
+        spent += take * price; shares += take
+    return round(spent, 2), round(shares, 2), (spent / shares if shares else 0.0)
+
 SLUG_RE = re.compile(r"^([a-z]+)-updown-(\d+)(m|h)-(\d+)$")
 
 def find_updown_markets():
@@ -290,10 +320,12 @@ def evaluate(mkt, state):
     token = mkt["up_token"] if side == "UP" else mkt["down_token"]
     entry = clob_ask(token)
     if entry > MAX_ENTRY:
+        log_missed(mkt, side, entry, "дорого", f"потолок {MAX_ENTRY}")
         return None, f"{side} ask {entry:.2f} > {MAX_ENTRY}"
     if entry <= 0.01:
         return None, "no liquidity"
     if entry < MIN_ENTRY:
+        log_missed(mkt, side, entry, "дёшево", f"минимум {MIN_ENTRY}")
         return None, f"{side} ask {entry:.2f} < MIN_ENTRY {MIN_ENTRY}"
     if entry > TIER_ENTRY:
         if MOVE_MODE == "sigma":
@@ -305,9 +337,11 @@ def evaluate(mkt, state):
     # корреляционные лимиты
     same_win = sum(1 for p in state.positions.values() if p.get("start") == mkt["start"].isoformat())
     if same_win >= MAX_PER_WINDOW:
+        log_missed(mkt, side, entry, "лимит окна", f"{same_win} позиций")
         return None, f"уже {same_win} позиций в этом окне"
     same_dir = sum(1 for p in state.positions.values() if p.get("side") == side)
     if same_dir >= MAX_SAME_DIR:
+        log_missed(mkt, side, entry, "лимит стороны", f"{same_dir} позиций {side}")
         return None, f"уже {same_dir} позиций {side}"
 
     # Уверенность: чем позже и чем сильнее движение — тем выше.
@@ -322,12 +356,28 @@ def evaluate(mkt, state):
     size = max(0.0, kelly) * KELLY_FRAC * state.bankroll
     size = min(size, state.bankroll * MAX_STAKE, state.bankroll * MAX_EXPOSURE - state.exposure())
     if size < 1.0:
+        log_missed(mkt, side, entry, "мало места", f"размер {size:.2f}$")
         return None, "size too small"
+
+    # Стакан: сколько реально можно купить, не разгоняя цену
+    avg, shares, depth_note = entry, round(size / entry, 2), ""
+    if USE_BOOK:
+        book = clob_book(token)
+        if book:
+            cap = min(MAX_ENTRY, entry + MAX_SLIP)
+            spent, sh, avg_p = fillable(book, size, cap)
+            if spent < 1.0:
+                log_missed(mkt, side, entry, "нет объёма", f"в стакане до {cap:.2f} меньше 1$")
+                return None, f"нет объёма до {cap:.2f}"
+            if spent < size * 0.99:
+                depth_note = f"стакан дал {spent:.2f}$ из {size:.2f}$"
+                log_missed(mkt, side, entry, "частичный объём", depth_note)
+            size, shares, avg = spent, sh, round(avg_p, 4)
 
     return {
         "market_id": mkt["id"], "asset": mkt["asset"], "side": side, "token": token,
         "minutes": mkt["minutes"], "start": mkt["start"].isoformat(),
-        "entry": entry, "cost": round(size, 2), "shares": round(size / entry, 2),
+        "entry": avg, "best_ask": entry, "cost": round(size, 2), "shares": shares, "depth_note": depth_note,
         "conf": round(conf, 3), "move": round(move, 5), "elapsed": round(elapsed, 2),
         "ref": ref, "end": mkt["end"].isoformat(), "opened": now().isoformat(),
         "question": mkt["question"],
