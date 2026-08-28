@@ -175,7 +175,7 @@ def snapshot():
                        "pnl": t.get("pnl", 0.0), "conf": t.get("conf"), "move": t.get("move"),
                        "question": t.get("question")} for t in closed]
 
-    start_bankroll = cfg_num(cfg, "BANKROLL", 500.0)
+    start_bankroll = cfg_num(cfg, "BANKROLL", 100.0)
     wins = [t["pnl"] for t in closed_src if t["won"]]
     losses = [t["pnl"] for t in closed_src if not t["won"]]
     total_pnl = sum(t["pnl"] for t in closed_src)
@@ -191,14 +191,15 @@ def snapshot():
         peak = max(peak, v)
         maxdd = max(maxdd, peak - v)
 
+    execstats = state.get("execstats") or {}
     positions = list((state.get("positions") or {}).values())
     exposure = sum(p.get("cost", 0) for p in positions)
     bankroll = state.get("bankroll", start_bankroll)
-    max_exposure = cfg_num(cfg, "MAX_EXPOSURE", 0.40)
-    max_positions = int(cfg_num(cfg, "MAX_POSITIONS", 10))
-    daily_limit = cfg_num(cfg, "DAILY_LOSS_LIMIT", 50.0)
+    max_exposure = cfg_num(cfg, "MAX_EXPOSURE", 0.15)
+    max_positions = int(cfg_num(cfg, "MAX_POSITIONS", 3))
+    daily_limit = cfg_num(cfg, "DAILY_LOSS_LIMIT", 0.30)
     rate_limit = int(cfg_num(cfg, "RATE_LIMIT", 20))
-    consec_limit = int(cfg_num(cfg, "CONSEC_LOSS_LIMIT", 4))
+    consec_limit = int(cfg_num(cfg, "CONSEC_LOSS_LIMIT", 5))
 
     now_ts = datetime.now(timezone.utc).timestamp()
     trade_times = [t for t in (state.get("trade_times") or []) if t > now_ts - 3600]
@@ -212,14 +213,24 @@ def snapshot():
             pass
 
     day_pnl = state.get("day_pnl", 0.0)
+    day_start = state.get("day_start_bankroll") or start_bankroll
+    daily_limit_usd = day_start * daily_limit if daily_limit <= 1 else daily_limit
+    dir_exp = {"UP": 0.0, "DOWN": 0.0}
+    for p in positions:
+        dir_exp[p.get("side", "UP")] = dir_exp.get(p.get("side", "UP"), 0.0) + p.get("cost", 0.0)
     gates = [
-        {"name": "Дневной стоп", "value": f"{day_pnl:+.2f} / -{daily_limit:.0f} $",
-         "pct": min(1, max(0, -day_pnl / daily_limit)) if daily_limit else 0, "blocked": day_pnl <= -daily_limit},
+        {"name": "Дневной стоп", "value": f"{day_pnl:+.2f} / -{daily_limit_usd:.2f} $",
+         "pct": min(1, max(0, -day_pnl / daily_limit_usd)) if daily_limit_usd else 0,
+         "blocked": day_pnl <= -daily_limit_usd,
+         "extra": f"осталось {max(0.0, daily_limit_usd + day_pnl):.2f} $"},
         {"name": "Открытые позиции", "value": f"{len(positions)} / {max_positions}",
          "pct": len(positions) / max_positions if max_positions else 0, "blocked": len(positions) >= max_positions},
-        {"name": "Экспозиция", "value": f"{exposure:.2f} / {start_bankroll * max_exposure:.0f} $",
-         "pct": exposure / (start_bankroll * max_exposure) if start_bankroll * max_exposure else 0,
-         "blocked": exposure >= start_bankroll * max_exposure},
+        {"name": "Экспозиция", "value": f"{exposure:.2f} / {bankroll * max_exposure:.2f} $",
+         "pct": exposure / (bankroll * max_exposure) if bankroll * max_exposure else 0,
+         "blocked": exposure >= bankroll * max_exposure},
+        {"name": "В одну сторону", "value": f"UP {dir_exp['UP']:.2f} · DOWN {dir_exp['DOWN']:.2f} $",
+         "pct": (max(dir_exp.values()) / (bankroll * max_exposure)) if bankroll * max_exposure else 0,
+         "blocked": False, "extra": "корреляционный риск"},
         {"name": "Сделок за час", "value": f"{len(trade_times)} / {rate_limit}",
          "pct": len(trade_times) / rate_limit if rate_limit else 0, "blocked": len(trade_times) >= rate_limit},
         {"name": "Убытков подряд", "value": f"{state.get('consec_losses', 0)} / {consec_limit}",
@@ -229,6 +240,18 @@ def snapshot():
 
     longs = sum(1 for t in closed_src if t["side"] == "UP") + sum(1 for p in positions if p.get("side") == "UP")
     shorts = sum(1 for t in closed_src if t["side"] == "DOWN") + sum(1 for p in positions if p.get("side") == "DOWN")
+    per_window = {}
+    for t in closed_src:
+        k = f"{t.get('minutes') or '?'}m"
+        a = per_window.setdefault(k, {"n": 0, "wins": 0, "pnl": 0.0, "gp": 0.0, "gl": 0.0, "entry_sum": 0.0})
+        a["n"] += 1; a["wins"] += int(bool(t["won"])); a["pnl"] += t["pnl"]
+        a["entry_sum"] += t.get("entry") or 0
+        if t["won"]: a["gp"] += t["pnl"]
+        else: a["gl"] += -t["pnl"]
+    for k, v in per_window.items():
+        v["winrate"] = v["wins"] / v["n"] if v["n"] else 0
+        v["pf"] = (v["gp"] / v["gl"]) if v["gl"] else (99.0 if v["gp"] else 0)
+        v["avg_entry"] = v["entry_sum"] / v["n"] if v["n"] else 0
     per_asset = {}
     for t in closed_src:
         a = per_asset.setdefault(t["asset"], {"n": 0, "wins": 0, "pnl": 0.0})
@@ -253,7 +276,8 @@ def snapshot():
         "positions": positions,
         "closed": closed_src[-40:][::-1],
         "gates": gates,
-        "per_asset": per_asset,
+        "per_asset": per_asset, "per_window": per_window, "execstats": execstats,
+        "dir_exposure": dir_exp, "daily_limit_usd": round(daily_limit_usd, 2), "day_start_bankroll": day_start,
         "longs": longs, "shorts": shorts,
         "log": tail_log(),
         "missed": read_missed(),
@@ -431,10 +455,13 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
   <div class="card c6"><h2>Открытые позиции <span id="posN"></span></h2><div id="positions"></div></div>
   <div class="card c6"><h2>Закрытые сделки</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Сторона</th><th>Вход</th><th>Ставка</th><th>Итог</th><th>P&amp;L</th></tr></thead><tbody id="closed"></tbody></table></div></div>
 
+  <div class="card c6"><h2>5m против 15m</h2><div id="perWindow"></div><div class="sub">Считаем как две отдельные стратегии внутри одной системы.</div></div>
+  <div class="card c6"><h2>Исполнение</h2><div class="kv" id="execBox"></div><div class="sub" id="execSub"></div></div>
   <div class="card c4"><h2>По активам</h2><div id="perAsset"></div></div>
   <div class="card c8"><h2>Лента событий</h2><div class="feed" id="feed"></div>
     <details class="logbox"><summary>Показать технический лог</summary><pre id="log"></pre></details></div>
 
+  <div class="card c12"><h2>Стратегия сейчас</h2><div class="kv" id="strategyBox"></div></div>
   <div class="card c12"><h2>Конфиг (.env)</h2><div class="kv" id="cfg"></div></div>
 </div>
 </div>
@@ -457,7 +484,10 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
    <div class="card c8"><h2 id="calTitle">Календарь</h2><div id="calBox" style="max-width:560px"></div><div class="sub" id="calHint"></div></div>
    <div class="card c4"><h2>По часам (UTC)</h2><div class="hgrid" id="st_hours"></div><div class="sub" style="margin-top:10px">Зелёный — час в плюсе, красный — в минусе. Цифра — число сделок.</div></div>
    <div class="card c6"><h2>По цене входа</h2><div id="st_entry"></div></div>
-   <div class="card c6"><h2>По активам и окнам</h2><div id="st_asset"></div></div>
+   <div class="card c6"><h2>По силе движения</h2><div id="st_move"></div></div>
+   <div class="card c6"><h2>5m против 15m</h2><div id="st_win"></div></div>
+   <div class="card c6"><h2>По активам</h2><div id="st_asset"></div></div>
+   <div class="card c12"><h2>Просадка</h2><svg id="st_dd" viewBox="0 0 800 120" preserveAspectRatio="none" style="height:120px"></svg><div class="sub" id="st_dds"></div></div>
    <div class="card c12"><h2>Банкролл</h2><svg id="st_eq" viewBox="0 0 800 200" preserveAspectRatio="none" style="height:200px"></svg><div class="sub" id="st_eqs"></div></div>
    <div class="card c12"><h2>Сделки периода</h2><div class="tw"><table><thead><tr><th>Время</th><th>Актив</th><th>Окно</th><th>Сторона</th><th>Вход</th><th>Ставка</th><th>Итог</th><th>P&amp;L</th></tr></thead><tbody id="st_trades"></tbody></table></div></div>
   </div>
@@ -602,7 +632,7 @@ function render(d){
    else if(left<30)st=`<span class="st no">Окно закрывается</span>`;
    else{const why=!mOk?`движение ${sgn(x.move*100)}% < ${(need*100).toFixed(2)}%`:!pOk?(ask<P.lo?`${side} по ${fmt(ask)} — рынок не согласен`:`${side} по ${fmt(ask)} — дорого`):'ждём';st=`<span class="st no">${side}: ${why}</span>`}
    return st+`<div class="g">${chip('время',tOk,'время '+(x.elapsed*100).toFixed(0)+'%')}${chip('движение',mOk,'движение '+sgn(x.move*100)+'%')}${chip('цена',pOk,side+' '+fmt(ask))}</div>`}
-  const WIN=String(C.WINDOWS||'15,60').split(',').map(v=>+v.trim()).filter(Boolean);const grp={};w.filter(x=>WIN.includes(+x.minutes)).forEach(x=>(grp[x.minutes]=grp[x.minutes]||[]).push(x));
+  const WIN=String(C.WINDOWS||'5,15').split(',').map(v=>+v.trim()).filter(Boolean);const grp={};w.filter(x=>WIN.includes(+x.minutes)).forEach(x=>(grp[x.minutes]=grp[x.minutes]||[]).push(x));
   const row=x=>{const end=Date.parse(x.end),left=Math.max(0,end-Date.now()),mm=Math.floor(left/60000),ss=Math.floor(left%60000/1000);
     const pot=x.potential?` class="pot"`:'';const raw=x.error||x.reason||'';const rs=gates(x,raw);
     return `<tr${pot}><td><span class="alink" onclick="openChart('${esc(x.asset)}',${x.start?Date.parse(x.start):0},${x.ref||0})"><b>${esc(x.asset)}</b></span></td><td>${x.minutes}м · до ${new Date(end).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</td>
@@ -618,6 +648,29 @@ function render(d){
     <td class="side ${esc(t.side)}">${esc(t.side)}</td><td>${fmt(t.entry)}</td><td>${fmt(t.cost)}</td>
     <td class="${t.won?'pos':'neg'}">${t.won?'WIN':'LOSS'}</td><td class="${cls(t.pnl)}">${sgn(t.pnl)}</td></tr>`).join('')
     :'<tr><td colspan="7" class="empty">Закрытых сделок ещё нет.</td></tr>';
+  // 5m vs 15m
+  const pw=Object.entries(d.per_window||{});
+  $('perWindow').innerHTML=pw.length?`<div class="tw" style="max-height:220px"><table><thead><tr><th>Окно</th><th>Сделок</th><th>W/L</th><th>Winrate</th><th>PF</th><th>Ср. вход</th><th>P&amp;L</th></tr></thead><tbody>`+
+   pw.sort().map(([k,v])=>`<tr><td><b>${esc(k)}</b></td><td>${v.n}</td><td><span class="pos">${v.wins}</span>/<span class="neg">${v.n-v.wins}</span></td><td class="${v.winrate>=.6?'pos':v.winrate<.5?'neg':''}">${(v.winrate*100).toFixed(0)}%</td><td class="${v.pf>=1.3?'pos':v.pf<1?'neg':''}">${v.pf>=99?'∞':fmt(v.pf)}</td><td>${fmt(v.avg_entry)}</td><td class="${cls(v.pnl)}">${sgn(v.pnl)}</td></tr>`).join('')+'</tbody></table></div>'
+   :'<div class="empty">Появится после первых сделок.</div>';
+  // исполнение
+  const es=d.execstats||{},bw=es.by_window||{};
+  const slip=es.slip_n?es.slip_sum/es.slip_n:null;
+  $('execBox').innerHTML=[['Ордеров отправлено',es.submitted||0],['Исполнено полностью',es.filled||0],['Исполнено частично',es.partial||0],
+   ['Не исполнено',es.unfilled||0],['Снято',es.cancelled||0],['Среднее проскальзывание',slip==null?'—':(slip>=0?'+':'')+fmt(slip,4)]]
+   .map(([k,v])=>`<span>${k}</span><span>${v}</span>`).join('');
+  $('execSub').innerHTML=Object.keys(bw).length?Object.entries(bw).sort().map(([k,v])=>`${k}: сигналов ${v.signal||0} → отправлено ${v.submitted||0} → исполнено ${v.filled||0}${v.partial?', частично '+v.partial:''}${v.unfilled?', не исполнено '+v.unfilled:''}`).join(' · '):'В paper-режиме ордера исполняются мгновенно — метрики наполнятся в live.';
+  // стратегия
+  const C2=d.config||{},sv=k=>C2[k]??'—';
+  $('strategyBox').innerHTML=[['Окна',sv('WINDOWS')],['Активы',d.assets],['Вход после',(sv('MIN_ELAPSED')*100).toFixed(0)+'% окна'],
+   ['Зона цены',sv('MIN_ENTRY')+' – '+sv('MAX_ENTRY')],['Граница уровней',sv('TIER_ENTRY')],
+   ['Движение (дешёвый вход)',(sv('MIN_MOVE')*100).toFixed(2)+'%'],['Движение (дорогой вход)',(sv('MIN_MOVE_HIGH')*100).toFixed(2)+'%'],
+   ['Мин. уверенность',sv('MIN_CONF')+' (informational)'],['Доля Келли',(sv('KELLY_FRAC')*100).toFixed(0)+'%'],
+   ['Потолок ставки',(sv('MAX_STAKE')*100).toFixed(0)+'% банкролла'],['Открытых позиций',sv('MAX_POSITIONS')],
+   ['На одно окно / в одну сторону',sv('MAX_PER_WINDOW')+' / '+sv('MAX_SAME_DIR')],
+   ['Дневной стоп',(sv('DAILY_LOSS_LIMIT')<=1?(sv('DAILY_LOSS_LIMIT')*100).toFixed(0)+'% от старта дня':sv('DAILY_LOSS_LIMIT')+' $')+' = '+fmt(d.daily_limit_usd)+' $'],
+   ['Пауза',sv('CONSEC_LOSS_LIMIT')+' убытков подряд → '+sv('COOLDOWN_MIN')+' мин']]
+   .map(([k,v])=>`<span>${k}</span><span>${v}</span>`).join('');
   const pa=Object.entries(d.per_asset);
   $('perAsset').innerHTML=pa.length?`<div class="tw" style="max-height:260px"><table><thead><tr><th>Актив</th><th>Сделок</th><th>Winrate</th><th>P&amp;L</th></tr></thead><tbody>`+
     pa.map(([a,s])=>`<tr><td><b>${esc(a)}</b></td><td>${s.n}</td><td>${(s.wins/s.n*100).toFixed(0)}%</td><td class="${cls(s.pnl)}">${sgn(s.pnl)}</td></tr>`).join('')+'</tbody></table></div>'
@@ -714,8 +767,17 @@ function renderStats(){
  }
  const byh2=grp(list,t=>t.opened.slice(11,13));
  $('st_hours').innerHTML=Array.from({length:24},(_,h)=>{const k=String(h).padStart(2,'0'),v=byh2[k];return `<div class="${v?(v.pnl>=0?'win':'loss'):''}" title="${k}:00 · ${v?v.n+' сделок · '+sgn(v.pnl)+'$':'нет'}">${k}</div>`}).join('');
- barList('st_entry',grp(list,t=>{const lo=Math.floor(t.entry*20)/20;return lo.toFixed(2)+'–'+(lo+0.05).toFixed(2)}));
- barList('st_asset',grp(list,t=>t.asset+(t.minutes?' '+t.minutes+'м':'')));
+ barList('st_entry',grp(list,t=>t.entry_bucket||(()=>{const lo=Math.floor(t.entry*20)/20;return lo.toFixed(2)+'–'+(lo+0.05).toFixed(2)})()));
+ barList('st_move',grp(list,t=>t.move_bucket||'—'));
+ barList('st_win',grp(list,t=>(t.minutes||'?')+'m'));
+ barList('st_asset',grp(list,t=>t.asset));
+ // просадка
+ const dd=$('st_dd');
+ if(list.length){let b=(last.start_bankroll||100),peak=b,cur=[0];list.forEach(t=>{b+=t.pnl;peak=Math.max(peak,b);cur.push(+((peak-b)/peak*100).toFixed(2))});
+  const W=800,H=120,p=6,mx=Math.max(...cur,1),x=i=>p+i*(W-2*p)/(cur.length-1),y=v=>p+v*(H-2*p)/mx;
+  dd.innerHTML=`<polygon points="${p},${p} ${cur.map((v,i)=>x(i).toFixed(1)+','+y(v).toFixed(1)).join(' ')} ${x(cur.length-1)},${p}" fill="var(--down)" opacity=".15"/><polyline points="${cur.map((v,i)=>x(i).toFixed(1)+','+y(v).toFixed(1)).join(' ')}" fill="none" stroke="var(--down)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`;
+  $('st_dds').textContent=`максимальная просадка за период ${mx.toFixed(1)}% (от пика капитала)`}
+ else{dd.innerHTML='';$('st_dds').textContent='нет сделок за период'}
  // кривая
  const s=$('st_eq');if(list.length){let b=(last.start_bankroll||100),eq=[b];list.forEach(t=>{b+=t.pnl;eq.push(+b.toFixed(2))});
   const W=800,H=200,p=8,mn=Math.min(...eq),mx=Math.max(...eq),r=(mx-mn)||1,x=i=>p+i*(W-2*p)/(eq.length-1),y=v=>H-p-(v-mn)*(H-2*p)/r;
@@ -767,22 +829,22 @@ const S=[
  {k:'MOVE_MODE',t:'chips1',opts:['pct','sigma'],n:'Как мерить движение',d:'pct — порог в процентах (ползунки ниже). sigma — порог в единицах волатильности актива за последний час: одинаково честно для спокойного BTC и дёрганого SOL.'},
  {k:'MIN_SIGMA',t:'range',min:0.5,max:3,step:0.1,n:'Порог движения в сигмах',d:'Только для режима sigma. 1.0 — движение как обычная минутная волатильность, 2.0 — явно необычное.'},
  {k:'REF_MODE',t:'chips1',opts:['open','twap'],n:'Цена старта окна',d:'open — цена открытия первой минуты. twap — её средняя, ближе к тому, как считает Chainlink при резолве.'},
- {k:'TIER_ENTRY',t:'range',min:0.3,max:0.9,step:0.01,n:'Порог «дорогого» входа',d:'Если исход дороже этой цены — требуется более сильное движение (следующий ползунок). Защита от покупки фаворита на слабом сигнале.'},
+ {k:'TIER_ENTRY',t:'range',min:0.3,max:0.9,step:0.01,n:'Граница двух уровней входа',d:'Вход по цене до этой границы включительно требует обычного движения (MIN_MOVE), дороже — усиленного (MIN_MOVE_HIGH). При зоне 0.50–0.62 и границе 0.55: 0.50–0.55 → 0.10%, 0.55–0.62 → 0.12%.'},
  {k:'MIN_MOVE_HIGH',t:'range',min:0.0002,max:0.005,step:0.0001,pct:100,dec:2,n:'Движение для дорогих входов, %',d:'Сколько должна пройти цена, если исход дороже порога выше. Обычно чуть больше обычного минимума.'},
- {k:'MIN_CONF',t:'range',min:0.5,max:0.95,step:0.01,n:'Минимальная уверенность',d:'Внутренняя оценка бота: чем позже в окне и чем сильнее движение, тем выше. Ниже этой планки сделка не открывается. Это эвристика, не предсказание.'},
- {k:'KELLY_FRAC',t:'range',min:0.05,max:0.5,step:0.01,pct:1,n:'Келли: доля от полной ставки, %',d:'Формула Келли считает «идеальную» ставку для максимального роста капитала. Бот берёт от неё этот процент: 15% — осторожно, 25% — стандарт, 50% — агрессивно, глубокие просадки. В тестировщике кривые «Келли 0.10/0.15/0.25» — это 10/15/25% здесь.'},
- {k:'MAX_STAKE',t:'range',min:0.01,max:0.25,step:0.01,pct:1,n:'Келли: потолок одной ставки, % банкролла',d:'Что бы ни насчитал Келли, одна сделка не больше этого процента от текущего банкролла. 8% значит: пять убытков подряд — минус ~34%, а не половина. Кривые Келли в тестировщике считаются с этим же потолком.'},
- {k:'MAX_PER_WINDOW',t:'range',min:1,max:10,step:1,n:'Позиций на одно окно времени',d:'Крипта ходит вместе: BTC/ETH/SOL UP в одном окне — это одна ставка ×3. Лимит режет корреляционный риск. 99 — без лимита.'},
+ {k:'MIN_CONF',t:'range',min:0.5,max:0.95,step:0.01,n:'Минимальная уверенность',d:'Эвристический скор качества сигнала: 0.5 + 0.3×(доля окна) + 0.15×(сила движения). При входе после 75% окна он всегда ≥ 0.725, поэтому планка 0.70 сейчас ничего не отсекает и служит записью в отчёт. Режущий фильтр начинается примерно с 0.78.'},
+ {k:'KELLY_FRAC',t:'range',min:0.05,max:0.5,step:0.01,pct:1,n:'Келли: доля от полной ставки, %',d:'Формула Келли считает «идеальную» ставку для максимального роста капитала. Бот берёт от неё этот процент. Сейчас 10%: conf — эвристика, а не настоящая вероятность, поэтому берём мало. 25% — стандарт для честной вероятности, 50% — агрессивно.'},
+ {k:'MAX_STAKE',t:'range',min:0.01,max:0.25,step:0.01,pct:1,n:'Келли: потолок одной ставки, % банкролла',d:'Что бы ни насчитал Келли, одна сделка не больше этого процента от текущего банкролла. Сейчас 5%: пять убытков подряд — минус ~23%, а не половина. Кривые Келли в тестировщике считаются с этим же потолком.'},
+ {k:'MAX_PER_WINDOW',t:'range',min:1,max:10,step:1,n:'Позиций на одно окно времени',d:'Крипта ходит вместе: BTC/ETH/SOL UP в одном окне — это одна ставка ×3, а не три независимых. Сейчас 1. Смотри «В одну сторону» в риск-гейтах.'},
  {k:'MAX_SAME_DIR',t:'range',min:1,max:10,step:1,n:'Одновременно в одну сторону',d:'Не больше N открытых позиций UP (или DOWN) сразу. 99 — без лимита.'},
  {k:'SKIP_HOURS',t:'text',n:'Часы без торговли (UTC)',d:'Список часов через запятую, например 2,3,4,5. Бэктест показывает по часам, где стратегия сливает. Пусто — торгуем круглосуточно.'},
  {k:'MAX_POSITIONS',t:'range',min:1,max:20,step:1,n:'Максимум открытых сделок',d:'Сколько окон бот может держать одновременно.'},
  {k:'MAX_EXPOSURE',t:'range',min:0.05,max:0.8,step:0.05,pct:1,n:'Максимум в позициях, % банкролла',d:'Суммарно во всех открытых сделках не больше этой доли. Остальное всегда остаётся в резерве.'},
- {k:'DAILY_LOSS_LIMIT',t:'range',min:5,max:500,step:5,n:'Дневной стоп, $',d:'Как только за день потеряно столько — бот перестаёт торговать до следующего дня (UTC).'},
+ {k:'DAILY_LOSS_LIMIT',t:'range',min:0.05,max:0.9,step:0.05,pct:1,n:'Дневной стоп, % банкролла',d:'Доля от банкролла НА НАЧАЛО ДНЯ. Как только дневной минус достигает этой величины — бот прекращает открывать сделки до следующего дня (UTC). Это аварийный предел, а не ожидаемая просадка: расходовать его целиком не нужно.'},
  {k:'CONSEC_LOSS_LIMIT',t:'range',min:1,max:15,step:1,n:'Убытков подряд до паузы',d:'После стольких убытков подряд бот берёт паузу (длительность — следующий ползунок), затем счётчик обнуляется и работа продолжается. Чем больше число, тем реже срабатывает защита.'},
  {k:'COOLDOWN_MIN',t:'range',min:5,max:1440,step:5,n:'Длительность паузы, минут',d:'Сколько бот стоит после серии убытков. 30 минут — переждать локальный «пилообразный» участок; несколько часов — переждать плохую сессию.'},
  {k:'RATE_LIMIT',t:'range',min:1,max:60,step:1,n:'Максимум сделок в час',d:'Ограничитель, чтобы бот не «разогнался» на серии одинаковых сигналов.'},
 ];
-const DEF={COOLDOWN_MIN:'30',MOVE_MODE:'pct',MIN_SIGMA:'1.5',REF_MODE:'open',MAX_PER_WINDOW:'99',MAX_SAME_DIR:'99',SKIP_HOURS:'',MODE:'paper',ASSETS:'BTC,ETH,SOL',WINDOWS:'15,60',BANKROLL:'500',MIN_ELAPSED:'0.5',MIN_ENTRY:'0',MAX_ENTRY:'0.15',MIN_MOVE:'0.0008',TIER_ENTRY:'0.45',MIN_MOVE_HIGH:'0.0012',MIN_CONF:'0.6',KELLY_FRAC:'0.25',MAX_STAKE:'0.08',MAX_POSITIONS:'10',MAX_EXPOSURE:'0.4',DAILY_LOSS_LIMIT:'50',CONSEC_LOSS_LIMIT:'4',RATE_LIMIT:'20'};
+const DEF={COOLDOWN_MIN:'30',MOVE_MODE:'pct',MIN_SIGMA:'1.5',REF_MODE:'twap',MAX_PER_WINDOW:'1',MAX_SAME_DIR:'2',SKIP_HOURS:'',MODE:'paper',ASSETS:'BTC,ETH,SOL,XRP',WINDOWS:'5,15',BANKROLL:'100',MIN_ELAPSED:'0.75',MIN_ENTRY:'0.50',MAX_ENTRY:'0.62',MIN_MOVE:'0.0010',TIER_ENTRY:'0.55',MIN_MOVE_HIGH:'0.0012',MIN_CONF:'0.70',KELLY_FRAC:'0.10',MAX_STAKE:'0.05',MAX_POSITIONS:'3',MAX_EXPOSURE:'0.15',DAILY_LOSS_LIMIT:'0.30',CONSEC_LOSS_LIMIT:'5',RATE_LIMIT:'20'};
 let VARS={};
 function showVal(x,v){if(x.t==='range'){const f=x.pct?(+v*x.pct).toFixed(x.dec??0)+'%':(+v).toString();return f}return v}
 async function loadSettings(){$('ghWarn').style.display=tok()?'none':'';let vars={};
@@ -822,11 +884,13 @@ async function ghPublic(path){const r=await fetch(GH+path,{headers:{'Accept':'ap
 function snapshot(label){const d=last||{};const cfg={};KEYS.forEach(k=>cfg[k]=(VARS[k]??(d.config||{})[k]??DEF[k]));
  return {label,ts:new Date().toISOString(),mode:d.mode,settings:cfg,stats:{bankroll:d.bankroll,start_bankroll:d.start_bankroll,trades:d.trades,wins:d.wins,losses:d.losses,winrate:d.winrate,pf:d.pf,total_pnl:d.total_pnl,max_dd:d.max_dd,per_asset:d.per_asset,longs:d.longs,shorts:d.shorts},closed:d.closed||[]}}
 async function saveSnapshot(label){if(!tok())throw new Error('нужен токен GitHub');if(!Object.keys(VARS).length){try{const j=await gh('/actions/variables?per_page=100');j.variables.forEach(v=>VARS[v.name]=v.value)}catch(e){}}
- const snap=snapshot(label);const name='archive/'+snap.ts.replace(/[:.]/g,'-').slice(0,19)+'.json';
+ const snap=snapshot(label);const name='archive/snapshots/'+snap.ts.replace(/[:.]/g,'-').slice(0,19)+'.json';
  await gh('/contents/'+name,{method:'PUT',body:JSON.stringify({message:'archive: '+label,content:btoa(unescape(encodeURIComponent(JSON.stringify(snap,null,1))))})});return name}
 async function loadArchive(){$('arcList').innerHTML='<tr><td colspan="9" class="empty">загрузка…</td></tr>';$('arcDetail').innerHTML='';
- let files=[];try{files=await ghPublic('/contents/archive')}catch(e){$('arcList').innerHTML='<tr><td colspan="9" class="empty">Архив пуст — сохрани первый снимок.</td></tr>';return}
- files=files.filter(f=>f.name.endsWith('.json')).sort((a,b)=>b.name.localeCompare(a.name));window.__arc={};
+ let files=[];
+ for(const p of ['archive/snapshots','archive']){try{const r=await ghPublic('/contents/'+p);if(Array.isArray(r))files=files.concat(r)}catch(e){}}
+ if(!files.length){$('arcList').innerHTML='<tr><td colspan="9" class="empty">Архив пуст — сохрани первый снимок.</td></tr>';return}
+ files=files.filter(f=>f.type==='file'&&f.name.endsWith('.json')).sort((a,b)=>b.name.localeCompare(a.name));window.__arc={};
  const rows=await Promise.all(files.map(async f=>{try{const r=await fetch(f.download_url+'?t='+Date.now());const j=await r.json();window.__arc[f.name]=j;const st=j.stats||{};
   return `<tr><td>${j.ts.slice(0,16).replace('T',' ')}</td><td>${esc(j.label)}</td><td>${j.mode||''}</td><td>${st.trades??''}</td><td>${st.winrate==null?'—':(st.winrate*100).toFixed(0)+'%'}</td><td>${st.pf==null?'—':st.pf>=99?'∞':fmt(st.pf)}</td><td class="${cls(st.total_pnl)}">${st.total_pnl==null?'—':sgn(st.total_pnl)}</td><td>${fmt(st.bankroll)}</td><td><button onclick="arcShow('${f.name}')">открыть</button></td></tr>`}catch(e){return ''}}));
  $('arcList').innerHTML=rows.join('')||'<tr><td colspan="9" class="empty">Архив пуст.</td></tr>'}

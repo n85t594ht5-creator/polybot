@@ -12,6 +12,7 @@ C = {a: {int(k): v for k, v in d.items()} for a, d in C.items()}
 BANKROLL = float(os.getenv("BANKROLL", "500")); SPREAD = float(os.getenv("SPREAD", "0.04"))  # ask ≈ last + spread (пессимистично)
 FLAT_STAKE = float(os.getenv("FLAT_STAKE", "0.05"))   # фиксированная ставка: доля стартового банкролла, без реинвеста
 MIN_TRADES = int(os.getenv("MIN_TRADES", "30"))
+OOS_SPLIT = float(os.getenv("OOS_SPLIT", "0.70"))   # доля периода на подбор параметров, остальное — проверка
 os.makedirs("results", exist_ok=True); os.makedirs("docs", exist_ok=True)
 
 def price_at(asset, ts):
@@ -70,12 +71,22 @@ for w in W:
         steps.append((el, (cur - ref) / ref, min(0.99, p + SPREAD), min(0.99, (1 - p) + SPREAD), w["end"] - t, sg, t))
     if steps: TRAJ.append({**w, "steps": steps, "hour": (w["start"] // 3600) % 24, "wday": ((w["start"] // 86400) + 4) % 7})
 print(f"windows usable: {len(TRAJ)} of {len(W)}")
+# граница in-sample / out-of-sample по времени
+_ts = sorted(w["start"] for w in TRAJ)
+SPLIT_TS = _ts[int(len(_ts) * OOS_SPLIT)] if _ts else 0
+IS = [w for w in TRAJ if w["start"] < SPLIT_TS]
+OOS = [w for w in TRAJ if w["start"] >= SPLIT_TS]
+print(f"in-sample: {len(IS)} окон, out-of-sample: {len(OOS)} окон, граница {_dt.fromtimestamp(SPLIT_TS, _tz.utc):%Y-%m-%d %H:%M}" if _ts else "нет данных")
 
-def run(P, assets=None, windows=None):
-    """Одна конфигурация → список сделок (в хронологии) и метрики."""
+def run(P, assets=None, windows=None, sample=None):
+    """Одна конфигурация → список сделок (в хронологии) и метрики.
+
+    sample: None — весь период, 'is' — in-sample, 'oos' — out-of-sample.
+    """
     cands = []
     skip_hours = set(P.get("SKIP_HOURS") or [])
-    for w in TRAJ:
+    src = IS if sample == "is" else OOS if sample == "oos" else TRAJ
+    for w in src:
         if assets and w["asset"] not in assets: continue
         if windows and w["minutes"] not in windows: continue
         if w["hour"] in skip_hours: continue
@@ -126,18 +137,18 @@ def run(P, assets=None, windows=None):
                     "exp_per_trade": (bank - BANKROLL) / n / size if n else 0, "score": score}
 
 GRID = {
-    "MIN_ELAPSED": [0.65, 0.75, 0.85],
-    "MIN_ENTRY": [0.45, 0.5],
-    "MAX_ENTRY": [0.62, 0.7],
+    "MIN_ELAPSED": [0.70, 0.75, 0.80],
+    "MIN_ENTRY": [0.50],
+    "MAX_ENTRY": [0.58, 0.62],
     "MOVE_MODE": ["pct"],
-    "MIN_MOVE": [0.0006, 0.001],
+    "MIN_MOVE": [0.0008, 0.0010, 0.0014],
     "MIN_SIGMA": [1.5],
-    "TIER_ENTRY": [0.45],
-    "MIN_MOVE_HIGH": [0.0008],
-    "MIN_CONF": [0.6],
-    "KELLY_FRAC": [0.15],
-    "MAX_PER_WINDOW": [99, 2],
-    "MAX_SAME_DIR": [99, 3],
+    "TIER_ENTRY": [0.55],
+    "MIN_MOVE_HIGH": [0.0012, 0.0016],
+    "MIN_CONF": [0.70],
+    "KELLY_FRAC": [0.10],
+    "MAX_PER_WINDOW": [1],
+    "MAX_SAME_DIR": [2],
 }
 keys = list(GRID); rows = []; seen_sig = set()
 for vals in itertools.product(*GRID.values()):
@@ -147,13 +158,18 @@ for vals in itertools.product(*GRID.values()):
     sig = tuple(P[k] for k in keys)
     if sig in seen_sig: continue
     seen_sig.add(sig)
-    _, m = run(P); rows.append({**P, **m})
+    _, m = run(P, sample="is")                    # подбор только на in-sample
+    _, mo = run(P, sample="oos")                  # проверка на нетронутых данных
+    rows.append({**P, **m, "oos_trades": mo["trades"], "oos_winrate": mo["winrate"],
+                 "oos_pf": mo["pf"], "oos_pnl": mo["pnl"], "oos_dd": mo["max_dd"]})
 rows.sort(key=lambda r: (r["trades"] >= MIN_TRADES, r["score"], r["pnl"]), reverse=True)
 with open("results/grid.csv", "w", newline="") as f:
     wr = csv.DictWriter(f, fieldnames=list(rows[0].keys())); wr.writeheader(); wr.writerows(rows)
 
 # Текущие настройки бота и лучшая
-CURRENT = {"MIN_ELAPSED": 0.75, "MIN_ENTRY": 0.5, "MAX_ENTRY": 0.62, "MOVE_MODE": "pct", "MIN_SIGMA": "-", "MAX_PER_WINDOW": 99, "MAX_SAME_DIR": 99, "MIN_MOVE": 0.0006, "TIER_ENTRY": 0.45, "MIN_MOVE_HIGH": 0.0008, "MIN_CONF": 0.65, "KELLY_FRAC": 0.15}
+CURRENT = {"MIN_ELAPSED": 0.75, "MIN_ENTRY": 0.50, "MAX_ENTRY": 0.62, "MOVE_MODE": "pct", "MIN_SIGMA": "-",
+           "MIN_MOVE": 0.0010, "TIER_ENTRY": 0.55, "MIN_MOVE_HIGH": 0.0012, "MIN_CONF": 0.70,
+           "KELLY_FRAC": 0.10, "MAX_PER_WINDOW": 1, "MAX_SAME_DIR": 2}
 cur_tr, cur = run(CURRENT)
 good = [r for r in rows if r["trades"] >= MIN_TRADES]
 best = good[0] if good else rows[0]
@@ -177,6 +193,7 @@ base = sum(1 for w in TRAJ if w["up_won"]) / nw if nw else 0
 
 md = [f"# Бэктест PolyBot", "", f"Окон с данными: **{nw}** (" + ", ".join(f"{k}: {v}" for k, v in sorted(by.items())) + f"). Доля Up-исходов: {base:.0%}.",
       f"Банкролл {BANKROLL:.0f} $, ставка фиксированная {FLAT_STAKE:.0%} без реинвеста, спред {SPREAD} (пессимистично), минимум сделок для рейтинга {MIN_TRADES}.", "",
+      f"Выборка разделена: in-sample {len(IS)} окон (подбор), out-of-sample {len(OOS)} окон (проверка). Параметры подбираются ТОЛЬКО на in-sample.", "",
       "## Текущие настройки бота", fmtm(cur), "",
       "## Лучшая конфигурация", ", ".join(f"`{k}={v}`" for k, v in BP.items()), "", fmtm(bm), "",
       "### Разбивка лучшей конфигурации", "| Срез | Сделок | Winrate | P&L |", "|---|---|---|---|"]
@@ -233,6 +250,10 @@ print("equity:", {k: (v["final"], v["max_dd"]) for k, v in curves.items()})
 from datetime import datetime, timezone
 def pack(label, P):
     tr, m = run(P); wins = sum(1 for t in tr if t["won"])
+    _, m_is = run(P, sample="is"); _, m_oos = run(P, sample="oos")
+    by_win = {}
+    for wm in sorted({t["min"] for t in tr}):
+        _, mw = run(P, windows=[wm]); by_win[f"{wm}m"] = mw
     br = breakdown(P); buckets = {k: v for k, v in br.items() if k.startswith("вход")}; hours = {k: v for k, v in br.items() if k.startswith("час")}; days = {k: v for k, v in br.items() if k.startswith("день")}
     dates = {k: v for k, v in br.items() if k.startswith("дата")}
     other = {k: v for k, v in br.items() if not (k.startswith("вход") or k.startswith("час") or k.startswith("день") or k.startswith("дата"))}
@@ -241,11 +262,13 @@ def pack(label, P):
         c, dd = equity(tr, mode, frac); cv[name] = {"curve": c, "max_dd": round(dd, 3), "final": c[-1]}
     return {"label": label, "params": {k: (",".join(map(str, v)) if isinstance(v, list) else v) for k, v in P.items() if k != "KELLY_FRAC"}, "metrics": {**m, "wins": wins},
             "buckets": buckets, "hours": hours, "days": days, "dates": dates, "breakdown": other, "curves": cv,
+            "is": m_is, "oos": m_oos, "by_window": by_win,
             "trades": [{k: t[k] for k in ("t", "asset", "min", "side", "entry", "won")} for t in tr]}
 SHOW_COLS = [k for k in keys if len(GRID[k]) > 1]
 page = {"generated": datetime.now(timezone.utc).isoformat(), "windows": nw, "days": round((max(w["end"] for w in TRAJ) - min(w["start"] for w in TRAJ)) / 86400, 1) if TRAJ else 0,
         "spread": SPREAD, "stake": round(BANKROLL * FLAT_STAKE), "bankroll": BANKROLL, "grid_cols": SHOW_COLS,
-        "grid": [{**{k: r[k] for k in SHOW_COLS}, **{k: r[k] for k in ("trades", "wins", "losses", "winrate", "pf", "pnl", "gross_loss", "max_dd", "score")}} for r in rows[:40]],
+        "grid": [{**{k: r[k] for k in SHOW_COLS}, **{k: r[k] for k in ("trades", "wins", "losses", "winrate", "pf", "pnl", "gross_loss", "max_dd", "score", "oos_trades", "oos_winrate", "oos_pf", "oos_pnl")}} for r in rows[:40]],
+        "split": {"ts": SPLIT_TS, "is_windows": len(IS), "oos_windows": len(OOS), "oos_split": OOS_SPLIT},
         "inputs": json.loads(os.getenv("BT_INPUTS") or "{}"), "excluded": sorted(EXCLUDE), "repo": os.getenv("GITHUB_REPOSITORY", ""), "min_trades": MIN_TRADES,
         "configs": {"current": pack("Текущие настройки бота", CURRENT)}}
 seen, top = set(), []

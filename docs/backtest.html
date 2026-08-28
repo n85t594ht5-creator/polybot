@@ -5,7 +5,8 @@
 --mono:"JetBrains Mono","SF Mono",Consolas,monospace;--sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 var(--sans)}a{color:var(--acc);text-decoration:none}
 .wrap{max-width:1360px;margin:0 auto;padding:18px}
-header{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}header h1{font:600 20px var(--mono);letter-spacing:.04em;margin:0}
+header{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}.ver{font:500 11px var(--mono);color:var(--mut);letter-spacing:.06em;vertical-align:2px}
+header h1{font:600 20px var(--mono);letter-spacing:.04em;margin:0}
 .pill{font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid var(--line);color:var(--mut)}
 .btn{font:600 13px var(--sans);padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--txt)}.btn:hover{border-color:var(--acc)}
 .spacer{flex:1}.grid{display:grid;gap:12px;grid-template-columns:repeat(12,1fr)}
@@ -35,9 +36,8 @@ button{font:600 13px var(--sans);padding:8px 14px;border-radius:8px;border:1px s
 .top3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.top3 .t{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px}.top3 .t.first{border-color:var(--up)}
 .top3 .t h3{margin:0 0 6px;font:600 15px var(--sans)}.top3 .t .p{font:11px var(--mono);color:var(--mut);line-height:1.7}.top3 .t .m{font:12px var(--mono);margin:8px 0}
 </style></head><body><div class="wrap">
-<div class="fab" id="menu"><button title="На главную" onclick="location.href='./'" style="display:block">←</button><button class="acc" title="Меню" onclick="event.stopPropagation();this.parentNode.classList.toggle('open')">☰</button><div class="dd">
- <a href="./"><i>▦</i>Дашборд</a><a href="backtest.html"><i>⚗</i>Тестировщик</a><a href="./#settings"><i>⚙</i>Настройки бота</a><a href="./#keys"><i>🔑</i>Ключи</a><a href="./#power"><i>⏻</i>Питание</a><a href="./#stats"><i>▤</i>Статистика · архив</a></div></div>
-<header><h1>POLYBOT · BACKTEST</h1><span class="pill" id="when">—</span><span class="pill" id="scope">—</span><span class="spacer"></span><span class="pill" id="runState"></span></header>
+<div class="fab" id="menu"><button title="На главную" onclick="location.href='./'" style="display:block">←</button><button class="acc" title="Меню" onclick="event.stopPropagation();this.parentNode.classList.toggle('open')">☰</button><div class="dd"><a href="./"><i>▦</i>Дашборд</a><a href="backtest.html" class="on"><i>⚗</i>Тестировщик</a><a href="./#statistics"><i>📊</i>Статистика</a><a href="./#signals"><i>⚡</i>Журнал сигналов</a><a href="./#reports"><i>📄</i>Отчёты</a><a href="./#settings"><i>⚙</i>Настройки бота</a><a href="./#keys"><i>🔑</i>Ключи</a><a href="./#power"><i>⏻</i>Питание</a><a href="./#stats"><i>▤</i>Архив настроек</a></div></div>
+<header><h1>POLYBOT <span class="ver">v1.5.0</span> · BACKTEST</h1><span class="pill" id="when">—</span><span class="pill" id="scope">—</span><span class="spacer"></span><span class="pill" id="runState"></span></header>
 <div class="grid">
   <div class="card c12"><h2>Запустить тест</h2>
    <div class="run">

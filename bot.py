@@ -31,35 +31,36 @@ def env(name, default, cast=str):
     return cast(v) if v not in (None, "") else default
 
 MODE              = env("MODE", "paper").lower()
-ASSETS            = [a.strip().upper() for a in env("ASSETS", "BTC,ETH,SOL").split(",")]
+ASSETS            = [a.strip().upper() for a in env("ASSETS", "BTC,ETH,SOL,XRP").split(",")]
 BANKROLL          = env("BANKROLL", 500.0, float)
-MAX_ENTRY         = env("MAX_ENTRY", 0.15, float)
-MIN_ENTRY         = env("MIN_ENTRY", 0.0, float)      # не покупать исход дешевле (дешёвые исходы = рынок не согласен)
-MIN_ELAPSED       = env("MIN_ELAPSED", 0.50, float)
-MIN_MOVE          = env("MIN_MOVE", 0.0008, float)
-TIER_ENTRY        = env("TIER_ENTRY", 0.45, float)      # исход дороже этой цены → требуем движение MIN_MOVE_HIGH
+MAX_ENTRY         = env("MAX_ENTRY", 0.62, float)
+MIN_ENTRY         = env("MIN_ENTRY", 0.50, float)      # не покупать исход дешевле (дешёвые исходы = рынок не согласен)
+MIN_ELAPSED       = env("MIN_ELAPSED", 0.75, float)
+MIN_MOVE          = env("MIN_MOVE", 0.0010, float)   # доля: 0.0010 = 0.10% от цены старта окна
+TIER_ENTRY        = env("TIER_ENTRY", 0.55, float)      # исход дороже этой цены → требуем движение MIN_MOVE_HIGH
 MIN_MOVE_HIGH     = env("MIN_MOVE_HIGH", 0.0012, float)
-MIN_CONF          = env("MIN_CONF", 0.60, float)
-KELLY_FRAC        = env("KELLY_FRAC", 0.25, float)
-MAX_POSITIONS     = env("MAX_POSITIONS", 10, int)
-MAX_EXPOSURE      = env("MAX_EXPOSURE", 0.40, float)
-MAX_STAKE         = env("MAX_STAKE", 0.08, float)     # одна ставка не больше этой доли банкролла
-DAILY_LOSS_LIMIT  = env("DAILY_LOSS_LIMIT", 50.0, float)
-CONSEC_LOSS_LIMIT = env("CONSEC_LOSS_LIMIT", 7, int)
+MIN_CONF          = env("MIN_CONF", 0.70, float)     # шкала conf при MIN_ELAPSED=0.75: 0.725...0.935 -> informational
+KELLY_FRAC        = env("KELLY_FRAC", 0.10, float)
+MAX_POSITIONS     = env("MAX_POSITIONS", 3, int)
+MAX_EXPOSURE      = env("MAX_EXPOSURE", 0.15, float)
+MAX_STAKE         = env("MAX_STAKE", 0.05, float)     # одна ставка не больше этой доли банкролла
+DAILY_LOSS_LIMIT  = env("DAILY_LOSS_LIMIT", 0.30, float)   # <=1 - доля банкролла на начало дня; >1 - доллары
+CONSEC_LOSS_LIMIT = env("CONSEC_LOSS_LIMIT", 5, int)
 COOLDOWN_MIN      = env("COOLDOWN_MIN", 30, int)      # длительность паузы после серии убытков, минут
 RATE_LIMIT        = env("RATE_LIMIT", 20, int)
 MOVE_MODE         = env("MOVE_MODE", "pct").lower()       # pct — порог в %, sigma — порог в волатильностях
 MIN_SIGMA         = env("MIN_SIGMA", 1.5, float)          # для MOVE_MODE=sigma
-REF_MODE          = env("REF_MODE", "open").lower()       # open — открытие 1-й минуты, twap — её средняя
+REF_MODE          = env("REF_MODE", "twap").lower()       # open — открытие 1-й минуты, twap — её средняя
 SKIP_HOURS        = [int(h) for h in env("SKIP_HOURS", "").split(",") if h.strip() != ""]   # часы UTC без торговли
-MAX_PER_WINDOW    = env("MAX_PER_WINDOW", 99, int)        # позиций на одно окно времени
-MAX_SAME_DIR      = env("MAX_SAME_DIR", 99, int)          # одновременных позиций в одну сторону
+MAX_PER_WINDOW    = env("MAX_PER_WINDOW", 1, int)        # позиций на одно окно времени
+MAX_SAME_DIR      = env("MAX_SAME_DIR", 2, int)          # одновременных позиций в одну сторону
 USE_BOOK          = env("USE_BOOK", "1") == "1"          # учитывать стакан: входить на доступный объём
-MAX_SLIP          = env("MAX_SLIP", 0.02, float)          # допустимое проскальзывание от лучшей цены
+MAX_SLIP          = env("MAX_SLIP", 0.01, float)          # допустимое проскальзывание от лучшей цены
+ORDER_WAIT_SEC    = env("ORDER_WAIT_SEC", 20, int)        # сколько ждём исполнения ордера в live
 LOOP_SEC          = env("LOOP_SEC", 1.5, float)          # пауза между циклами
 MARKETS_TTL       = env("MARKETS_TTL", 30, int)          # как часто обновлять список рынков, сек
 PRE_ENTRY_SEC     = env("PRE_ENTRY_SEC", 60, int)        # начинать опрашивать цены за N сек до момента входа
-WINDOWS           = [int(w) for w in env("WINDOWS", "15,60").split(",")]   # длины окон в минутах: 5, 15, 60
+WINDOWS           = [int(w) for w in env("WINDOWS", "5,15").split(",")]   # длины окон в минутах: 5, 15, 60
 PRICE_SOURCE      = env("PRICE_SOURCE", "coinbase").lower()               # coinbase | binance
 
 TG_TOKEN = env("TELEGRAM_BOT_TOKEN", "")
@@ -85,6 +86,23 @@ logging.basicConfig(
 log = logging.getLogger("polybot")
 
 # ───────────────────────── helpers ─────────────────────────
+
+# Границы включающие сверху — как в tier-логике (entry > TIER_ENTRY → дорогой уровень),
+# поэтому 0.55 относится к дешёвому бакету и требует MIN_MOVE, а не MIN_MOVE_HIGH.
+ENTRY_BUCKETS = ((0.55, "0.50–0.55"), (0.60, "0.55–0.60"), (0.62, "0.60–0.62"))
+
+def entry_bucket(p):
+    for hi, name in ENTRY_BUCKETS:
+        if p <= hi + 1e-9:
+            return name
+    return "прочее"
+
+def move_bucket(m):
+    a = abs(m)
+    if a < 0.0012: return "0.10–0.12%"
+    if a < 0.0020: return "0.12–0.20%"
+    if a < 0.0035: return "0.20–0.35%"
+    return "≥0.35%"
 
 def log_missed(mkt, side, entry, reason, extra=""):
     """Журнал упущенных сигналов: условия сошлись, но войти не удалось."""
@@ -123,6 +141,9 @@ class State:
         self.closed = []           # resolved positions
         self.day = now().date().isoformat()
         self.day_pnl = 0.0
+        self.day_start_bankroll = BANKROLL
+        self.execstats = {"submitted": 0, "filled": 0, "partial": 0, "unfilled": 0, "cancelled": 0,
+                          "slip_sum": 0.0, "slip_n": 0, "by_window": {}}
         self.consec_losses = 0
         self.cooldown_until = None
         self.trade_times = []
@@ -144,6 +165,20 @@ class State:
         d = now().date().isoformat()
         if d != self.day:
             self.day, self.day_pnl = d, 0.0
+            self.day_start_bankroll = self.bankroll
+
+    def daily_limit_usd(self):
+        """Дневной стоп в долларах: доля от банкролла на начало дня либо абсолютная сумма."""
+        base = getattr(self, "day_start_bankroll", None) or self.bankroll or BANKROLL
+        return base * DAILY_LOSS_LIMIT if DAILY_LOSS_LIMIT <= 1 else DAILY_LOSS_LIMIT
+
+    def dir_exposure(self):
+        """Экспозиция по направлениям: корреляционный риск UP/DOWN в долларах."""
+        out = {"UP": 0.0, "DOWN": 0.0}
+        for p in self.positions.values():
+            k = p.get("side", "UP")
+            out[k] = out.get(k, 0.0) + p.get("cost", 0.0)
+        return out
 
     def exposure(self):
         return sum(p["cost"] for p in self.positions.values())
@@ -152,11 +187,11 @@ class State:
         self.roll_day()
         if self.cooldown_until and now() < parse_iso(str(self.cooldown_until)):
             return False, "cooldown"
-        if self.day_pnl <= -DAILY_LOSS_LIMIT:
+        if self.day_pnl <= -self.daily_limit_usd():
             return False, "daily loss limit"
         if len(self.positions) >= MAX_POSITIONS:
             return False, "max positions"
-        if self.exposure() >= BANKROLL * MAX_EXPOSURE:
+        if self.exposure() >= self.bankroll * MAX_EXPOSURE:
             return False, "max exposure"
         cutoff = time.time() - 3600
         self.trade_times = [t for t in self.trade_times if t > cutoff]
@@ -354,7 +389,10 @@ def evaluate(mkt, state):
     # Kelly: f = (p*b - q) / b, где b = выигрыш на 1$ ставки
     b = (1 - entry) / entry
     kelly = (conf * b - (1 - conf)) / b
-    size = max(0.0, kelly) * KELLY_FRAC * state.bankroll
+    if kelly <= 0:                      # нет положительного edge — сделки нет
+        log_missed(mkt, side, entry, "нет edge", f"kelly {kelly:.3f}")
+        return None, f"kelly {kelly:.3f} <= 0"
+    size = kelly * KELLY_FRAC * state.bankroll
     size = min(size, state.bankroll * MAX_STAKE, state.bankroll * MAX_EXPOSURE - state.exposure())
     if size < 1.0:
         log_missed(mkt, side, entry, "мало места", f"размер {size:.2f}$")
@@ -380,6 +418,7 @@ def evaluate(mkt, state):
         "minutes": mkt["minutes"], "start": mkt["start"].isoformat(),
         "entry": avg, "best_ask": entry, "cost": round(size, 2), "shares": shares, "depth_note": depth_note,
         "conf": round(conf, 3), "move": round(move, 5), "elapsed": round(elapsed, 2),
+        "entry_bucket": entry_bucket(avg), "move_bucket": move_bucket(move),
         "ref": ref, "end": mkt["end"].isoformat(), "opened": now().isoformat(),
         "question": mkt["question"],
     }, ""
@@ -406,29 +445,104 @@ def live_client():
     return c
 
 def place_order(cand):
+    """Отправляет ордер и ДОЖИДАЕТСЯ факта исполнения.
+
+    Возвращает dict: order_id, status (FILLED/PARTIAL/UNFILLED/CANCELLED/PAPER),
+    filled_shares, filled_cost, avg_fill_price. Позиция открывается только на
+    фактически исполненный объём — submitted != открытая позиция.
+    """
     if MODE != "live":
-        return "PAPER"
+        return {"order_id": "PAPER", "status": "PAPER", "filled_shares": cand["shares"],
+                "filled_cost": cand["cost"], "avg_fill_price": cand["entry"]}
     from py_clob_client.clob_types import OrderArgs, OrderType
     from py_clob_client.order_builder.constants import BUY
     c = live_client()
     order = c.create_order(OrderArgs(
         token_id=cand["token"], price=cand["entry"], size=cand["shares"], side=BUY))
     resp = c.post_order(order, OrderType.GTC)
-    return resp.get("orderID", str(resp))
+    oid = resp.get("orderID") or resp.get("orderId") or str(resp)
+
+    deadline = time.time() + ORDER_WAIT_SEC
+    filled = 0.0; cost = 0.0; status = "UNFILLED"
+    while time.time() < deadline:
+        time.sleep(1.0)
+        try:
+            o = c.get_order(oid) or {}
+        except Exception as e:
+            log.warning("get_order %s: %s", oid, e); continue
+        st = str(o.get("status", "")).upper()
+        try:
+            matched = float(o.get("size_matched") or o.get("sizeMatched") or 0)
+            px = float(o.get("price") or cand["entry"])
+        except (TypeError, ValueError):
+            matched, px = 0.0, cand["entry"]
+        filled, cost = matched, matched * px
+        if matched >= cand["shares"] * 0.999 or st in ("MATCHED", "FILLED"):
+            status = "FILLED"; break
+        if st in ("CANCELED", "CANCELLED", "EXPIRED"):
+            status = "PARTIAL" if matched > 0 else "CANCELLED"; break
+    else:
+        # не исполнился за отведённое время — снимаем остаток
+        try:
+            c.cancel(oid); log.info("Ордер %s снят по таймауту", oid)
+        except Exception as e:
+            log.warning("cancel %s: %s", oid, e)
+        status = "PARTIAL" if filled > 0 else "UNFILLED"
+
+    avg = (cost / filled) if filled else cand["entry"]
+    return {"order_id": oid, "status": status, "filled_shares": round(filled, 2),
+            "filled_cost": round(cost, 2), "avg_fill_price": round(avg, 4)}
 
 def open_position(cand, state):
-    oid = place_order(cand)
-    cand["order_id"] = oid
+    """Открывает позицию ТОЛЬКО на фактически исполненный объём."""
+    es = state.execstats
+    es["submitted"] = es.get("submitted", 0) + 1
+    wkey = f"{cand['minutes']}m"
+    w = es.setdefault("by_window", {}).setdefault(wkey, {"signal": 0, "submitted": 0, "filled": 0,
+                                                         "partial": 0, "unfilled": 0, "cancelled": 0})
+    w["submitted"] += 1
+    requested_shares, requested_cost = cand["shares"], cand["cost"]
+
+    r = place_order(cand)
+    cand["order_id"] = r["order_id"]; cand["order_status"] = r["status"]
+    cand["requested_shares"] = requested_shares; cand["requested_cost"] = requested_cost
+
+    if r["status"] in ("UNFILLED", "CANCELLED"):
+        es[r["status"].lower()] = es.get(r["status"].lower(), 0) + 1
+        w["unfilled" if r["status"] == "UNFILLED" else "cancelled"] += 1
+        state.save()
+        msg = f"[{MODE.upper()}] {cand['asset']} {cand['side']} ордер не исполнен ({r['status']}) — позиции нет"
+        log.warning(msg); notify(msg)
+        log_missed({"asset": cand["asset"], "minutes": cand["minutes"], "end": parse_iso(cand["end"])},
+                   cand["side"], cand["entry"], "ордер не исполнен", r["status"])
+        return False
+
+    # исполнено полностью или частично — позиция равна фактическому объёму
+    cand["shares"] = r["filled_shares"]; cand["cost"] = r["filled_cost"]
+    cand["entry"] = r["avg_fill_price"]
+    cand["remaining_shares"] = round(requested_shares - r["filled_shares"], 2)
+    if r["status"] == "PARTIAL":
+        es["partial"] = es.get("partial", 0) + 1; w["partial"] += 1
+    else:
+        es["filled"] = es.get("filled", 0) + 1; w["filled"] += 1
+    slip = r["avg_fill_price"] - cand.get("best_ask", r["avg_fill_price"])
+    es["slip_sum"] = es.get("slip_sum", 0.0) + slip; es["slip_n"] = es.get("slip_n", 0) + 1
+
     state.positions[cand["market_id"]] = cand
     state.trade_times.append(time.time())
     state.save()
-    msg = (f"[{MODE.upper()}] BUY {cand['asset']} {cand['side']} @ {cand['entry']:.2f} "
-           f"${cand['cost']:.2f} conf={cand['conf']} move={cand['move']:+.3%}")
-    log.info(msg)
-    notify(msg)
+    msg = (f"[{MODE.upper()}] BUY {cand['asset']} {cand['side']} @ {cand['entry']:.3f} "
+           f"${cand['cost']:.2f} ({r['status']}) conf={cand['conf']} move={cand['move']:+.3%}")
+    log.info(msg); notify(msg)
+    return True
 
 def resolve_positions(state):
-    """Закрываем позиции по цене Binance в момент окончания окна."""
+    """Закрываем позиции по цене окончания окна.
+
+    ВНИМАНИЕ: это приближение. Polymarket резолвит по TWAP от Chainlink, а мы
+    считаем по Coinbase (REF_MODE=twap — среднее открытия и закрытия минуты).
+    На пограничных окнах результат paper-режима может отличаться от реального.
+    """
     for mid, p in list(state.positions.items()):
         end = parse_iso(p["end"])
         if now() < end + timedelta(seconds=90):
@@ -500,6 +614,9 @@ def main():
                         continue
                     cand, reason = evaluate(mkt, state)
                     if cand:
+                        wk = f"{mkt['minutes']}m"
+                        state.execstats.setdefault("by_window", {}).setdefault(
+                            wk, {"signal": 0, "submitted": 0, "filled": 0, "partial": 0, "unfilled": 0, "cancelled": 0})["signal"] += 1
                         open_position(cand, state)
                     else:
                         log.debug("%s %s: %s", mkt["asset"], mkt["end"].strftime("%H:%M"), reason)

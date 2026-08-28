@@ -32,7 +32,10 @@ rep = {
     "by_asset": agg(lambda t: t.get("asset", "?")),
     "by_window": agg(lambda t: f"{t.get('minutes', '?')}m"),
     "by_hour": agg(lambda t: str(t.get("opened", ""))[11:13]),
-    "by_entry": agg(lambda t: f"{int(float(t.get('entry', 0)) * 20) / 20:.2f}"),
+    "by_entry": agg(lambda t: t.get("entry_bucket") or f"{int(float(t.get('entry', 0)) * 20) / 20:.2f}"),
+    "by_move": agg(lambda t: t.get("move_bucket") or "—"),
+    "by_side": agg(lambda t: t.get("side", "?")),
+    "execstats": state.get("execstats") or {},
     "trade_list": [{k: t.get(k) for k in ("opened", "asset", "side", "minutes", "entry", "cost", "shares", "conf", "move", "won", "pnl", "question")} for t in trades],
 }
 json.dump(rep, open(f"reports/{day}.json", "w"), ensure_ascii=False, indent=1)
@@ -47,7 +50,8 @@ try:
     w2 = wb.create_sheet("Итоги")
     for k in ("day", "trades", "wins", "losses", "winrate", "pnl", "gross_win", "gross_loss", "pf", "bankroll_end"):
         w2.append([k, rep[k]])
-    for name, key in (("По активам", "by_asset"), ("По окнам", "by_window"), ("По часам", "by_hour"), ("По цене входа", "by_entry")):
+    for name, key in (("По активам", "by_asset"), ("По окнам", "by_window"), ("По часам", "by_hour"),
+                      ("По цене входа", "by_entry"), ("По силе движения", "by_move"), ("По направлению", "by_side")):
         w2.append([]); w2.append([name, "сделок", "побед", "P&L"])
         for k, v in sorted(rep[key].items()):
             w2.append([k, v["n"], v["w"], v["pnl"]])
