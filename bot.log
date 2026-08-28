@@ -300,3 +300,39 @@
 2026-08-28 18:35:03,365 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
 2026-08-28 18:37:04,615 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
 2026-08-28 18:39:20,314 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:26:58,051 INFO  State loaded: bankroll=89.39, open=0
+2026-08-28 20:26:58,051 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP'] bankroll=89
+2026-08-28 20:29:36,296 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:31:36,974 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:33:37,993 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:35:53,350 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:37:54,313 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:40:04,854 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:42:26,257 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:45:00,242 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:47:00,993 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:49:07,391 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:51:14,857 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:53:16,199 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:55:28,019 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 20:57:43,053 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:00:01,381 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:02:02,180 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:04:09,587 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:06:15,574 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:08:16,537 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:10:29,067 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:12:48,889 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:15:11,216 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:17:12,031 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:19:29,415 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:21:30,153 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:23:37,324 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:25:48,616 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:26:40,372 INFO  SIGNAL SOL DOWN @ 0.550 заблокирован (NO_LIQUIDITY)
+2026-08-28 21:28:04,927 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:30:18,423 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:32:19,350 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:34:37,491 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:36:38,472 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
+2026-08-28 21:38:44,574 INFO  STATS trades=16 winrate=56% pnl=-10.61 PF=0.78 bankroll=89.39
