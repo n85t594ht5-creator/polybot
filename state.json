@@ -1,26 +1,6 @@
 {
- "bankroll": 78.22000000000001,
- "positions": {
-  "3929082": {
-   "market_id": "3929082",
-   "asset": "XRP",
-   "side": "DOWN",
-   "token": "54458217314574185580195047352368977655523055832426321736575856301995467254184",
-   "minutes": 5,
-   "start": "2026-08-28T09:25:00+00:00",
-   "entry": 0.61,
-   "cost": 4.68,
-   "shares": 7.66,
-   "conf": 0.765,
-   "move": -0.00113,
-   "elapsed": 0.77,
-   "ref": 1.4168,
-   "end": "2026-08-28T09:30:00+00:00",
-   "opened": "2026-08-28T09:28:51.659916+00:00",
-   "question": "XRP Up or Down - August 28, 5:25AM-5:30AM ET",
-   "order_id": "PAPER"
-  }
- },
+ "bankroll": 81.20000000000002,
+ "positions": {},
  "closed": [
   {
    "market_id": "3919352",
@@ -126,10 +106,32 @@
    "won": false,
    "pnl": -6.63,
    "final": 107.17
+  },
+  {
+   "market_id": "3929082",
+   "asset": "XRP",
+   "side": "DOWN",
+   "token": "54458217314574185580195047352368977655523055832426321736575856301995467254184",
+   "minutes": 5,
+   "start": "2026-08-28T09:25:00+00:00",
+   "entry": 0.61,
+   "cost": 4.68,
+   "shares": 7.66,
+   "conf": 0.765,
+   "move": -0.00113,
+   "elapsed": 0.77,
+   "ref": 1.4168,
+   "end": "2026-08-28T09:30:00+00:00",
+   "opened": "2026-08-28T09:28:51.659916+00:00",
+   "question": "XRP Up or Down - August 28, 5:25AM-5:30AM ET",
+   "order_id": "PAPER",
+   "won": true,
+   "pnl": 2.98,
+   "final": 1.4151
   }
  ],
  "day": "2026-08-28",
- "day_pnl": -21.78,
+ "day_pnl": -18.8,
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
