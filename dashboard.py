@@ -32,6 +32,7 @@ if os.path.exists(".env"):
         if _l.startswith("DASH_PORT=") and not os.getenv("DASH_PORT"):
             os.environ["DASH_PORT"] = _l.split("=", 1)[1].split("#")[0].strip()
 
+VERSION = (open("VERSION").read().strip() if os.path.exists("VERSION") else "dev")
 PORT = int(os.getenv("DASH_PORT", "8080"))
 PASSWORD = os.getenv("DASH_PASSWORD", "")          # если задан — панель доступна снаружи с паролем
 HOST = "0.0.0.0" if PASSWORD else "127.0.0.1"      # без пароля — только с этого компьютера
@@ -283,6 +284,8 @@ a{color:var(--acc)}
 header{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;margin-bottom:16px}
 header .sub{flex-basis:100%;margin:0}
 header h1{font:600 20px var(--mono);letter-spacing:.04em;margin:0}
+.ver{font:500 11px var(--mono);color:var(--mut);letter-spacing:.06em;vertical-align:2px}
+body{overflow-wrap:anywhere}
 .pill{font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid var(--line);color:var(--mut)}
 .pill.live{border-color:var(--down);color:var(--down)}
 .pill.paper{border-color:var(--acc);color:var(--acc)}
@@ -369,7 +372,7 @@ svg{display:block;width:100%;height:170px}
 .cal .hd{text-align:center;font:10px var(--mono);color:var(--mut);letter-spacing:.08em}
 .hgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:3px}.hgrid div{aspect-ratio:1;border-radius:4px;background:var(--panel2);border:1px solid var(--line);font:9px var(--mono);display:flex;align-items:center;justify-content:center;color:var(--mut)}
 .hgrid div.win{background:rgba(53,217,155,.25);color:var(--up)}.hgrid div.loss{background:rgba(255,107,122,.25);color:var(--down)}
-.tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}.tabs button{font-size:12px;padding:6px 12px}.tabs button.on{border-color:var(--acc);color:var(--acc)}
+.tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}.tabs button{white-space:nowrap}.tabs button{font-size:12px;padding:6px 12px}.tabs button.on{border-color:var(--acc);color:var(--acc)}
 details.logbox{margin-top:8px}details.logbox summary{cursor:pointer;color:var(--mut);font-size:12px;padding:6px 0}
 .book{font:11px var(--mono)}.book .r{display:grid;grid-template-columns:44px 1fr 58px;gap:6px;align-items:center;padding:1px 0}.book .r i{display:block;height:8px;background:rgba(138,180,255,.35);border-radius:2px}
 .brow{display:grid;grid-template-columns:minmax(70px,110px) 1fr minmax(96px,auto);gap:8px;align-items:center;padding:5px 0;font:12px var(--mono);border-bottom:1px solid rgba(36,50,72,.5)}
@@ -396,7 +399,7 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
 <div class="fab" id="menu"><button id="fabBack" title="Назад" onclick="showView('dash')">←</button><button id="menuBtn" class="acc" title="Меню">☰</button><div class="dd">
     <a href="#" data-view="dash" class="on"><i>▦</i>Дашборд</a><a href="backtest.html"><i>⚗</i>Тестировщик</a><a href="#" data-view="settings"><i>⚙</i>Настройки бота</a><a href="#" data-view="keys"><i>🔑</i>Ключи</a><a href="#" data-view="power"><i>⏻</i>Питание</a><a href="#" data-view="statistics"><i>📊</i>Статистика</a><a href="#" data-view="signals"><i>⚡</i>Журнал сигналов</a><a href="#" data-view="reports"><i>📄</i>Отчёты</a><a href="#" data-view="stats"><i>▤</i>Архив настроек</a></div></div>
 <header>
-  <h1>POLYBOT</h1>
+  <h1>POLYBOT <span class="ver" id="ver"></span></h1>
   <span id="modePill" class="pill">—</span>
   <span class="pill"><span id="dot" class="dot"></span><span id="botTxt">не запущен</span></span>
   <span class="pill" id="assets">—</span>
@@ -515,6 +518,7 @@ tr.sec td{background:var(--panel2);font:600 11px var(--mono);letter-spacing:.12e
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 const $=id=>document.getElementById(id);
+document.addEventListener('DOMContentLoaded',()=>{const v=$('ver');if(v)v.textContent='v'+(window.__VER__||'')});
 const fmt=(n,d=2)=>(n==null||isNaN(n))?'—':Number(n).toFixed(d);
 const sgn=n=>(n>0?'+':'')+fmt(n);
 const cls=n=>n>0?'pos':n<0?'neg':'';
@@ -554,7 +558,7 @@ function renderPositions(){
 
 function render(d){
   last=d; positions=d.positions||[];
-  $('modePill').textContent=d.mode; $('modePill').className='pill '+d.mode;
+  $('ver').textContent='v'+(window.__VER__||'');$('modePill').textContent=d.mode; $('modePill').className='pill '+d.mode;
   $('assets').textContent=d.assets;
   $('dot').className='dot'+(d.bot.running?' on':''); $('botTxt').textContent=d.bot.running?'работает':'не запущен';
   $('btnStart').disabled=d.bot.running; $('btnStop').disabled=!d.bot.managed;

@@ -269,5 +269,9 @@ if SKIP:
     page["configs"]["hours"] = pack(f"Топ 1 без часов {','.join(f'{h:02d}' for h in SKIP)} UTC", HOURS_CFG)
     page["configs"]["hours"]["params"]["SKIP_HOURS"] = ",".join(str(h) for h in SKIP)
 tpl = open("template.html", encoding="utf-8").read()
+_v = "dev"
+for _p in ("../VERSION", "VERSION"):
+    if os.path.exists(_p): _v = open(_p).read().strip(); break
+tpl = tpl.replace("__VERSION__", _v)
 open("docs/backtest.html", "w", encoding="utf-8").write(tpl.replace("__DATA__", json.dumps(page, ensure_ascii=False, default=str)))
 print("docs/backtest.html written")
