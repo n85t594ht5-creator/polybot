@@ -1,12 +1,22 @@
 [
  {
   "day": "2026-08-28",
-  "trades": 9,
-  "wins": 5,
-  "losses": 4,
-  "winrate": 0.5555555555555556,
-  "pnl": -7.11,
-  "pf": 0.74,
-  "bankroll_end": 92.89000000000001
+  "trades": 17,
+  "wins": 10,
+  "losses": 7,
+  "winrate": 0.5882352941176471,
+  "pnl": -7.9,
+  "pf": 0.83,
+  "bankroll_end": 92.10000000000001
+ },
+ {
+  "day": "2026-08-29",
+  "trades": 0,
+  "wins": 0,
+  "losses": 0,
+  "winrate": null,
+  "pnl": 0,
+  "pf": null,
+  "bankroll_end": 92.10000000000001
  }
 ]
