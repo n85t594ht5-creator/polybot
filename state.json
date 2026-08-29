@@ -422,6 +422,14 @@
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
+   },
+   "5m": {
+    "signal": 1,
+    "submitted": 0,
+    "filled": 0,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
    }
   }
  },
