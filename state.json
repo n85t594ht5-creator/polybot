@@ -1,5 +1,5 @@
 {
- "bankroll": 92.10000000000001,
+ "bankroll": 96.52000000000001,
  "positions": {},
  "closed": [
   {
@@ -401,19 +401,58 @@
    "won": true,
    "pnl": 2.71,
    "final": 103.55000000000001
+  },
+  {
+   "market_id": "3978286",
+   "asset": "BTC",
+   "side": "DOWN",
+   "token": "56618401224878452494916478838129861343377680709459385444685737311111770248634",
+   "minutes": 5,
+   "start": "2026-08-30T18:05:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 4.61,
+   "hyp_shares": 9.03,
+   "depth_usd": 29.58,
+   "remaining_sec": 74.8,
+   "execution_quality": "GOOD",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 78877.56,
+   "entry": 0.51,
+   "best_ask": 0.5,
+   "cost": 4.61,
+   "shares": 9.03,
+   "depth_note": "",
+   "conf": 0.766,
+   "move": -0.00135,
+   "elapsed": 0.75,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.12\u20130.15%",
+   "ref": 78983.8,
+   "end": "2026-08-30T18:10:00+00:00",
+   "opened": "2026-08-30T18:08:45.633477+00:00",
+   "question": "Bitcoin Up or Down - August 30, 2:05PM-2:10PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 9.03,
+   "requested_cost": 4.61,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 4.42,
+   "final": 78851.37
   }
  ],
  "day": "2026-08-30",
- "day_pnl": 0.0,
+ "day_pnl": 4.419999999999999,
  "day_start_bankroll": 92.10000000000001,
  "execstats": {
-  "submitted": 1,
-  "filled": 1,
+  "submitted": 2,
+  "filled": 2,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.010000000000000009,
-  "slip_n": 1,
+  "slip_sum": 0.020000000000000018,
+  "slip_n": 2,
   "by_window": {
    "15m": {
     "signal": 8,
@@ -424,9 +463,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 1,
-    "submitted": 0,
-    "filled": 0,
+    "signal": 2,
+    "submitted": 1,
+    "filled": 1,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -436,5 +475,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1788113325.6334937
+ ]
 }
