@@ -463,7 +463,7 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 2,
+    "signal": 4,
     "submitted": 1,
     "filled": 1,
     "partial": 0,
