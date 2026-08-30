@@ -612,3 +612,8 @@
 2026-08-30 23:33:45,815 INFO  [PAPER] BUY XRP UP @ 0.540 $1.06 (PAPER) conf=0.797 move=+0.239%
 2026-08-30 23:33:47,991 INFO  SIGNAL BTC UP @ 0.580 заблокирован (MAX_PER_WINDOW)
 2026-08-30 23:35:35,190 INFO  STATS trades=18 winrate=61% pnl=-3.48 PF=0.93 bankroll=96.52
+2026-08-30 23:36:37,282 INFO  WIN  XRP UP pnl=+0.90 bankroll=97.42
+2026-08-30 23:37:36,461 INFO  STATS trades=19 winrate=63% pnl=-2.58 PF=0.95 bankroll=97.42
+2026-08-30 23:39:55,924 INFO  STATS trades=19 winrate=63% pnl=-2.58 PF=0.95 bankroll=97.42
+2026-08-30 23:42:24,285 INFO  STATS trades=19 winrate=63% pnl=-2.58 PF=0.95 bankroll=97.42
+2026-08-30 23:45:18,884 INFO  STATS trades=19 winrate=63% pnl=-2.58 PF=0.95 bankroll=97.42
