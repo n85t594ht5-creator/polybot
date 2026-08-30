@@ -606,3 +606,9 @@
 2026-08-30 23:21:39,830 INFO  STATS trades=18 winrate=61% pnl=-3.48 PF=0.93 bankroll=96.52
 2026-08-30 23:23:48,798 INFO  STATS trades=18 winrate=61% pnl=-3.48 PF=0.93 bankroll=96.52
 2026-08-30 23:25:58,007 INFO  STATS trades=18 winrate=61% pnl=-3.48 PF=0.93 bankroll=96.52
+2026-08-30 23:29:13,529 INFO  STATS trades=18 winrate=61% pnl=-3.48 PF=0.93 bankroll=96.52
+2026-08-30 23:31:23,492 INFO  STATS trades=18 winrate=61% pnl=-3.48 PF=0.93 bankroll=96.52
+2026-08-30 23:33:25,387 INFO  STATS trades=18 winrate=61% pnl=-3.48 PF=0.93 bankroll=96.52
+2026-08-30 23:33:45,815 INFO  [PAPER] BUY XRP UP @ 0.540 $1.06 (PAPER) conf=0.797 move=+0.239%
+2026-08-30 23:33:47,991 INFO  SIGNAL BTC UP @ 0.580 заблокирован (MAX_PER_WINDOW)
+2026-08-30 23:35:35,190 INFO  STATS trades=18 winrate=61% pnl=-3.48 PF=0.93 bankroll=96.52
