@@ -680,3 +680,8 @@
 2026-08-31 01:57:52,839 INFO  STATS trades=20 winrate=65% pnl=+1.92 PF=1.04 bankroll=101.92
 2026-08-31 02:00:23,506 INFO  STATS trades=20 winrate=65% pnl=+1.92 PF=1.04 bankroll=101.92
 2026-08-31 02:01:40,631 INFO  WIN  XRP DOWN pnl=+4.89 bankroll=106.81
+2026-08-31 02:02:24,365 INFO  STATS trades=21 winrate=67% pnl=+6.81 PF=1.14 bankroll=106.81
+2026-08-31 02:04:29,899 INFO  STATS trades=21 winrate=67% pnl=+6.81 PF=1.14 bankroll=106.81
+2026-08-31 02:06:30,858 INFO  STATS trades=21 winrate=67% pnl=+6.81 PF=1.14 bankroll=106.81
+2026-08-31 02:08:31,835 INFO  STATS trades=21 winrate=67% pnl=+6.81 PF=1.14 bankroll=106.81
+2026-08-31 02:10:42,564 INFO  STATS trades=21 winrate=67% pnl=+6.81 PF=1.14 bankroll=106.81
