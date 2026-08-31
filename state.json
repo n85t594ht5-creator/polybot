@@ -1,5 +1,5 @@
 {
- "bankroll": 335.97999999999996,
+ "bankroll": 352.11999999999995,
  "positions": {},
  "closed": [
   {
@@ -1610,19 +1610,58 @@
    "won": true,
    "pnl": 14.72,
    "final": 1.3734
+  },
+  {
+   "market_id": "3998031",
+   "asset": "SOL",
+   "side": "UP",
+   "token": "26787542776621610007131507210431806683269690139122307132235573582597930968205",
+   "minutes": 5,
+   "start": "2026-08-31T10:25:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 16.8,
+   "hyp_shares": 32.94,
+   "depth_usd": 25.5,
+   "remaining_sec": 74.9,
+   "execution_quality": "GOOD",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 102.91,
+   "entry": 0.51,
+   "best_ask": 0.5,
+   "cost": 16.8,
+   "shares": 32.94,
+   "depth_note": "",
+   "conf": 0.759,
+   "move": 0.00112,
+   "elapsed": 0.75,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 102.795,
+   "end": "2026-08-31T10:30:00+00:00",
+   "opened": "2026-08-31T10:28:45.511115+00:00",
+   "question": "Solana Up or Down - August 31, 6:25AM-6:30AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 32.94,
+   "requested_cost": 16.8,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 16.14,
+   "final": 102.85499999999999
   }
  ],
  "day": "2026-08-31",
- "day_pnl": 238.55999999999997,
+ "day_pnl": 254.69999999999996,
  "day_start_bankroll": 97.42000000000002,
  "execstats": {
-  "submitted": 32,
-  "filled": 32,
+  "submitted": 33,
+  "filled": 33,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.3200000000000003,
-  "slip_n": 32,
+  "slip_sum": 0.3300000000000003,
+  "slip_n": 33,
   "by_window": {
    "15m": {
     "signal": 36,
@@ -1633,9 +1672,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 41,
-    "submitted": 18,
-    "filled": 18,
+    "signal": 42,
+    "submitted": 19,
+    "filled": 19,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -1646,8 +1685,8 @@
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1788168377.1572738,
   1788171225.9063308,
-  1788171227.506036
+  1788171227.506036,
+  1788172125.51114
  ]
 }
