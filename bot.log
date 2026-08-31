@@ -955,3 +955,9 @@
 2026-08-31 09:29:58,548 INFO  STATS trades=44 winrate=82% pnl=+179.66 PF=4.21 bankroll=279.66
 2026-08-31 09:30:15,743 INFO  WIN  ETH UP pnl=+13.44 bankroll=293.10
 2026-08-31 09:32:00,468 INFO  STATS trades=45 winrate=82% pnl=+193.10 PF=4.45 bankroll=293.10
+2026-08-31 09:34:13,018 INFO  STATS trades=45 winrate=82% pnl=+193.10 PF=4.45 bankroll=293.10
+2026-08-31 09:35:19,165 INFO  WIN  XRP UP pnl=+13.44 bankroll=306.54
+2026-08-31 09:36:18,224 INFO  STATS trades=46 winrate=83% pnl=+206.54 PF=4.69 bankroll=306.54
+2026-08-31 09:38:19,370 INFO  STATS trades=46 winrate=83% pnl=+206.54 PF=4.69 bankroll=306.54
+2026-08-31 09:40:25,517 INFO  STATS trades=46 winrate=83% pnl=+206.54 PF=4.69 bankroll=306.54
+2026-08-31 09:42:34,828 INFO  STATS trades=46 winrate=83% pnl=+206.54 PF=4.69 bankroll=306.54
