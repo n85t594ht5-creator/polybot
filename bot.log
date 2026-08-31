@@ -811,3 +811,9 @@
 2026-08-31 06:55:51,902 INFO  STATS trades=21 winrate=67% pnl=+6.81 PF=1.14 bankroll=106.81
 2026-08-31 06:56:28,230 INFO  SIGNAL ETH DOWN @ 0.500 заблокирован (NO_LIQUIDITY)
 2026-08-31 06:58:06,108 INFO  STATS trades=21 winrate=67% pnl=+6.81 PF=1.14 bankroll=106.81
+2026-08-31 07:00:22,077 INFO  STATS trades=21 winrate=67% pnl=+6.81 PF=1.14 bankroll=106.81
+2026-08-31 07:02:23,134 INFO  STATS trades=21 winrate=67% pnl=+6.81 PF=1.14 bankroll=106.81
+2026-08-31 07:04:29,516 INFO  STATS trades=21 winrate=67% pnl=+6.81 PF=1.14 bankroll=106.81
+2026-08-31 07:06:30,696 INFO  STATS trades=21 winrate=67% pnl=+6.81 PF=1.14 bankroll=106.81
+2026-08-31 07:08:32,128 INFO  STATS trades=21 winrate=67% pnl=+6.81 PF=1.14 bankroll=106.81
+2026-08-31 07:09:28,396 INFO  [PAPER] BUY SOL UP @ 0.510 $5.34 (PAPER) conf=0.807 move=+0.131%
