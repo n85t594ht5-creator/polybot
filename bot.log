@@ -845,3 +845,12 @@
 2026-08-31 07:35:23,883 INFO  WIN  ETH DOWN pnl=+5.89 bankroll=134.22
 2026-08-31 07:36:38,119 INFO  STATS trades=26 winrate=73% pnl=+34.22 PF=1.71 bankroll=134.22
 2026-08-31 07:38:39,271 INFO  STATS trades=26 winrate=73% pnl=+34.22 PF=1.71 bankroll=134.22
+2026-08-31 07:40:45,877 INFO  STATS trades=26 winrate=73% pnl=+34.22 PF=1.71 bankroll=134.22
+2026-08-31 07:43:09,374 INFO  STATS trades=26 winrate=73% pnl=+34.22 PF=1.71 bankroll=134.22
+2026-08-31 07:44:11,029 INFO  [PAPER] BUY BTC UP @ 0.510 $6.71 (PAPER) conf=0.814 move=+0.103%
+2026-08-31 07:44:28,734 INFO  [PAPER] BUY SOL UP @ 0.510 $6.71 (PAPER) conf=0.808 move=+0.131%
+2026-08-31 07:45:20,078 INFO  STATS trades=26 winrate=73% pnl=+34.22 PF=1.71 bankroll=134.22
+2026-08-31 07:46:37,414 INFO  WIN  BTC UP pnl=+6.45 bankroll=140.67
+2026-08-31 07:46:37,461 INFO  WIN  SOL UP pnl=+6.45 bankroll=147.12
+2026-08-31 07:47:21,318 INFO  STATS trades=28 winrate=75% pnl=+47.12 PF=1.98 bankroll=147.12
+2026-08-31 07:49:27,176 INFO  STATS trades=28 winrate=75% pnl=+47.12 PF=1.98 bankroll=147.12
