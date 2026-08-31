@@ -638,3 +638,10 @@
 2026-08-31 00:44:11,903 INFO  STATS trades=19 winrate=63% pnl=-2.58 PF=0.95 bankroll=97.42
 2026-08-31 00:46:18,842 INFO  STATS trades=19 winrate=63% pnl=-2.58 PF=0.95 bankroll=97.42
 2026-08-31 00:48:19,775 INFO  STATS trades=19 winrate=63% pnl=-2.58 PF=0.95 bankroll=97.42
+2026-08-31 00:50:32,382 INFO  STATS trades=19 winrate=63% pnl=-2.58 PF=0.95 bankroll=97.42
+2026-08-31 00:52:33,184 INFO  STATS trades=19 winrate=63% pnl=-2.58 PF=0.95 bankroll=97.42
+2026-08-31 00:54:43,384 INFO  STATS trades=19 winrate=63% pnl=-2.58 PF=0.95 bankroll=97.42
+2026-08-31 00:56:44,085 INFO  STATS trades=19 winrate=63% pnl=-2.58 PF=0.95 bankroll=97.42
+2026-08-31 00:58:20,738 INFO  SIGNAL ETH DOWN @ 0.500 заблокирован (NO_LIQUIDITY)
+2026-08-31 00:58:39,973 INFO  [PAPER] BUY BTC DOWN @ 0.520 $4.87 (PAPER) conf=0.804 move=-0.102%
+2026-08-31 00:59:00,002 INFO  STATS trades=19 winrate=63% pnl=-2.58 PF=0.95 bankroll=97.42
