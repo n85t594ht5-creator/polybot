@@ -1349,3 +1349,9 @@
 2026-08-31 23:26:26,176 INFO  SIGNAL SOL UP @ 0.500 заблокирован (MAX_PER_WINDOW)
 2026-08-31 23:26:30,480 INFO  SIGNAL ETH UP @ 0.520 заблокирован (MAX_PER_WINDOW)
 2026-08-31 23:26:54,269 INFO  STATS trades=52 winrate=83% pnl=+258.20 PF=4.49 bankroll=358.20
+2026-08-31 23:29:26,725 INFO  STATS trades=52 winrate=83% pnl=+258.20 PF=4.49 bankroll=358.20
+2026-08-31 23:31:28,700 INFO  STATS trades=52 winrate=83% pnl=+258.20 PF=4.49 bankroll=358.20
+2026-08-31 23:31:30,268 INFO  WIN  BTC UP pnl=+8.68 bankroll=366.88
+2026-08-31 23:33:30,380 INFO  STATS trades=53 winrate=83% pnl=+266.88 PF=4.60 bankroll=366.88
+2026-08-31 23:35:43,218 INFO  STATS trades=53 winrate=83% pnl=+266.88 PF=4.60 bankroll=366.88
+2026-08-31 23:37:44,408 INFO  STATS trades=53 winrate=83% pnl=+266.88 PF=4.60 bankroll=366.88
