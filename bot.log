@@ -838,3 +838,10 @@
 2026-08-31 07:28:05,044 INFO  STATS trades=24 winrate=71% pnl=+22.70 PF=1.47 bankroll=122.70
 2026-08-31 07:28:48,851 INFO  [PAPER] BUY ETH DOWN @ 0.510 $6.14 (PAPER) conf=0.759 move=-0.101%
 2026-08-31 07:28:50,873 INFO  SIGNAL XRP UP @ 0.510 заблокирован (MAX_PER_WINDOW)
+2026-08-31 07:30:17,102 INFO  STATS trades=24 winrate=71% pnl=+22.70 PF=1.47 bankroll=122.70
+2026-08-31 07:32:18,853 INFO  STATS trades=24 winrate=71% pnl=+22.70 PF=1.47 bankroll=122.70
+2026-08-31 07:34:35,866 INFO  STATS trades=24 winrate=71% pnl=+22.70 PF=1.47 bankroll=122.70
+2026-08-31 07:35:08,269 INFO  WIN  XRP UP pnl=+5.63 bankroll=128.33
+2026-08-31 07:35:23,883 INFO  WIN  ETH DOWN pnl=+5.89 bankroll=134.22
+2026-08-31 07:36:38,119 INFO  STATS trades=26 winrate=73% pnl=+34.22 PF=1.71 bankroll=134.22
+2026-08-31 07:38:39,271 INFO  STATS trades=26 winrate=73% pnl=+34.22 PF=1.71 bankroll=134.22
