@@ -1,20 +1,20 @@
 {
  "day": "2026-08-31",
- "generated": "2026-08-31T17:47:02.895157+00:00",
- "trades": 33,
- "wins": 31,
+ "generated": "2026-08-31T23:46:29.240920+00:00",
+ "trades": 34,
+ "wins": 32,
  "losses": 2,
- "winrate": 0.9393939393939394,
- "pnl": 260.78,
- "gross_win": 286.95,
+ "winrate": 0.9411764705882353,
+ "pnl": 269.46,
+ "gross_win": 295.63,
  "gross_loss": -26.17,
- "pf": 10.96,
- "bankroll_end": 358.19999999999993,
+ "pf": 11.3,
+ "bankroll_end": 366.87999999999994,
  "by_asset": {
   "BTC": {
-   "n": 9,
-   "w": 8,
-   "pnl": 67.66
+   "n": 10,
+   "w": 9,
+   "pnl": 76.34
   },
   "XRP": {
    "n": 9,
@@ -34,9 +34,9 @@
  },
  "by_window": {
   "15m": {
-   "n": 15,
-   "w": 14,
-   "pnl": 116.46
+   "n": 16,
+   "w": 15,
+   "pnl": 125.14
   },
   "5m": {
    "n": 18,
@@ -84,13 +84,18 @@
    "n": 2,
    "w": 1,
    "pnl": -4.04
+  },
+  "23": {
+   "n": 1,
+   "w": 1,
+   "pnl": 8.68
   }
  },
  "by_entry": {
   "0.50–0.55": {
-   "n": 32,
-   "w": 30,
-   "pnl": 250.66
+   "n": 33,
+   "w": 31,
+   "pnl": 259.34
   },
   "0.55–0.60": {
    "n": 1,
@@ -100,9 +105,9 @@
  },
  "by_move": {
   "0.10–0.12%": {
-   "n": 19,
-   "w": 17,
-   "pnl": 127.17
+   "n": 20,
+   "w": 18,
+   "pnl": 135.85
   },
   "0.12–0.15%": {
    "n": 9,
@@ -127,30 +132,30 @@
    "pnl": 33.13
   },
   "UP": {
-   "n": 28,
-   "w": 26,
-   "pnl": 227.65
+   "n": 29,
+   "w": 27,
+   "pnl": 236.33
   }
  },
  "execstats": {
-  "submitted": 36,
-  "filled": 36,
+  "submitted": 37,
+  "filled": 37,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.3600000000000003,
-  "slip_n": 36,
+  "slip_sum": 0.37000000000000033,
+  "slip_n": 37,
   "by_window": {
    "15m": {
-    "signal": 46,
-    "submitted": 16,
-    "filled": 16,
+    "signal": 51,
+    "submitted": 17,
+    "filled": 17,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    },
    "5m": {
-    "signal": 43,
+    "signal": 46,
     "submitted": 20,
     "filled": 20,
     "partial": 0,
@@ -159,56 +164,56 @@
    }
   }
  },
- "signals": 75,
- "signals_executed": 33,
- "signals_blocked": 42,
- "hypothetical_pnl": 634.26,
+ "signals": 83,
+ "signals_executed": 34,
+ "signals_blocked": 49,
+ "hypothetical_pnl": 700.41,
  "signals_by_window": {
   "15m": {
-   "n": 38,
-   "w": 35,
-   "hyp": 302.79,
-   "real": 116.46
+   "n": 43,
+   "w": 39,
+   "hyp": 351.73,
+   "real": 125.14
   },
   "5m": {
-   "n": 37,
-   "w": 36,
-   "hyp": 331.47,
+   "n": 40,
+   "w": 38,
+   "hyp": 348.68,
    "real": 144.32
   }
  },
  "signals_by_asset": {
   "ETH": {
-   "n": 19,
-   "w": 18,
-   "hyp": 153.75,
+   "n": 20,
+   "w": 19,
+   "hyp": 170.28,
    "real": 84.3
   },
   "BTC": {
-   "n": 20,
-   "w": 19,
-   "hyp": 189.42,
-   "real": 67.66
+   "n": 22,
+   "w": 21,
+   "hyp": 223.16,
+   "real": 76.34
   },
   "XRP": {
-   "n": 23,
+   "n": 24,
    "w": 22,
-   "hyp": 173.15,
+   "hyp": 155.24,
    "real": 71.31
   },
   "SOL": {
-   "n": 13,
-   "w": 12,
-   "hyp": 117.94,
+   "n": 17,
+   "w": 15,
+   "hyp": 151.73,
    "real": 37.51
   }
  },
  "signals_by_entry": {
   "0.50–0.55": {
-   "n": 71,
-   "w": 67,
-   "hyp": 602.58,
-   "real": 250.66
+   "n": 79,
+   "w": 73,
+   "hyp": 668.73,
+   "real": 259.34
   },
   "0.60–0.62": {
    "n": 2,
@@ -225,21 +230,21 @@
  },
  "signals_by_gate": {
   "NO_LIQUIDITY": {
-   "n": 14,
-   "w": 13,
-   "hyp": 94.05,
+   "n": 19,
+   "w": 16,
+   "hyp": 109.23,
    "real": 0.0
   },
   "—": {
-   "n": 33,
-   "w": 31,
-   "hyp": 264.49,
-   "real": 260.78
+   "n": 34,
+   "w": 32,
+   "hyp": 281.02,
+   "real": 269.46
   },
   "MAX_PER_WINDOW": {
-   "n": 28,
-   "w": 27,
-   "hyp": 275.72,
+   "n": 30,
+   "w": 29,
+   "hyp": 310.16,
    "real": 0.0
   }
  },
@@ -705,6 +710,20 @@
    "won": true,
    "pnl": 14.07,
    "question": "Ethereum Up or Down - August 31, 10:45AM-11:00AM ET"
+  },
+  {
+   "opened": "2026-08-31T23:26:16.269564+00:00",
+   "asset": "BTC",
+   "side": "UP",
+   "minutes": 15,
+   "entry": 0.52,
+   "cost": 9.4,
+   "shares": 18.08,
+   "conf": 0.76,
+   "move": 0.00117,
+   "won": true,
+   "pnl": 8.68,
+   "question": "Bitcoin Up or Down - August 31, 7:15PM-7:30PM ET"
   }
  ]
 }
