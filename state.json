@@ -481,9 +481,9 @@
    "final": 1.3627500000000001
   }
  ],
- "day": "2026-08-30",
- "day_pnl": 5.3199999999999985,
- "day_start_bankroll": 92.10000000000001,
+ "day": "2026-08-31",
+ "day_pnl": 0.0,
+ "day_start_bankroll": 97.42000000000002,
  "execstats": {
   "submitted": 3,
   "filled": 3,
@@ -494,7 +494,7 @@
   "slip_n": 3,
   "by_window": {
    "15m": {
-    "signal": 8,
+    "signal": 9,
     "submitted": 1,
     "filled": 1,
     "partial": 0,
