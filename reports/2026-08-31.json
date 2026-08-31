@@ -1,0 +1,199 @@
+{
+ "day": "2026-08-31",
+ "generated": "2026-08-31T05:48:18.403667+00:00",
+ "trades": 2,
+ "wins": 2,
+ "losses": 0,
+ "winrate": 1.0,
+ "pnl": 9.39,
+ "gross_win": 9.39,
+ "gross_loss": 0,
+ "pf": 99.0,
+ "bankroll_end": 106.81000000000002,
+ "by_asset": {
+  "BTC": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.5
+  },
+  "XRP": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.89
+  }
+ },
+ "by_window": {
+  "15m": {
+   "n": 2,
+   "w": 2,
+   "pnl": 9.39
+  }
+ },
+ "by_hour": {
+  "00": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.5
+  },
+  "01": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.89
+  }
+ },
+ "by_entry": {
+  "0.50–0.55": {
+   "n": 2,
+   "w": 2,
+   "pnl": 9.39
+  }
+ },
+ "by_move": {
+  "0.10–0.12%": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.5
+  },
+  "0.12–0.15%": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.89
+  }
+ },
+ "by_side": {
+  "DOWN": {
+   "n": 2,
+   "w": 2,
+   "pnl": 9.39
+  }
+ },
+ "execstats": {
+  "submitted": 5,
+  "filled": 5,
+  "partial": 0,
+  "unfilled": 0,
+  "cancelled": 0,
+  "slip_sum": 0.050000000000000044,
+  "slip_n": 5,
+  "by_window": {
+   "15m": {
+    "signal": 13,
+    "submitted": 3,
+    "filled": 3,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   },
+   "5m": {
+    "signal": 10,
+    "submitted": 2,
+    "filled": 2,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   }
+  }
+ },
+ "signals": 9,
+ "signals_executed": 2,
+ "signals_blocked": 7,
+ "hypothetical_pnl": 40.68,
+ "signals_by_window": {
+  "15m": {
+   "n": 5,
+   "w": 5,
+   "hyp": 22.33,
+   "real": 9.39
+  },
+  "5m": {
+   "n": 4,
+   "w": 4,
+   "hyp": 18.35,
+   "real": 0.0
+  }
+ },
+ "signals_by_asset": {
+  "ETH": {
+   "n": 2,
+   "w": 2,
+   "hyp": 9.74,
+   "real": 0.0
+  },
+  "BTC": {
+   "n": 1,
+   "w": 1,
+   "hyp": 4.5,
+   "real": 4.5
+  },
+  "XRP": {
+   "n": 6,
+   "w": 6,
+   "hyp": 26.44,
+   "real": 4.89
+  }
+ },
+ "signals_by_entry": {
+  "0.50–0.55": {
+   "n": 7,
+   "w": 7,
+   "hyp": 34.05,
+   "real": 9.39
+  },
+  "0.60–0.62": {
+   "n": 1,
+   "w": 1,
+   "hyp": 3.2,
+   "real": 0.0
+  },
+  "0.55–0.60": {
+   "n": 1,
+   "w": 1,
+   "hyp": 3.43,
+   "real": 0.0
+  }
+ },
+ "signals_by_gate": {
+  "NO_LIQUIDITY": {
+   "n": 7,
+   "w": 7,
+   "hyp": 31.29,
+   "real": 0.0
+  },
+  "—": {
+   "n": 2,
+   "w": 2,
+   "hyp": 9.39,
+   "real": 9.39
+  }
+ },
+ "trade_list": [
+  {
+   "opened": "2026-08-31T00:58:39.971517+00:00",
+   "asset": "BTC",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.52,
+   "cost": 4.87,
+   "shares": 9.37,
+   "conf": 0.804,
+   "move": -0.00102,
+   "won": true,
+   "pnl": 4.5,
+   "question": "Bitcoin Up or Down - August 30, 8:45PM-9:00PM ET"
+  },
+  {
+   "opened": "2026-08-31T01:56:55.855504+00:00",
+   "asset": "XRP",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.51,
+   "cost": 5.1,
+   "shares": 9.99,
+   "conf": 0.783,
+   "move": -0.00148,
+   "won": true,
+   "pnl": 4.89,
+   "question": "XRP Up or Down - August 30, 9:45PM-10:00PM ET"
+  }
+ ]
+}
