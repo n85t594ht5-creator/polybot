@@ -1,5 +1,5 @@
 {
- "bankroll": 344.12999999999994,
+ "bankroll": 358.19999999999993,
  "positions": {},
  "closed": [
   {
@@ -1727,24 +1727,63 @@
    "won": false,
    "pnl": -18.11,
    "final": 103.425
+  },
+  {
+   "market_id": "4003255",
+   "asset": "ETH",
+   "side": "UP",
+   "token": "88977567089344277500461213164543370591265613492050431280479097945928802131683",
+   "minutes": 15,
+   "start": "2026-08-31T14:45:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 17.21,
+   "hyp_shares": 31.28,
+   "depth_usd": 36.85,
+   "remaining_sec": 185.8,
+   "execution_quality": "GOOD",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 2468.6,
+   "entry": 0.55,
+   "best_ask": 0.54,
+   "cost": 17.21,
+   "shares": 31.28,
+   "depth_note": "",
+   "conf": 0.783,
+   "move": 0.00149,
+   "elapsed": 0.79,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.12\u20130.15%",
+   "ref": 2464.9300000000003,
+   "end": "2026-08-31T15:00:00+00:00",
+   "opened": "2026-08-31T14:56:54.532380+00:00",
+   "question": "Ethereum Up or Down - August 31, 10:45AM-11:00AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 31.28,
+   "requested_cost": 17.21,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 14.07,
+   "final": 2467.335
   }
  ],
  "day": "2026-08-31",
- "day_pnl": 246.70999999999992,
+ "day_pnl": 260.7799999999999,
  "day_start_bankroll": 97.42000000000002,
  "execstats": {
-  "submitted": 35,
-  "filled": 35,
+  "submitted": 36,
+  "filled": 36,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.3500000000000003,
-  "slip_n": 35,
+  "slip_sum": 0.3600000000000003,
+  "slip_n": 36,
   "by_window": {
    "15m": {
-    "signal": 40,
-    "submitted": 15,
-    "filled": 15,
+    "signal": 43,
+    "submitted": 16,
+    "filled": 16,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -1760,9 +1799,10 @@
   }
  },
  "pending_signals": [],
- "consec_losses": 1,
+ "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1788187732.954843
+  1788187732.954843,
+  1788188214.5324044
  ]
 }
