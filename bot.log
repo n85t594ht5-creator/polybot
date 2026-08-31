@@ -673,3 +673,10 @@
 2026-08-31 01:47:10,064 INFO  STATS trades=20 winrate=65% pnl=+1.92 PF=1.04 bankroll=101.92
 2026-08-31 01:49:13,770 INFO  STATS trades=20 winrate=65% pnl=+1.92 PF=1.04 bankroll=101.92
 2026-08-31 01:51:15,791 INFO  STATS trades=20 winrate=65% pnl=+1.92 PF=1.04 bankroll=101.92
+2026-08-31 01:53:16,590 INFO  STATS trades=20 winrate=65% pnl=+1.92 PF=1.04 bankroll=101.92
+2026-08-31 01:53:57,391 INFO  SIGNAL XRP DOWN @ 0.580 заблокирован (NO_LIQUIDITY)
+2026-08-31 01:55:27,294 INFO  STATS trades=20 winrate=65% pnl=+1.92 PF=1.04 bankroll=101.92
+2026-08-31 01:56:55,858 INFO  [PAPER] BUY XRP DOWN @ 0.510 $5.10 (PAPER) conf=0.783 move=-0.148%
+2026-08-31 01:57:52,839 INFO  STATS trades=20 winrate=65% pnl=+1.92 PF=1.04 bankroll=101.92
+2026-08-31 02:00:23,506 INFO  STATS trades=20 winrate=65% pnl=+1.92 PF=1.04 bankroll=101.92
+2026-08-31 02:01:40,631 INFO  WIN  XRP DOWN pnl=+4.89 bankroll=106.81

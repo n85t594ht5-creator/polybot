@@ -1,5 +1,5 @@
 {
- "bankroll": 101.92000000000002,
+ "bankroll": 106.81000000000002,
  "positions": {},
  "closed": [
   {
@@ -518,30 +518,69 @@
    "won": true,
    "pnl": 4.5,
    "final": 77931.12
+  },
+  {
+   "market_id": "3988568",
+   "asset": "XRP",
+   "side": "DOWN",
+   "token": "102037506259170299874950807409079652680652341549728503016251861963000683661082",
+   "minutes": 15,
+   "start": "2026-08-31T01:45:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 5.1,
+   "hyp_shares": 9.99,
+   "depth_usd": 7.46,
+   "remaining_sec": 184.5,
+   "execution_quality": "GOOD",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 1.3459,
+   "entry": 0.51,
+   "best_ask": 0.5,
+   "cost": 5.1,
+   "shares": 9.99,
+   "depth_note": "",
+   "conf": 0.783,
+   "move": -0.00148,
+   "elapsed": 0.8,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.12\u20130.15%",
+   "ref": 1.3479,
+   "end": "2026-08-31T02:00:00+00:00",
+   "opened": "2026-08-31T01:56:55.855504+00:00",
+   "question": "XRP Up or Down - August 30, 9:45PM-10:00PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 9.99,
+   "requested_cost": 5.1,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 4.89,
+   "final": 1.34315
   }
  ],
  "day": "2026-08-31",
- "day_pnl": 4.499999999999999,
+ "day_pnl": 9.39,
  "day_start_bankroll": 97.42000000000002,
  "execstats": {
-  "submitted": 4,
-  "filled": 4,
+  "submitted": 5,
+  "filled": 5,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.040000000000000036,
-  "slip_n": 4,
+  "slip_sum": 0.050000000000000044,
+  "slip_n": 5,
   "by_window": {
    "15m": {
-    "signal": 12,
-    "submitted": 2,
-    "filled": 2,
+    "signal": 13,
+    "submitted": 3,
+    "filled": 3,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    },
    "5m": {
-    "signal": 8,
+    "signal": 9,
     "submitted": 2,
     "filled": 2,
     "partial": 0,
@@ -554,6 +593,6 @@
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1788137919.9715443
+  1788141415.8555331
  ]
 }
