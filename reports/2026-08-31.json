@@ -1,6 +1,6 @@
 {
  "day": "2026-08-31",
- "generated": "2026-09-01T17:55:28.791814+00:00",
+ "generated": "2026-09-01T23:53:51.756892+00:00",
  "trades": 34,
  "wins": 32,
  "losses": 2,
@@ -9,7 +9,7 @@
  "gross_win": 295.63,
  "gross_loss": -26.17,
  "pf": 11.3,
- "bankroll_end": 393.15999999999997,
+ "bankroll_end": 481.65999999999997,
  "by_asset": {
   "BTC": {
    "n": 10,
@@ -138,26 +138,26 @@
   }
  },
  "execstats": {
-  "submitted": 39,
-  "filled": 39,
+  "submitted": 44,
+  "filled": 44,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.37000000000000033,
-  "slip_n": 39,
+  "slip_sum": 0.4200000000000004,
+  "slip_n": 44,
   "by_window": {
    "15m": {
-    "signal": 61,
-    "submitted": 19,
-    "filled": 19,
+    "signal": 69,
+    "submitted": 21,
+    "filled": 21,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    },
    "5m": {
-    "signal": 49,
-    "submitted": 20,
-    "filled": 20,
+    "signal": 54,
+    "submitted": 23,
+    "filled": 23,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
