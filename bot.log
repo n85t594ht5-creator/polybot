@@ -1996,3 +1996,9 @@
 2026-09-01 23:11:42,373 INFO  [PAPER] BUY SOL UP @ 0.510 $10.20 (PAPER) conf=0.766 move=+0.105%
 2026-09-01 23:11:43,057 INFO  SIGNAL XRP UP @ 0.510 заблокирован (MAX_PER_WINDOW)
 2026-09-01 23:12:52,766 INFO  STATS trades=59 winrate=85% pnl=+371.86 PF=6.02 bankroll=471.86
+2026-09-01 23:15:15,661 INFO  STATS trades=59 winrate=85% pnl=+371.86 PF=6.02 bankroll=471.86
+2026-09-01 23:16:32,963 INFO  WIN  SOL UP pnl=+9.80 bankroll=481.66
+2026-09-01 23:17:17,333 INFO  STATS trades=60 winrate=85% pnl=+381.66 PF=6.15 bankroll=481.66
+2026-09-01 23:19:28,767 INFO  STATS trades=60 winrate=85% pnl=+381.66 PF=6.15 bankroll=481.66
+2026-09-01 23:21:30,451 INFO  STATS trades=60 winrate=85% pnl=+381.66 PF=6.15 bankroll=481.66
+2026-09-01 23:23:32,358 INFO  STATS trades=60 winrate=85% pnl=+381.66 PF=6.15 bankroll=481.66
