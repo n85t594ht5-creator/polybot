@@ -1804,3 +1804,10 @@
 2026-09-01 16:26:13,347 INFO  STATS trades=55 winrate=84% pnl=+293.16 PF=4.96 bankroll=393.16
 2026-09-01 16:29:03,441 INFO  STATS trades=55 winrate=84% pnl=+293.16 PF=4.96 bankroll=393.16
 2026-09-01 16:31:14,403 INFO  STATS trades=55 winrate=84% pnl=+293.16 PF=4.96 bankroll=393.16
+2026-09-01 16:33:15,472 INFO  STATS trades=55 winrate=84% pnl=+293.16 PF=4.96 bankroll=393.16
+2026-09-01 16:35:22,951 INFO  STATS trades=55 winrate=84% pnl=+293.16 PF=4.96 bankroll=393.16
+2026-09-01 16:37:23,772 INFO  STATS trades=55 winrate=84% pnl=+293.16 PF=4.96 bankroll=393.16
+2026-09-01 16:39:31,597 INFO  STATS trades=55 winrate=84% pnl=+293.16 PF=4.96 bankroll=393.16
+2026-09-01 16:41:36,907 INFO  STATS trades=55 winrate=84% pnl=+293.16 PF=4.96 bankroll=393.16
+2026-09-01 16:41:46,542 INFO  SIGNAL ETH UP @ 0.500 заблокирован (NO_LIQUIDITY)
+2026-09-01 16:42:07,529 INFO  SIGNAL XRP UP @ 0.600 заблокирован (NO_LIQUIDITY)
