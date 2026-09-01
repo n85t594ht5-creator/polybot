@@ -1,0 +1,170 @@
+{
+ "day": "2026-09-01",
+ "generated": "2026-09-01T05:58:30.617035+00:00",
+ "trades": 1,
+ "wins": 1,
+ "losses": 0,
+ "winrate": 1.0,
+ "pnl": 8.93,
+ "gross_win": 8.93,
+ "gross_loss": 0,
+ "pf": 99.0,
+ "bankroll_end": 375.80999999999995,
+ "by_asset": {
+  "BTC": {
+   "n": 1,
+   "w": 1,
+   "pnl": 8.93
+  }
+ },
+ "by_window": {
+  "15m": {
+   "n": 1,
+   "w": 1,
+   "pnl": 8.93
+  }
+ },
+ "by_hour": {
+  "01": {
+   "n": 1,
+   "w": 1,
+   "pnl": 8.93
+  }
+ },
+ "by_entry": {
+  "0.55–0.60": {
+   "n": 1,
+   "w": 1,
+   "pnl": 8.93
+  }
+ },
+ "by_move": {
+  "0.12–0.15%": {
+   "n": 1,
+   "w": 1,
+   "pnl": 8.93
+  }
+ },
+ "by_side": {
+  "DOWN": {
+   "n": 1,
+   "w": 1,
+   "pnl": 8.93
+  }
+ },
+ "execstats": {
+  "submitted": 38,
+  "filled": 38,
+  "partial": 0,
+  "unfilled": 0,
+  "cancelled": 0,
+  "slip_sum": 0.38000000000000034,
+  "slip_n": 38,
+  "by_window": {
+   "15m": {
+    "signal": 55,
+    "submitted": 18,
+    "filled": 18,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   },
+   "5m": {
+    "signal": 46,
+    "submitted": 20,
+    "filled": 20,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   }
+  }
+ },
+ "signals": 4,
+ "signals_executed": 1,
+ "signals_blocked": 3,
+ "hypothetical_pnl": 56.76,
+ "signals_by_window": {
+  "15m": {
+   "n": 4,
+   "w": 4,
+   "hyp": 56.76,
+   "real": 8.93
+  }
+ },
+ "signals_by_asset": {
+  "XRP": {
+   "n": 1,
+   "w": 1,
+   "hyp": 16.27,
+   "real": 0.0
+  },
+  "ETH": {
+   "n": 1,
+   "w": 1,
+   "hyp": 13.84,
+   "real": 0.0
+  },
+  "BTC": {
+   "n": 1,
+   "w": 1,
+   "hyp": 14.42,
+   "real": 8.93
+  },
+  "SOL": {
+   "n": 1,
+   "w": 1,
+   "hyp": 12.23,
+   "real": 0.0
+  }
+ },
+ "signals_by_entry": {
+  "0.50–0.55": {
+   "n": 1,
+   "w": 1,
+   "hyp": 16.27,
+   "real": 0.0
+  },
+  "0.55–0.60": {
+   "n": 3,
+   "w": 3,
+   "hyp": 40.49,
+   "real": 8.93
+  }
+ },
+ "signals_by_gate": {
+  "NO_LIQUIDITY": {
+   "n": 2,
+   "w": 2,
+   "hyp": 30.11,
+   "real": 0.0
+  },
+  "—": {
+   "n": 1,
+   "w": 1,
+   "hyp": 14.42,
+   "real": 8.93
+  },
+  "MAX_PER_WINDOW": {
+   "n": 1,
+   "w": 1,
+   "hyp": 12.23,
+   "real": 0.0
+  }
+ },
+ "trade_list": [
+  {
+   "opened": "2026-09-01T01:13:24.447952+00:00",
+   "asset": "BTC",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.56,
+   "cost": 11.37,
+   "shares": 20.3,
+   "conf": 0.805,
+   "move": -0.00124,
+   "won": true,
+   "pnl": 8.93,
+   "question": "Bitcoin Up or Down - August 31, 9:00PM-9:15PM ET"
+  }
+ ]
+}
