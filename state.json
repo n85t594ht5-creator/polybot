@@ -1,5 +1,5 @@
 {
- "bankroll": 429.59,
+ "bankroll": 450.22999999999996,
  "positions": {},
  "closed": [
   {
@@ -1961,24 +1961,63 @@
    "won": true,
    "pnl": 19.69,
    "final": 77294.41
+  },
+  {
+   "market_id": "4046345",
+   "asset": "BTC",
+   "side": "UP",
+   "token": "7351294692153464601149552612065894730719777574857157008767880714583744686082",
+   "minutes": 15,
+   "start": "2026-09-01T22:45:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 21.48,
+   "hyp_shares": 42.12,
+   "depth_usd": 129.58,
+   "remaining_sec": 223.8,
+   "execution_quality": "GOOD",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 77260.14,
+   "entry": 0.51,
+   "best_ask": 0.5,
+   "cost": 21.48,
+   "shares": 42.12,
+   "depth_note": "",
+   "conf": 0.77,
+   "move": 0.00148,
+   "elapsed": 0.75,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.12\u20130.15%",
+   "ref": 77145.58,
+   "end": "2026-09-01T23:00:00+00:00",
+   "opened": "2026-09-01T22:56:16.697070+00:00",
+   "question": "Bitcoin Up or Down - September 1, 6:45PM-7:00PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 42.12,
+   "requested_cost": 21.48,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 20.64,
+   "final": 77215.54999999999
   }
  ],
  "day": "2026-09-01",
- "day_pnl": 62.709999999999994,
+ "day_pnl": 83.35,
  "day_start_bankroll": 366.87999999999994,
  "execstats": {
-  "submitted": 41,
-  "filled": 41,
+  "submitted": 42,
+  "filled": 42,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.39000000000000035,
-  "slip_n": 41,
+  "slip_sum": 0.40000000000000036,
+  "slip_n": 42,
   "by_window": {
    "15m": {
-    "signal": 63,
-    "submitted": 19,
-    "filled": 19,
+    "signal": 67,
+    "submitted": 20,
+    "filled": 20,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -1997,6 +2036,7 @@
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1788302926.9473295
+  1788302926.9473295,
+  1788303376.697098
  ]
 }
