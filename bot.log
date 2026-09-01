@@ -1678,3 +1678,13 @@
 2026-09-01 11:48:46,896 INFO  STATS trades=54 winrate=83% pnl=+275.81 PF=4.73 bankroll=375.81
 2026-09-01 11:50:55,238 INFO  STATS trades=54 winrate=83% pnl=+275.81 PF=4.73 bankroll=375.81
 2026-09-01 11:52:56,382 INFO  STATS trades=54 winrate=83% pnl=+275.81 PF=4.73 bankroll=375.81
+2026-09-01 12:15:27,872 INFO  State loaded: bankroll=375.81, open=0
+2026-09-01 12:15:27,873 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP'] bankroll=376
+2026-09-01 12:17:27,324 INFO  STATS trades=54 winrate=83% pnl=+275.81 PF=4.73 bankroll=375.81
+2026-09-01 12:19:40,971 INFO  STATS trades=54 winrate=83% pnl=+275.81 PF=4.73 bankroll=375.81
+2026-09-01 12:20:03,602 WARNING Gamma error: 502 Server Error: Bad Gateway for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-01T12%3A20%3A03Z
+2026-09-01 12:20:03,695 WARNING Gamma error: 502 Server Error: Bad Gateway for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-01T12%3A20%3A03Z
+2026-09-01 12:20:04,009 WARNING Gamma error: 502 Server Error: Bad Gateway for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-01T12%3A20%3A03Z
+2026-09-01 12:21:41,846 INFO  STATS trades=54 winrate=83% pnl=+275.81 PF=4.73 bankroll=375.81
+2026-09-01 12:23:42,794 INFO  STATS trades=54 winrate=83% pnl=+275.81 PF=4.73 bankroll=375.81
+2026-09-01 12:25:49,535 INFO  STATS trades=54 winrate=83% pnl=+275.81 PF=4.73 bankroll=375.81
