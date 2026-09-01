@@ -1,5 +1,5 @@
 {
- "bankroll": 366.87999999999994,
+ "bankroll": 375.80999999999995,
  "positions": {},
  "closed": [
   {
@@ -1805,24 +1805,63 @@
    "won": true,
    "pnl": 8.68,
    "final": 78558.8
+  },
+  {
+   "market_id": "4015466",
+   "asset": "BTC",
+   "side": "DOWN",
+   "token": "58422081539592710355380227421619092827653218128282314992247493596183306392366",
+   "minutes": 15,
+   "start": "2026-09-01T01:00:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 18.34,
+   "hyp_shares": 32.76,
+   "depth_usd": 11.37,
+   "remaining_sec": 96.0,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "85\u201390%",
+   "cur": 78571.55,
+   "entry": 0.56,
+   "best_ask": 0.55,
+   "cost": 11.37,
+   "shares": 20.3,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 11.37$ \u0438\u0437 18.34$",
+   "conf": 0.805,
+   "move": -0.00124,
+   "elapsed": 0.89,
+   "entry_bucket": "0.55\u20130.60",
+   "move_bucket": "0.12\u20130.15%",
+   "ref": 78668.83499999999,
+   "end": "2026-09-01T01:15:00+00:00",
+   "opened": "2026-09-01T01:13:24.447952+00:00",
+   "question": "Bitcoin Up or Down - August 31, 9:00PM-9:15PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 20.3,
+   "requested_cost": 11.37,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 8.93,
+   "final": 78537.405
   }
  ],
  "day": "2026-09-01",
- "day_pnl": 0.0,
+ "day_pnl": 8.930000000000001,
  "day_start_bankroll": 366.87999999999994,
  "execstats": {
-  "submitted": 37,
-  "filled": 37,
+  "submitted": 38,
+  "filled": 38,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.37000000000000033,
-  "slip_n": 37,
+  "slip_sum": 0.38000000000000034,
+  "slip_n": 38,
   "by_window": {
    "15m": {
-    "signal": 51,
-    "submitted": 17,
-    "filled": 17,
+    "signal": 55,
+    "submitted": 18,
+    "filled": 18,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -1840,5 +1879,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1788225204.4479775
+ ]
 }
