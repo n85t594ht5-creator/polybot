@@ -1,0 +1,310 @@
+{
+ "day": "2026-09-02",
+ "generated": "2026-09-02T05:58:08.187719+00:00",
+ "trades": 9,
+ "wins": 9,
+ "losses": 0,
+ "winrate": 1.0,
+ "pnl": 195.13,
+ "gross_win": 195.13,
+ "gross_loss": 0,
+ "pf": 99.0,
+ "bankroll_end": 676.79,
+ "by_asset": {
+  "BTC": {
+   "n": 8,
+   "w": 8,
+   "pnl": 192.68
+  },
+  "SOL": {
+   "n": 1,
+   "w": 1,
+   "pnl": 2.45
+  }
+ },
+ "by_window": {
+  "15m": {
+   "n": 4,
+   "w": 4,
+   "pnl": 82.9
+  },
+  "5m": {
+   "n": 5,
+   "w": 5,
+   "pnl": 112.23
+  }
+ },
+ "by_hour": {
+  "01": {
+   "n": 3,
+   "w": 3,
+   "pnl": 31.23
+  },
+  "02": {
+   "n": 5,
+   "w": 5,
+   "pnl": 132.88
+  },
+  "03": {
+   "n": 1,
+   "w": 1,
+   "pnl": 31.02
+  }
+ },
+ "by_entry": {
+  "0.50–0.55": {
+   "n": 9,
+   "w": 9,
+   "pnl": 195.13
+  }
+ },
+ "by_move": {
+  "0.20%+": {
+   "n": 2,
+   "w": 2,
+   "pnl": 7.83
+  },
+  "0.10–0.12%": {
+   "n": 4,
+   "w": 4,
+   "pnl": 103.34
+  },
+  "0.15–0.20%": {
+   "n": 1,
+   "w": 1,
+   "pnl": 24.64
+  },
+  "0.12–0.15%": {
+   "n": 2,
+   "w": 2,
+   "pnl": 59.32
+  }
+ },
+ "by_side": {
+  "DOWN": {
+   "n": 1,
+   "w": 1,
+   "pnl": 5.38
+  },
+  "UP": {
+   "n": 8,
+   "w": 8,
+   "pnl": 189.75
+  }
+ },
+ "execstats": {
+  "submitted": 53,
+  "filled": 53,
+  "partial": 0,
+  "unfilled": 0,
+  "cancelled": 0,
+  "slip_sum": 0.5100000000000005,
+  "slip_n": 53,
+  "by_window": {
+   "15m": {
+    "signal": 73,
+    "submitted": 25,
+    "filled": 25,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   },
+   "5m": {
+    "signal": 61,
+    "submitted": 28,
+    "filled": 28,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   }
+  }
+ },
+ "signals": 11,
+ "signals_executed": 9,
+ "signals_blocked": 2,
+ "hypothetical_pnl": 281.98,
+ "signals_by_window": {
+  "15m": {
+   "n": 4,
+   "w": 4,
+   "hyp": 99.75,
+   "real": 82.9
+  },
+  "5m": {
+   "n": 7,
+   "w": 7,
+   "hyp": 182.23,
+   "real": 112.23
+  }
+ },
+ "signals_by_asset": {
+  "BTC": {
+   "n": 9,
+   "w": 9,
+   "hyp": 232.93,
+   "real": 192.68
+  },
+  "SOL": {
+   "n": 1,
+   "w": 1,
+   "hyp": 23.4,
+   "real": 2.45
+  },
+  "ETH": {
+   "n": 1,
+   "w": 1,
+   "hyp": 25.65,
+   "real": 0.0
+  }
+ },
+ "signals_by_entry": {
+  "0.50–0.55": {
+   "n": 11,
+   "w": 11,
+   "hyp": 281.98,
+   "real": 195.13
+  }
+ },
+ "signals_by_gate": {
+  "—": {
+   "n": 9,
+   "w": 9,
+   "hyp": 232.93,
+   "real": 195.13
+  },
+  "MAX_PER_WINDOW": {
+   "n": 2,
+   "w": 2,
+   "hyp": 49.05,
+   "real": 0.0
+  }
+ },
+ "trade_list": [
+  {
+   "opened": "2026-09-02T01:41:16.659727+00:00",
+   "asset": "BTC",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.52,
+   "cost": 5.83,
+   "shares": 11.21,
+   "conf": 0.786,
+   "move": -0.00201,
+   "won": true,
+   "pnl": 5.38,
+   "question": "Bitcoin Up or Down - September 1, 9:30PM-9:45PM ET"
+  },
+  {
+   "opened": "2026-09-02T01:58:46.727809+00:00",
+   "asset": "SOL",
+   "side": "UP",
+   "minutes": 5,
+   "entry": 0.51,
+   "cost": 2.55,
+   "shares": 5.0,
+   "conf": 0.807,
+   "move": 0.00268,
+   "won": true,
+   "pnl": 2.45,
+   "question": "Solana Up or Down - September 1, 9:55PM-10:00PM ET"
+  },
+  {
+   "opened": "2026-09-02T01:59:17.441928+00:00",
+   "asset": "BTC",
+   "side": "UP",
+   "minutes": 15,
+   "entry": 0.51,
+   "cost": 24.35,
+   "shares": 47.75,
+   "conf": 0.817,
+   "move": 0.00104,
+   "won": true,
+   "pnl": 23.4,
+   "question": "Bitcoin Up or Down - September 1, 9:45PM-10:00PM ET"
+  },
+  {
+   "opened": "2026-09-02T02:08:45.649555+00:00",
+   "asset": "BTC",
+   "side": "UP",
+   "minutes": 5,
+   "entry": 0.51,
+   "cost": 25.64,
+   "shares": 50.28,
+   "conf": 0.781,
+   "move": 0.00186,
+   "won": true,
+   "pnl": 24.64,
+   "question": "Bitcoin Up or Down - September 1, 10:05PM-10:10PM ET"
+  },
+  {
+   "opened": "2026-09-02T02:12:04.005187+00:00",
+   "asset": "BTC",
+   "side": "UP",
+   "minutes": 15,
+   "entry": 0.51,
+   "cost": 26.88,
+   "shares": 52.7,
+   "conf": 0.772,
+   "move": 0.00103,
+   "won": true,
+   "pnl": 25.82,
+   "question": "Bitcoin Up or Down - September 1, 10:00PM-10:15PM ET"
+  },
+  {
+   "opened": "2026-09-02T02:13:47.431785+00:00",
+   "asset": "BTC",
+   "side": "UP",
+   "minutes": 5,
+   "entry": 0.51,
+   "cost": 26.88,
+   "shares": 52.7,
+   "conf": 0.76,
+   "move": 0.00111,
+   "won": true,
+   "pnl": 25.82,
+   "question": "Bitcoin Up or Down - September 1, 10:10PM-10:15PM ET"
+  },
+  {
+   "opened": "2026-09-02T02:24:25.065400+00:00",
+   "asset": "BTC",
+   "side": "UP",
+   "minutes": 5,
+   "entry": 0.51,
+   "cost": 29.46,
+   "shares": 57.76,
+   "conf": 0.799,
+   "move": 0.00114,
+   "won": true,
+   "pnl": 28.3,
+   "question": "Bitcoin Up or Down - September 1, 10:20PM-10:25PM ET"
+  },
+  {
+   "opened": "2026-09-02T02:26:16.960769+00:00",
+   "asset": "BTC",
+   "side": "UP",
+   "minutes": 15,
+   "entry": 0.51,
+   "cost": 29.46,
+   "shares": 57.76,
+   "conf": 0.768,
+   "move": 0.00141,
+   "won": true,
+   "pnl": 28.3,
+   "question": "Bitcoin Up or Down - September 1, 10:15PM-10:30PM ET"
+  },
+  {
+   "opened": "2026-09-02T03:28:47.414416+00:00",
+   "asset": "BTC",
+   "side": "UP",
+   "minutes": 5,
+   "entry": 0.51,
+   "cost": 32.29,
+   "shares": 63.31,
+   "conf": 0.77,
+   "move": 0.00144,
+   "won": true,
+   "pnl": 31.02,
+   "question": "Bitcoin Up or Down - September 1, 11:25PM-11:30PM ET"
+  }
+ ]
+}
