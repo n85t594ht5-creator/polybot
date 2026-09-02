@@ -2092,3 +2092,22 @@
 2026-09-02 15:16:36,333 INFO  STATS trades=69 winrate=87% pnl=+576.79 PF=8.79 bankroll=676.79
 2026-09-02 15:18:49,116 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-02T15%3A18%3A45Z
 2026-09-02 15:18:51,872 INFO  STATS trades=69 winrate=87% pnl=+576.79 PF=8.79 bankroll=676.79
+2026-09-02 15:20:23,589 WARNING Gamma error: HTTPSConnectionPool(host='gamma-api.polymarket.com', port=443): Read timed out. (read timeout=10)
+2026-09-02 15:21:25,175 INFO  STATS trades=69 winrate=87% pnl=+576.79 PF=8.79 bankroll=676.79
+2026-09-02 15:23:43,123 INFO  STATS trades=69 winrate=87% pnl=+576.79 PF=8.79 bankroll=676.79
+2026-09-02 15:25:55,471 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-02T15%3A25%3A46Z
+2026-09-02 15:26:01,627 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-02T15%3A25%3A58Z
+2026-09-02 15:26:05,921 WARNING Gamma error: HTTPSConnectionPool(host='gamma-api.polymarket.com', port=443): Read timed out. (read timeout=10)
+2026-09-02 15:26:21,134 INFO  STATS trades=69 winrate=87% pnl=+576.79 PF=8.79 bankroll=676.79
+2026-09-02 15:26:40,719 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-02T15%3A26%3A31Z
+2026-09-02 15:26:47,386 WARNING Gamma error: HTTPSConnectionPool(host='gamma-api.polymarket.com', port=443): Read timed out. (read timeout=10)
+2026-09-02 15:26:50,890 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-02T15%3A26%3A47Z
+2026-09-02 15:27:20,762 WARNING Gamma error: HTTPSConnectionPool(host='gamma-api.polymarket.com', port=443): Read timed out. (read timeout=10)
+2026-09-02 15:27:32,559 WARNING Gamma error: HTTPSConnectionPool(host='gamma-api.polymarket.com', port=443): Read timed out. (read timeout=10)
+2026-09-02 15:27:42,971 WARNING Gamma error: HTTPSConnectionPool(host='gamma-api.polymarket.com', port=443): Read timed out. (read timeout=10)
+2026-09-02 15:28:00,810 WARNING Gamma error: HTTPSConnectionPool(host='gamma-api.polymarket.com', port=443): Read timed out. (read timeout=10)
+2026-09-02 15:28:48,107 INFO  SIGNAL XRP UP @ 0.520 заблокирован (NO_LIQUIDITY)
+2026-09-02 15:28:48,540 INFO  SIGNAL SOL UP @ 0.610 заблокирован (NO_LIQUIDITY)
+2026-09-02 15:29:08,749 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-02T15%3A29%3A08Z
+2026-09-02 15:29:09,500 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-02T15%3A29%3A09Z
+2026-09-02 15:29:11,459 INFO  STATS trades=69 winrate=87% pnl=+576.79 PF=8.79 bankroll=676.79
