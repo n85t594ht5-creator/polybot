@@ -2073,3 +2073,9 @@
 2026-09-02 02:26:16,966 INFO  [PAPER] BUY BTC UP @ 0.510 $29.46 (PAPER) conf=0.768 move=+0.141%
 2026-09-02 02:29:16,813 INFO  STATS trades=66 winrate=86% pnl=+489.17 PF=7.61 bankroll=589.17
 2026-09-02 02:30:10,076 INFO  WIN  BTC UP pnl=+28.30 bankroll=617.47
+2026-09-02 02:31:24,497 INFO  STATS trades=67 winrate=87% pnl=+517.47 PF=7.99 bankroll=617.47
+2026-09-02 02:33:38,682 INFO  STATS trades=67 winrate=87% pnl=+517.47 PF=7.99 bankroll=617.47
+2026-09-02 02:35:14,501 INFO  WIN  BTC UP pnl=+28.30 bankroll=645.77
+2026-09-02 02:35:58,549 INFO  STATS trades=68 winrate=87% pnl=+545.77 PF=8.37 bankroll=645.77
+2026-09-02 02:38:03,504 INFO  STATS trades=68 winrate=87% pnl=+545.77 PF=8.37 bankroll=645.77
+2026-09-02 02:40:30,432 INFO  STATS trades=68 winrate=87% pnl=+545.77 PF=8.37 bankroll=645.77
