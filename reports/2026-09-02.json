@@ -1,6 +1,6 @@
 {
  "day": "2026-09-02",
- "generated": "2026-09-02T11:59:53.915875+00:00",
+ "generated": "2026-09-02T17:55:40.268773+00:00",
  "trades": 9,
  "wins": 9,
  "losses": 0,
@@ -102,7 +102,7 @@
   "slip_n": 53,
   "by_window": {
    "15m": {
-    "signal": 76,
+    "signal": 79,
     "submitted": 25,
     "filled": 25,
     "partial": 0,
@@ -110,7 +110,7 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 61,
+    "signal": 63,
     "submitted": 28,
     "filled": 28,
     "partial": 0,
@@ -119,21 +119,21 @@
    }
   }
  },
- "signals": 14,
+ "signals": 19,
  "signals_executed": 9,
- "signals_blocked": 5,
- "hypothetical_pnl": 235.21,
+ "signals_blocked": 10,
+ "hypothetical_pnl": 371.61,
  "signals_by_window": {
   "15m": {
-   "n": 7,
-   "w": 5,
-   "hyp": 52.98,
+   "n": 10,
+   "w": 8,
+   "hyp": 139.46,
    "real": 82.9
   },
   "5m": {
-   "n": 7,
-   "w": 7,
-   "hyp": 182.23,
+   "n": 9,
+   "w": 9,
+   "hyp": 232.15,
    "real": 112.23
   }
  },
@@ -145,35 +145,41 @@
    "real": 192.68
   },
   "SOL": {
-   "n": 3,
-   "w": 2,
-   "hyp": 10.47,
+   "n": 5,
+   "w": 4,
+   "hyp": 62.99,
    "real": 2.45
   },
   "ETH": {
-   "n": 1,
-   "w": 1,
-   "hyp": 25.65,
+   "n": 2,
+   "w": 2,
+   "hyp": 59.49,
    "real": 0.0
   },
   "XRP": {
-   "n": 1,
-   "w": 0,
-   "hyp": -33.84,
+   "n": 3,
+   "w": 2,
+   "hyp": 16.2,
    "real": 0.0
   }
  },
  "signals_by_entry": {
   "0.50–0.55": {
-   "n": 13,
-   "w": 11,
-   "hyp": 214.3,
+   "n": 16,
+   "w": 14,
+   "hyp": 313.22,
    "real": 195.13
   },
   "0.60–0.62": {
+   "n": 2,
+   "w": 2,
+   "hyp": 39.59,
+   "real": 0.0
+  },
+  "0.55–0.60": {
    "n": 1,
    "w": 1,
-   "hyp": 20.91,
+   "hyp": 18.8,
    "real": 0.0
   }
  },
@@ -191,9 +197,9 @@
    "real": 0.0
   },
   "NO_LIQUIDITY": {
-   "n": 3,
-   "w": 1,
-   "hyp": -46.77,
+   "n": 8,
+   "w": 6,
+   "hyp": 89.63,
    "real": 0.0
   }
  },
