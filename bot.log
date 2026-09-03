@@ -2144,3 +2144,11 @@
 2026-09-03 16:58:46,457 INFO  STATS trades=73 winrate=86% pnl=+589.77 PF=6.61 bankroll=689.77
 2026-09-03 17:00:47,465 INFO  STATS trades=73 winrate=86% pnl=+589.77 PF=6.61 bankroll=689.77
 2026-09-03 17:02:48,848 INFO  STATS trades=73 winrate=86% pnl=+589.77 PF=6.61 bankroll=689.77
+2026-09-03 17:05:00,329 INFO  STATS trades=73 winrate=86% pnl=+589.77 PF=6.61 bankroll=689.77
+2026-09-03 17:07:02,053 INFO  STATS trades=73 winrate=86% pnl=+589.77 PF=6.61 bankroll=689.77
+2026-09-03 17:09:32,443 INFO  STATS trades=73 winrate=86% pnl=+589.77 PF=6.61 bankroll=689.77
+2026-09-03 17:11:16,374 INFO  SIGNAL SOL UP @ 0.540 заблокирован (NO_LIQUIDITY)
+2026-09-03 17:11:42,096 INFO  STATS trades=73 winrate=86% pnl=+589.77 PF=6.61 bankroll=689.77
+2026-09-03 17:11:46,276 INFO  [PAPER] BUY ETH UP @ 0.620 $28.57 (PAPER) conf=0.772 move=+0.121%
+2026-09-03 17:12:06,038 INFO  SIGNAL BTC UP @ 0.520 заблокирован (MAX_PER_WINDOW)
+2026-09-03 17:14:16,820 INFO  STATS trades=73 winrate=86% pnl=+589.77 PF=6.61 bankroll=689.77
