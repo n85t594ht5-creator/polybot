@@ -1,5 +1,5 @@
 {
- "bankroll": 776.87,
+ "bankroll": 781.57,
  "positions": {},
  "closed": [
   {
@@ -2702,19 +2702,58 @@
    "won": true,
    "pnl": 35.61,
    "final": 81193.63
+  },
+  {
+   "market_id": "4169491",
+   "asset": "BTC",
+   "side": "DOWN",
+   "token": "16889092510714450026236077496016720339312501284007437969227962847962928196609",
+   "minutes": 5,
+   "start": "2026-09-03T20:00:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 38.84,
+   "hyp_shares": 73.29,
+   "depth_usd": 5.3,
+   "remaining_sec": 73.7,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 81565.1,
+   "entry": 0.53,
+   "best_ask": 0.52,
+   "cost": 5.3,
+   "shares": 10.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 5.30$ \u0438\u0437 38.84$",
+   "conf": 0.777,
+   "move": -0.00168,
+   "elapsed": 0.75,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.15\u20130.20%",
+   "ref": 81702.505,
+   "end": "2026-09-03T20:05:00+00:00",
+   "opened": "2026-09-03T20:03:46.714140+00:00",
+   "question": "Bitcoin Up or Down - September 3, 4:00PM-4:05PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 10.0,
+   "requested_cost": 5.3,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 4.7,
+   "final": 81627.42
   }
  ],
  "day": "2026-09-03",
- "day_pnl": 100.08,
+ "day_pnl": 104.78,
  "day_start_bankroll": 676.79,
  "execstats": {
-  "submitted": 60,
-  "filled": 60,
+  "submitted": 61,
+  "filled": 61,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.5400000000000005,
-  "slip_n": 60,
+  "slip_sum": 0.5500000000000005,
+  "slip_n": 61,
   "by_window": {
    "15m": {
     "signal": 98,
@@ -2725,9 +2764,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 69,
-    "submitted": 30,
-    "filled": 30,
+    "signal": 70,
+    "submitted": 31,
+    "filled": 31,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -2737,5 +2776,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1788465826.7141638
+ ]
 }
