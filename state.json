@@ -1,5 +1,5 @@
 {
- "bankroll": 655.79,
+ "bankroll": 684.87,
  "positions": {},
  "closed": [
   {
@@ -2507,24 +2507,63 @@
    "won": false,
    "pnl": -31.0,
    "final": 102.75999999999999
+  },
+  {
+   "market_id": "4140035",
+   "asset": "BTC",
+   "side": "DOWN",
+   "token": "57339011137331490733892597452478440072578707941398949844809438397320334253509",
+   "minutes": 15,
+   "start": "2026-09-03T15:00:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 32.79,
+   "hyp_shares": 61.87,
+   "depth_usd": 63.38,
+   "remaining_sec": 181.1,
+   "execution_quality": "GOOD",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 80460.0,
+   "entry": 0.53,
+   "best_ask": 0.52,
+   "cost": 32.79,
+   "shares": 61.87,
+   "depth_note": "",
+   "conf": 0.776,
+   "move": -0.0012,
+   "elapsed": 0.8,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 80556.525,
+   "end": "2026-09-03T15:15:00+00:00",
+   "opened": "2026-09-03T15:11:59.419834+00:00",
+   "question": "Bitcoin Up or Down - September 3, 11:00AM-11:15AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 61.87,
+   "requested_cost": 32.79,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 29.08,
+   "final": 80531.195
   }
  ],
  "day": "2026-09-03",
- "day_pnl": -21.0,
+ "day_pnl": 8.079999999999998,
  "day_start_bankroll": 676.79,
  "execstats": {
-  "submitted": 55,
-  "filled": 55,
+  "submitted": 56,
+  "filled": 56,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.5000000000000004,
-  "slip_n": 55,
+  "slip_sum": 0.5100000000000005,
+  "slip_n": 56,
   "by_window": {
    "15m": {
-    "signal": 87,
-    "submitted": 27,
-    "filled": 27,
+    "signal": 91,
+    "submitted": 28,
+    "filled": 28,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -2540,10 +2579,10 @@
   }
  },
  "pending_signals": [],
- "consec_losses": 1,
+ "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1788444695.1942997,
-  1788446523.3845725
+  1788446523.3845725,
+  1788448319.4198627
  ]
 }
