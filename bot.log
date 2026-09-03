@@ -2101,3 +2101,10 @@
 2026-09-03 21:36:55,526 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57
 2026-09-03 21:38:53,713 WARNING Gamma error: HTTPSConnectionPool(host='gamma-api.polymarket.com', port=443): Read timed out. (read timeout=10)
 2026-09-03 21:39:11,013 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57
+2026-09-03 21:41:15,643 INFO  SIGNAL XRP DOWN @ 0.570 заблокирован (NO_LIQUIDITY)
+2026-09-03 21:41:18,747 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57
+2026-09-03 21:41:30,322 INFO  SIGNAL ETH DOWN @ 0.550 заблокирован (NO_LIQUIDITY)
+2026-09-03 21:44:17,951 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57
+2026-09-03 21:46:23,654 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57
+2026-09-03 21:48:25,067 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57
+2026-09-03 21:50:36,704 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57

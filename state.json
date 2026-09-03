@@ -2756,7 +2756,7 @@
   "slip_n": 61,
   "by_window": {
    "15m": {
-    "signal": 100,
+    "signal": 102,
     "submitted": 30,
     "filled": 30,
     "partial": 0,
