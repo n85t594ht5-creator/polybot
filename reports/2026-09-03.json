@@ -1,6 +1,6 @@
 {
  "day": "2026-09-03",
- "generated": "2026-09-03T05:58:46.603753+00:00",
+ "generated": "2026-09-03T11:56:30.403227+00:00",
  "trades": 0,
  "wins": 0,
  "losses": 0,
@@ -26,7 +26,7 @@
   "slip_n": 53,
   "by_window": {
    "15m": {
-    "signal": 82,
+    "signal": 83,
     "submitted": 25,
     "filled": 25,
     "partial": 0,
@@ -34,7 +34,7 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 63,
+    "signal": 64,
     "submitted": 28,
     "filled": 28,
     "partial": 0,
@@ -43,15 +43,21 @@
    }
   }
  },
- "signals": 2,
+ "signals": 4,
  "signals_executed": 0,
- "signals_blocked": 2,
- "hypothetical_pnl": -67.68,
+ "signals_blocked": 4,
+ "hypothetical_pnl": -25.74,
  "signals_by_window": {
   "15m": {
-   "n": 2,
-   "w": 0,
-   "hyp": -67.68,
+   "n": 3,
+   "w": 1,
+   "hyp": -44.16,
+   "real": 0.0
+  },
+  "5m": {
+   "n": 1,
+   "w": 1,
+   "hyp": 18.42,
    "real": 0.0
   }
  },
@@ -63,9 +69,9 @@
    "real": 0.0
   },
   "SOL": {
-   "n": 1,
-   "w": 0,
-   "hyp": -33.84,
+   "n": 3,
+   "w": 2,
+   "hyp": 8.1,
    "real": 0.0
   }
  },
@@ -77,17 +83,17 @@
    "real": 0.0
   },
   "0.55–0.60": {
-   "n": 1,
-   "w": 0,
-   "hyp": -33.84,
+   "n": 3,
+   "w": 2,
+   "hyp": 8.1,
    "real": 0.0
   }
  },
  "signals_by_gate": {
   "NO_LIQUIDITY": {
-   "n": 2,
-   "w": 0,
-   "hyp": -67.68,
+   "n": 4,
+   "w": 2,
+   "hyp": -25.74,
    "real": 0.0
   }
  },
