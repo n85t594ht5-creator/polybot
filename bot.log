@@ -2091,3 +2091,7 @@
 2026-09-03 15:17:11,666 INFO  STATS trades=71 winrate=86% pnl=+555.79 PF=6.29 bankroll=655.79
 2026-09-03 15:19:48,765 INFO  STATS trades=71 winrate=86% pnl=+555.79 PF=6.29 bankroll=655.79
 2026-09-03 15:20:06,157 INFO  WIN  BTC DOWN pnl=+29.08 bankroll=684.87
+2026-09-03 15:21:51,212 INFO  STATS trades=72 winrate=86% pnl=+584.87 PF=6.57 bankroll=684.87
+2026-09-03 15:23:52,425 INFO  STATS trades=72 winrate=86% pnl=+584.87 PF=6.57 bankroll=684.87
+2026-09-03 15:25:54,015 INFO  STATS trades=72 winrate=86% pnl=+584.87 PF=6.57 bankroll=684.87
+2026-09-03 15:28:59,929 INFO  STATS trades=72 winrate=86% pnl=+584.87 PF=6.57 bankroll=684.87
