@@ -2158,3 +2158,9 @@
 2026-09-03 17:20:41,179 INFO  STATS trades=74 winrate=86% pnl=+607.28 PF=6.78 bankroll=707.28
 2026-09-03 17:22:42,152 INFO  STATS trades=74 winrate=86% pnl=+607.28 PF=6.78 bankroll=707.28
 2026-09-03 17:24:03,621 INFO  [PAPER] BUY BTC DOWN @ 0.510 $35.36 (PAPER) conf=0.775 move=-0.107%
+2026-09-03 17:24:55,951 INFO  STATS trades=74 winrate=86% pnl=+607.28 PF=6.78 bankroll=707.28
+2026-09-03 17:26:43,287 INFO  WIN  BTC DOWN pnl=+33.98 bankroll=741.26
+2026-09-03 17:26:57,128 INFO  STATS trades=75 winrate=87% pnl=+641.26 PF=7.10 bankroll=741.26
+2026-09-03 17:28:57,807 INFO  STATS trades=75 winrate=87% pnl=+641.26 PF=7.10 bankroll=741.26
+2026-09-03 17:30:58,646 INFO  STATS trades=75 winrate=87% pnl=+641.26 PF=7.10 bankroll=741.26
+2026-09-03 17:33:00,154 INFO  STATS trades=75 winrate=87% pnl=+641.26 PF=7.10 bankroll=741.26
