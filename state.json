@@ -1,5 +1,5 @@
 {
- "bankroll": 686.79,
+ "bankroll": 655.79,
  "positions": {},
  "closed": [
   {
@@ -2468,24 +2468,63 @@
    "won": true,
    "pnl": 10.0,
    "final": 101.735
+  },
+  {
+   "market_id": "4138332",
+   "asset": "SOL",
+   "side": "DOWN",
+   "token": "58025294698712699837649880937550017592636922128114423288389067916073175959600",
+   "minutes": 15,
+   "start": "2026-09-03T14:30:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 33.09,
+   "hyp_shares": 53.37,
+   "depth_usd": 31.0,
+   "remaining_sec": 177.1,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.0012,
+   "elapsed_bucket": "80\u201385%",
+   "cur": 102.53,
+   "entry": 0.62,
+   "best_ask": 0.61,
+   "cost": 31.0,
+   "shares": 50.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 31.00$ \u0438\u0437 33.09$",
+   "conf": 0.798,
+   "move": -0.0019,
+   "elapsed": 0.8,
+   "entry_bucket": "0.60\u20130.62",
+   "move_bucket": "0.15\u20130.20%",
+   "ref": 102.725,
+   "end": "2026-09-03T14:45:00+00:00",
+   "opened": "2026-09-03T14:42:03.384540+00:00",
+   "question": "Solana Up or Down - September 3, 10:30AM-10:45AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 50.0,
+   "requested_cost": 31.0,
+   "remaining_shares": 0.0,
+   "won": false,
+   "pnl": -31.0,
+   "final": 102.75999999999999
   }
  ],
  "day": "2026-09-03",
- "day_pnl": 10.0,
+ "day_pnl": -21.0,
  "day_start_bankroll": 676.79,
  "execstats": {
-  "submitted": 54,
-  "filled": 54,
+  "submitted": 55,
+  "filled": 55,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.49000000000000044,
-  "slip_n": 54,
+  "slip_sum": 0.5000000000000004,
+  "slip_n": 55,
   "by_window": {
    "15m": {
-    "signal": 86,
-    "submitted": 26,
-    "filled": 26,
+    "signal": 87,
+    "submitted": 27,
+    "filled": 27,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -2501,9 +2540,10 @@
   }
  },
  "pending_signals": [],
- "consec_losses": 0,
+ "consec_losses": 1,
  "cooldown_until": null,
  "trade_times": [
-  1788444695.1942997
+  1788444695.1942997,
+  1788446523.3845725
  ]
 }
