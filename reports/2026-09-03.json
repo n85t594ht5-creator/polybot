@@ -1,101 +1,307 @@
 {
  "day": "2026-09-03",
- "generated": "2026-09-03T11:56:30.403227+00:00",
- "trades": 0,
- "wins": 0,
- "losses": 0,
- "winrate": null,
- "pnl": 0,
- "gross_win": 0,
- "gross_loss": 0,
- "pf": null,
- "bankroll_end": 676.79,
- "by_asset": {},
- "by_window": {},
- "by_hour": {},
- "by_entry": {},
- "by_move": {},
- "by_side": {},
+ "generated": "2026-09-03T17:56:11.166788+00:00",
+ "trades": 6,
+ "wins": 5,
+ "losses": 1,
+ "winrate": 0.8333333333333334,
+ "pnl": 64.47,
+ "gross_win": 95.47,
+ "gross_loss": -31.0,
+ "pf": 3.08,
+ "bankroll_end": 741.26,
+ "by_asset": {
+  "SOL": {
+   "n": 2,
+   "w": 1,
+   "pnl": -21.0
+  },
+  "BTC": {
+   "n": 2,
+   "w": 2,
+   "pnl": 63.06
+  },
+  "XRP": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.9
+  },
+  "ETH": {
+   "n": 1,
+   "w": 1,
+   "pnl": 17.51
+  }
+ },
+ "by_window": {
+  "15m": {
+   "n": 5,
+   "w": 4,
+   "pnl": 30.49
+  },
+  "5m": {
+   "n": 1,
+   "w": 1,
+   "pnl": 33.98
+  }
+ },
+ "by_hour": {
+  "14": {
+   "n": 2,
+   "w": 1,
+   "pnl": -21.0
+  },
+  "15": {
+   "n": 1,
+   "w": 1,
+   "pnl": 29.08
+  },
+  "16": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.9
+  },
+  "17": {
+   "n": 2,
+   "w": 2,
+   "pnl": 51.49
+  }
+ },
+ "by_entry": {
+  "0.50–0.55": {
+   "n": 4,
+   "w": 4,
+   "pnl": 77.96
+  },
+  "0.60–0.62": {
+   "n": 2,
+   "w": 1,
+   "pnl": -13.49
+  }
+ },
+ "by_move": {
+  "0.10–0.12%": {
+   "n": 3,
+   "w": 3,
+   "pnl": 73.06
+  },
+  "0.15–0.20%": {
+   "n": 2,
+   "w": 1,
+   "pnl": -26.1
+  },
+  "0.12–0.15%": {
+   "n": 1,
+   "w": 1,
+   "pnl": 17.51
+  }
+ },
+ "by_side": {
+  "UP": {
+   "n": 2,
+   "w": 2,
+   "pnl": 27.51
+  },
+  "DOWN": {
+   "n": 4,
+   "w": 3,
+   "pnl": 36.96
+  }
+ },
  "execstats": {
-  "submitted": 53,
-  "filled": 53,
+  "submitted": 59,
+  "filled": 59,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.5100000000000005,
-  "slip_n": 53,
+  "slip_sum": 0.5300000000000005,
+  "slip_n": 59,
   "by_window": {
    "15m": {
-    "signal": 83,
-    "submitted": 25,
-    "filled": 25,
+    "signal": 97,
+    "submitted": 30,
+    "filled": 30,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    },
    "5m": {
-    "signal": 64,
-    "submitted": 28,
-    "filled": 28,
+    "signal": 68,
+    "submitted": 29,
+    "filled": 29,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    }
   }
  },
- "signals": 4,
- "signals_executed": 0,
- "signals_blocked": 4,
- "hypothetical_pnl": -25.74,
+ "signals": 22,
+ "signals_executed": 6,
+ "signals_blocked": 16,
+ "hypothetical_pnl": 378.24,
  "signals_by_window": {
   "15m": {
-   "n": 3,
-   "w": 1,
-   "hyp": -44.16,
-   "real": 0.0
+   "n": 17,
+   "w": 14,
+   "hyp": 252.47,
+   "real": 30.49
   },
   "5m": {
-   "n": 1,
-   "w": 1,
-   "hyp": 18.42,
-   "real": 0.0
+   "n": 5,
+   "w": 5,
+   "hyp": 125.77,
+   "real": 33.98
   }
  },
  "signals_by_asset": {
   "XRP": {
-   "n": 1,
-   "w": 0,
-   "hyp": -33.84,
-   "real": 0.0
+   "n": 7,
+   "w": 6,
+   "hyp": 122.04,
+   "real": 4.9
   },
   "SOL": {
+   "n": 8,
+   "w": 6,
+   "hyp": 80.8,
+   "real": -21.0
+  },
+  "BTC": {
+   "n": 4,
+   "w": 4,
+   "hyp": 110.34,
+   "real": 63.06
+  },
+  "ETH": {
    "n": 3,
-   "w": 2,
-   "hyp": 8.1,
-   "real": 0.0
+   "w": 3,
+   "hyp": 65.06,
+   "real": 17.51
   }
  },
  "signals_by_entry": {
   "0.50–0.55": {
-   "n": 1,
-   "w": 0,
-   "hyp": -33.84,
-   "real": 0.0
+   "n": 10,
+   "w": 9,
+   "hyp": 254.16,
+   "real": 77.96
   },
   "0.55–0.60": {
-   "n": 3,
-   "w": 2,
-   "hyp": 8.1,
+   "n": 5,
+   "w": 4,
+   "hyp": 55.31,
    "real": 0.0
+  },
+  "0.60–0.62": {
+   "n": 7,
+   "w": 6,
+   "hyp": 68.77,
+   "real": -13.49
   }
  },
  "signals_by_gate": {
   "NO_LIQUIDITY": {
-   "n": 4,
-   "w": 2,
-   "hyp": -25.74,
+   "n": 13,
+   "w": 11,
+   "hyp": 180.85,
+   "real": 0.0
+  },
+  "—": {
+   "n": 6,
+   "w": 5,
+   "hyp": 114.22,
+   "real": 64.47
+  },
+  "MAX_PER_WINDOW": {
+   "n": 3,
+   "w": 3,
+   "hyp": 83.17,
    "real": 0.0
   }
  },
- "trade_list": []
+ "trade_list": [
+  {
+   "opened": "2026-09-03T14:11:35.194269+00:00",
+   "asset": "SOL",
+   "side": "UP",
+   "minutes": 15,
+   "entry": 0.5,
+   "cost": 10.0,
+   "shares": 20.0,
+   "conf": 0.767,
+   "move": 0.00118,
+   "won": true,
+   "pnl": 10.0,
+   "question": "Solana Up or Down - September 3, 10:00AM-10:15AM ET"
+  },
+  {
+   "opened": "2026-09-03T14:42:03.384540+00:00",
+   "asset": "SOL",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.62,
+   "cost": 31.0,
+   "shares": 50.0,
+   "conf": 0.798,
+   "move": -0.0019,
+   "won": false,
+   "pnl": -31.0,
+   "question": "Solana Up or Down - September 3, 10:30AM-10:45AM ET"
+  },
+  {
+   "opened": "2026-09-03T15:11:59.419834+00:00",
+   "asset": "BTC",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.53,
+   "cost": 32.79,
+   "shares": 61.87,
+   "conf": 0.776,
+   "move": -0.0012,
+   "won": true,
+   "pnl": 29.08,
+   "question": "Bitcoin Up or Down - September 3, 11:00AM-11:15AM ET"
+  },
+  {
+   "opened": "2026-09-03T16:41:19.326369+00:00",
+   "asset": "XRP",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.51,
+   "cost": 5.1,
+   "shares": 10.0,
+   "conf": 0.777,
+   "move": -0.00168,
+   "won": true,
+   "pnl": 4.9,
+   "question": "XRP Up or Down - September 3, 12:30PM-12:45PM ET"
+  },
+  {
+   "opened": "2026-09-03T17:11:46.269119+00:00",
+   "asset": "ETH",
+   "side": "UP",
+   "minutes": 15,
+   "entry": 0.62,
+   "cost": 28.57,
+   "shares": 46.08,
+   "conf": 0.772,
+   "move": 0.00121,
+   "won": true,
+   "pnl": 17.51,
+   "question": "Ethereum Up or Down - September 3, 1:00PM-1:15PM ET"
+  },
+  {
+   "opened": "2026-09-03T17:24:03.614984+00:00",
+   "asset": "BTC",
+   "side": "DOWN",
+   "minutes": 5,
+   "entry": 0.51,
+   "cost": 35.36,
+   "shares": 69.34,
+   "conf": 0.775,
+   "move": -0.00107,
+   "won": true,
+   "pnl": 33.98,
+   "question": "Bitcoin Up or Down - September 3, 1:20PM-1:25PM ET"
+  }
+ ]
 }
