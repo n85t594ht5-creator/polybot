@@ -1,5 +1,5 @@
 {
- "bankroll": 711.2200000000001,
+ "bankroll": 740.2200000000001,
  "positions": {},
  "closed": [
   {
@@ -2897,19 +2897,58 @@
    "won": false,
    "pnl": -34.16,
    "final": 2454.2749999999996
+  },
+  {
+   "market_id": "4189423",
+   "asset": "BTC",
+   "side": "UP",
+   "token": "108118054446210653633860412443732738003686259149600719985547759564740374618852",
+   "minutes": 5,
+   "start": "2026-09-04T14:20:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 35.45,
+   "hyp_shares": 64.45,
+   "depth_usd": 494.16,
+   "remaining_sec": 73.5,
+   "execution_quality": "GOOD",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 79259.02,
+   "entry": 0.55,
+   "best_ask": 0.54,
+   "cost": 35.45,
+   "shares": 64.45,
+   "depth_note": "",
+   "conf": 0.769,
+   "move": 0.00143,
+   "elapsed": 0.75,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.12\u20130.15%",
+   "ref": 79146.14499999999,
+   "end": "2026-09-04T14:25:00+00:00",
+   "opened": "2026-09-04T14:23:46.939220+00:00",
+   "question": "Bitcoin Up or Down - September 4, 10:20AM-10:25AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 64.45,
+   "requested_cost": 35.45,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 29.0,
+   "final": 79311.19
   }
  ],
  "day": "2026-09-04",
- "day_pnl": -70.35,
+ "day_pnl": -41.349999999999994,
  "day_start_bankroll": 781.57,
  "execstats": {
-  "submitted": 65,
-  "filled": 65,
+  "submitted": 66,
+  "filled": 66,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.5900000000000005,
-  "slip_n": 65,
+  "slip_sum": 0.6000000000000005,
+  "slip_n": 66,
   "by_window": {
    "15m": {
     "signal": 116,
@@ -2920,9 +2959,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 76,
-    "submitted": 31,
-    "filled": 31,
+    "signal": 77,
+    "submitted": 32,
+    "filled": 32,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -2930,10 +2969,11 @@
   }
  },
  "pending_signals": [],
- "consec_losses": 3,
+ "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
   1788529276.7220728,
-  1788531079.2325966
+  1788531079.2325966,
+  1788531826.9392421
  ]
 }
