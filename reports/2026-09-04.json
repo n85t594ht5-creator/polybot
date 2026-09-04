@@ -1,0 +1,164 @@
+{
+ "day": "2026-09-04",
+ "generated": "2026-09-04T05:57:09.777244+00:00",
+ "trades": 1,
+ "wins": 1,
+ "losses": 0,
+ "winrate": 1.0,
+ "pnl": 9.0,
+ "gross_win": 9.0,
+ "gross_loss": 0,
+ "pf": 99.0,
+ "bankroll_end": 790.57,
+ "by_asset": {
+  "ETH": {
+   "n": 1,
+   "w": 1,
+   "pnl": 9.0
+  }
+ },
+ "by_window": {
+  "15m": {
+   "n": 1,
+   "w": 1,
+   "pnl": 9.0
+  }
+ },
+ "by_hour": {
+  "00": {
+   "n": 1,
+   "w": 1,
+   "pnl": 9.0
+  }
+ },
+ "by_entry": {
+  "0.50–0.55": {
+   "n": 1,
+   "w": 1,
+   "pnl": 9.0
+  }
+ },
+ "by_move": {
+  "0.10–0.12%": {
+   "n": 1,
+   "w": 1,
+   "pnl": 9.0
+  }
+ },
+ "by_side": {
+  "DOWN": {
+   "n": 1,
+   "w": 1,
+   "pnl": 9.0
+  }
+ },
+ "execstats": {
+  "submitted": 62,
+  "filled": 62,
+  "partial": 0,
+  "unfilled": 0,
+  "cancelled": 0,
+  "slip_sum": 0.5600000000000005,
+  "slip_n": 62,
+  "by_window": {
+   "15m": {
+    "signal": 107,
+    "submitted": 31,
+    "filled": 31,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   },
+   "5m": {
+    "signal": 73,
+    "submitted": 31,
+    "filled": 31,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   }
+  }
+ },
+ "signals": 7,
+ "signals_executed": 1,
+ "signals_blocked": 6,
+ "hypothetical_pnl": 145.46,
+ "signals_by_window": {
+  "5m": {
+   "n": 2,
+   "w": 2,
+   "hyp": 51.32,
+   "real": 0.0
+  },
+  "15m": {
+   "n": 5,
+   "w": 4,
+   "hyp": 94.14,
+   "real": 9.0
+  }
+ },
+ "signals_by_asset": {
+  "XRP": {
+   "n": 4,
+   "w": 4,
+   "hyp": 115.28,
+   "real": 0.0
+  },
+  "ETH": {
+   "n": 1,
+   "w": 1,
+   "hyp": 31.97,
+   "real": 9.0
+  },
+  "SOL": {
+   "n": 2,
+   "w": 1,
+   "hyp": -1.79,
+   "real": 0.0
+  }
+ },
+ "signals_by_entry": {
+  "0.55–0.60": {
+   "n": 3,
+   "w": 3,
+   "hyp": 78.79,
+   "real": 0.0
+  },
+  "0.50–0.55": {
+   "n": 4,
+   "w": 3,
+   "hyp": 66.67,
+   "real": 9.0
+  }
+ },
+ "signals_by_gate": {
+  "NO_LIQUIDITY": {
+   "n": 6,
+   "w": 5,
+   "hyp": 113.49,
+   "real": 0.0
+  },
+  "—": {
+   "n": 1,
+   "w": 1,
+   "hyp": 31.97,
+   "real": 9.0
+  }
+ },
+ "trade_list": [
+  {
+   "opened": "2026-09-04T00:27:01.682350+00:00",
+   "asset": "ETH",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.55,
+   "cost": 11.0,
+   "shares": 20.0,
+   "conf": 0.774,
+   "move": -0.00113,
+   "won": true,
+   "pnl": 9.0,
+   "question": "Ethereum Up or Down - September 3, 8:15PM-8:30PM ET"
+  }
+ ]
+}
