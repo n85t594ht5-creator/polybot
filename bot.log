@@ -1998,3 +1998,11 @@
 2026-09-03 23:49:14,349 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57
 2026-09-03 23:51:17,859 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57
 2026-09-03 23:53:19,315 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57
+2026-09-04 00:17:08,839 INFO  State loaded: bankroll=781.57, open=0
+2026-09-04 00:17:08,839 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP'] bankroll=782
+2026-09-04 00:19:13,270 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57
+2026-09-04 00:19:17,594 INFO  SIGNAL XRP DOWN @ 0.600 заблокирован (NO_LIQUIDITY)
+2026-09-04 00:21:18,925 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57
+2026-09-04 00:23:20,298 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57
+2026-09-04 00:25:33,940 INFO  STATS trades=77 winrate=87% pnl=+681.57 PF=7.49 bankroll=781.57
+2026-09-04 00:27:01,688 INFO  [PAPER] BUY ETH DOWN @ 0.550 $11.00 (PAPER) conf=0.774 move=-0.113%
