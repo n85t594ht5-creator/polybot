@@ -2990,7 +2990,7 @@
   "slip_n": 67,
   "by_window": {
    "15m": {
-    "signal": 119,
+    "signal": 120,
     "submitted": 35,
     "filled": 35,
     "partial": 0,
@@ -3011,7 +3011,6 @@
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1788531079.2325966,
   1788531826.9392421,
   1788533793.6805763
  ]
