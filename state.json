@@ -1,5 +1,5 @@
 {
- "bankroll": 776.0200000000001,
+ "bankroll": 737.2200000000001,
  "positions": {},
  "closed": [
   {
@@ -2975,19 +2975,58 @@
    "won": true,
    "pnl": 35.8,
    "final": 2439.9
+  },
+  {
+   "market_id": "4203856",
+   "asset": "XRP",
+   "side": "DOWN",
+   "token": "20447705494520582278608175001519951931595415607444235746762698374661289188276",
+   "minutes": 5,
+   "start": "2026-09-05T02:30:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 38.8,
+   "hyp_shares": 229.32,
+   "depth_usd": 160.19,
+   "remaining_sec": 59.0,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "80\u201385%",
+   "cur": 1.3942,
+   "entry": 0.1692,
+   "best_ask": 0.5,
+   "cost": 38.8,
+   "shares": 229.3,
+   "depth_note": "",
+   "conf": 0.771,
+   "move": -0.001,
+   "elapsed": 0.8,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 1.3956,
+   "end": "2026-09-05T02:35:00+00:00",
+   "opened": "2026-09-05T02:34:01.404703+00:00",
+   "question": "XRP Up or Down - September 4, 10:30PM-10:35PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 229.3,
+   "requested_cost": 38.8,
+   "remaining_shares": 0.0,
+   "won": false,
+   "pnl": -38.8,
+   "final": 1.3964500000000002
   }
  ],
  "day": "2026-09-05",
- "day_pnl": 0.0,
+ "day_pnl": -38.8,
  "day_start_bankroll": 776.0200000000001,
  "execstats": {
-  "submitted": 67,
-  "filled": 67,
+  "submitted": 68,
+  "filled": 68,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.6084000000000005,
-  "slip_n": 67,
+  "slip_sum": 0.2776000000000005,
+  "slip_n": 68,
   "by_window": {
    "15m": {
     "signal": 121,
@@ -2998,9 +3037,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 77,
-    "submitted": 32,
-    "filled": 32,
+    "signal": 78,
+    "submitted": 33,
+    "filled": 33,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -3008,7 +3047,9 @@
   }
  },
  "pending_signals": [],
- "consec_losses": 0,
+ "consec_losses": 1,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1788575641.4047284
+ ]
 }

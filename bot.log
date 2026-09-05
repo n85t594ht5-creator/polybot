@@ -2062,3 +2062,10 @@
 2026-09-05 02:25:58,627 INFO  STATS trades=83 winrate=84% pnl=+676.02 PF=4.67 bankroll=776.02
 2026-09-05 02:28:31,773 INFO  STATS trades=83 winrate=84% pnl=+676.02 PF=4.67 bankroll=776.02
 2026-09-05 02:30:51,747 INFO  STATS trades=83 winrate=84% pnl=+676.02 PF=4.67 bankroll=776.02
+2026-09-05 02:32:53,049 INFO  STATS trades=83 winrate=84% pnl=+676.02 PF=4.67 bankroll=776.02
+2026-09-05 02:34:01,409 INFO  [PAPER] BUY XRP DOWN @ 0.169 $38.80 (PAPER) conf=0.771 move=-0.100%
+2026-09-05 02:35:02,838 INFO  STATS trades=83 winrate=84% pnl=+676.02 PF=4.67 bankroll=776.02
+2026-09-05 02:37:04,178 INFO  STATS trades=83 winrate=84% pnl=+676.02 PF=4.67 bankroll=776.02
+2026-09-05 02:37:05,765 INFO  LOSS XRP DOWN pnl=-38.80 bankroll=737.22
+2026-09-05 02:39:10,448 INFO  STATS trades=84 winrate=83% pnl=+637.22 PF=3.86 bankroll=737.22
+2026-09-05 02:41:15,735 INFO  STATS trades=84 winrate=83% pnl=+637.22 PF=3.86 bankroll=737.22
