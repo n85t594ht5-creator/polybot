@@ -1,0 +1,134 @@
+{
+ "day": "2026-09-05",
+ "generated": "2026-09-05T05:58:03.583613+00:00",
+ "trades": 1,
+ "wins": 0,
+ "losses": 1,
+ "winrate": 0.0,
+ "pnl": -38.8,
+ "gross_win": 0,
+ "gross_loss": -38.8,
+ "pf": 0.0,
+ "bankroll_end": 737.2200000000001,
+ "by_asset": {
+  "XRP": {
+   "n": 1,
+   "w": 0,
+   "pnl": -38.8
+  }
+ },
+ "by_window": {
+  "5m": {
+   "n": 1,
+   "w": 0,
+   "pnl": -38.8
+  }
+ },
+ "by_hour": {
+  "02": {
+   "n": 1,
+   "w": 0,
+   "pnl": -38.8
+  }
+ },
+ "by_entry": {
+  "0.50–0.55": {
+   "n": 1,
+   "w": 0,
+   "pnl": -38.8
+  }
+ },
+ "by_move": {
+  "0.10–0.12%": {
+   "n": 1,
+   "w": 0,
+   "pnl": -38.8
+  }
+ },
+ "by_side": {
+  "DOWN": {
+   "n": 1,
+   "w": 0,
+   "pnl": -38.8
+  }
+ },
+ "execstats": {
+  "submitted": 68,
+  "filled": 68,
+  "partial": 0,
+  "unfilled": 0,
+  "cancelled": 0,
+  "slip_sum": 0.2776000000000005,
+  "slip_n": 68,
+  "by_window": {
+   "15m": {
+    "signal": 122,
+    "submitted": 35,
+    "filled": 35,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   },
+   "5m": {
+    "signal": 78,
+    "submitted": 33,
+    "filled": 33,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   }
+  }
+ },
+ "signals": 1,
+ "signals_executed": 1,
+ "signals_blocked": 0,
+ "hypothetical_pnl": -38.8,
+ "signals_by_window": {
+  "5m": {
+   "n": 1,
+   "w": 0,
+   "hyp": -38.8,
+   "real": 0.0
+  }
+ },
+ "signals_by_asset": {
+  "XRP": {
+   "n": 1,
+   "w": 0,
+   "hyp": -38.8,
+   "real": 0.0
+  }
+ },
+ "signals_by_entry": {
+  "0.50–0.55": {
+   "n": 1,
+   "w": 0,
+   "hyp": -38.8,
+   "real": 0.0
+  }
+ },
+ "signals_by_gate": {
+  "—": {
+   "n": 1,
+   "w": 0,
+   "hyp": -38.8,
+   "real": 0.0
+  }
+ },
+ "trade_list": [
+  {
+   "opened": "2026-09-05T02:34:01.404703+00:00",
+   "asset": "XRP",
+   "side": "DOWN",
+   "minutes": 5,
+   "entry": 0.1692,
+   "cost": 38.8,
+   "shares": 229.3,
+   "conf": 0.771,
+   "move": -0.001,
+   "won": false,
+   "pnl": -38.8,
+   "question": "XRP Up or Down - September 4, 10:30PM-10:35PM ET"
+  }
+ ]
+}
