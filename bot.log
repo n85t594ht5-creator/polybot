@@ -1998,3 +1998,9 @@
 2026-09-04 23:48:33,773 INFO  STATS trades=83 winrate=84% pnl=+676.02 PF=4.67 bankroll=776.02
 2026-09-04 23:50:39,919 INFO  STATS trades=83 winrate=84% pnl=+676.02 PF=4.67 bankroll=776.02
 2026-09-04 23:52:40,520 INFO  STATS trades=83 winrate=84% pnl=+676.02 PF=4.67 bankroll=776.02
+2026-09-05 00:18:02,733 INFO  State loaded: bankroll=776.02, open=0
+2026-09-05 00:18:02,733 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP'] bankroll=776
+2026-09-05 00:20:12,047 INFO  STATS trades=83 winrate=84% pnl=+676.02 PF=4.67 bankroll=776.02
+2026-09-05 00:22:13,344 INFO  STATS trades=83 winrate=84% pnl=+676.02 PF=4.67 bankroll=776.02
+2026-09-05 00:24:21,120 INFO  STATS trades=83 winrate=84% pnl=+676.02 PF=4.67 bankroll=776.02
+2026-09-05 00:26:23,691 INFO  STATS trades=83 winrate=84% pnl=+676.02 PF=4.67 bankroll=776.02
