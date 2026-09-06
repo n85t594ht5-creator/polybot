@@ -1,6 +1,6 @@
 {
  "day": "2026-09-05",
- "generated": "2026-09-05T23:52:16.662536+00:00",
+ "generated": "2026-09-06T06:00:25.808703+00:00",
  "trades": 3,
  "wins": 1,
  "losses": 2,
@@ -87,7 +87,7 @@
   "slip_n": 70,
   "by_window": {
    "15m": {
-    "signal": 126,
+    "signal": 127,
     "submitted": 36,
     "filled": 36,
     "partial": 0,
@@ -95,7 +95,7 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 79,
+    "signal": 80,
     "submitted": 34,
     "filled": 34,
     "partial": 0,
