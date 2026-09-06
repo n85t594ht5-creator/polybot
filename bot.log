@@ -1998,3 +1998,9 @@
 2026-09-06 05:56:34,757 INFO  SIGNAL SOL DOWN @ 0.530 заблокирован (NO_LIQUIDITY)
 2026-09-06 05:58:54,483 ERROR loop error: HTTPSConnectionPool(host='api.exchange.coinbase.com', port=443): Read timed out. (read timeout=10)
 2026-09-06 05:59:17,986 INFO  STATS trades=86 winrate=83% pnl=+653.88 PF=3.89 bankroll=753.88
+2026-09-06 06:14:06,718 INFO  State loaded: bankroll=753.88, open=0
+2026-09-06 06:14:06,718 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP'] bankroll=754
+2026-09-06 06:16:12,035 INFO  STATS trades=86 winrate=83% pnl=+653.88 PF=3.89 bankroll=753.88
+2026-09-06 06:18:12,716 INFO  STATS trades=86 winrate=83% pnl=+653.88 PF=3.89 bankroll=753.88
+2026-09-06 06:20:23,382 INFO  STATS trades=86 winrate=83% pnl=+653.88 PF=3.89 bankroll=753.88
+2026-09-06 06:22:24,117 INFO  STATS trades=86 winrate=83% pnl=+653.88 PF=3.89 bankroll=753.88
