@@ -1,0 +1,107 @@
+{
+ "day": "2026-09-07",
+ "generated": "2026-09-07T05:59:13.883149+00:00",
+ "trades": 0,
+ "wins": 0,
+ "losses": 0,
+ "winrate": null,
+ "pnl": 0,
+ "gross_win": 0,
+ "gross_loss": 0,
+ "pf": null,
+ "bankroll_end": 771.3600000000001,
+ "by_asset": {},
+ "by_window": {},
+ "by_hour": {},
+ "by_entry": {},
+ "by_move": {},
+ "by_side": {},
+ "execstats": {
+  "submitted": 71,
+  "filled": 71,
+  "partial": 0,
+  "unfilled": 0,
+  "cancelled": 0,
+  "slip_sum": 0.30760000000000054,
+  "slip_n": 71,
+  "by_window": {
+   "15m": {
+    "signal": 129,
+    "submitted": 36,
+    "filled": 36,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   },
+   "5m": {
+    "signal": 83,
+    "submitted": 35,
+    "filled": 35,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   }
+  }
+ },
+ "signals": 4,
+ "signals_executed": 0,
+ "signals_blocked": 4,
+ "hypothetical_pnl": 60.14,
+ "signals_by_window": {
+  "5m": {
+   "n": 2,
+   "w": 1,
+   "hyp": -9.98,
+   "real": 0.0
+  },
+  "15m": {
+   "n": 2,
+   "w": 2,
+   "hyp": 70.12,
+   "real": 0.0
+  }
+ },
+ "signals_by_asset": {
+  "SOL": {
+   "n": 1,
+   "w": 1,
+   "hyp": 28.59,
+   "real": 0.0
+  },
+  "ETH": {
+   "n": 1,
+   "w": 1,
+   "hyp": 38.57,
+   "real": 0.0
+  },
+  "XRP": {
+   "n": 2,
+   "w": 1,
+   "hyp": -7.02,
+   "real": 0.0
+  }
+ },
+ "signals_by_entry": {
+  "0.55–0.60": {
+   "n": 1,
+   "w": 1,
+   "hyp": 28.59,
+   "real": 0.0
+  },
+  "0.50–0.55": {
+   "n": 3,
+   "w": 2,
+   "hyp": 31.55,
+   "real": 0.0
+  }
+ },
+ "signals_by_gate": {
+  "NO_LIQUIDITY": {
+   "n": 4,
+   "w": 3,
+   "hyp": 60.14,
+   "real": 0.0
+  }
+ },
+ "trade_list": []
+}
