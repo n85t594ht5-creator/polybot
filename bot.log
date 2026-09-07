@@ -2130,3 +2130,10 @@
 2026-09-07 22:43:57,100 INFO  [PAPER] BUY SOL UP @ 0.520 $26.68 (PAPER) conf=0.77 move=+0.111%
 2026-09-07 22:46:01,431 INFO  STATS trades=87 winrate=83% pnl=+671.36 PF=3.97 bankroll=771.36
 2026-09-07 22:48:04,647 INFO  STATS trades=87 winrate=83% pnl=+671.36 PF=3.97 bankroll=771.36
+2026-09-07 22:50:20,562 INFO  STATS trades=87 winrate=83% pnl=+671.36 PF=3.97 bankroll=771.36
+2026-09-07 22:50:22,168 INFO  WIN  SOL UP pnl=+24.62 bankroll=795.98
+2026-09-07 22:52:21,468 INFO  STATS trades=88 winrate=83% pnl=+695.98 PF=4.08 bankroll=795.98
+2026-09-07 22:54:27,111 INFO  STATS trades=88 winrate=83% pnl=+695.98 PF=4.08 bankroll=795.98
+2026-09-07 22:56:28,043 INFO  STATS trades=88 winrate=83% pnl=+695.98 PF=4.08 bankroll=795.98
+2026-09-07 22:58:28,832 INFO  STATS trades=88 winrate=83% pnl=+695.98 PF=4.08 bankroll=795.98
+2026-09-07 23:00:29,394 INFO  STATS trades=88 winrate=83% pnl=+695.98 PF=4.08 bankroll=795.98
