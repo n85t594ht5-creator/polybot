@@ -1,6 +1,6 @@
 {
  "day": "2026-09-08",
- "generated": "2026-09-08T17:55:55.880802+00:00",
+ "generated": "2026-09-08T23:54:26.725811+00:00",
  "trades": 1,
  "wins": 1,
  "losses": 0,
@@ -70,7 +70,7 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 88,
+    "signal": 89,
     "submitted": 36,
     "filled": 36,
     "partial": 0,
@@ -79,10 +79,10 @@
    }
   }
  },
- "signals": 6,
+ "signals": 7,
  "signals_executed": 1,
- "signals_blocked": 5,
- "hypothetical_pnl": 103.72,
+ "signals_blocked": 6,
+ "hypothetical_pnl": 128.67,
  "signals_by_window": {
   "15m": {
    "n": 3,
@@ -91,9 +91,9 @@
    "real": 1.58
   },
   "5m": {
-   "n": 3,
-   "w": 2,
-   "hyp": 22.65,
+   "n": 4,
+   "w": 3,
+   "hyp": 47.6,
    "real": 0.0
   }
  },
@@ -105,9 +105,9 @@
    "real": 0.0
   },
   "XRP": {
-   "n": 4,
-   "w": 3,
-   "hyp": 51.47,
+   "n": 5,
+   "w": 4,
+   "hyp": 76.42,
    "real": 1.58
   },
   "SOL": {
@@ -131,17 +131,17 @@
    "real": 0.0
   },
   "0.55–0.60": {
-   "n": 2,
-   "w": 2,
-   "hyp": 57.85,
+   "n": 3,
+   "w": 3,
+   "hyp": 82.8,
    "real": 1.58
   }
  },
  "signals_by_gate": {
   "NO_LIQUIDITY": {
-   "n": 5,
-   "w": 4,
-   "hyp": 74.9,
+   "n": 6,
+   "w": 5,
+   "hyp": 99.85,
    "real": 0.0
   },
   "—": {
