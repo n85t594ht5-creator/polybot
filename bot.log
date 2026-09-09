@@ -2125,3 +2125,10 @@
 2026-09-09 04:39:44,838 INFO  STATS trades=90 winrate=82% pnl=+690.36 PF=3.96 bankroll=790.36
 2026-09-09 04:41:53,007 INFO  STATS trades=90 winrate=82% pnl=+690.36 PF=3.96 bankroll=790.36
 2026-09-09 04:44:39,079 INFO  STATS trades=90 winrate=82% pnl=+690.36 PF=3.96 bankroll=790.36
+2026-09-09 04:46:39,627 INFO  STATS trades=90 winrate=82% pnl=+690.36 PF=3.96 bankroll=790.36
+2026-09-09 04:48:40,540 INFO  STATS trades=90 winrate=82% pnl=+690.36 PF=3.96 bankroll=790.36
+2026-09-09 04:48:45,384 INFO  [PAPER] BUY ETH DOWN @ 0.610 $17.08 (PAPER) conf=0.779 move=-0.180%
+2026-09-09 04:50:51,994 INFO  STATS trades=90 winrate=82% pnl=+690.36 PF=3.96 bankroll=790.36
+2026-09-09 04:52:54,297 INFO  STATS trades=90 winrate=82% pnl=+690.36 PF=3.96 bankroll=790.36
+2026-09-09 04:55:10,738 INFO  STATS trades=90 winrate=82% pnl=+690.36 PF=3.96 bankroll=790.36
+2026-09-09 04:55:12,329 INFO  WIN  ETH DOWN pnl=+10.92 bankroll=801.28
