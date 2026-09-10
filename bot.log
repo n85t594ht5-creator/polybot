@@ -2040,3 +2040,9 @@
 2026-09-10 13:33:40,540 INFO  STATS trades=91 winrate=82% pnl=+701.28 PF=4.01 bankroll=801.28
 2026-09-10 13:35:51,618 INFO  STATS trades=91 winrate=82% pnl=+701.28 PF=4.01 bankroll=801.28
 2026-09-10 13:37:53,922 INFO  STATS trades=91 winrate=82% pnl=+701.28 PF=4.01 bankroll=801.28
+2026-09-10 13:40:09,337 INFO  STATS trades=91 winrate=82% pnl=+701.28 PF=4.01 bankroll=801.28
+2026-09-10 13:41:49,318 INFO  SIGNAL SOL UP @ 0.620 заблокирован (NO_LIQUIDITY)
+2026-09-10 13:42:36,055 INFO  STATS trades=91 winrate=82% pnl=+701.28 PF=4.01 bankroll=801.28
+2026-09-10 13:42:59,669 INFO  [PAPER] BUY BTC UP @ 0.620 $38.18 (PAPER) conf=0.796 move=+0.120%
+2026-09-10 13:45:07,900 INFO  STATS trades=91 winrate=82% pnl=+701.28 PF=4.01 bankroll=801.28
+2026-09-10 13:47:08,977 INFO  STATS trades=91 winrate=82% pnl=+701.28 PF=4.01 bankroll=801.28
