@@ -2109,3 +2109,9 @@
 2026-09-10 15:51:39,886 INFO  STATS trades=93 winrate=83% pnl=+738.78 PF=4.17 bankroll=838.78
 2026-09-10 15:53:44,548 INFO  STATS trades=93 winrate=83% pnl=+738.78 PF=4.17 bankroll=838.78
 2026-09-10 15:53:46,462 INFO  SIGNAL XRP DOWN @ 0.590 заблокирован (NO_LIQUIDITY)
+2026-09-10 15:54:25,780 INFO  SIGNAL SOL DOWN @ 0.520 заблокирован (NO_LIQUIDITY)
+2026-09-10 15:55:53,668 INFO  STATS trades=93 winrate=83% pnl=+738.78 PF=4.17 bankroll=838.78
+2026-09-10 15:57:54,839 INFO  STATS trades=93 winrate=83% pnl=+738.78 PF=4.17 bankroll=838.78
+2026-09-10 15:59:55,494 INFO  STATS trades=93 winrate=83% pnl=+738.78 PF=4.17 bankroll=838.78
+2026-09-10 16:01:56,403 INFO  STATS trades=93 winrate=83% pnl=+738.78 PF=4.17 bankroll=838.78
+2026-09-10 16:04:09,590 INFO  STATS trades=93 winrate=83% pnl=+738.78 PF=4.17 bankroll=838.78
