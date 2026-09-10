@@ -1,0 +1,83 @@
+{
+ "day": "2026-09-10",
+ "generated": "2026-09-10T05:55:53.014913+00:00",
+ "trades": 0,
+ "wins": 0,
+ "losses": 0,
+ "winrate": null,
+ "pnl": 0,
+ "gross_win": 0,
+ "gross_loss": 0,
+ "pf": null,
+ "bankroll_end": 801.2800000000001,
+ "by_asset": {},
+ "by_window": {},
+ "by_hour": {},
+ "by_entry": {},
+ "by_move": {},
+ "by_side": {},
+ "execstats": {
+  "submitted": 75,
+  "filled": 75,
+  "partial": 0,
+  "unfilled": 0,
+  "cancelled": 0,
+  "slip_sum": 0.32760000000000056,
+  "slip_n": 75,
+  "by_window": {
+   "15m": {
+    "signal": 136,
+    "submitted": 38,
+    "filled": 38,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   },
+   "5m": {
+    "signal": 94,
+    "submitted": 37,
+    "filled": 37,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   }
+  }
+ },
+ "signals": 1,
+ "signals_executed": 0,
+ "signals_blocked": 1,
+ "hypothetical_pnl": 34.13,
+ "signals_by_window": {
+  "15m": {
+   "n": 1,
+   "w": 1,
+   "hyp": 34.13,
+   "real": 0.0
+  }
+ },
+ "signals_by_asset": {
+  "XRP": {
+   "n": 1,
+   "w": 1,
+   "hyp": 34.13,
+   "real": 0.0
+  }
+ },
+ "signals_by_entry": {
+  "0.50–0.55": {
+   "n": 1,
+   "w": 1,
+   "hyp": 34.13,
+   "real": 0.0
+  }
+ },
+ "signals_by_gate": {
+  "NO_LIQUIDITY": {
+   "n": 1,
+   "w": 1,
+   "hyp": 34.13,
+   "real": 0.0
+  }
+ },
+ "trade_list": []
+}
