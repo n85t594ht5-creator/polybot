@@ -1,6 +1,43 @@
 {
  "bankroll": 819.37,
- "positions": {},
+ "positions": {
+  "4429695": {
+   "market_id": "4429695",
+   "asset": "BTC",
+   "side": "UP",
+   "token": "35056965972676394067682367795006431989062684954025208204650866991705485551490",
+   "minutes": 15,
+   "start": "2026-09-11T03:30:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 40.69,
+   "hyp_shares": 76.77,
+   "depth_usd": 5.3,
+   "remaining_sec": 223.1,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 76844.85,
+   "entry": 0.53,
+   "best_ask": 0.52,
+   "cost": 5.3,
+   "shares": 10.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 5.30$ \u0438\u0437 40.69$",
+   "conf": 0.758,
+   "move": 0.00109,
+   "elapsed": 0.75,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 76761.115,
+   "end": "2026-09-11T03:45:00+00:00",
+   "opened": "2026-09-11T03:41:17.312226+00:00",
+   "question": "Bitcoin Up or Down - September 10, 11:30PM-11:45PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 10.0,
+   "requested_cost": 5.3,
+   "remaining_shares": 0.0
+  }
+ },
  "closed": [
   {
    "market_id": "3919352",
@@ -3488,18 +3525,18 @@
  "day_pnl": -33.72,
  "day_start_bankroll": 853.09,
  "execstats": {
-  "submitted": 80,
-  "filled": 80,
+  "submitted": 81,
+  "filled": 81,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.3776000000000006,
-  "slip_n": 80,
+  "slip_sum": 0.3876000000000006,
+  "slip_n": 81,
   "by_window": {
    "15m": {
-    "signal": 148,
-    "submitted": 42,
-    "filled": 42,
+    "signal": 149,
+    "submitted": 43,
+    "filled": 43,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -3514,10 +3551,60 @@
    }
   }
  },
- "pending_signals": [],
+ "pending_signals": [
+  {
+   "row": {
+    "timestamp": "2026-09-11T03:41:17.312226+00:00",
+    "asset": "BTC",
+    "window": "15m",
+    "market_id": "4429695",
+    "elapsed": 0.75,
+    "remaining_seconds": 223.1,
+    "reference_price": 76761.115,
+    "current_price": 76844.85,
+    "move_pct": 0.109,
+    "direction": "UP",
+    "entry_price": 0.53,
+    "bid": "",
+    "ask": 0.52,
+    "spread": "",
+    "confidence": 0.758,
+    "required_move": 0.1,
+    "entry_bucket": "0.50\u20130.55",
+    "move_bucket": "0.10\u20130.12%",
+    "elapsed_bucket": "75\u201380%",
+    "risk_gate": "",
+    "signal_status": "EXECUTED",
+    "order_status": "PAPER",
+    "execution_quality": "MARGINAL",
+    "requested_shares": 10.0,
+    "filled_shares": 10.0,
+    "remaining_shares": 0.0,
+    "average_fill_price": 0.53,
+    "best_ask": 0.52,
+    "slippage": 0.01,
+    "hyp_cost": 40.69,
+    "hyp_shares": 76.77,
+    "resolution": "",
+    "hypothetical_pnl": "",
+    "realized_pnl": "",
+    "bankroll_at_signal": 819.37,
+    "daily_pnl": -33.72,
+    "exposure_at_signal": 5.3,
+    "consecutive_losses": 1,
+    "end": "2026-09-11T03:45:00+00:00"
+   },
+   "side": "UP",
+   "ref": 76761.115,
+   "asset": "BTC",
+   "end": "2026-09-11T03:45:00+00:00",
+   "executed": true
+  }
+ ],
  "consec_losses": 1,
  "cooldown_until": null,
  "trade_times": [
-  1789096398.1410844
+  1789096398.1410844,
+  1789098077.3122466
  ]
 }
