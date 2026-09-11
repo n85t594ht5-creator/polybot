@@ -2125,3 +2125,9 @@
 2026-09-11 10:50:58,812 INFO  STATS trades=97 winrate=82% pnl=+724.07 PF=3.62 bankroll=824.07
 2026-09-11 10:53:00,603 INFO  STATS trades=97 winrate=82% pnl=+724.07 PF=3.62 bankroll=824.07
 2026-09-11 10:55:10,928 INFO  STATS trades=97 winrate=82% pnl=+724.07 PF=3.62 bankroll=824.07
+2026-09-11 10:57:31,188 INFO  STATS trades=97 winrate=82% pnl=+724.07 PF=3.62 bankroll=824.07
+2026-09-11 10:58:57,649 ERROR loop error: HTTPSConnectionPool(host='api.exchange.coinbase.com', port=443): Read timed out. (read timeout=10)
+2026-09-11 10:59:09,221 WARNING Gamma error: HTTPSConnectionPool(host='gamma-api.polymarket.com', port=443): Read timed out. (read timeout=10)
+2026-09-11 11:00:21,909 INFO  STATS trades=97 winrate=82% pnl=+724.07 PF=3.62 bankroll=824.07
+2026-09-11 11:02:23,208 INFO  STATS trades=97 winrate=82% pnl=+724.07 PF=3.62 bankroll=824.07
+2026-09-11 11:04:45,463 INFO  STATS trades=97 winrate=82% pnl=+724.07 PF=3.62 bankroll=824.07
