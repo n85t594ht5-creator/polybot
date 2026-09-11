@@ -2064,3 +2064,9 @@
 2026-09-11 14:26:22,435 INFO  [PAPER] BUY ETH UP @ 0.590 $32.45 (PAPER) conf=0.787 move=+0.198%
 2026-09-11 14:26:22,710 INFO  STATS trades=97 winrate=82% pnl=+724.07 PF=3.62 bankroll=824.07
 2026-09-11 14:29:05,369 INFO  STATS trades=97 winrate=82% pnl=+724.07 PF=3.62 bankroll=824.07
+2026-09-11 14:31:13,086 INFO  STATS trades=97 winrate=82% pnl=+724.07 PF=3.62 bankroll=824.07
+2026-09-11 14:31:44,937 INFO  WIN  ETH UP pnl=+22.55 bankroll=846.62
+2026-09-11 14:33:14,397 INFO  STATS trades=98 winrate=83% pnl=+746.62 PF=3.70 bankroll=846.62
+2026-09-11 14:35:31,980 INFO  STATS trades=98 winrate=83% pnl=+746.62 PF=3.70 bankroll=846.62
+2026-09-11 14:37:33,060 INFO  STATS trades=98 winrate=83% pnl=+746.62 PF=3.70 bankroll=846.62
+2026-09-11 14:39:44,649 INFO  STATS trades=98 winrate=83% pnl=+746.62 PF=3.70 bankroll=846.62
