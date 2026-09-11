@@ -2121,3 +2121,11 @@
 2026-09-11 16:18:37,283 INFO  STATS trades=99 winrate=82% pnl=+743.62 PF=3.66 bankroll=843.62
 2026-09-11 16:20:55,014 INFO  STATS trades=99 winrate=82% pnl=+743.62 PF=3.66 bankroll=843.62
 2026-09-11 16:22:56,608 INFO  STATS trades=99 winrate=82% pnl=+743.62 PF=3.66 bankroll=843.62
+2026-09-11 16:25:09,278 INFO  STATS trades=99 winrate=82% pnl=+743.62 PF=3.66 bankroll=843.62
+2026-09-11 16:27:10,297 INFO  STATS trades=99 winrate=82% pnl=+743.62 PF=3.66 bankroll=843.62
+2026-09-11 16:29:11,201 INFO  STATS trades=99 winrate=82% pnl=+743.62 PF=3.66 bankroll=843.62
+2026-09-11 16:31:12,017 INFO  STATS trades=99 winrate=82% pnl=+743.62 PF=3.66 bankroll=843.62
+2026-09-11 16:33:13,252 INFO  STATS trades=99 winrate=82% pnl=+743.62 PF=3.66 bankroll=843.62
+2026-09-11 16:34:04,474 INFO  [PAPER] BUY SOL UP @ 0.510 $42.18 (PAPER) conf=0.782 move=+0.128%
+2026-09-11 16:34:04,898 INFO  SIGNAL ETH UP @ 0.510 заблокирован (MAX_PER_WINDOW)
+2026-09-11 16:35:20,686 INFO  STATS trades=99 winrate=82% pnl=+743.62 PF=3.66 bankroll=843.62
