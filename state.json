@@ -3757,9 +3757,9 @@
    "final": 77117.9
   }
  ],
- "day": "2026-09-11",
- "day_pnl": 130.75,
- "day_start_bankroll": 853.09,
+ "day": "2026-09-12",
+ "day_pnl": 0.0,
+ "day_start_bankroll": 983.8399999999999,
  "execstats": {
   "submitted": 87,
   "filled": 87,
@@ -3790,7 +3790,5 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": [
-  1789168306.2435973
- ]
+ "trade_times": []
 }
