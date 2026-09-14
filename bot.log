@@ -2053,3 +2053,9 @@
 2026-09-14 13:56:30,281 INFO  STATS trades=105 winrate=82% pnl=+861.83 PF=3.79 bankroll=961.83
 2026-09-14 13:58:31,499 INFO  SIGNAL BTC DOWN @ 0.560 заблокирован (MAX_PER_WINDOW)
 2026-09-14 13:59:00,580 INFO  STATS trades=105 winrate=82% pnl=+861.83 PF=3.79 bankroll=961.83
+2026-09-14 14:01:08,304 INFO  STATS trades=105 winrate=82% pnl=+861.83 PF=3.79 bankroll=961.83
+2026-09-14 14:01:40,035 INFO  WIN  XRP DOWN pnl=+11.08 bankroll=972.91
+2026-09-14 14:03:10,454 INFO  STATS trades=106 winrate=82% pnl=+872.91 PF=3.82 bankroll=972.91
+2026-09-14 14:05:28,035 INFO  STATS trades=106 winrate=82% pnl=+872.91 PF=3.82 bankroll=972.91
+2026-09-14 14:07:29,004 INFO  STATS trades=106 winrate=82% pnl=+872.91 PF=3.82 bankroll=972.91
+2026-09-14 14:09:46,984 INFO  STATS trades=106 winrate=82% pnl=+872.91 PF=3.82 bankroll=972.91
