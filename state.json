@@ -3965,7 +3965,7 @@
   "slip_n": 92,
   "by_window": {
    "15m": {
-    "signal": 173,
+    "signal": 174,
     "submitted": 53,
     "filled": 53,
     "partial": 0,
@@ -3982,7 +3982,56 @@
    }
   }
  },
- "pending_signals": [],
+ "pending_signals": [
+  {
+   "row": {
+    "timestamp": "2026-09-14T21:26:16.897787+00:00",
+    "asset": "XRP",
+    "window": "15m",
+    "market_id": "4541503",
+    "elapsed": 0.75,
+    "remaining_seconds": 223.6,
+    "reference_price": 1.45025,
+    "current_price": 1.4529,
+    "move_pct": 0.183,
+    "direction": "UP",
+    "entry_price": 0.61,
+    "bid": "",
+    "ask": 0.61,
+    "spread": "",
+    "confidence": 0.78,
+    "required_move": 0.12,
+    "entry_bucket": "0.60\u20130.62",
+    "move_bucket": "0.15\u20130.20%",
+    "elapsed_bucket": "75\u201380%",
+    "risk_gate": "NO_LIQUIDITY",
+    "signal_status": "BLOCKED_BY_RISK",
+    "order_status": "",
+    "execution_quality": "UNEXECUTABLE",
+    "requested_shares": 73.29,
+    "filled_shares": "",
+    "remaining_shares": "",
+    "average_fill_price": "",
+    "best_ask": 0.61,
+    "slippage": "",
+    "hyp_cost": 44.71,
+    "hyp_shares": 73.29,
+    "resolution": "",
+    "hypothetical_pnl": "",
+    "realized_pnl": "",
+    "bankroll_at_signal": 1023.78,
+    "daily_pnl": 39.94,
+    "exposure_at_signal": 0,
+    "consecutive_losses": 0,
+    "end": "2026-09-14T21:30:00+00:00"
+   },
+   "side": "UP",
+   "ref": 1.45025,
+   "asset": "XRP",
+   "end": "2026-09-14T21:30:00+00:00",
+   "executed": false
+  }
+ ],
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": []
