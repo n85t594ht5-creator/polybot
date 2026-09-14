@@ -1,5 +1,5 @@
 {
- "bankroll": 1012.28,
+ "bankroll": 1023.78,
  "positions": {},
  "closed": [
   {
@@ -3911,24 +3911,63 @@
    "won": true,
    "pnl": 39.37,
    "final": 78405.91500000001
+  },
+  {
+   "market_id": "4534586",
+   "asset": "XRP",
+   "side": "DOWN",
+   "token": "79545361068666759496967048953743629466228160632232739994981706175113498509553",
+   "minutes": 15,
+   "start": "2026-09-14T19:15:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 50.61,
+   "hyp_shares": 93.73,
+   "depth_usd": 13.5,
+   "remaining_sec": 179.0,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "80\u201385%",
+   "cur": 1.46,
+   "entry": 0.54,
+   "best_ask": 0.53,
+   "cost": 13.5,
+   "shares": 25.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 13.50$ \u0438\u0437 50.61$",
+   "conf": 0.819,
+   "move": -0.00263,
+   "elapsed": 0.8,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.20%+",
+   "ref": 1.46385,
+   "end": "2026-09-14T19:30:00+00:00",
+   "opened": "2026-09-14T19:27:01.383943+00:00",
+   "question": "XRP Up or Down - September 14, 3:15PM-3:30PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 25.0,
+   "requested_cost": 13.5,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 11.5,
+   "final": 1.46125
   }
  ],
  "day": "2026-09-14",
- "day_pnl": 28.439999999999998,
+ "day_pnl": 39.94,
  "day_start_bankroll": 983.8399999999999,
  "execstats": {
-  "submitted": 91,
-  "filled": 91,
+  "submitted": 92,
+  "filled": 92,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.4876000000000007,
-  "slip_n": 91,
+  "slip_sum": 0.4976000000000007,
+  "slip_n": 92,
   "by_window": {
    "15m": {
-    "signal": 172,
-    "submitted": 52,
-    "filled": 52,
+    "signal": 173,
+    "submitted": 53,
+    "filled": 53,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -3946,5 +3985,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1789414021.3839707
+ ]
 }
