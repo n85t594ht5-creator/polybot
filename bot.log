@@ -2068,3 +2068,10 @@
 2026-09-14 14:25:35,821 INFO  STATS trades=106 winrate=82% pnl=+872.91 PF=3.82 bankroll=972.91
 2026-09-14 14:28:27,506 INFO  STATS trades=106 winrate=82% pnl=+872.91 PF=3.82 bankroll=972.91
 2026-09-14 14:30:53,347 INFO  STATS trades=106 winrate=82% pnl=+872.91 PF=3.82 bankroll=972.91
+2026-09-14 14:32:54,694 INFO  STATS trades=106 winrate=82% pnl=+872.91 PF=3.82 bankroll=972.91
+2026-09-14 14:35:10,729 INFO  STATS trades=106 winrate=82% pnl=+872.91 PF=3.82 bankroll=972.91
+2026-09-14 14:37:12,220 INFO  STATS trades=106 winrate=82% pnl=+872.91 PF=3.82 bankroll=972.91
+2026-09-14 14:39:30,021 INFO  STATS trades=106 winrate=82% pnl=+872.91 PF=3.82 bankroll=972.91
+2026-09-14 14:41:20,943 INFO  SIGNAL SOL DOWN @ 0.540 заблокирован (NO_LIQUIDITY)
+2026-09-14 14:41:37,121 INFO  STATS trades=106 winrate=82% pnl=+872.91 PF=3.82 bankroll=972.91
+2026-09-14 14:41:48,898 INFO  [PAPER] BUY BTC DOWN @ 0.550 $48.13 (PAPER) conf=0.768 move=-0.105%
