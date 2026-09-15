@@ -1,5 +1,5 @@
 {
- "bankroll": 1043.8899999999999,
+ "bankroll": 1049.08,
  "positions": {},
  "closed": [
   {
@@ -3989,30 +3989,69 @@
    "won": true,
    "pnl": 20.11,
    "final": 1.4144999999999999
+  },
+  {
+   "market_id": "4558173",
+   "asset": "ETH",
+   "side": "UP",
+   "token": "24940751268157820157810013709930497365021764575336877571946885577570468900570",
+   "minutes": 15,
+   "start": "2026-09-15T15:30:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 52.19,
+   "hyp_shares": 93.2,
+   "depth_usd": 6.61,
+   "remaining_sec": 152.8,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "80\u201385%",
+   "cur": 2426.89,
+   "entry": 0.56,
+   "best_ask": 0.55,
+   "cost": 6.61,
+   "shares": 11.8,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 6.61$ \u0438\u0437 52.19$",
+   "conf": 0.779,
+   "move": 0.001,
+   "elapsed": 0.83,
+   "entry_bucket": "0.55\u20130.60",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 2424.465,
+   "end": "2026-09-15T15:45:00+00:00",
+   "opened": "2026-09-15T15:42:27.667116+00:00",
+   "question": "Ethereum Up or Down - September 15, 11:30AM-11:45AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 11.8,
+   "requested_cost": 6.61,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 5.19,
+   "final": 2426.175
   }
  ],
  "day": "2026-09-15",
- "day_pnl": 20.11,
+ "day_pnl": 25.3,
  "day_start_bankroll": 1023.78,
  "execstats": {
-  "submitted": 93,
-  "filled": 93,
+  "submitted": 94,
+  "filled": 94,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.5076000000000007,
-  "slip_n": 93,
+  "slip_sum": 0.5176000000000007,
+  "slip_n": 94,
   "by_window": {
    "15m": {
-    "signal": 184,
-    "submitted": 54,
-    "filled": 54,
+    "signal": 185,
+    "submitted": 55,
+    "filled": 55,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    },
    "5m": {
-    "signal": 113,
+    "signal": 114,
     "submitted": 39,
     "filled": 39,
     "partial": 0,
@@ -4024,5 +4063,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1789486947.6671412
+ ]
 }
