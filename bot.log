@@ -2147,3 +2147,8 @@
 2026-09-15 23:08:33,965 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
 2026-09-15 23:10:47,382 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
 2026-09-15 23:12:45,264 ERROR loop error: HTTPSConnectionPool(host='clob.polymarket.com', port=443): Max retries exceeded with url: /price?token_id=61615615090531196712214976740345409766060888118500747057706444083905913077223&side=BUY (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))
+2026-09-15 23:14:01,508 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
+2026-09-15 23:16:14,758 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
+2026-09-15 23:18:17,294 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
+2026-09-15 23:20:31,137 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
+2026-09-15 23:22:32,022 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
