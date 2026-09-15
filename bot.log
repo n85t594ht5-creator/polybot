@@ -2048,3 +2048,8 @@
 2026-09-15 19:43:07,769 ERROR loop error: HTTPSConnectionPool(host='api.exchange.coinbase.com', port=443): Max retries exceeded with url: /products/BTC-USD/ticker (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))
 2026-09-15 19:43:11,442 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
 2026-09-15 19:45:34,306 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
+2026-09-15 19:47:35,333 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
+2026-09-15 19:49:51,554 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
+2026-09-15 19:51:52,567 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
+2026-09-15 19:54:04,576 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
+2026-09-15 19:56:14,555 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
