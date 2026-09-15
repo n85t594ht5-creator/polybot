@@ -2070,3 +2070,8 @@
 2026-09-15 08:46:19,515 INFO  STATS trades=108 winrate=82% pnl=+923.78 PF=3.99 bankroll=1023.78
 2026-09-15 08:48:24,973 INFO  STATS trades=108 winrate=82% pnl=+923.78 PF=3.99 bankroll=1023.78
 2026-09-15 08:50:37,145 INFO  STATS trades=108 winrate=82% pnl=+923.78 PF=3.99 bankroll=1023.78
+2026-09-15 08:52:37,805 INFO  STATS trades=108 winrate=82% pnl=+923.78 PF=3.99 bankroll=1023.78
+2026-09-15 08:53:47,044 INFO  SIGNAL SOL UP @ 0.560 заблокирован (NO_LIQUIDITY)
+2026-09-15 08:54:48,988 INFO  STATS trades=108 winrate=82% pnl=+923.78 PF=3.99 bankroll=1023.78
+2026-09-15 08:57:08,070 INFO  STATS trades=108 winrate=82% pnl=+923.78 PF=3.99 bankroll=1023.78
+2026-09-15 08:59:58,745 INFO  STATS trades=108 winrate=82% pnl=+923.78 PF=3.99 bankroll=1023.78
