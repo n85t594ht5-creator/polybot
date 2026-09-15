@@ -2041,3 +2041,10 @@
 2026-09-15 19:30:04,105 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
 2026-09-15 19:32:04,884 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
 2026-09-15 19:34:27,516 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
+2026-09-15 19:36:28,935 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
+2026-09-15 19:38:32,106 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
+2026-09-15 19:40:48,080 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
+2026-09-15 19:41:37,634 INFO  SIGNAL XRP UP @ 0.550 заблокирован (NO_LIQUIDITY)
+2026-09-15 19:43:07,769 ERROR loop error: HTTPSConnectionPool(host='api.exchange.coinbase.com', port=443): Max retries exceeded with url: /products/BTC-USD/ticker (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))
+2026-09-15 19:43:11,442 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
+2026-09-15 19:45:34,306 INFO  STATS trades=110 winrate=83% pnl=+949.08 PF=4.07 bankroll=1049.08
