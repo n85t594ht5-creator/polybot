@@ -2136,3 +2136,8 @@
 2026-09-16 11:14:10,919 INFO  SIGNAL BTC DOWN @ 0.570 заблокирован (NO_LIQUIDITY)
 2026-09-16 11:14:45,191 INFO  STATS trades=113 winrate=82% pnl=+957.27 PF=3.67 bankroll=1057.27
 2026-09-16 11:16:46,720 INFO  STATS trades=113 winrate=82% pnl=+957.27 PF=3.67 bankroll=1057.27
+2026-09-16 11:19:09,989 INFO  STATS trades=113 winrate=82% pnl=+957.27 PF=3.67 bankroll=1057.27
+2026-09-16 11:21:18,499 INFO  STATS trades=113 winrate=82% pnl=+957.27 PF=3.67 bankroll=1057.27
+2026-09-16 11:23:22,180 INFO  STATS trades=113 winrate=82% pnl=+957.27 PF=3.67 bankroll=1057.27
+2026-09-16 11:25:37,338 INFO  STATS trades=113 winrate=82% pnl=+957.27 PF=3.67 bankroll=1057.27
+2026-09-16 11:28:39,669 INFO  STATS trades=113 winrate=82% pnl=+957.27 PF=3.67 bankroll=1057.27
