@@ -4160,7 +4160,7 @@
   "slip_n": 97,
   "by_window": {
    "15m": {
-    "signal": 198,
+    "signal": 199,
     "submitted": 57,
     "filled": 57,
     "partial": 0,
@@ -4168,7 +4168,7 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 119,
+    "signal": 120,
     "submitted": 40,
     "filled": 40,
     "partial": 0,
