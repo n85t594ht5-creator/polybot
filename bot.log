@@ -2027,3 +2027,8 @@
 2026-09-16 07:13:36,610 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
 2026-09-16 07:16:04,823 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
 2026-09-16 07:18:11,244 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
+2026-09-16 07:20:34,052 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
+2026-09-16 07:22:35,229 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
+2026-09-16 07:25:02,415 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
+2026-09-16 07:27:04,005 INFO  [PAPER] BUY SOL DOWN @ 0.520 $9.36 (PAPER) conf=0.787 move=-0.154%
+2026-09-16 07:27:25,365 INFO  STATS trades=112 winrate=82% pnl=+948.63 PF=3.65 bankroll=1048.63
