@@ -1,5 +1,5 @@
 {
- "bankroll": 1057.2700000000002,
+ "bankroll": 1061.8300000000002,
  "positions": {},
  "closed": [
   {
@@ -4145,24 +4145,63 @@
    "won": true,
    "pnl": 8.64,
    "final": 97.015
+  },
+  {
+   "market_id": "4596532",
+   "asset": "XRP",
+   "side": "UP",
+   "token": "84470153429324421910458685024481772324757546337535395711979421669192674340530",
+   "minutes": 15,
+   "start": "2026-09-16T20:15:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 52.86,
+   "hyp_shares": 85.26,
+   "depth_usd": 7.44,
+   "remaining_sec": 165.0,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.0012,
+   "elapsed_bucket": "80\u201385%",
+   "cur": 1.3085,
+   "entry": 0.62,
+   "best_ask": 0.61,
+   "cost": 7.44,
+   "shares": 12.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 7.44$ \u0438\u0437 52.86$",
+   "conf": 0.81,
+   "move": 0.00218,
+   "elapsed": 0.82,
+   "entry_bucket": "0.60\u20130.62",
+   "move_bucket": "0.20%+",
+   "ref": 1.30565,
+   "end": "2026-09-16T20:30:00+00:00",
+   "opened": "2026-09-16T20:27:15.420131+00:00",
+   "question": "XRP Up or Down - September 16, 4:15PM-4:30PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 12.0,
+   "requested_cost": 7.44,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 4.56,
+   "final": 1.30745
   }
  ],
  "day": "2026-09-16",
- "day_pnl": 8.64,
+ "day_pnl": 13.2,
  "day_start_bankroll": 1048.63,
  "execstats": {
-  "submitted": 97,
-  "filled": 97,
+  "submitted": 98,
+  "filled": 98,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.5476000000000008,
-  "slip_n": 97,
+  "slip_sum": 0.5576000000000008,
+  "slip_n": 98,
   "by_window": {
    "15m": {
-    "signal": 199,
-    "submitted": 57,
-    "filled": 57,
+    "signal": 201,
+    "submitted": 58,
+    "filled": 58,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -4180,5 +4219,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1789590435.4201593
+ ]
 }
