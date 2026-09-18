@@ -4550,7 +4550,7 @@
   "slip_n": 107,
   "by_window": {
    "15m": {
-    "signal": 220,
+    "signal": 221,
     "submitted": 65,
     "filled": 65,
     "partial": 0,
@@ -4570,7 +4570,5 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": [
-  1789749676.0016317
- ]
+ "trade_times": []
 }
