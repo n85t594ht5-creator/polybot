@@ -1,5 +1,5 @@
 {
- "bankroll": 1184.2400000000002,
+ "bankroll": 1195.2800000000002,
  "positions": {},
  "closed": [
   {
@@ -4457,19 +4457,58 @@
    "won": true,
    "pnl": 48.38,
    "final": 80732.35500000001
+  },
+  {
+   "market_id": "4641009",
+   "asset": "BTC",
+   "side": "DOWN",
+   "token": "30076132828277420365905555629139699469238323629918958942302959127633510711090",
+   "minutes": 5,
+   "start": "2026-09-18T15:35:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 58.07,
+   "hyp_shares": 107.53,
+   "depth_usd": 12.96,
+   "remaining_sec": 71.3,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 80730.0,
+   "entry": 0.54,
+   "best_ask": 0.53,
+   "cost": 12.96,
+   "shares": 24.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 12.96$ \u0438\u0437 58.07$",
+   "conf": 0.76,
+   "move": -0.00106,
+   "elapsed": 0.76,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 80815.535,
+   "end": "2026-09-18T15:40:00+00:00",
+   "opened": "2026-09-18T15:38:49.009489+00:00",
+   "question": "Bitcoin Up or Down - September 18, 11:35AM-11:40AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 24.0,
+   "requested_cost": 12.96,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 11.04,
+   "final": 80740.995
   }
  ],
  "day": "2026-09-18",
- "day_pnl": 47.13,
+ "day_pnl": 58.17,
  "day_start_bankroll": 1137.1100000000001,
  "execstats": {
-  "submitted": 105,
-  "filled": 105,
+  "submitted": 106,
+  "filled": 106,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.6276000000000008,
-  "slip_n": 105,
+  "slip_sum": 0.6376000000000008,
+  "slip_n": 106,
   "by_window": {
    "15m": {
     "signal": 216,
@@ -4480,68 +4519,20 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 125,
-    "submitted": 41,
-    "filled": 41,
+    "signal": 126,
+    "submitted": 42,
+    "filled": 42,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    }
   }
  },
- "pending_signals": [
-  {
-   "row": {
-    "timestamp": "2026-09-18T15:28:49.597410+00:00",
-    "asset": "XRP",
-    "window": "15m",
-    "market_id": "4640755",
-    "elapsed": 0.92,
-    "remaining_seconds": 70.7,
-    "reference_price": 1.3881999999999999,
-    "current_price": 1.3864,
-    "move_pct": -0.13,
-    "direction": "DOWN",
-    "entry_price": 0.62,
-    "bid": "",
-    "ask": 0.62,
-    "spread": "",
-    "confidence": 0.815,
-    "required_move": 0.12,
-    "entry_bucket": "0.60\u20130.62",
-    "move_bucket": "0.12\u20130.15%",
-    "elapsed_bucket": "90\u201395%",
-    "risk_gate": "NO_LIQUIDITY",
-    "signal_status": "BLOCKED_BY_RISK",
-    "order_status": "",
-    "execution_quality": "UNEXECUTABLE",
-    "requested_shares": 95.5,
-    "filled_shares": "",
-    "remaining_shares": "",
-    "average_fill_price": "",
-    "best_ask": 0.62,
-    "slippage": "",
-    "hyp_cost": 59.21,
-    "hyp_shares": 95.5,
-    "resolution": "",
-    "hypothetical_pnl": "",
-    "realized_pnl": "",
-    "bankroll_at_signal": 1184.24,
-    "daily_pnl": 47.13,
-    "exposure_at_signal": 0,
-    "consecutive_losses": 0,
-    "end": "2026-09-18T15:30:00+00:00"
-   },
-   "side": "DOWN",
-   "ref": 1.3881999999999999,
-   "asset": "XRP",
-   "end": "2026-09-18T15:30:00+00:00",
-   "executed": false
-  }
- ],
+ "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1789742509.135003
+  1789742509.135003,
+  1789745929.009516
  ]
 }
