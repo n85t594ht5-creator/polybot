@@ -1998,3 +1998,11 @@
 2026-09-18 11:49:47,670 INFO  STATS trades=120 winrate=82% pnl=+1035.86 PF=3.86 bankroll=1135.86
 2026-09-18 11:51:48,543 INFO  STATS trades=120 winrate=82% pnl=+1035.86 PF=3.86 bankroll=1135.86
 2026-09-18 11:53:59,795 INFO  STATS trades=120 winrate=82% pnl=+1035.86 PF=3.86 bankroll=1135.86
+2026-09-18 12:14:26,900 INFO  State loaded: bankroll=1135.86, open=0
+2026-09-18 12:14:26,900 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP'] bankroll=1136
+2026-09-18 12:16:27,611 INFO  STATS trades=120 winrate=82% pnl=+1035.86 PF=3.86 bankroll=1135.86
+2026-09-18 12:18:33,893 INFO  STATS trades=120 winrate=82% pnl=+1035.86 PF=3.86 bankroll=1135.86
+2026-09-18 12:20:44,240 INFO  STATS trades=120 winrate=82% pnl=+1035.86 PF=3.86 bankroll=1135.86
+2026-09-18 12:22:45,244 INFO  STATS trades=120 winrate=82% pnl=+1035.86 PF=3.86 bankroll=1135.86
+2026-09-18 12:23:39,113 WARNING Gamma error: HTTPSConnectionPool(host='gamma-api.polymarket.com', port=443): Read timed out. (read timeout=10)
+2026-09-18 12:24:58,810 INFO  STATS trades=120 winrate=82% pnl=+1035.86 PF=3.86 bankroll=1135.86
