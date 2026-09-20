@@ -1,5 +1,5 @@
 {
- "bankroll": 1221.7800000000002,
+ "bankroll": 1261.3700000000001,
  "positions": {},
  "closed": [
   {
@@ -4613,19 +4613,58 @@
    "won": true,
    "pnl": 2.28,
    "final": 108.03
+  },
+  {
+   "market_id": "4727621",
+   "asset": "BTC",
+   "side": "UP",
+   "token": "9080240557890567184965661379424270913153537159195228025205337357588574830565",
+   "minutes": 5,
+   "start": "2026-09-20T16:30:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 53.35,
+   "hyp_shares": 92.93,
+   "depth_usd": 120.98,
+   "remaining_sec": 50.4,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.0012,
+   "elapsed_bucket": "80\u201385%",
+   "cur": 81251.01,
+   "entry": 0.5741,
+   "best_ask": 0.62,
+   "cost": 53.35,
+   "shares": 92.94,
+   "depth_note": "",
+   "conf": 0.786,
+   "move": 0.00121,
+   "elapsed": 0.83,
+   "entry_bucket": "0.55\u20130.60",
+   "move_bucket": "0.12\u20130.15%",
+   "ref": 81152.78,
+   "end": "2026-09-20T16:35:00+00:00",
+   "opened": "2026-09-20T16:34:09.966249+00:00",
+   "question": "Bitcoin Up or Down - September 20, 12:30PM-12:35PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 92.94,
+   "requested_cost": 53.35,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 39.59,
+   "final": 81216.855
   }
  ],
  "day": "2026-09-20",
- "day_pnl": 2.28,
+ "day_pnl": 41.87,
  "day_start_bankroll": 1219.5000000000002,
  "execstats": {
-  "submitted": 109,
-  "filled": 109,
+  "submitted": 110,
+  "filled": 110,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.6676000000000009,
-  "slip_n": 109,
+  "slip_sum": 0.6217000000000009,
+  "slip_n": 110,
   "by_window": {
    "15m": {
     "signal": 230,
@@ -4636,9 +4675,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 129,
-    "submitted": 42,
-    "filled": 42,
+    "signal": 130,
+    "submitted": 43,
+    "filled": 43,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -4648,5 +4687,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1789922049.9662802
+ ]
 }
