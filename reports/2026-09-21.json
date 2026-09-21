@@ -1,20 +1,20 @@
 {
  "day": "2026-09-21",
- "generated": "2026-09-21T17:54:01.810570+00:00",
- "trades": 5,
- "wins": 3,
+ "generated": "2026-09-21T23:53:17.645321+00:00",
+ "trades": 6,
+ "wins": 4,
  "losses": 2,
- "winrate": 0.6,
- "pnl": 76.47,
- "gross_win": 120.99,
+ "winrate": 0.6666666666666666,
+ "pnl": 122.63,
+ "gross_win": 167.15,
  "gross_loss": -44.52,
- "pf": 2.72,
- "bankroll_end": 1358.2200000000003,
+ "pf": 3.75,
+ "bankroll_end": 1404.3800000000003,
  "by_asset": {
   "ETH": {
-   "n": 2,
-   "w": 1,
-   "pnl": 23.67
+   "n": 3,
+   "w": 2,
+   "pnl": 69.83
   },
   "BTC": {
    "n": 1,
@@ -39,9 +39,9 @@
    "pnl": 29.19
   },
   "5m": {
-   "n": 2,
-   "w": 1,
-   "pnl": 47.28
+   "n": 3,
+   "w": 2,
+   "pnl": 93.44
   }
  },
  "by_hour": {
@@ -69,13 +69,18 @@
    "n": 1,
    "w": 0,
    "pnl": -10.6
+  },
+  "18": {
+   "n": 1,
+   "w": 1,
+   "pnl": 46.16
   }
  },
  "by_entry": {
   "0.50–0.55": {
-   "n": 5,
-   "w": 3,
-   "pnl": 76.47
+   "n": 6,
+   "w": 4,
+   "pnl": 122.63
   }
  },
  "by_move": {
@@ -85,16 +90,16 @@
    "pnl": -28.4
   },
   "0.10–0.12%": {
-   "n": 3,
-   "w": 2,
-   "pnl": 104.87
+   "n": 4,
+   "w": 3,
+   "pnl": 151.03
   }
  },
  "by_side": {
   "DOWN": {
-   "n": 4,
-   "w": 2,
-   "pnl": 18.59
+   "n": 5,
+   "w": 3,
+   "pnl": 64.75
   },
   "UP": {
    "n": 1,
@@ -103,16 +108,16 @@
   }
  },
  "execstats": {
-  "submitted": 116,
-  "filled": 116,
+  "submitted": 117,
+  "filled": 117,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.656600000000001,
-  "slip_n": 116,
+  "slip_sum": 0.666600000000001,
+  "slip_n": 117,
   "by_window": {
    "15m": {
-    "signal": 243,
+    "signal": 247,
     "submitted": 70,
     "filled": 70,
     "partial": 0,
@@ -120,90 +125,90 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 138,
-    "submitted": 46,
-    "filled": 46,
+    "signal": 141,
+    "submitted": 47,
+    "filled": 47,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    }
   }
  },
- "signals": 19,
- "signals_executed": 5,
- "signals_blocked": 14,
- "hypothetical_pnl": 347.89,
+ "signals": 26,
+ "signals_executed": 6,
+ "signals_blocked": 20,
+ "hypothetical_pnl": 703.96,
  "signals_by_window": {
   "15m": {
-   "n": 13,
-   "w": 10,
-   "hyp": 267.07,
+   "n": 17,
+   "w": 14,
+   "hyp": 447.73,
    "real": 29.19
   },
   "5m": {
-   "n": 6,
-   "w": 4,
-   "hyp": 80.82,
-   "real": 47.28
+   "n": 9,
+   "w": 7,
+   "hyp": 256.23,
+   "real": 93.44
   }
  },
  "signals_by_asset": {
   "ETH": {
-   "n": 4,
-   "w": 3,
-   "hyp": 71.3,
-   "real": 23.67
+   "n": 5,
+   "w": 4,
+   "hyp": 133.99,
+   "real": 69.83
   },
   "XRP": {
-   "n": 7,
-   "w": 6,
-   "hyp": 225.6,
+   "n": 11,
+   "w": 10,
+   "hyp": 388.54,
    "real": 5.52
   },
   "SOL": {
-   "n": 7,
-   "w": 4,
-   "hyp": -6.89,
+   "n": 8,
+   "w": 5,
+   "hyp": 53.33,
    "real": -10.6
   },
   "BTC": {
-   "n": 1,
-   "w": 1,
-   "hyp": 57.88,
+   "n": 2,
+   "w": 2,
+   "hyp": 128.1,
    "real": 57.88
   }
  },
  "signals_by_entry": {
   "0.50–0.55": {
-   "n": 7,
-   "w": 4,
-   "hyp": 41.83,
-   "real": 76.47
+   "n": 10,
+   "w": 7,
+   "hyp": 234.96,
+   "real": 122.63
   },
   "0.55–0.60": {
-   "n": 7,
-   "w": 6,
-   "hyp": 211.65,
+   "n": 9,
+   "w": 8,
+   "hyp": 302.95,
    "real": 0.0
   },
   "0.60–0.62": {
-   "n": 5,
-   "w": 4,
-   "hyp": 94.41,
+   "n": 7,
+   "w": 6,
+   "hyp": 166.05,
    "real": 0.0
   }
  },
  "signals_by_gate": {
   "—": {
-   "n": 5,
-   "w": 3,
-   "hyp": 41.53,
-   "real": 76.47
+   "n": 6,
+   "w": 4,
+   "hyp": 104.22,
+   "real": 122.63
   },
   "NO_LIQUIDITY": {
-   "n": 13,
-   "w": 10,
-   "hyp": 259.29,
+   "n": 19,
+   "w": 16,
+   "hyp": 552.67,
    "real": 0.0
   },
   "MAX_PER_WINDOW": {
@@ -283,6 +288,20 @@
    "won": false,
    "pnl": -10.6,
    "question": "Solana Up or Down - September 21, 10:10AM-10:15AM ET"
+  },
+  {
+   "opened": "2026-09-21T18:33:52.175443+00:00",
+   "asset": "ETH",
+   "side": "DOWN",
+   "minutes": 5,
+   "entry": 0.52,
+   "cost": 50.01,
+   "shares": 96.17,
+   "conf": 0.764,
+   "move": -0.00109,
+   "won": true,
+   "pnl": 46.16,
+   "question": "Ethereum Up or Down - September 21, 2:30PM-2:35PM ET"
   }
  ]
 }
