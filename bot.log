@@ -2090,3 +2090,10 @@
 2026-09-21 15:18:28,992 INFO  STATS trades=132 winrate=83% pnl=+1258.22 PF=4.10 bankroll=1358.22
 2026-09-21 15:20:41,677 INFO  STATS trades=132 winrate=83% pnl=+1258.22 PF=4.10 bankroll=1358.22
 2026-09-21 15:22:42,481 INFO  STATS trades=132 winrate=83% pnl=+1258.22 PF=4.10 bankroll=1358.22
+2026-09-21 15:24:58,205 INFO  STATS trades=132 winrate=83% pnl=+1258.22 PF=4.10 bankroll=1358.22
+2026-09-21 15:27:24,935 INFO  STATS trades=132 winrate=83% pnl=+1258.22 PF=4.10 bankroll=1358.22
+2026-09-21 15:30:09,717 INFO  STATS trades=132 winrate=83% pnl=+1258.22 PF=4.10 bankroll=1358.22
+2026-09-21 15:32:10,568 INFO  STATS trades=132 winrate=83% pnl=+1258.22 PF=4.10 bankroll=1358.22
+2026-09-21 15:33:05,133 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-21T15%3A33%3A00Z
+2026-09-21 15:33:08,226 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-21T15%3A33%3A00Z
+2026-09-21 15:33:09,298 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-21T15%3A33%3A06Z
