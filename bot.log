@@ -2023,3 +2023,17 @@
 2026-09-21 18:50:48,939 INFO  STATS trades=133 winrate=83% pnl=+1304.38 PF=4.21 bankroll=1404.38
 2026-09-21 18:52:49,875 INFO  STATS trades=133 winrate=83% pnl=+1304.38 PF=4.21 bankroll=1404.38
 2026-09-21 18:55:06,502 INFO  STATS trades=133 winrate=83% pnl=+1304.38 PF=4.21 bankroll=1404.38
+2026-09-21 18:57:15,994 INFO  STATS trades=133 winrate=83% pnl=+1304.38 PF=4.21 bankroll=1404.38
+2026-09-21 18:59:34,696 INFO  STATS trades=133 winrate=83% pnl=+1304.38 PF=4.21 bankroll=1404.38
+2026-09-21 19:00:24,489 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-21T19%3A00%3A18Z
+2026-09-21 19:00:29,878 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-21T19%3A00%3A26Z
+2026-09-21 19:00:34,151 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-21T19%3A00%3A30Z
+2026-09-21 19:00:57,731 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-21T19%3A00%3A54Z
+2026-09-21 19:01:10,224 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-21T19%3A01%3A07Z
+2026-09-21 19:01:17,352 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-21T19%3A01%3A11Z
+2026-09-21 19:01:33,592 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-21T19%3A01%3A27Z
+2026-09-21 19:01:50,101 INFO  STATS trades=133 winrate=83% pnl=+1304.38 PF=4.21 bankroll=1404.38
+2026-09-21 19:01:53,180 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-21T19%3A01%3A49Z
+2026-09-21 19:02:00,188 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-21T19%3A01%3A54Z
+2026-09-21 19:02:09,280 WARNING Gamma error: 500 Server Error: Internal Server Error for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-09-21T19%3A02%3A03Z
+2026-09-21 19:04:01,436 INFO  STATS trades=133 winrate=83% pnl=+1304.38 PF=4.21 bankroll=1404.38
