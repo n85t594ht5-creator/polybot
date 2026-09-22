@@ -1,5 +1,5 @@
 {
- "bankroll": 1414.6400000000003,
+ "bankroll": 1424.4400000000003,
  "positions": {},
  "closed": [
   {
@@ -4964,19 +4964,58 @@
    "won": true,
    "pnl": 10.26,
    "final": 2750.63
+  },
+  {
+   "market_id": "4780054",
+   "asset": "SOL",
+   "side": "DOWN",
+   "token": "16504861762560304477252969246633163151194441049359032737009683507872929365878",
+   "minutes": 5,
+   "start": "2026-09-22T02:00:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 70.73,
+   "hyp_shares": 138.69,
+   "depth_usd": 10.2,
+   "remaining_sec": 67.5,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 117.45,
+   "entry": 0.51,
+   "best_ask": 0.5,
+   "cost": 10.2,
+   "shares": 20.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 10.20$ \u0438\u0437 70.73$",
+   "conf": 0.763,
+   "move": -0.00102,
+   "elapsed": 0.78,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 117.57,
+   "end": "2026-09-22T02:05:00+00:00",
+   "opened": "2026-09-22T02:03:52.921248+00:00",
+   "question": "Solana Up or Down - September 21, 10:00PM-10:05PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 20.0,
+   "requested_cost": 10.2,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 9.8,
+   "final": 117.375
   }
  ],
  "day": "2026-09-22",
- "day_pnl": 10.260000000000002,
+ "day_pnl": 20.060000000000002,
  "day_start_bankroll": 1404.3800000000003,
  "execstats": {
-  "submitted": 118,
-  "filled": 118,
+  "submitted": 119,
+  "filled": 119,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.676600000000001,
-  "slip_n": 118,
+  "slip_sum": 0.686600000000001,
+  "slip_n": 119,
   "by_window": {
    "15m": {
     "signal": 252,
@@ -4987,68 +5026,20 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 141,
-    "submitted": 47,
-    "filled": 47,
+    "signal": 142,
+    "submitted": 48,
+    "filled": 48,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    }
   }
  },
- "pending_signals": [
-  {
-   "row": {
-    "timestamp": "2026-09-22T01:56:24.893769+00:00",
-    "asset": "SOL",
-    "window": "15m",
-    "market_id": "4779920",
-    "elapsed": 0.76,
-    "remaining_seconds": 215.5,
-    "reference_price": 117.64,
-    "current_price": 117.47,
-    "move_pct": -0.145,
-    "direction": "DOWN",
-    "entry_price": 0.6,
-    "bid": "",
-    "ask": 0.6,
-    "spread": "",
-    "confidence": 0.772,
-    "required_move": 0.12,
-    "entry_bucket": "0.55\u20130.60",
-    "move_bucket": "0.12\u20130.15%",
-    "elapsed_bucket": "75\u201380%",
-    "risk_gate": "NO_LIQUIDITY",
-    "signal_status": "BLOCKED_BY_RISK",
-    "order_status": "",
-    "execution_quality": "UNEXECUTABLE",
-    "requested_shares": 101.09,
-    "filled_shares": "",
-    "remaining_shares": "",
-    "average_fill_price": "",
-    "best_ask": 0.6,
-    "slippage": "",
-    "hyp_cost": 60.66,
-    "hyp_shares": 101.09,
-    "resolution": "",
-    "hypothetical_pnl": "",
-    "realized_pnl": "",
-    "bankroll_at_signal": 1414.64,
-    "daily_pnl": 10.26,
-    "exposure_at_signal": 0,
-    "consecutive_losses": 0,
-    "end": "2026-09-22T02:00:00+00:00"
-   },
-   "side": "DOWN",
-   "ref": 117.64,
-   "asset": "SOL",
-   "end": "2026-09-22T02:00:00+00:00",
-   "executed": false
-  }
- ],
+ "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1790040405.1114984
+  1790040405.1114984,
+  1790042632.9212744
  ]
 }
