@@ -2042,3 +2042,7 @@
 2026-09-22 01:35:12,499 INFO  WIN  ETH DOWN pnl=+10.26 bankroll=1414.64
 2026-09-22 01:36:26,851 INFO  STATS trades=134 winrate=83% pnl=+1314.64 PF=4.23 bankroll=1414.64
 2026-09-22 01:38:30,204 INFO  STATS trades=134 winrate=83% pnl=+1314.64 PF=4.23 bankroll=1414.64
+2026-09-22 01:40:49,128 INFO  STATS trades=134 winrate=83% pnl=+1314.64 PF=4.23 bankroll=1414.64
+2026-09-22 01:43:43,245 INFO  STATS trades=134 winrate=83% pnl=+1314.64 PF=4.23 bankroll=1414.64
+2026-09-22 01:46:05,246 INFO  STATS trades=134 winrate=83% pnl=+1314.64 PF=4.23 bankroll=1414.64
+2026-09-22 01:48:06,554 INFO  STATS trades=134 winrate=83% pnl=+1314.64 PF=4.23 bankroll=1414.64
