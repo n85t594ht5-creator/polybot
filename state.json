@@ -1,5 +1,5 @@
 {
- "bankroll": 1586.3500000000004,
+ "bankroll": 1592.2300000000005,
  "positions": {},
  "closed": [
   {
@@ -5237,24 +5237,63 @@
    "won": true,
    "pnl": 69.65,
    "final": 85904.95
+  },
+  {
+   "market_id": "4797378",
+   "asset": "SOL",
+   "side": "UP",
+   "token": "9866944354563190853528577508503904396815587944603847787066324932587867806991",
+   "minutes": 15,
+   "start": "2026-09-22T15:30:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 79.32,
+   "hyp_shares": 136.75,
+   "depth_usd": 8.12,
+   "remaining_sec": 123.6,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.0012,
+   "elapsed_bucket": "85\u201390%",
+   "cur": 117.54,
+   "entry": 0.58,
+   "best_ask": 0.57,
+   "cost": 8.12,
+   "shares": 14.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 8.12$ \u0438\u0437 79.32$",
+   "conf": 0.8,
+   "move": 0.00136,
+   "elapsed": 0.86,
+   "entry_bucket": "0.55\u20130.60",
+   "move_bucket": "0.12\u20130.15%",
+   "ref": 117.38,
+   "end": "2026-09-22T15:45:00+00:00",
+   "opened": "2026-09-22T15:42:56.740292+00:00",
+   "question": "Solana Up or Down - September 22, 11:30AM-11:45AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 14.0,
+   "requested_cost": 8.12,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 5.88,
+   "final": 117.63499999999999
   }
  ],
  "day": "2026-09-22",
- "day_pnl": 181.97000000000003,
+ "day_pnl": 187.85000000000002,
  "day_start_bankroll": 1404.3800000000003,
  "execstats": {
-  "submitted": 125,
-  "filled": 125,
+  "submitted": 126,
+  "filled": 126,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.6766000000000011,
-  "slip_n": 125,
+  "slip_sum": 0.6866000000000011,
+  "slip_n": 126,
   "by_window": {
    "15m": {
-    "signal": 260,
-    "submitted": 74,
-    "filled": 74,
+    "signal": 261,
+    "submitted": 75,
+    "filled": 75,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -5272,5 +5311,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1790091776.7403114
+ ]
 }
