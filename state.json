@@ -1,5 +1,5 @@
 {
- "bankroll": 1420.2000000000003,
+ "bankroll": 1429.4400000000003,
  "positions": {},
  "closed": [
   {
@@ -5042,19 +5042,58 @@
    "won": false,
    "pnl": -4.24,
    "final": 116.835
+  },
+  {
+   "market_id": "4787198",
+   "asset": "XRP",
+   "side": "UP",
+   "token": "82966724956280952000426218011223037362697621564935035741792936732299173033986",
+   "minutes": 5,
+   "start": "2026-09-22T10:25:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 68.81,
+   "hyp_shares": 118.65,
+   "depth_usd": 12.76,
+   "remaining_sec": 59.0,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.0012,
+   "elapsed_bucket": "80\u201385%",
+   "cur": 1.5266,
+   "entry": 0.58,
+   "best_ask": 0.57,
+   "cost": 12.76,
+   "shares": 22.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 12.76$ \u0438\u0437 68.81$",
+   "conf": 0.778,
+   "move": 0.00125,
+   "elapsed": 0.8,
+   "entry_bucket": "0.55\u20130.60",
+   "move_bucket": "0.12\u20130.15%",
+   "ref": 1.5247000000000002,
+   "end": "2026-09-22T10:30:00+00:00",
+   "opened": "2026-09-22T10:29:01.367556+00:00",
+   "question": "XRP Up or Down - September 22, 6:25AM-6:30AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 22.0,
+   "requested_cost": 12.76,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 9.24,
+   "final": 1.5258
   }
  ],
  "day": "2026-09-22",
- "day_pnl": 15.820000000000002,
+ "day_pnl": 25.060000000000002,
  "day_start_bankroll": 1404.3800000000003,
  "execstats": {
-  "submitted": 120,
-  "filled": 120,
+  "submitted": 121,
+  "filled": 121,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.696600000000001,
-  "slip_n": 120,
+  "slip_sum": 0.706600000000001,
+  "slip_n": 121,
   "by_window": {
    "15m": {
     "signal": 255,
@@ -5065,9 +5104,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 146,
-    "submitted": 48,
-    "filled": 48,
+    "signal": 147,
+    "submitted": 49,
+    "filled": 49,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -5075,7 +5114,9 @@
   }
  },
  "pending_signals": [],
- "consec_losses": 1,
+ "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1790072941.3675811
+ ]
 }
