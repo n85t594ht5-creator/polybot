@@ -1,6 +1,6 @@
 {
  "day": "2026-09-21",
- "generated": "2026-09-21T23:53:17.645321+00:00",
+ "generated": "2026-09-22T05:55:50.657742+00:00",
  "trades": 6,
  "wins": 4,
  "losses": 2,
@@ -9,7 +9,7 @@
  "gross_win": 167.15,
  "gross_loss": -44.52,
  "pf": 3.75,
- "bankroll_end": 1404.3800000000003,
+ "bankroll_end": 1420.2000000000003,
  "by_asset": {
   "ETH": {
    "n": 3,
@@ -108,26 +108,26 @@
   }
  },
  "execstats": {
-  "submitted": 117,
-  "filled": 117,
+  "submitted": 120,
+  "filled": 120,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.666600000000001,
-  "slip_n": 117,
+  "slip_sum": 0.696600000000001,
+  "slip_n": 120,
   "by_window": {
    "15m": {
-    "signal": 247,
-    "submitted": 70,
-    "filled": 70,
+    "signal": 255,
+    "submitted": 72,
+    "filled": 72,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    },
    "5m": {
-    "signal": 141,
-    "submitted": 47,
-    "filled": 47,
+    "signal": 144,
+    "submitted": 48,
+    "filled": 48,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
