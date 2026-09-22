@@ -5026,7 +5026,7 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 142,
+    "signal": 143,
     "submitted": 48,
     "filled": 48,
     "partial": 0,
@@ -5038,7 +5038,5 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": [
-  1790042632.9212744
- ]
+ "trade_times": []
 }
