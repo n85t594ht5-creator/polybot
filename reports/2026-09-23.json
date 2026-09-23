@@ -1,0 +1,152 @@
+{
+ "day": "2026-09-23",
+ "generated": "2026-09-23T05:55:21.725418+00:00",
+ "trades": 1,
+ "wins": 1,
+ "losses": 0,
+ "winrate": 1.0,
+ "pnl": 1.9,
+ "gross_win": 1.9,
+ "gross_loss": 0,
+ "pf": 99.0,
+ "bankroll_end": 1609.6100000000006,
+ "by_asset": {
+  "XRP": {
+   "n": 1,
+   "w": 1,
+   "pnl": 1.9
+  }
+ },
+ "by_window": {
+  "15m": {
+   "n": 1,
+   "w": 1,
+   "pnl": 1.9
+  }
+ },
+ "by_hour": {
+  "03": {
+   "n": 1,
+   "w": 1,
+   "pnl": 1.9
+  }
+ },
+ "by_entry": {
+  "0.60–0.62": {
+   "n": 1,
+   "w": 1,
+   "pnl": 1.9
+  }
+ },
+ "by_move": {
+  "0.20%+": {
+   "n": 1,
+   "w": 1,
+   "pnl": 1.9
+  }
+ },
+ "by_side": {
+  "DOWN": {
+   "n": 1,
+   "w": 1,
+   "pnl": 1.9
+  }
+ },
+ "execstats": {
+  "submitted": 130,
+  "filled": 130,
+  "partial": 0,
+  "unfilled": 0,
+  "cancelled": 0,
+  "slip_sum": 0.7266000000000011,
+  "slip_n": 130,
+  "by_window": {
+   "15m": {
+    "signal": 267,
+    "submitted": 78,
+    "filled": 78,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   },
+   "5m": {
+    "signal": 156,
+    "submitted": 52,
+    "filled": 52,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   }
+  }
+ },
+ "signals": 2,
+ "signals_executed": 1,
+ "signals_blocked": 1,
+ "hypothetical_pnl": 125.97,
+ "signals_by_window": {
+  "15m": {
+   "n": 2,
+   "w": 2,
+   "hyp": 125.97,
+   "real": 1.9
+  }
+ },
+ "signals_by_asset": {
+  "SOL": {
+   "n": 1,
+   "w": 1,
+   "hyp": 77.23,
+   "real": 0.0
+  },
+  "XRP": {
+   "n": 1,
+   "w": 1,
+   "hyp": 48.74,
+   "real": 1.9
+  }
+ },
+ "signals_by_entry": {
+  "0.50–0.55": {
+   "n": 1,
+   "w": 1,
+   "hyp": 77.23,
+   "real": 0.0
+  },
+  "0.60–0.62": {
+   "n": 1,
+   "w": 1,
+   "hyp": 48.74,
+   "real": 1.9
+  }
+ },
+ "signals_by_gate": {
+  "NO_LIQUIDITY": {
+   "n": 1,
+   "w": 1,
+   "hyp": 77.23,
+   "real": 0.0
+  },
+  "—": {
+   "n": 1,
+   "w": 1,
+   "hyp": 48.74,
+   "real": 1.9
+  }
+ },
+ "trade_list": [
+  {
+   "opened": "2026-09-23T03:56:15.958798+00:00",
+   "asset": "XRP",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.62,
+   "cost": 3.1,
+   "shares": 5.0,
+   "conf": 0.803,
+   "move": -0.00259,
+   "won": true,
+   "pnl": 1.9,
+   "question": "XRP Up or Down - September 22, 11:45PM-12:00AM ET"
+  }
+ ]
+}
