@@ -1,6 +1,6 @@
 {
  "day": "2026-09-23",
- "generated": "2026-09-23T17:55:06.564110+00:00",
+ "generated": "2026-09-23T23:54:42.793449+00:00",
  "trades": 4,
  "wins": 3,
  "losses": 1,
@@ -97,7 +97,7 @@
   "slip_n": 133,
   "by_window": {
    "15m": {
-    "signal": 271,
+    "signal": 272,
     "submitted": 80,
     "filled": 80,
     "partial": 0,
@@ -105,7 +105,7 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 164,
+    "signal": 165,
     "submitted": 53,
     "filled": 53,
     "partial": 0,
@@ -114,21 +114,21 @@
    }
   }
  },
- "signals": 14,
+ "signals": 16,
  "signals_executed": 4,
- "signals_blocked": 10,
- "hypothetical_pnl": 787.55,
+ "signals_blocked": 12,
+ "hypothetical_pnl": 924.21,
  "signals_by_window": {
   "15m": {
-   "n": 6,
-   "w": 5,
-   "hyp": 226.35,
+   "n": 7,
+   "w": 6,
+   "hyp": 295.1,
    "real": -1.16
   },
   "5m": {
-   "n": 8,
-   "w": 8,
-   "hyp": 561.2,
+   "n": 9,
+   "w": 9,
+   "hyp": 629.11,
    "real": 74.15
   }
  },
@@ -140,9 +140,9 @@
    "real": 0.0
   },
   "XRP": {
-   "n": 9,
-   "w": 8,
-   "hyp": 410.52,
+   "n": 11,
+   "w": 10,
+   "hyp": 547.18,
    "real": -1.16
   },
   "BTC": {
@@ -154,9 +154,9 @@
  },
  "signals_by_entry": {
   "0.50–0.55": {
-   "n": 8,
-   "w": 8,
-   "hyp": 594.44,
+   "n": 10,
+   "w": 10,
+   "hyp": 731.1,
    "real": 74.15
   },
   "0.60–0.62": {
@@ -174,9 +174,9 @@
  },
  "signals_by_gate": {
   "NO_LIQUIDITY": {
-   "n": 10,
-   "w": 10,
-   "hyp": 691.83,
+   "n": 12,
+   "w": 12,
+   "hyp": 828.49,
    "real": 0.0
   },
   "—": {
