@@ -1,6 +1,6 @@
 {
  "day": "2026-09-23",
- "generated": "2026-09-24T17:54:54.074050+00:00",
+ "generated": "2026-09-24T23:54:20.190022+00:00",
  "trades": 4,
  "wins": 3,
  "losses": 1,
@@ -9,7 +9,7 @@
  "gross_win": 83.25,
  "gross_loss": -10.26,
  "pf": 8.11,
- "bankroll_end": 1746.8200000000008,
+ "bankroll_end": 1684.520000000001,
  "by_asset": {
   "XRP": {
    "n": 3,
@@ -88,18 +88,18 @@
   }
  },
  "execstats": {
-  "submitted": 136,
-  "filled": 136,
+  "submitted": 137,
+  "filled": 137,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.774800000000001,
-  "slip_n": 136,
+  "slip_sum": 0.775900000000001,
+  "slip_n": 137,
   "by_window": {
    "15m": {
-    "signal": 279,
-    "submitted": 81,
-    "filled": 81,
+    "signal": 282,
+    "submitted": 82,
+    "filled": 82,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
