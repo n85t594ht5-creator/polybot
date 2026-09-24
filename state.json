@@ -1,5 +1,5 @@
 {
- "bankroll": 1746.8200000000008,
+ "bankroll": 1684.520000000001,
  "positions": {},
  "closed": [
   {
@@ -5666,24 +5666,63 @@
    "won": true,
    "pnl": 8.4,
    "final": 117.14500000000001
+  },
+  {
+   "market_id": "4893497",
+   "asset": "XRP",
+   "side": "UP",
+   "token": "106333524952287288216190340627038344655934425446854807575555723980403381103141",
+   "minutes": 15,
+   "start": "2026-09-24T21:45:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 87.34,
+   "hyp_shares": 145.3,
+   "depth_usd": 62.3,
+   "remaining_sec": 98.2,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.0012,
+   "elapsed_bucket": "85\u201390%",
+   "cur": 1.5408,
+   "entry": 0.6011,
+   "best_ask": 0.6,
+   "cost": 62.3,
+   "shares": 103.64,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 62.30$ \u0438\u0437 87.34$",
+   "conf": 0.815,
+   "move": 0.00159,
+   "elapsed": 0.89,
+   "entry_bucket": "0.60\u20130.62",
+   "move_bucket": "0.15\u20130.20%",
+   "ref": 1.5383499999999999,
+   "end": "2026-09-24T22:00:00+00:00",
+   "opened": "2026-09-24T21:58:22.168155+00:00",
+   "question": "XRP Up or Down - September 24, 5:45PM-6:00PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 103.64,
+   "requested_cost": 62.3,
+   "remaining_shares": 0.0,
+   "won": false,
+   "pnl": -62.3,
+   "final": 1.5373
   }
  ],
  "day": "2026-09-24",
- "day_pnl": 66.12,
+ "day_pnl": 3.8200000000000074,
  "day_start_bankroll": 1680.7000000000007,
  "execstats": {
-  "submitted": 136,
-  "filled": 136,
+  "submitted": 137,
+  "filled": 137,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.774800000000001,
-  "slip_n": 136,
+  "slip_sum": 0.775900000000001,
+  "slip_n": 137,
   "by_window": {
    "15m": {
-    "signal": 279,
-    "submitted": 81,
-    "filled": 81,
+    "signal": 280,
+    "submitted": 82,
+    "filled": 82,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -5699,7 +5738,9 @@
   }
  },
  "pending_signals": [],
- "consec_losses": 0,
+ "consec_losses": 1,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1790287102.1681798
+ ]
 }
