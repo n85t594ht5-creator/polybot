@@ -1,5 +1,5 @@
 {
- "bankroll": 1768.730000000001,
+ "bankroll": 1789.0500000000009,
  "positions": {},
  "closed": [
   {
@@ -5822,24 +5822,63 @@
    "won": true,
    "pnl": 69.51,
    "final": 84412.495
+  },
+  {
+   "market_id": "4906518",
+   "asset": "SOL",
+   "side": "UP",
+   "token": "30123042751607125905925448418132390143237232209992806820176312904859602358700",
+   "minutes": 15,
+   "start": "2026-09-25T13:00:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 88.44,
+   "hyp_shares": 163.77,
+   "depth_usd": 23.85,
+   "remaining_sec": 135.8,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "80\u201385%",
+   "cur": 120.72,
+   "entry": 0.54,
+   "best_ask": 0.53,
+   "cost": 23.85,
+   "shares": 44.17,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 23.85$ \u0438\u0437 88.44$",
+   "conf": 0.788,
+   "move": 0.00112,
+   "elapsed": 0.85,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 120.58500000000001,
+   "end": "2026-09-25T13:15:00+00:00",
+   "opened": "2026-09-25T13:12:44.665869+00:00",
+   "question": "Solana Up or Down - September 25, 9:00AM-9:15AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 44.17,
+   "requested_cost": 23.85,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 20.32,
+   "final": 120.685
   }
  ],
  "day": "2026-09-25",
- "day_pnl": 84.21000000000001,
+ "day_pnl": 104.53,
  "day_start_bankroll": 1684.520000000001,
  "execstats": {
-  "submitted": 140,
-  "filled": 140,
+  "submitted": 141,
+  "filled": 141,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.8059000000000011,
-  "slip_n": 140,
+  "slip_sum": 0.8159000000000011,
+  "slip_n": 141,
   "by_window": {
    "15m": {
-    "signal": 293,
-    "submitted": 84,
-    "filled": 84,
+    "signal": 294,
+    "submitted": 85,
+    "filled": 85,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -5858,6 +5897,7 @@
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1790339251.867612
+  1790339251.867612,
+  1790341964.6658967
  ]
 }
