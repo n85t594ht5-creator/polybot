@@ -2147,3 +2147,8 @@
 2026-09-25 11:28:38,854 INFO  STATS trades=155 winrate=83% pnl=+1599.22 PF=4.31 bankroll=1699.22
 2026-09-25 11:31:00,227 INFO  STATS trades=155 winrate=83% pnl=+1599.22 PF=4.31 bankroll=1699.22
 2026-09-25 11:33:01,407 INFO  STATS trades=155 winrate=83% pnl=+1599.22 PF=4.31 bankroll=1699.22
+2026-09-25 11:35:14,624 INFO  STATS trades=155 winrate=83% pnl=+1599.22 PF=4.31 bankroll=1699.22
+2026-09-25 11:37:15,814 INFO  STATS trades=155 winrate=83% pnl=+1599.22 PF=4.31 bankroll=1699.22
+2026-09-25 11:38:54,300 INFO  SIGNAL ETH DOWN @ 0.550 заблокирован (NO_LIQUIDITY)
+2026-09-25 11:39:25,588 INFO  STATS trades=155 winrate=83% pnl=+1599.22 PF=4.31 bankroll=1699.22
+2026-09-25 11:41:32,826 INFO  STATS trades=155 winrate=83% pnl=+1599.22 PF=4.31 bankroll=1699.22
