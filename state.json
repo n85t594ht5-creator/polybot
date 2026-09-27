@@ -1,5 +1,5 @@
 {
- "bankroll": 1911.7900000000004,
+ "bankroll": 1929.3400000000004,
  "positions": {},
  "closed": [
   {
@@ -6212,24 +6212,63 @@
    "won": true,
    "pnl": 1.06,
    "final": 2686.1800000000003
+  },
+  {
+   "market_id": "4980168",
+   "asset": "SOL",
+   "side": "UP",
+   "token": "21429159722375262405709733308520533770400903897730524969001254285045026756292",
+   "minutes": 15,
+   "start": "2026-09-27T13:15:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 95.59,
+   "hyp_shares": 173.8,
+   "depth_usd": 21.45,
+   "remaining_sec": 208.7,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 122.84,
+   "entry": 0.55,
+   "best_ask": 0.54,
+   "cost": 21.45,
+   "shares": 39.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 21.45$ \u0438\u0437 95.59$",
+   "conf": 0.799,
+   "move": 0.00228,
+   "elapsed": 0.77,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.20%+",
+   "ref": 122.56,
+   "end": "2026-09-27T13:30:00+00:00",
+   "opened": "2026-09-27T13:26:31.677431+00:00",
+   "question": "Solana Up or Down - September 27, 9:15AM-9:30AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 39.0,
+   "requested_cost": 21.45,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 17.55,
+   "final": 123.17
   }
  ],
  "day": "2026-09-27",
- "day_pnl": 0.0,
+ "day_pnl": 17.55,
  "day_start_bankroll": 1911.7900000000004,
  "execstats": {
-  "submitted": 150,
-  "filled": 150,
+  "submitted": 151,
+  "filled": 151,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.7892000000000011,
-  "slip_n": 150,
+  "slip_sum": 0.7992000000000011,
+  "slip_n": 151,
   "by_window": {
    "15m": {
-    "signal": 307,
-    "submitted": 87,
-    "filled": 87,
+    "signal": 308,
+    "submitted": 88,
+    "filled": 88,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -6247,5 +6286,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1790515591.67746
+ ]
 }
