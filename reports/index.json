@@ -298,5 +298,15 @@
   "pnl": 37.52,
   "pf": 99.0,
   "bankroll_end": 1911.7900000000004
+ },
+ {
+  "day": "2026-09-27",
+  "trades": 0,
+  "wins": 0,
+  "losses": 0,
+  "winrate": null,
+  "pnl": 0,
+  "pf": null,
+  "bankroll_end": 1911.7900000000004
  }
 ]
