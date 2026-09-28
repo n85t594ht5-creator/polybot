@@ -1,5 +1,5 @@
 {
- "bankroll": 2058.3,
+ "bankroll": 2091.38,
  "positions": {},
  "closed": [
   {
@@ -6446,19 +6446,58 @@
    "won": true,
    "pnl": 14.4,
    "final": 1.4822
+  },
+  {
+   "market_id": "5030287",
+   "asset": "BTC",
+   "side": "UP",
+   "token": "44568161095067615457671163627156967087804758298671117690574975671930071942154",
+   "minutes": 5,
+   "start": "2026-09-28T13:50:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 90.87,
+   "hyp_shares": 148.97,
+   "depth_usd": 51.73,
+   "remaining_sec": 62.7,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.0012,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 83682.55,
+   "entry": 0.61,
+   "best_ask": 0.6,
+   "cost": 51.73,
+   "shares": 84.81,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 51.73$ \u0438\u0437 90.87$",
+   "conf": 0.777,
+   "move": 0.00131,
+   "elapsed": 0.79,
+   "entry_bucket": "0.60\u20130.62",
+   "move_bucket": "0.12\u20130.15%",
+   "ref": 83573.11,
+   "end": "2026-09-28T13:55:00+00:00",
+   "opened": "2026-09-28T13:53:57.933748+00:00",
+   "question": "Bitcoin Up or Down - September 28, 9:50AM-9:55AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 84.81,
+   "requested_cost": 51.73,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 33.08,
+   "final": 83710.305
   }
  ],
  "day": "2026-09-28",
- "day_pnl": 124.86,
+ "day_pnl": 157.94,
  "day_start_bankroll": 1933.4400000000003,
  "execstats": {
-  "submitted": 156,
-  "filled": 156,
+  "submitted": 157,
+  "filled": 157,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.8447000000000011,
-  "slip_n": 156,
+  "slip_sum": 0.8547000000000011,
+  "slip_n": 157,
   "by_window": {
    "15m": {
     "signal": 321,
@@ -6469,9 +6508,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 204,
-    "submitted": 65,
-    "filled": 65,
+    "signal": 205,
+    "submitted": 66,
+    "filled": 66,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -6481,5 +6520,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1790603637.9337702
+ ]
 }
