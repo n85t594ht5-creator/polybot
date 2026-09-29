@@ -1,5 +1,5 @@
 {
- "bankroll": 2286.2399999999993,
+ "bankroll": 2330.3399999999992,
  "positions": {},
  "closed": [
   {
@@ -6953,24 +6953,63 @@
    "won": true,
    "pnl": 42.24,
    "final": 1.5185
+  },
+  {
+   "market_id": "5083327",
+   "asset": "ETH",
+   "side": "UP",
+   "token": "93670120907483571138989352514595027188921435247378568024742806878324331519533",
+   "minutes": 15,
+   "start": "2026-09-29T16:45:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 114.31,
+   "hyp_shares": 224.14,
+   "depth_usd": 45.9,
+   "remaining_sec": 122.3,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "85\u201390%",
+   "cur": 2673.34,
+   "entry": 0.51,
+   "best_ask": 0.5,
+   "cost": 45.9,
+   "shares": 90.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 45.90$ \u0438\u0437 114.31$",
+   "conf": 0.791,
+   "move": 0.00104,
+   "elapsed": 0.86,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 2670.55,
+   "end": "2026-09-29T17:00:00+00:00",
+   "opened": "2026-09-29T16:57:57.998997+00:00",
+   "question": "Ethereum Up or Down - September 29, 12:45PM-1:00PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 90.0,
+   "requested_cost": 45.9,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 44.1,
+   "final": 2674.8599999999997
   }
  ],
  "day": "2026-09-29",
- "day_pnl": 171.04999999999998,
+ "day_pnl": 215.14999999999998,
  "day_start_bankroll": 2115.19,
  "execstats": {
-  "submitted": 169,
-  "filled": 169,
+  "submitted": 170,
+  "filled": 170,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.8961000000000011,
-  "slip_n": 169,
+  "slip_sum": 0.9061000000000011,
+  "slip_n": 170,
   "by_window": {
    "15m": {
-    "signal": 352,
-    "submitted": 100,
-    "filled": 100,
+    "signal": 353,
+    "submitted": 101,
+    "filled": 101,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -6990,6 +7029,7 @@
  "cooldown_until": null,
  "trade_times": [
   1790698380.006708,
-  1790698430.1011431
+  1790698430.1011431,
+  1790701077.9990203
  ]
 }
