@@ -1,6 +1,43 @@
 {
  "bankroll": 2330.3399999999992,
- "positions": {},
+ "positions": {
+  "5084794": {
+   "market_id": "5084794",
+   "asset": "XRP",
+   "side": "DOWN",
+   "token": "18772787802625713530308376171850904344770200636831506591459827695019803906238",
+   "minutes": 5,
+   "start": "2026-09-29T17:30:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 116.52,
+   "hyp_shares": 224.07,
+   "depth_usd": 9.36,
+   "remaining_sec": 64.4,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 1.4833,
+   "entry": 0.52,
+   "best_ask": 0.51,
+   "cost": 9.36,
+   "shares": 18.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 9.36$ \u0438\u0437 116.52$",
+   "conf": 0.796,
+   "move": -0.00202,
+   "elapsed": 0.79,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.20%+",
+   "ref": 1.4863,
+   "end": "2026-09-29T17:35:00+00:00",
+   "opened": "2026-09-29T17:33:55.930314+00:00",
+   "question": "XRP Up or Down - September 29, 1:30PM-1:35PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 18.0,
+   "requested_cost": 9.36,
+   "remaining_shares": 0.0
+  }
+ },
  "closed": [
   {
    "market_id": "3919352",
@@ -6998,13 +7035,13 @@
  "day_pnl": 215.14999999999998,
  "day_start_bankroll": 2115.19,
  "execstats": {
-  "submitted": 170,
-  "filled": 170,
+  "submitted": 171,
+  "filled": 171,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.9061000000000011,
-  "slip_n": 170,
+  "slip_sum": 0.9161000000000011,
+  "slip_n": 171,
   "by_window": {
    "15m": {
     "signal": 353,
@@ -7015,19 +7052,69 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 215,
-    "submitted": 69,
-    "filled": 69,
+    "signal": 216,
+    "submitted": 70,
+    "filled": 70,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    }
   }
  },
- "pending_signals": [],
+ "pending_signals": [
+  {
+   "row": {
+    "timestamp": "2026-09-29T17:33:55.930314+00:00",
+    "asset": "XRP",
+    "window": "5m",
+    "market_id": "5084794",
+    "elapsed": 0.79,
+    "remaining_seconds": 64.4,
+    "reference_price": 1.4863,
+    "current_price": 1.4833,
+    "move_pct": -0.202,
+    "direction": "DOWN",
+    "entry_price": 0.52,
+    "bid": "",
+    "ask": 0.51,
+    "spread": "",
+    "confidence": 0.796,
+    "required_move": 0.1,
+    "entry_bucket": "0.50\u20130.55",
+    "move_bucket": "0.20%+",
+    "elapsed_bucket": "75\u201380%",
+    "risk_gate": "",
+    "signal_status": "EXECUTED",
+    "order_status": "PAPER",
+    "execution_quality": "MARGINAL",
+    "requested_shares": 18.0,
+    "filled_shares": 18.0,
+    "remaining_shares": 0.0,
+    "average_fill_price": 0.52,
+    "best_ask": 0.51,
+    "slippage": 0.01,
+    "hyp_cost": 116.52,
+    "hyp_shares": 224.07,
+    "resolution": "",
+    "hypothetical_pnl": "",
+    "realized_pnl": "",
+    "bankroll_at_signal": 2330.34,
+    "daily_pnl": 215.15,
+    "exposure_at_signal": 9.36,
+    "consecutive_losses": 0,
+    "end": "2026-09-29T17:35:00+00:00"
+   },
+   "side": "DOWN",
+   "ref": 1.4863,
+   "asset": "XRP",
+   "end": "2026-09-29T17:35:00+00:00",
+   "executed": true
+  }
+ ],
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1790701077.9990203
+  1790701077.9990203,
+  1790703235.930337
  ]
 }
