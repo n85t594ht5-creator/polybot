@@ -1,20 +1,20 @@
 {
  "day": "2026-09-29",
- "generated": "2026-09-29T04:39:32.887225+00:00",
- "trades": 4,
+ "generated": "2026-09-29T10:20:29.779844+00:00",
+ "trades": 5,
  "wins": 3,
- "losses": 1,
- "winrate": 0.75,
- "pnl": 66.63,
+ "losses": 2,
+ "winrate": 0.6,
+ "pnl": 57.35,
  "gross_win": 71.11,
- "gross_loss": -4.48,
- "pf": 15.87,
- "bankroll_end": 2181.82,
+ "gross_loss": -13.76,
+ "pf": 5.17,
+ "bankroll_end": 2172.54,
  "by_asset": {
   "XRP": {
-   "n": 2,
+   "n": 3,
    "w": 2,
-   "pnl": 12.78
+   "pnl": 3.5
   },
   "SOL": {
    "n": 2,
@@ -24,9 +24,9 @@
  },
  "by_window": {
   "15m": {
-   "n": 3,
+   "n": 4,
    "w": 2,
-   "pnl": 8.3
+   "pnl": -0.98
   },
   "5m": {
    "n": 1,
@@ -49,6 +49,11 @@
    "n": 2,
    "w": 2,
    "pnl": 62.13
+  },
+  "10": {
+   "n": 1,
+   "w": 0,
+   "pnl": -9.28
   }
  },
  "by_entry": {
@@ -58,9 +63,9 @@
    "pnl": 67.31
   },
   "0.55–0.60": {
-   "n": 1,
+   "n": 2,
    "w": 0,
-   "pnl": -4.48
+   "pnl": -13.76
   },
   "0.60–0.62": {
    "n": 1,
@@ -75,16 +80,16 @@
    "pnl": 67.31
   },
   "0.12–0.15%": {
-   "n": 2,
+   "n": 3,
    "w": 1,
-   "pnl": -0.68
+   "pnl": -9.96
   }
  },
  "by_side": {
   "UP": {
-   "n": 3,
+   "n": 4,
    "w": 3,
-   "pnl": 71.11
+   "pnl": 61.83
   },
   "DOWN": {
    "n": 1,
@@ -93,18 +98,18 @@
   }
  },
  "execstats": {
-  "submitted": 164,
-  "filled": 164,
+  "submitted": 165,
+  "filled": 165,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.8461000000000011,
-  "slip_n": 164,
+  "slip_sum": 0.8561000000000011,
+  "slip_n": 165,
   "by_window": {
    "15m": {
-    "signal": 343,
-    "submitted": 97,
-    "filled": 97,
+    "signal": 345,
+    "submitted": 98,
+    "filled": 98,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -119,16 +124,16 @@
    }
   }
  },
- "signals": 9,
- "signals_executed": 4,
- "signals_blocked": 5,
- "hypothetical_pnl": 581.32,
+ "signals": 11,
+ "signals_executed": 5,
+ "signals_blocked": 6,
+ "hypothetical_pnl": 366.53,
  "signals_by_window": {
   "15m": {
-   "n": 7,
+   "n": 9,
    "w": 6,
-   "hyp": 398.84,
-   "real": 8.3
+   "hyp": 184.05,
+   "real": -0.98
   },
   "5m": {
    "n": 2,
@@ -139,10 +144,10 @@
  },
  "signals_by_asset": {
   "XRP": {
-   "n": 4,
+   "n": 6,
    "w": 4,
-   "hyp": 304.81,
-   "real": 12.78
+   "hyp": 90.02,
+   "real": 3.5
   },
   "SOL": {
    "n": 5,
@@ -165,23 +170,23 @@
    "real": 3.8
   },
   "0.55–0.60": {
-   "n": 1,
+   "n": 3,
    "w": 0,
-   "hyp": -100.68,
-   "real": -4.48
+   "hyp": -315.47,
+   "real": -13.76
   }
  },
  "signals_by_gate": {
   "—": {
-   "n": 4,
+   "n": 5,
    "w": 3,
-   "hyp": 140.46,
-   "real": 66.63
+   "hyp": 34.76,
+   "real": 57.35
   },
   "NO_LIQUIDITY": {
-   "n": 4,
+   "n": 5,
    "w": 4,
-   "hyp": 340.33,
+   "hyp": 231.24,
    "real": 0.0
   },
   "MAX_PER_WINDOW": {
@@ -247,6 +252,20 @@
    "won": true,
    "pnl": 3.8,
    "question": "XRP Up or Down - September 28, 11:30PM-11:45PM ET"
+  },
+  {
+   "opened": "2026-09-29T10:12:04.995093+00:00",
+   "asset": "XRP",
+   "side": "UP",
+   "minutes": 15,
+   "entry": 0.58,
+   "cost": 9.28,
+   "shares": 16.0,
+   "conf": 0.778,
+   "move": 0.00123,
+   "won": false,
+   "pnl": -9.28,
+   "question": "XRP Up or Down - September 29, 6:00AM-6:15AM ET"
   }
  ]
 }
