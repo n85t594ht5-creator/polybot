@@ -1,5 +1,5 @@
 {
- "bankroll": 2377.519999999999,
+ "bankroll": 2418.399999999999,
  "positions": {},
  "closed": [
   {
@@ -7148,30 +7148,69 @@
    "won": false,
    "pnl": -1.04,
    "final": 119.72
+  },
+  {
+   "market_id": "5123975",
+   "asset": "BTC",
+   "side": "DOWN",
+   "token": "19731894406133273651143373420890601026498548555035176499758996787881394033292",
+   "minutes": 15,
+   "start": "2026-09-30T14:30:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 109.66,
+   "hyp_shares": 181.13,
+   "depth_usd": 62.7,
+   "remaining_sec": 168.6,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.0012,
+   "elapsed_bucket": "80\u201385%",
+   "cur": 83621.38,
+   "entry": 0.6054,
+   "best_ask": 0.6,
+   "cost": 62.7,
+   "shares": 103.58,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 62.70$ \u0438\u0437 109.66$",
+   "conf": 0.784,
+   "move": -0.00136,
+   "elapsed": 0.81,
+   "entry_bucket": "0.60\u20130.62",
+   "move_bucket": "0.12\u20130.15%",
+   "ref": 83734.97,
+   "end": "2026-09-30T14:45:00+00:00",
+   "opened": "2026-09-30T14:42:11.827894+00:00",
+   "question": "Bitcoin Up or Down - September 30, 10:30AM-10:45AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 103.58,
+   "requested_cost": 62.7,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 40.88,
+   "final": 83507.63
   }
  ],
  "day": "2026-09-30",
- "day_pnl": -1.04,
+ "day_pnl": 39.839999999999996,
  "day_start_bankroll": 2378.559999999999,
  "execstats": {
-  "submitted": 174,
-  "filled": 174,
+  "submitted": 175,
+  "filled": 175,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.9461000000000012,
-  "slip_n": 174,
+  "slip_sum": 0.9515000000000012,
+  "slip_n": 175,
   "by_window": {
    "15m": {
-    "signal": 357,
-    "submitted": 103,
-    "filled": 103,
+    "signal": 361,
+    "submitted": 104,
+    "filled": 104,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    },
    "5m": {
-    "signal": 221,
+    "signal": 222,
     "submitted": 71,
     "filled": 71,
     "partial": 0,
@@ -7181,7 +7220,9 @@
   }
  },
  "pending_signals": [],
- "consec_losses": 1,
+ "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1790779331.8279245
+ ]
 }
