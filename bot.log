@@ -2106,3 +2106,9 @@
 2026-09-30 15:28:54,426 INFO  SIGNAL SOL UP @ 0.510 заблокирован (NO_LIQUIDITY)
 2026-09-30 15:29:18,229 INFO  STATS trades=191 winrate=83% pnl=+2318.40 PF=5.38 bankroll=2418.40
 2026-09-30 15:29:24,339 INFO  SIGNAL XRP UP @ 0.560 заблокирован (NO_LIQUIDITY)
+2026-09-30 15:31:25,010 INFO  STATS trades=191 winrate=83% pnl=+2318.40 PF=5.38 bankroll=2418.40
+2026-09-30 15:33:30,781 INFO  STATS trades=191 winrate=83% pnl=+2318.40 PF=5.38 bankroll=2418.40
+2026-09-30 15:35:49,875 INFO  STATS trades=191 winrate=83% pnl=+2318.40 PF=5.38 bankroll=2418.40
+2026-09-30 15:37:51,516 INFO  STATS trades=191 winrate=83% pnl=+2318.40 PF=5.38 bankroll=2418.40
+2026-09-30 15:40:05,069 INFO  STATS trades=191 winrate=83% pnl=+2318.40 PF=5.38 bankroll=2418.40
+2026-09-30 15:40:20,963 WARNING Gamma error: HTTPSConnectionPool(host='gamma-api.polymarket.com', port=443): Read timed out. (read timeout=10)
