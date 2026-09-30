@@ -2014,3 +2014,8 @@
 2026-09-30 12:29:14,602 INFO  STATS trades=190 winrate=83% pnl=+2277.52 PF=5.30 bankroll=2377.52
 2026-09-30 12:31:18,126 INFO  STATS trades=190 winrate=83% pnl=+2277.52 PF=5.30 bankroll=2377.52
 2026-09-30 12:32:57,714 WARNING Gamma error: HTTPSConnectionPool(host='gamma-api.polymarket.com', port=443): Read timed out. (read timeout=10)
+2026-09-30 12:33:19,950 INFO  STATS trades=190 winrate=83% pnl=+2277.52 PF=5.30 bankroll=2377.52
+2026-09-30 12:35:39,686 INFO  STATS trades=190 winrate=83% pnl=+2277.52 PF=5.30 bankroll=2377.52
+2026-09-30 12:37:40,786 INFO  STATS trades=190 winrate=83% pnl=+2277.52 PF=5.30 bankroll=2377.52
+2026-09-30 12:39:52,790 INFO  STATS trades=190 winrate=83% pnl=+2277.52 PF=5.30 bankroll=2377.52
+2026-09-30 12:42:22,034 INFO  STATS trades=190 winrate=83% pnl=+2277.52 PF=5.30 bankroll=2377.52
