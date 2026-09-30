@@ -2088,3 +2088,8 @@
 2026-09-30 14:53:13,579 INFO  STATS trades=191 winrate=83% pnl=+2318.40 PF=5.38 bankroll=2418.40
 2026-09-30 14:55:23,375 INFO  STATS trades=191 winrate=83% pnl=+2318.40 PF=5.38 bankroll=2418.40
 2026-09-30 14:58:16,371 INFO  STATS trades=191 winrate=83% pnl=+2318.40 PF=5.38 bankroll=2418.40
+2026-09-30 14:59:38,373 ERROR loop error: HTTPSConnectionPool(host='clob.polymarket.com', port=443): Read timed out. (read timeout=10)
+2026-09-30 15:01:09,227 INFO  STATS trades=191 winrate=83% pnl=+2318.40 PF=5.38 bankroll=2418.40
+2026-09-30 15:03:14,728 INFO  STATS trades=191 winrate=83% pnl=+2318.40 PF=5.38 bankroll=2418.40
+2026-09-30 15:05:32,260 INFO  STATS trades=191 winrate=83% pnl=+2318.40 PF=5.38 bankroll=2418.40
+2026-09-30 15:07:33,383 INFO  STATS trades=191 winrate=83% pnl=+2318.40 PF=5.38 bankroll=2418.40
