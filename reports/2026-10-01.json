@@ -1,0 +1,83 @@
+{
+ "day": "2026-10-01",
+ "generated": "2026-10-01T05:12:55.308846+00:00",
+ "trades": 0,
+ "wins": 0,
+ "losses": 0,
+ "winrate": null,
+ "pnl": 0,
+ "gross_win": 0,
+ "gross_loss": 0,
+ "pf": null,
+ "bankroll_end": 2418.399999999999,
+ "by_asset": {},
+ "by_window": {},
+ "by_hour": {},
+ "by_entry": {},
+ "by_move": {},
+ "by_side": {},
+ "execstats": {
+  "submitted": 175,
+  "filled": 175,
+  "partial": 0,
+  "unfilled": 0,
+  "cancelled": 0,
+  "slip_sum": 0.9515000000000012,
+  "slip_n": 175,
+  "by_window": {
+   "15m": {
+    "signal": 362,
+    "submitted": 104,
+    "filled": 104,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   },
+   "5m": {
+    "signal": 225,
+    "submitted": 71,
+    "filled": 71,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   }
+  }
+ },
+ "signals": 1,
+ "signals_executed": 0,
+ "signals_blocked": 1,
+ "hypothetical_pnl": 97.16,
+ "signals_by_window": {
+  "15m": {
+   "n": 1,
+   "w": 1,
+   "hyp": 97.16,
+   "real": 0.0
+  }
+ },
+ "signals_by_asset": {
+  "SOL": {
+   "n": 1,
+   "w": 1,
+   "hyp": 97.16,
+   "real": 0.0
+  }
+ },
+ "signals_by_entry": {
+  "0.50–0.55": {
+   "n": 1,
+   "w": 1,
+   "hyp": 97.16,
+   "real": 0.0
+  }
+ },
+ "signals_by_gate": {
+  "NO_LIQUIDITY": {
+   "n": 1,
+   "w": 1,
+   "hyp": 97.16,
+   "real": 0.0
+  }
+ },
+ "trade_list": []
+}
