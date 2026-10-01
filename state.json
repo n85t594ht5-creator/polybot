@@ -1,5 +1,5 @@
 {
- "bankroll": 2429.079999999999,
+ "bankroll": 2507.719999999999,
  "positions": {},
  "closed": [
   {
@@ -7265,22 +7265,61 @@
    "won": true,
    "pnl": 7.56,
    "final": 1.49
+  },
+  {
+   "market_id": "5156315",
+   "asset": "BTC",
+   "side": "UP",
+   "token": "12750768142999419300758195201246440340229852744291048582637973353591301058930",
+   "minutes": 5,
+   "start": "2026-10-01T15:10:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 121.45,
+   "hyp_shares": 238.15,
+   "depth_usd": 81.84,
+   "remaining_sec": 70.3,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 83973.86,
+   "entry": 0.51,
+   "best_ask": 0.5,
+   "cost": 81.84,
+   "shares": 160.48,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 81.84$ \u0438\u0437 121.45$",
+   "conf": 0.783,
+   "move": 0.00177,
+   "elapsed": 0.77,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.15\u20130.20%",
+   "ref": 83825.4,
+   "end": "2026-10-01T15:15:00+00:00",
+   "opened": "2026-10-01T15:13:50.072256+00:00",
+   "question": "Bitcoin Up or Down - October 1, 11:10AM-11:15AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 160.48,
+   "requested_cost": 81.84,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 78.64,
+   "final": 84040.975
   }
  ],
  "day": "2026-10-01",
- "day_pnl": 10.68,
+ "day_pnl": 89.32,
  "day_start_bankroll": 2418.399999999999,
  "execstats": {
-  "submitted": 177,
-  "filled": 177,
+  "submitted": 178,
+  "filled": 178,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 0.9715000000000013,
-  "slip_n": 177,
+  "slip_sum": 0.9815000000000013,
+  "slip_n": 178,
   "by_window": {
    "15m": {
-    "signal": 364,
+    "signal": 365,
     "submitted": 105,
     "filled": 105,
     "partial": 0,
@@ -7288,9 +7327,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 230,
-    "submitted": 72,
-    "filled": 72,
+    "signal": 231,
+    "submitted": 73,
+    "filled": 73,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -7300,5 +7339,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1790867630.0722754
+ ]
 }
