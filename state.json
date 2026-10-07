@@ -1,5 +1,5 @@
 {
- "bankroll": 2733.3699999999985,
+ "bankroll": 2737.2099999999987,
  "positions": {},
  "closed": [
   {
@@ -7694,24 +7694,63 @@
    "won": true,
    "pnl": 4.71,
    "final": 1.5033
+  },
+  {
+   "market_id": "5364147",
+   "asset": "SOL",
+   "side": "DOWN",
+   "token": "111980318731347666122192184800252623100358394837989983305352347714159149426628",
+   "minutes": 15,
+   "start": "2026-10-07T04:45:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 136.67,
+   "hyp_shares": 262.82,
+   "depth_usd": 4.16,
+   "remaining_sec": 94.4,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "85\u201390%",
+   "cur": 118.05,
+   "entry": 0.52,
+   "best_ask": 0.51,
+   "cost": 4.16,
+   "shares": 8.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 4.16$ \u0438\u0437 136.67$",
+   "conf": 0.8,
+   "move": -0.00106,
+   "elapsed": 0.9,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 118.175,
+   "end": "2026-10-07T05:00:00+00:00",
+   "opened": "2026-10-07T04:58:26.071867+00:00",
+   "question": "Solana Up or Down - October 7, 12:45AM-1:00AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 8.0,
+   "requested_cost": 4.16,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 3.84,
+   "final": 118.07
   }
  ],
  "day": "2026-10-07",
- "day_pnl": 0.0,
+ "day_pnl": 3.84,
  "day_start_bankroll": 2733.3699999999985,
  "execstats": {
-  "submitted": 188,
-  "filled": 188,
+  "submitted": 189,
+  "filled": 189,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.0474000000000012,
-  "slip_n": 188,
+  "slip_sum": 1.0574000000000012,
+  "slip_n": 189,
   "by_window": {
    "15m": {
-    "signal": 391,
-    "submitted": 114,
-    "filled": 114,
+    "signal": 392,
+    "submitted": 115,
+    "filled": 115,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -7729,5 +7768,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1791349106.0718918
+ ]
 }
