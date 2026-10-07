@@ -1,34 +1,70 @@
 {
  "day": "2026-10-07",
- "generated": "2026-10-07T04:04:57.850061+00:00",
- "trades": 0,
- "wins": 0,
+ "generated": "2026-10-07T10:22:13.136563+00:00",
+ "trades": 1,
+ "wins": 1,
  "losses": 0,
- "winrate": null,
- "pnl": 0,
- "gross_win": 0,
+ "winrate": 1.0,
+ "pnl": 3.84,
+ "gross_win": 3.84,
  "gross_loss": 0,
- "pf": null,
- "bankroll_end": 2733.3699999999985,
- "by_asset": {},
- "by_window": {},
- "by_hour": {},
- "by_entry": {},
- "by_move": {},
- "by_side": {},
+ "pf": 99.0,
+ "bankroll_end": 2737.2099999999987,
+ "by_asset": {
+  "SOL": {
+   "n": 1,
+   "w": 1,
+   "pnl": 3.84
+  }
+ },
+ "by_window": {
+  "15m": {
+   "n": 1,
+   "w": 1,
+   "pnl": 3.84
+  }
+ },
+ "by_hour": {
+  "04": {
+   "n": 1,
+   "w": 1,
+   "pnl": 3.84
+  }
+ },
+ "by_entry": {
+  "0.50–0.55": {
+   "n": 1,
+   "w": 1,
+   "pnl": 3.84
+  }
+ },
+ "by_move": {
+  "0.10–0.12%": {
+   "n": 1,
+   "w": 1,
+   "pnl": 3.84
+  }
+ },
+ "by_side": {
+  "DOWN": {
+   "n": 1,
+   "w": 1,
+   "pnl": 3.84
+  }
+ },
  "execstats": {
-  "submitted": 188,
-  "filled": 188,
+  "submitted": 189,
+  "filled": 189,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.0474000000000012,
-  "slip_n": 188,
+  "slip_sum": 1.0574000000000012,
+  "slip_n": 189,
   "by_window": {
    "15m": {
-    "signal": 391,
-    "submitted": 114,
-    "filled": 114,
+    "signal": 392,
+    "submitted": 115,
+    "filled": 115,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -43,16 +79,22 @@
    }
   }
  },
- "signals": 1,
- "signals_executed": 0,
+ "signals": 2,
+ "signals_executed": 1,
  "signals_blocked": 1,
- "hypothetical_pnl": 116.42,
+ "hypothetical_pnl": 242.57,
  "signals_by_window": {
   "5m": {
    "n": 1,
    "w": 1,
    "hyp": 116.42,
    "real": 0.0
+  },
+  "15m": {
+   "n": 1,
+   "w": 1,
+   "hyp": 126.15,
+   "real": 3.84
   }
  },
  "signals_by_asset": {
@@ -61,14 +103,20 @@
    "w": 1,
    "hyp": 116.42,
    "real": 0.0
+  },
+  "SOL": {
+   "n": 1,
+   "w": 1,
+   "hyp": 126.15,
+   "real": 3.84
   }
  },
  "signals_by_entry": {
   "0.50–0.55": {
-   "n": 1,
-   "w": 1,
-   "hyp": 116.42,
-   "real": 0.0
+   "n": 2,
+   "w": 2,
+   "hyp": 242.57,
+   "real": 3.84
   }
  },
  "signals_by_gate": {
@@ -77,7 +125,28 @@
    "w": 1,
    "hyp": 116.42,
    "real": 0.0
+  },
+  "—": {
+   "n": 1,
+   "w": 1,
+   "hyp": 126.15,
+   "real": 3.84
   }
  },
- "trade_list": []
+ "trade_list": [
+  {
+   "opened": "2026-10-07T04:58:26.071867+00:00",
+   "asset": "SOL",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.52,
+   "cost": 4.16,
+   "shares": 8.0,
+   "conf": 0.8,
+   "move": -0.00106,
+   "won": true,
+   "pnl": 3.84,
+   "question": "Solana Up or Down - October 7, 12:45AM-1:00AM ET"
+  }
+ ]
 }
