@@ -1,5 +1,5 @@
 {
- "bankroll": 2737.2099999999987,
+ "bankroll": 2806.1799999999985,
  "positions": {},
  "closed": [
   {
@@ -7733,24 +7733,63 @@
    "won": true,
    "pnl": 3.84,
    "final": 118.07
+  },
+  {
+   "market_id": "5375134",
+   "asset": "BTC",
+   "side": "UP",
+   "token": "45934207132755382328137230236420133087273578537075530036126402019237341033916",
+   "minutes": 15,
+   "start": "2026-10-07T14:00:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 112.53,
+   "hyp_shares": 181.5,
+   "depth_usd": 298.65,
+   "remaining_sec": 199.5,
+   "execution_quality": "GOOD",
+   "required_move": 0.0012,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 83206.85,
+   "entry": 0.62,
+   "best_ask": 0.61,
+   "cost": 112.53,
+   "shares": 181.5,
+   "depth_note": "",
+   "conf": 0.77,
+   "move": 0.00123,
+   "elapsed": 0.78,
+   "entry_bucket": "0.60\u20130.62",
+   "move_bucket": "0.12\u20130.15%",
+   "ref": 83104.86499999999,
+   "end": "2026-10-07T14:15:00+00:00",
+   "opened": "2026-10-07T14:11:40.844189+00:00",
+   "question": "Bitcoin Up or Down - October 7, 10:00AM-10:15AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 181.5,
+   "requested_cost": 112.53,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 68.97,
+   "final": 83126.185
   }
  ],
  "day": "2026-10-07",
- "day_pnl": 3.84,
+ "day_pnl": 72.81,
  "day_start_bankroll": 2733.3699999999985,
  "execstats": {
-  "submitted": 189,
-  "filled": 189,
+  "submitted": 190,
+  "filled": 190,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.0574000000000012,
-  "slip_n": 189,
+  "slip_sum": 1.0674000000000012,
+  "slip_n": 190,
   "by_window": {
    "15m": {
-    "signal": 393,
-    "submitted": 115,
-    "filled": 115,
+    "signal": 395,
+    "submitted": 116,
+    "filled": 116,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -7768,5 +7807,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1791382300.8442223
+ ]
 }
