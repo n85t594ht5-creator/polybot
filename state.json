@@ -1,6 +1,43 @@
 {
  "bankroll": 3118.349999999999,
- "positions": {},
+ "positions": {
+  "5537717": {
+   "market_id": "5537717",
+   "asset": "SOL",
+   "side": "UP",
+   "token": "58243970864142651475630801848571625581134456929753795430047023130920823642811",
+   "minutes": 15,
+   "start": "2026-10-12T05:00:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 155.92,
+   "hyp_shares": 305.72,
+   "depth_usd": 20.54,
+   "remaining_sec": 218.0,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 113.11,
+   "entry": 0.51,
+   "best_ask": 0.5,
+   "cost": 20.54,
+   "shares": 40.27,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 20.54$ \u0438\u0437 155.92$",
+   "conf": 0.762,
+   "move": 0.00115,
+   "elapsed": 0.76,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 112.98,
+   "end": "2026-10-12T05:15:00+00:00",
+   "opened": "2026-10-12T05:11:22.385825+00:00",
+   "question": "Solana Up or Down - October 12, 1:00AM-1:15AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 40.27,
+   "requested_cost": 20.54,
+   "remaining_shares": 0.0
+  }
+ },
  "closed": [
   {
    "market_id": "3919352",
@@ -8363,18 +8400,18 @@
  "day_pnl": -25.24,
  "day_start_bankroll": 3143.589999999999,
  "execstats": {
-  "submitted": 205,
-  "filled": 205,
+  "submitted": 206,
+  "filled": 206,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.1111000000000015,
-  "slip_n": 205,
+  "slip_sum": 1.1211000000000015,
+  "slip_n": 206,
   "by_window": {
    "15m": {
-    "signal": 417,
-    "submitted": 126,
-    "filled": 126,
+    "signal": 418,
+    "submitted": 127,
+    "filled": 127,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -8389,10 +8426,60 @@
    }
   }
  },
- "pending_signals": [],
+ "pending_signals": [
+  {
+   "row": {
+    "timestamp": "2026-10-12T05:11:22.385825+00:00",
+    "asset": "SOL",
+    "window": "15m",
+    "market_id": "5537717",
+    "elapsed": 0.76,
+    "remaining_seconds": 218.0,
+    "reference_price": 112.98,
+    "current_price": 113.11,
+    "move_pct": 0.115,
+    "direction": "UP",
+    "entry_price": 0.51,
+    "bid": "",
+    "ask": 0.5,
+    "spread": "",
+    "confidence": 0.762,
+    "required_move": 0.1,
+    "entry_bucket": "0.50\u20130.55",
+    "move_bucket": "0.10\u20130.12%",
+    "elapsed_bucket": "75\u201380%",
+    "risk_gate": "",
+    "signal_status": "EXECUTED",
+    "order_status": "PAPER",
+    "execution_quality": "MARGINAL",
+    "requested_shares": 40.27,
+    "filled_shares": 40.27,
+    "remaining_shares": 0.0,
+    "average_fill_price": 0.51,
+    "best_ask": 0.5,
+    "slippage": 0.01,
+    "hyp_cost": 155.92,
+    "hyp_shares": 305.72,
+    "resolution": "",
+    "hypothetical_pnl": "",
+    "realized_pnl": "",
+    "bankroll_at_signal": 3118.35,
+    "daily_pnl": -25.24,
+    "exposure_at_signal": 20.54,
+    "consecutive_losses": 1,
+    "end": "2026-10-12T05:15:00+00:00"
+   },
+   "side": "UP",
+   "ref": 112.98,
+   "asset": "SOL",
+   "end": "2026-10-12T05:15:00+00:00",
+   "executed": true
+  }
+ ],
  "consec_losses": 1,
  "cooldown_until": null,
  "trade_times": [
-  1791780530.3661094
+  1791780530.3661094,
+  1791781882.3858507
  ]
 }
