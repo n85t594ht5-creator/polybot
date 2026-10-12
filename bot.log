@@ -2024,3 +2024,7 @@
 2026-10-12 05:20:09,546 INFO  STATS trades=221 winrate=83% pnl=+3018.35 PF=6.05 bankroll=3118.35
 2026-10-12 05:20:11,148 INFO  WIN  SOL UP pnl=+19.73 bankroll=3138.08
 2026-10-12 05:22:10,687 INFO  STATS trades=222 winrate=83% pnl=+3038.08 PF=6.08 bankroll=3138.08
+2026-10-12 05:24:29,141 INFO  STATS trades=222 winrate=83% pnl=+3038.08 PF=6.08 bankroll=3138.08
+2026-10-12 05:26:40,177 INFO  STATS trades=222 winrate=83% pnl=+3038.08 PF=6.08 bankroll=3138.08
+2026-10-12 05:29:47,691 INFO  STATS trades=222 winrate=83% pnl=+3038.08 PF=6.08 bankroll=3138.08
+2026-10-12 05:31:48,616 INFO  STATS trades=222 winrate=83% pnl=+3038.08 PF=6.08 bankroll=3138.08
