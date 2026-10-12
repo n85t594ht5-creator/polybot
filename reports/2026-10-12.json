@@ -1,6 +1,6 @@
 {
  "day": "2026-10-12",
- "generated": "2026-10-12T10:22:01.817419+00:00",
+ "generated": "2026-10-12T20:17:15.044824+00:00",
  "trades": 5,
  "wins": 2,
  "losses": 3,
@@ -107,7 +107,7 @@
   "slip_n": 207,
   "by_window": {
    "15m": {
-    "signal": 418,
+    "signal": 419,
     "submitted": 127,
     "filled": 127,
     "partial": 0,
@@ -115,7 +115,7 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 250,
+    "signal": 251,
     "submitted": 80,
     "filled": 80,
     "partial": 0,
@@ -124,29 +124,29 @@
    }
   }
  },
- "signals": 5,
+ "signals": 7,
  "signals_executed": 5,
- "signals_blocked": 0,
- "hypothetical_pnl": -142.99,
+ "signals_blocked": 2,
+ "hypothetical_pnl": 118.02,
  "signals_by_window": {
   "15m": {
-   "n": 3,
-   "w": 2,
-   "hyp": 143.43,
+   "n": 4,
+   "w": 3,
+   "hyp": 266.05,
    "real": 37.46
   },
   "5m": {
-   "n": 2,
-   "w": 0,
-   "hyp": -286.42,
+   "n": 3,
+   "w": 1,
+   "hyp": -148.03,
    "real": -59.84
   }
  },
  "signals_by_asset": {
   "SOL": {
-   "n": 3,
-   "w": 1,
-   "hyp": -155.3,
+   "n": 5,
+   "w": 3,
+   "hyp": 105.71,
    "real": -27.56
   },
   "XRP": {
@@ -158,15 +158,15 @@
  },
  "signals_by_entry": {
   "0.50–0.55": {
-   "n": 4,
-   "w": 2,
-   "hyp": -4.49,
+   "n": 5,
+   "w": 3,
+   "hyp": 133.9,
    "real": -5.51
   },
   "0.55–0.60": {
-   "n": 1,
-   "w": 0,
-   "hyp": -138.5,
+   "n": 2,
+   "w": 1,
+   "hyp": -15.88,
    "real": -16.87
   }
  },
@@ -176,6 +176,12 @@
    "w": 2,
    "hyp": -142.99,
    "real": -22.38
+  },
+  "NO_LIQUIDITY": {
+   "n": 2,
+   "w": 2,
+   "hyp": 261.01,
+   "real": 0.0
   }
  },
  "trade_list": [
