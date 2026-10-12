@@ -1,5 +1,5 @@
 {
- "bankroll": 3161.319999999999,
+ "bankroll": 3118.349999999999,
  "positions": {},
  "closed": [
   {
@@ -8318,19 +8318,58 @@
    "won": true,
    "pnl": 22.05,
    "final": 1.4062999999999999
+  },
+  {
+   "market_id": "5536228",
+   "asset": "SOL",
+   "side": "UP",
+   "token": "81102080473747864594338105266114868941995320986557774806174843767828385076427",
+   "minutes": 5,
+   "start": "2026-10-12T04:45:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 147.92,
+   "hyp_shares": 276.8,
+   "depth_usd": 42.97,
+   "remaining_sec": 70.0,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 112.86,
+   "entry": 0.5344,
+   "best_ask": 0.55,
+   "cost": 42.97,
+   "shares": 80.4,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 42.97$ \u0438\u0437 147.92$",
+   "conf": 0.761,
+   "move": 0.00102,
+   "elapsed": 0.77,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 112.745,
+   "end": "2026-10-12T04:50:00+00:00",
+   "opened": "2026-10-12T04:48:50.366085+00:00",
+   "question": "Solana Up or Down - October 12, 12:45AM-12:50AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 80.4,
+   "requested_cost": 42.97,
+   "remaining_shares": 0.0,
+   "won": false,
+   "pnl": -42.97,
+   "final": 112.72999999999999
   }
  ],
  "day": "2026-10-12",
- "day_pnl": 17.73,
+ "day_pnl": -25.24,
  "day_start_bankroll": 3143.589999999999,
  "execstats": {
-  "submitted": 204,
-  "filled": 204,
+  "submitted": 205,
+  "filled": 205,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.1267000000000016,
-  "slip_n": 204,
+  "slip_sum": 1.1111000000000015,
+  "slip_n": 205,
   "by_window": {
    "15m": {
     "signal": 417,
@@ -8341,9 +8380,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 248,
-    "submitted": 78,
-    "filled": 78,
+    "signal": 249,
+    "submitted": 79,
+    "filled": 79,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -8351,9 +8390,9 @@
   }
  },
  "pending_signals": [],
- "consec_losses": 0,
+ "consec_losses": 1,
  "cooldown_until": null,
  "trade_times": [
-  1791771987.4441235
+  1791780530.3661094
  ]
 }

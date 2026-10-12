@@ -1998,3 +1998,11 @@
 2026-10-12 03:09:59,810 INFO  STATS trades=220 winrate=84% pnl=+3061.32 PF=6.51 bankroll=3161.32
 2026-10-12 03:12:14,821 INFO  STATS trades=220 winrate=84% pnl=+3061.32 PF=6.51 bankroll=3161.32
 2026-10-12 03:14:50,940 INFO  STATS trades=220 winrate=84% pnl=+3061.32 PF=6.51 bankroll=3161.32
+2026-10-12 04:42:01,059 INFO  State loaded: bankroll=3161.32, open=0
+2026-10-12 04:42:01,059 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP'] bankroll=3161
+2026-10-12 04:45:03,368 INFO  STATS trades=220 winrate=84% pnl=+3061.32 PF=6.51 bankroll=3161.32
+2026-10-12 04:47:04,344 INFO  STATS trades=220 winrate=84% pnl=+3061.32 PF=6.51 bankroll=3161.32
+2026-10-12 04:48:50,377 INFO  [PAPER] BUY SOL UP @ 0.534 $42.97 (PAPER) conf=0.761 move=+0.102%
+2026-10-12 04:49:10,803 INFO  STATS trades=220 winrate=84% pnl=+3061.32 PF=6.51 bankroll=3161.32
+2026-10-12 04:51:15,887 INFO  STATS trades=220 winrate=84% pnl=+3061.32 PF=6.51 bankroll=3161.32
+2026-10-12 04:51:32,452 INFO  LOSS SOL UP pnl=-42.97 bankroll=3118.35
