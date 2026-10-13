@@ -8567,7 +8567,7 @@
   "slip_n": 210,
   "by_window": {
    "15m": {
-    "signal": 423,
+    "signal": 424,
     "submitted": 129,
     "filled": 129,
     "partial": 0,
@@ -8584,7 +8584,56 @@
    }
   }
  },
- "pending_signals": [],
+ "pending_signals": [
+  {
+   "row": {
+    "timestamp": "2026-10-13T16:27:04.301800+00:00",
+    "asset": "ETH",
+    "window": "15m",
+    "market_id": "5611792",
+    "elapsed": 0.8,
+    "remaining_seconds": 176.2,
+    "reference_price": 2518.055,
+    "current_price": 2515.46,
+    "move_pct": -0.103,
+    "direction": "DOWN",
+    "entry_price": 0.53,
+    "bid": "",
+    "ask": 0.53,
+    "spread": "",
+    "confidence": 0.772,
+    "required_move": 0.1,
+    "entry_bucket": "0.50\u20130.55",
+    "move_bucket": "0.10\u20130.12%",
+    "elapsed_bucket": "80\u201385%",
+    "risk_gate": "NO_LIQUIDITY",
+    "signal_status": "BLOCKED_BY_RISK",
+    "order_status": "",
+    "execution_quality": "UNEXECUTABLE",
+    "requested_shares": 299.89,
+    "filled_shares": "",
+    "remaining_shares": "",
+    "average_fill_price": "",
+    "best_ask": 0.53,
+    "slippage": "",
+    "hyp_cost": 158.94,
+    "hyp_shares": 299.89,
+    "resolution": "",
+    "hypothetical_pnl": "",
+    "realized_pnl": "",
+    "bankroll_at_signal": 3178.81,
+    "daily_pnl": 57.6,
+    "exposure_at_signal": 0,
+    "consecutive_losses": 0,
+    "end": "2026-10-13T16:30:00+00:00"
+   },
+   "side": "DOWN",
+   "ref": 2518.055,
+   "asset": "ETH",
+   "end": "2026-10-13T16:30:00+00:00",
+   "executed": false
+  }
+ ],
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
