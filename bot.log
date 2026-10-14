@@ -1998,3 +1998,11 @@
 2026-10-14 04:17:42,142 INFO  STATS trades=227 winrate=83% pnl=+3074.17 PF=5.96 bankroll=3174.17
 2026-10-14 04:19:57,546 INFO  STATS trades=227 winrate=83% pnl=+3074.17 PF=5.96 bankroll=3174.17
 2026-10-14 04:21:58,524 INFO  STATS trades=227 winrate=83% pnl=+3074.17 PF=5.96 bankroll=3174.17
+2026-10-14 11:20:40,780 INFO  State loaded: bankroll=3174.17, open=0
+2026-10-14 11:20:40,781 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP'] bankroll=3174
+2026-10-14 11:22:40,844 INFO  STATS trades=227 winrate=83% pnl=+3074.17 PF=5.96 bankroll=3174.17
+2026-10-14 11:24:22,751 ERROR loop error: HTTPSConnectionPool(host='api.exchange.coinbase.com', port=443): Read timed out. (read timeout=10)
+2026-10-14 11:24:34,555 ERROR loop error: HTTPSConnectionPool(host='api.exchange.coinbase.com', port=443): Read timed out. (read timeout=10)
+2026-10-14 11:25:09,347 INFO  STATS trades=227 winrate=83% pnl=+3074.17 PF=5.96 bankroll=3174.17
+2026-10-14 11:27:26,333 INFO  STATS trades=227 winrate=83% pnl=+3074.17 PF=5.96 bankroll=3174.17
+2026-10-14 11:30:05,345 INFO  STATS trades=227 winrate=83% pnl=+3074.17 PF=5.96 bankroll=3174.17
