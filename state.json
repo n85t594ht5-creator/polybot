@@ -8606,7 +8606,7 @@
   "slip_n": 211,
   "by_window": {
    "15m": {
-    "signal": 425,
+    "signal": 426,
     "submitted": 130,
     "filled": 130,
     "partial": 0,
@@ -8623,7 +8623,56 @@
    }
   }
  },
- "pending_signals": [],
+ "pending_signals": [
+  {
+   "row": {
+    "timestamp": "2026-10-14T08:56:16.174272+00:00",
+    "asset": "SOL",
+    "window": "15m",
+    "market_id": "5645255",
+    "elapsed": 0.75,
+    "remaining_seconds": 224.2,
+    "reference_price": 107.2,
+    "current_price": 107.07,
+    "move_pct": -0.121,
+    "direction": "DOWN",
+    "entry_price": 0.61,
+    "bid": "",
+    "ask": 0.61,
+    "spread": "",
+    "confidence": 0.762,
+    "required_move": 0.12,
+    "entry_bucket": "0.60\u20130.62",
+    "move_bucket": "0.12\u20130.15%",
+    "elapsed_bucket": "75\u201380%",
+    "risk_gate": "NO_LIQUIDITY",
+    "signal_status": "BLOCKED_BY_RISK",
+    "order_status": "",
+    "execution_quality": "UNEXECUTABLE",
+    "requested_shares": 202.33,
+    "filled_shares": "",
+    "remaining_shares": "",
+    "average_fill_price": "",
+    "best_ask": 0.61,
+    "slippage": "",
+    "hyp_cost": 123.42,
+    "hyp_shares": 202.33,
+    "resolution": "",
+    "hypothetical_pnl": "",
+    "realized_pnl": "",
+    "bankroll_at_signal": 3174.17,
+    "daily_pnl": -4.64,
+    "exposure_at_signal": 0,
+    "consecutive_losses": 1,
+    "end": "2026-10-14T09:00:00+00:00"
+   },
+   "side": "DOWN",
+   "ref": 107.2,
+   "asset": "SOL",
+   "end": "2026-10-14T09:00:00+00:00",
+   "executed": false
+  }
+ ],
  "consec_losses": 1,
  "cooldown_until": null,
  "trade_times": []
