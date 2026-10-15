@@ -1,0 +1,164 @@
+{
+ "day": "2026-10-15",
+ "generated": "2026-10-15T04:21:28.478623+00:00",
+ "trades": 1,
+ "wins": 1,
+ "losses": 0,
+ "winrate": 1.0,
+ "pnl": 4.9,
+ "gross_win": 4.9,
+ "gross_loss": 0,
+ "pf": 99.0,
+ "bankroll_end": 3329.479999999999,
+ "by_asset": {
+  "XRP": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.9
+  }
+ },
+ "by_window": {
+  "15m": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.9
+  }
+ },
+ "by_hour": {
+  "01": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.9
+  }
+ },
+ "by_entry": {
+  "0.50–0.55": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.9
+  }
+ },
+ "by_move": {
+  "0.20%+": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.9
+  }
+ },
+ "by_side": {
+  "DOWN": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.9
+  }
+ },
+ "execstats": {
+  "submitted": 217,
+  "filled": 217,
+  "partial": 0,
+  "unfilled": 0,
+  "cancelled": 0,
+  "slip_sum": 1.2016000000000016,
+  "slip_n": 217,
+  "by_window": {
+   "15m": {
+    "signal": 441,
+    "submitted": 135,
+    "filled": 135,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   },
+   "5m": {
+    "signal": 256,
+    "submitted": 82,
+    "filled": 82,
+    "partial": 0,
+    "unfilled": 0,
+    "cancelled": 0
+   }
+  }
+ },
+ "signals": 4,
+ "signals_executed": 1,
+ "signals_blocked": 3,
+ "hypothetical_pnl": 596.77,
+ "signals_by_window": {
+  "15m": {
+   "n": 3,
+   "w": 3,
+   "hyp": 460.56,
+   "real": 4.9
+  },
+  "5m": {
+   "n": 1,
+   "w": 1,
+   "hyp": 136.21,
+   "real": 0.0
+  }
+ },
+ "signals_by_asset": {
+  "XRP": {
+   "n": 2,
+   "w": 2,
+   "hyp": 295.92,
+   "real": 4.9
+  },
+  "ETH": {
+   "n": 1,
+   "w": 1,
+   "hyp": 153.44,
+   "real": 0.0
+  },
+  "SOL": {
+   "n": 1,
+   "w": 1,
+   "hyp": 147.41,
+   "real": 0.0
+  }
+ },
+ "signals_by_entry": {
+  "0.50–0.55": {
+   "n": 4,
+   "w": 4,
+   "hyp": 596.77,
+   "real": 4.9
+  }
+ },
+ "signals_by_gate": {
+  "—": {
+   "n": 1,
+   "w": 1,
+   "hyp": 159.71,
+   "real": 4.9
+  },
+  "MAX_PER_WINDOW": {
+   "n": 2,
+   "w": 2,
+   "hyp": 300.85,
+   "real": 0.0
+  },
+  "NO_LIQUIDITY": {
+   "n": 1,
+   "w": 1,
+   "hyp": 136.21,
+   "real": 0.0
+  }
+ },
+ "trade_list": [
+  {
+   "opened": "2026-10-15T01:11:18.689376+00:00",
+   "asset": "XRP",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.51,
+   "cost": 5.1,
+   "shares": 10.0,
+   "conf": 0.787,
+   "move": -0.00203,
+   "won": true,
+   "pnl": 4.9,
+   "question": "XRP Up or Down - October 14, 9:00PM-9:15PM ET"
+  }
+ ]
+}
