@@ -1,5 +1,5 @@
 {
- "bankroll": 3334.3199999999993,
+ "bankroll": 3364.1399999999994,
  "positions": {},
  "closed": [
   {
@@ -8981,19 +8981,58 @@
    "won": true,
    "pnl": 7.58,
    "final": 101.31
+  },
+  {
+   "market_id": "5687932",
+   "asset": "ETH",
+   "side": "UP",
+   "token": "49165618196538524020489397971855403857698815913436604820163899491871309440075",
+   "minutes": 5,
+   "start": "2026-10-15T14:15:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 166.72,
+   "hyp_shares": 287.44,
+   "depth_usd": 41.18,
+   "remaining_sec": 67.3,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.0012,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 2370.08,
+   "entry": 0.58,
+   "best_ask": 0.57,
+   "cost": 41.18,
+   "shares": 71.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 41.18$ \u0438\u0437 166.72$",
+   "conf": 0.79,
+   "move": 0.00192,
+   "elapsed": 0.78,
+   "entry_bucket": "0.55\u20130.60",
+   "move_bucket": "0.15\u20130.20%",
+   "ref": 2365.535,
+   "end": "2026-10-15T14:20:00+00:00",
+   "opened": "2026-10-15T14:18:53.068821+00:00",
+   "question": "Ethereum Up or Down - October 15, 10:15AM-10:20AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 71.0,
+   "requested_cost": 41.18,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 29.82,
+   "final": 2371.395
   }
  ],
  "day": "2026-10-15",
- "day_pnl": 9.739999999999998,
+ "day_pnl": 39.56,
  "day_start_bankroll": 3324.579999999999,
  "execstats": {
-  "submitted": 221,
-  "filled": 221,
+  "submitted": 222,
+  "filled": 222,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.2416000000000014,
-  "slip_n": 221,
+  "slip_sum": 1.2516000000000014,
+  "slip_n": 222,
   "by_window": {
    "15m": {
     "signal": 447,
@@ -9004,9 +9043,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 262,
-    "submitted": 83,
-    "filled": 83,
+    "signal": 265,
+    "submitted": 84,
+    "filled": 84,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -9017,6 +9056,7 @@
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1792071232.3472607
+  1792071232.3472607,
+  1792073933.0688426
  ]
 }
