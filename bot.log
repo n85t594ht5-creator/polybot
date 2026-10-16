@@ -1986,15 +1986,9 @@
 2026-10-16 15:58:59,584 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
 2026-10-16 16:01:00,559 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
 2026-10-16 16:03:01,911 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
-2026-10-16 16:05:11,258 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
-2026-10-16 16:07:12,537 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
-2026-10-16 16:09:24,706 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
-2026-10-16 16:11:33,868 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
-2026-10-16 16:14:47,631 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
-2026-10-16 16:16:48,712 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
-2026-10-16 16:18:53,590 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
-2026-10-16 16:21:04,813 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
-2026-10-16 16:23:06,063 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
-2026-10-16 16:25:22,328 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
-2026-10-16 16:27:23,456 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
-2026-10-16 16:29:26,128 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
+2026-10-16 16:31:55,229 INFO  State loaded: bankroll=3301.62, open=0
+2026-10-16 16:31:55,229 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP'] bankroll=3302
+2026-10-16 16:33:56,927 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
+2026-10-16 16:36:03,764 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
+2026-10-16 16:38:07,643 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
+2026-10-16 16:40:23,834 INFO  STATS trades=243 winrate=82% pnl=+3201.62 PF=4.99 bankroll=3301.62
