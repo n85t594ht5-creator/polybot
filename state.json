@@ -9289,7 +9289,5 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": [
-  1792278701.3017795
- ]
+ "trade_times": []
 }
