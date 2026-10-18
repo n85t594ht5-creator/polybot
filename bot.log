@@ -1974,27 +1974,9 @@
 2026-10-18 15:16:05,721 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
 2026-10-18 15:18:09,149 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
 2026-10-18 15:20:21,967 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:22:22,860 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:24:30,070 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:26:30,909 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:28:31,810 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:30:32,788 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:32:33,626 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:34:43,700 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:36:44,640 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:38:46,102 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:40:57,743 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:42:58,614 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:44:59,628 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:47:00,553 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:49:03,715 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:51:10,308 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:53:11,387 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:55:16,947 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:57:17,778 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 15:59:18,627 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 16:01:19,632 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 16:03:20,776 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 16:05:35,922 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 16:07:37,264 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
-2026-10-18 16:09:52,596 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
+2026-10-18 16:10:57,610 INFO  State loaded: bankroll=3321.05, open=0
+2026-10-18 16:10:57,610 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP'] bankroll=3321
+2026-10-18 16:12:57,308 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
+2026-10-18 16:14:58,616 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
+2026-10-18 16:16:59,901 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
+2026-10-18 16:19:19,059 INFO  STATS trades=244 winrate=82% pnl=+3221.05 PF=5.02 bankroll=3321.05
