@@ -1,5 +1,5 @@
 {
- "bankroll": 3552.9799999999996,
+ "bankroll": 3574.4099999999994,
  "positions": {},
  "closed": [
   {
@@ -9410,24 +9410,63 @@
    "won": true,
    "pnl": 17.09,
    "final": 2399.19
+  },
+  {
+   "market_id": "5895412",
+   "asset": "XRP",
+   "side": "UP",
+   "token": "70275422889580570163742948076108259276326913681637446866903453384178593574260",
+   "minutes": 15,
+   "start": "2026-10-19T17:30:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 177.65,
+   "hyp_shares": 339.54,
+   "depth_usd": 23.51,
+   "remaining_sec": 85.2,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "90\u201395%",
+   "cur": 1.3015,
+   "entry": 0.5232,
+   "best_ask": 0.53,
+   "cost": 23.51,
+   "shares": 44.94,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 23.51$ \u0438\u0437 177.65$",
+   "conf": 0.805,
+   "move": 0.00112,
+   "elapsed": 0.91,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 1.3000500000000001,
+   "end": "2026-10-19T17:45:00+00:00",
+   "opened": "2026-10-19T17:43:35.253793+00:00",
+   "question": "XRP Up or Down - October 19, 1:30PM-1:45PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 44.94,
+   "requested_cost": 23.51,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 21.43,
+   "final": 1.3009499999999998
   }
  ],
  "day": "2026-10-19",
- "day_pnl": 215.53,
+ "day_pnl": 236.96,
  "day_start_bankroll": 3337.4499999999994,
  "execstats": {
-  "submitted": 232,
-  "filled": 232,
+  "submitted": 233,
+  "filled": 233,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.3155000000000014,
-  "slip_n": 232,
+  "slip_sum": 1.3087000000000013,
+  "slip_n": 233,
   "by_window": {
    "15m": {
-    "signal": 464,
-    "submitted": 145,
-    "filled": 145,
+    "signal": 466,
+    "submitted": 146,
+    "filled": 146,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -9446,7 +9485,7 @@
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1792428135.5985622,
-  1792430641.2575216
+  1792430641.2575216,
+  1792431815.2538133
  ]
 }
