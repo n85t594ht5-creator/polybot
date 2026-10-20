@@ -2131,3 +2131,8 @@
 2026-10-20 08:18:52,799 ERROR loop error: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
 2026-10-20 08:19:28,681 INFO  STATS trades=249 winrate=83% pnl=+3474.41 PF=5.33 bankroll=3574.41
 2026-10-20 08:21:29,404 INFO  STATS trades=249 winrate=83% pnl=+3474.41 PF=5.33 bankroll=3574.41
+2026-10-20 08:23:30,458 INFO  STATS trades=249 winrate=83% pnl=+3474.41 PF=5.33 bankroll=3574.41
+2026-10-20 08:25:35,609 INFO  STATS trades=249 winrate=83% pnl=+3474.41 PF=5.33 bankroll=3574.41
+2026-10-20 08:28:13,827 INFO  STATS trades=249 winrate=83% pnl=+3474.41 PF=5.33 bankroll=3574.41
+2026-10-20 08:30:40,471 INFO  STATS trades=249 winrate=83% pnl=+3474.41 PF=5.33 bankroll=3574.41
+2026-10-20 08:32:41,328 INFO  STATS trades=249 winrate=83% pnl=+3474.41 PF=5.33 bankroll=3574.41
