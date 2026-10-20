@@ -1,5 +1,5 @@
 {
- "bankroll": 3619.759999999999,
+ "bankroll": 3585.559999999999,
  "positions": {},
  "closed": [
   {
@@ -9566,63 +9566,24 @@
    "won": true,
    "pnl": 41.99,
    "final": 105.575
-  },
-  {
-   "market_id": "5930340",
-   "asset": "ETH",
-   "side": "DOWN",
-   "token": "59363200265931496708988171557661864466419762954481690832701340362111668749697",
-   "minutes": 15,
-   "start": "2026-10-20T16:15:00+00:00",
-   "risk_gate": "",
-   "hyp_cost": 167.47,
-   "hyp_shares": 270.12,
-   "depth_usd": 55.8,
-   "remaining_sec": 136.0,
-   "execution_quality": "MARGINAL",
-   "required_move": 0.0012,
-   "elapsed_bucket": "80\u201385%",
-   "cur": 2434.05,
-   "entry": 0.62,
-   "best_ask": 0.61,
-   "cost": 55.8,
-   "shares": 90.0,
-   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 55.80$ \u0438\u0437 167.47$",
-   "conf": 0.792,
-   "move": -0.00125,
-   "elapsed": 0.85,
-   "entry_bucket": "0.60\u20130.62",
-   "move_bucket": "0.12\u20130.15%",
-   "ref": 2437.0950000000003,
-   "end": "2026-10-20T16:30:00+00:00",
-   "opened": "2026-10-20T16:27:44.353655+00:00",
-   "question": "Ethereum Up or Down - October 20, 12:15PM-12:30PM ET",
-   "order_id": "PAPER",
-   "order_status": "PAPER",
-   "requested_shares": 90.0,
-   "requested_cost": 55.8,
-   "remaining_shares": 0.0,
-   "won": true,
-   "pnl": 34.2,
-   "final": 2435.46
   }
  ],
  "day": "2026-10-20",
- "day_pnl": 45.35000000000001,
+ "day_pnl": 11.150000000000006,
  "day_start_bankroll": 3574.4099999999994,
  "execstats": {
-  "submitted": 237,
-  "filled": 237,
+  "submitted": 236,
+  "filled": 236,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.3487000000000013,
-  "slip_n": 237,
+  "slip_sum": 1.3387000000000013,
+  "slip_n": 236,
   "by_window": {
    "15m": {
-    "signal": 477,
-    "submitted": 147,
-    "filled": 147,
+    "signal": 474,
+    "submitted": 146,
+    "filled": 146,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -9640,7 +9601,5 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": [
-  1792511625.8908987
- ]
+ "trade_times": []
 }
