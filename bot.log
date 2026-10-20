@@ -1983,18 +1983,10 @@
 2026-10-20 16:11:18,951 INFO  SIGNAL XRP DOWN @ 0.620 заблокирован (NO_LIQUIDITY)
 2026-10-20 16:13:11,093 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
 2026-10-20 16:15:37,274 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
-2026-10-20 16:17:38,671 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
-2026-10-20 16:19:58,647 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
-2026-10-20 16:21:59,809 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
-2026-10-20 16:24:04,382 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
-2026-10-20 16:26:08,612 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
-2026-10-20 16:27:44,372 INFO  [PAPER] BUY ETH DOWN @ 0.620 $55.80 (PAPER) conf=0.792 move=-0.125%
-2026-10-20 16:27:44,898 INFO  SIGNAL XRP DOWN @ 0.542 заблокирован (MAX_PER_WINDOW)
-2026-10-20 16:27:47,446 INFO  SIGNAL SOL DOWN @ 0.620 заблокирован (MAX_PER_WINDOW)
-2026-10-20 16:28:43,601 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
-2026-10-20 16:30:59,291 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
-2026-10-20 16:31:31,064 INFO  WIN  ETH DOWN pnl=+34.20 bankroll=3619.76
-2026-10-20 16:33:00,651 INFO  STATS trades=253 winrate=83% pnl=+3519.76 PF=5.21 bankroll=3619.76
-2026-10-20 16:35:16,816 INFO  STATS trades=253 winrate=83% pnl=+3519.76 PF=5.21 bankroll=3619.76
-2026-10-20 16:37:17,759 INFO  STATS trades=253 winrate=83% pnl=+3519.76 PF=5.21 bankroll=3619.76
-2026-10-20 16:39:25,565 INFO  STATS trades=253 winrate=83% pnl=+3519.76 PF=5.21 bankroll=3619.76
+2026-10-20 16:41:28,615 INFO  State loaded: bankroll=3585.56, open=0
+2026-10-20 16:41:28,615 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP'] bankroll=3586
+2026-10-20 16:43:28,304 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
+2026-10-20 16:45:29,496 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
+2026-10-20 16:47:30,543 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
+2026-10-20 16:49:47,781 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
+2026-10-20 16:51:48,720 INFO  STATS trades=252 winrate=83% pnl=+3485.56 PF=5.16 bankroll=3585.56
