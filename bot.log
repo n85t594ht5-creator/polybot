@@ -2185,3 +2185,8 @@
 2026-10-21 15:37:03,150 WARNING Gamma error: 404 Client Error: Not Found for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-10-21T15%3A37%3A02Z
 2026-10-21 15:37:17,639 WARNING Gamma error: 404 Client Error: Not Found for url: https://gamma-api.polymarket.com/markets?closed=false&active=true&limit=200&order=endDate&ascending=true&end_date_min=2026-10-21T15%3A37%3A17Z
 2026-10-21 15:37:44,649 INFO  STATS trades=255 winrate=83% pnl=+3617.55 PF=5.32 bankroll=3717.55
+2026-10-21 15:39:52,713 INFO  STATS trades=255 winrate=83% pnl=+3617.55 PF=5.32 bankroll=3717.55
+2026-10-21 15:42:16,224 INFO  STATS trades=255 winrate=83% pnl=+3617.55 PF=5.32 bankroll=3717.55
+2026-10-21 15:45:10,553 INFO  STATS trades=255 winrate=83% pnl=+3617.55 PF=5.32 bankroll=3717.55
+2026-10-21 15:47:11,691 INFO  STATS trades=255 winrate=83% pnl=+3617.55 PF=5.32 bankroll=3717.55
+2026-10-21 15:49:20,686 INFO  STATS trades=255 winrate=83% pnl=+3617.55 PF=5.32 bankroll=3717.55
