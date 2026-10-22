@@ -2024,3 +2024,9 @@
 2026-10-22 12:04:09,338 INFO  STATS trades=259 winrate=83% pnl=+3683.57 PF=5.40 bankroll=3783.57
 2026-10-22 12:06:16,411 INFO  STATS trades=259 winrate=83% pnl=+3683.57 PF=5.40 bankroll=3783.57
 2026-10-22 12:08:17,827 INFO  STATS trades=259 winrate=83% pnl=+3683.57 PF=5.40 bankroll=3783.57
+2026-10-22 12:10:26,707 INFO  STATS trades=259 winrate=83% pnl=+3683.57 PF=5.40 bankroll=3783.57
+2026-10-22 12:11:28,015 ERROR loop error: HTTPSConnectionPool(host='api.exchange.coinbase.com', port=443): Read timed out. (read timeout=10)
+2026-10-22 12:11:58,150 ERROR loop error: HTTPSConnectionPool(host='api.exchange.coinbase.com', port=443): Read timed out. (read timeout=10)
+2026-10-22 12:13:54,317 INFO  STATS trades=259 winrate=83% pnl=+3683.57 PF=5.40 bankroll=3783.57
+2026-10-22 12:16:05,820 INFO  STATS trades=259 winrate=83% pnl=+3683.57 PF=5.40 bankroll=3783.57
+2026-10-22 12:18:10,736 INFO  STATS trades=259 winrate=83% pnl=+3683.57 PF=5.40 bankroll=3783.57
