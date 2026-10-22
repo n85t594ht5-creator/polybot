@@ -1,15 +1,15 @@
 {
  "day": "2026-10-22",
- "generated": "2026-10-22T04:19:09.800736+00:00",
- "trades": 3,
- "wins": 3,
+ "generated": "2026-10-22T09:59:38.899231+00:00",
+ "trades": 4,
+ "wins": 4,
  "losses": 0,
  "winrate": 1.0,
- "pnl": 58.18,
- "gross_win": 58.18,
+ "pnl": 66.02,
+ "gross_win": 66.02,
  "gross_loss": 0,
  "pf": 99.0,
- "bankroll_end": 3775.7299999999987,
+ "bankroll_end": 3783.569999999999,
  "by_asset": {
   "ETH": {
    "n": 1,
@@ -22,16 +22,16 @@
    "pnl": 4.8
   },
   "SOL": {
-   "n": 1,
-   "w": 1,
-   "pnl": 14.18
+   "n": 2,
+   "w": 2,
+   "pnl": 22.02
   }
  },
  "by_window": {
   "15m": {
-   "n": 2,
-   "w": 2,
-   "pnl": 44.0
+   "n": 3,
+   "w": 3,
+   "pnl": 51.84
   },
   "5m": {
    "n": 1,
@@ -49,13 +49,18 @@
    "n": 2,
    "w": 2,
    "pnl": 18.98
+  },
+  "06": {
+   "n": 1,
+   "w": 1,
+   "pnl": 7.84
   }
  },
  "by_entry": {
   "0.50–0.55": {
-   "n": 2,
-   "w": 2,
-   "pnl": 44.0
+   "n": 3,
+   "w": 3,
+   "pnl": 51.84
   },
   "0.55–0.60": {
    "n": 1,
@@ -65,9 +70,9 @@
  },
  "by_move": {
   "0.10–0.12%": {
-   "n": 1,
-   "w": 1,
-   "pnl": 39.2
+   "n": 2,
+   "w": 2,
+   "pnl": 47.04
   },
   "0.12–0.15%": {
    "n": 2,
@@ -77,9 +82,9 @@
  },
  "by_side": {
   "UP": {
-   "n": 1,
-   "w": 1,
-   "pnl": 39.2
+   "n": 2,
+   "w": 2,
+   "pnl": 47.04
   },
   "DOWN": {
    "n": 2,
@@ -88,18 +93,18 @@
   }
  },
  "execstats": {
-  "submitted": 242,
-  "filled": 242,
+  "submitted": 243,
+  "filled": 243,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.3725000000000014,
-  "slip_n": 242,
+  "slip_sum": 1.3825000000000014,
+  "slip_n": 243,
   "by_window": {
    "15m": {
-    "signal": 485,
-    "submitted": 150,
-    "filled": 150,
+    "signal": 488,
+    "submitted": 151,
+    "filled": 151,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -114,16 +119,16 @@
    }
   }
  },
- "signals": 5,
- "signals_executed": 3,
- "signals_blocked": 2,
- "hypothetical_pnl": 769.79,
+ "signals": 8,
+ "signals_executed": 4,
+ "signals_blocked": 4,
+ "hypothetical_pnl": 1212.16,
  "signals_by_window": {
   "15m": {
-   "n": 3,
-   "w": 3,
-   "hyp": 454.72,
-   "real": 44.0
+   "n": 6,
+   "w": 6,
+   "hyp": 897.09,
+   "real": 51.84
   },
   "5m": {
    "n": 2,
@@ -140,38 +145,38 @@
    "real": 39.2
   },
   "XRP": {
-   "n": 2,
-   "w": 2,
-   "hyp": 276.13,
+   "n": 4,
+   "w": 4,
+   "hyp": 537.12,
    "real": 4.8
   },
   "SOL": {
-   "n": 2,
-   "w": 2,
-   "hyp": 315.07,
-   "real": 14.18
+   "n": 3,
+   "w": 3,
+   "hyp": 496.45,
+   "real": 22.02
   }
  },
  "signals_by_entry": {
   "0.50–0.55": {
-   "n": 3,
-   "w": 3,
-   "hyp": 532.45,
-   "real": 44.0
+   "n": 4,
+   "w": 4,
+   "hyp": 713.83,
+   "real": 51.84
   },
   "0.55–0.60": {
-   "n": 2,
-   "w": 2,
-   "hyp": 237.34,
+   "n": 4,
+   "w": 4,
+   "hyp": 498.33,
    "real": 14.18
   }
  },
  "signals_by_gate": {
   "—": {
-   "n": 3,
-   "w": 3,
-   "hyp": 486.58,
-   "real": 58.18
+   "n": 4,
+   "w": 4,
+   "hyp": 667.96,
+   "real": 66.02
   },
   "MAX_PER_WINDOW": {
    "n": 1,
@@ -180,9 +185,9 @@
    "real": 0.0
   },
   "NO_LIQUIDITY": {
-   "n": 1,
-   "w": 1,
-   "hyp": 180.47,
+   "n": 3,
+   "w": 3,
+   "hyp": 441.46,
    "real": 0.0
   }
  },
@@ -228,6 +233,20 @@
    "won": true,
    "pnl": 14.18,
    "question": "Solana Up or Down - October 21, 10:40PM-10:45PM ET"
+  },
+  {
+   "opened": "2026-10-22T06:13:12.183526+00:00",
+   "asset": "SOL",
+   "side": "UP",
+   "minutes": 15,
+   "entry": 0.51,
+   "cost": 8.16,
+   "shares": 16.0,
+   "conf": 0.794,
+   "move": 0.001,
+   "won": true,
+   "pnl": 7.84,
+   "question": "Solana Up or Down - October 22, 2:00AM-2:15AM ET"
   }
  ]
 }
