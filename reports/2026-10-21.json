@@ -1,6 +1,6 @@
 {
  "day": "2026-10-21",
- "generated": "2026-10-22T16:57:02.374261+00:00",
+ "generated": "2026-10-22T22:37:34.511445+00:00",
  "trades": 3,
  "wins": 3,
  "losses": 0,
@@ -9,7 +9,7 @@
  "gross_win": 131.99,
  "gross_loss": 0,
  "pf": 99.0,
- "bankroll_end": 3809.809999999999,
+ "bankroll_end": 3818.039999999999,
  "by_asset": {
   "SOL": {
    "n": 3,
@@ -88,18 +88,18 @@
   }
  },
  "execstats": {
-  "submitted": 245,
-  "filled": 245,
+  "submitted": 246,
+  "filled": 246,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.4025000000000014,
-  "slip_n": 245,
+  "slip_sum": 1.4125000000000014,
+  "slip_n": 246,
   "by_window": {
    "15m": {
-    "signal": 494,
-    "submitted": 153,
-    "filled": 153,
+    "signal": 495,
+    "submitted": 154,
+    "filled": 154,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
