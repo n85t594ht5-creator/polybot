@@ -1991,10 +1991,9 @@
 2026-10-23 16:27:47,227 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
 2026-10-23 16:29:48,957 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
 2026-10-23 16:31:50,253 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
-2026-10-23 16:34:01,587 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
-2026-10-23 16:36:13,684 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
-2026-10-23 16:38:15,044 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
-2026-10-23 16:40:31,413 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
-2026-10-23 16:43:30,292 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
-2026-10-23 16:45:56,246 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
-2026-10-23 16:47:57,998 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
+2026-10-23 16:48:37,475 INFO  State loaded: bankroll=4121.64, open=0
+2026-10-23 16:48:37,475 INFO  PolyBot started mode=paper assets=['BTC', 'ETH', 'SOL', 'XRP'] bankroll=4122
+2026-10-23 16:50:48,645 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
+2026-10-23 16:52:49,788 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
+2026-10-23 16:55:03,226 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
+2026-10-23 16:57:04,142 INFO  STATS trades=265 winrate=83% pnl=+4021.64 PF=5.81 bankroll=4121.64
