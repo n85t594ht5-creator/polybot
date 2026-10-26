@@ -1,15 +1,15 @@
 {
  "day": "2026-10-26",
- "generated": "2026-10-26T09:34:02.291276+00:00",
- "trades": 6,
- "wins": 6,
+ "generated": "2026-10-26T18:03:18.435530+00:00",
+ "trades": 7,
+ "wins": 7,
  "losses": 0,
  "winrate": 1.0,
- "pnl": 56.02,
- "gross_win": 56.02,
+ "pnl": 67.62,
+ "gross_win": 67.62,
  "gross_loss": 0,
  "pf": 99.0,
- "bankroll_end": 4205.45,
+ "bankroll_end": 4217.05,
  "by_asset": {
   "ETH": {
    "n": 3,
@@ -17,9 +17,9 @@
    "pnl": 43.18
   },
   "SOL": {
-   "n": 2,
-   "w": 2,
-   "pnl": 10.32
+   "n": 3,
+   "w": 3,
+   "pnl": 21.92
   },
   "XRP": {
    "n": 1,
@@ -29,9 +29,9 @@
  },
  "by_window": {
   "5m": {
-   "n": 3,
-   "w": 3,
-   "pnl": 34.89
+   "n": 4,
+   "w": 4,
+   "pnl": 46.49
   },
   "15m": {
    "n": 3,
@@ -64,13 +64,18 @@
    "n": 1,
    "w": 1,
    "pnl": 2.52
+  },
+  "14": {
+   "n": 1,
+   "w": 1,
+   "pnl": 11.6
   }
  },
  "by_entry": {
   "0.55–0.60": {
-   "n": 2,
-   "w": 2,
-   "pnl": 13.27
+   "n": 3,
+   "w": 3,
+   "pnl": 24.87
   },
   "0.60–0.62": {
    "n": 2,
@@ -85,9 +90,9 @@
  },
  "by_move": {
   "0.12–0.15%": {
-   "n": 2,
-   "w": 2,
-   "pnl": 15.75
+   "n": 3,
+   "w": 3,
+   "pnl": 27.35
   },
   "0.10–0.12%": {
    "n": 2,
@@ -102,9 +107,9 @@
  },
  "by_side": {
   "DOWN": {
-   "n": 4,
-   "w": 4,
-   "pnl": 40.21
+   "n": 5,
+   "w": 5,
+   "pnl": 51.81
   },
   "UP": {
    "n": 2,
@@ -113,16 +118,16 @@
   }
  },
  "execstats": {
-  "submitted": 257,
-  "filled": 257,
+  "submitted": 258,
+  "filled": 258,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.5225000000000015,
-  "slip_n": 257,
+  "slip_sum": 1.5325000000000015,
+  "slip_n": 258,
   "by_window": {
    "15m": {
-    "signal": 516,
+    "signal": 517,
     "submitted": 162,
     "filled": 162,
     "partial": 0,
@@ -130,44 +135,44 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 305,
-    "submitted": 95,
-    "filled": 95,
+    "signal": 308,
+    "submitted": 96,
+    "filled": 96,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    }
   }
  },
- "signals": 11,
- "signals_executed": 6,
- "signals_blocked": 5,
- "hypothetical_pnl": 1005.13,
+ "signals": 15,
+ "signals_executed": 7,
+ "signals_blocked": 8,
+ "hypothetical_pnl": 1714.97,
  "signals_by_window": {
   "5m": {
-   "n": 5,
-   "w": 5,
-   "hyp": 871.07,
-   "real": 34.89
+   "n": 8,
+   "w": 8,
+   "hyp": 1424.14,
+   "real": 46.49
   },
   "15m": {
-   "n": 6,
-   "w": 4,
-   "hyp": 134.06,
+   "n": 7,
+   "w": 5,
+   "hyp": 290.83,
    "real": 21.13
   }
  },
  "signals_by_asset": {
   "SOL": {
-   "n": 3,
-   "w": 3,
-   "hyp": 433.8,
-   "real": 10.32
+   "n": 5,
+   "w": 5,
+   "hyp": 784.84,
+   "real": 21.92
   },
   "XRP": {
-   "n": 3,
-   "w": 2,
-   "hyp": 126.25,
+   "n": 4,
+   "w": 3,
+   "hyp": 283.02,
    "real": 2.52
   },
   "ETH": {
@@ -175,20 +180,26 @@
    "w": 4,
    "hyp": 445.08,
    "real": 43.18
+  },
+  "BTC": {
+   "n": 1,
+   "w": 1,
+   "hyp": 202.03,
+   "real": 0.0
   }
  },
  "signals_by_entry": {
   "0.50–0.55": {
-   "n": 5,
-   "w": 4,
-   "hyp": 542.07,
+   "n": 7,
+   "w": 6,
+   "hyp": 954.96,
    "real": 32.43
   },
   "0.55–0.60": {
-   "n": 2,
-   "w": 2,
-   "hyp": 297.48,
-   "real": 13.27
+   "n": 4,
+   "w": 4,
+   "hyp": 594.43,
+   "real": 24.87
   },
   "0.60–0.62": {
    "n": 4,
@@ -199,16 +210,16 @@
  },
  "signals_by_gate": {
   "NO_LIQUIDITY": {
-   "n": 5,
-   "w": 3,
-   "hyp": 128.89,
+   "n": 8,
+   "w": 6,
+   "hyp": 698.55,
    "real": 0.0
   },
   "—": {
-   "n": 6,
-   "w": 6,
-   "hyp": 876.24,
-   "real": 56.02
+   "n": 7,
+   "w": 7,
+   "hyp": 1016.42,
+   "real": 67.62
   }
  },
  "trade_list": [
@@ -295,6 +306,20 @@
    "won": true,
    "pnl": 2.52,
    "question": "XRP Up or Down - October 26, 5:20AM-5:25AM ET"
+  },
+  {
+   "opened": "2026-10-26T14:04:22.153866+00:00",
+   "asset": "SOL",
+   "side": "DOWN",
+   "minutes": 5,
+   "entry": 0.6,
+   "cost": 17.4,
+   "shares": 29.0,
+   "conf": 0.801,
+   "move": -0.00129,
+   "won": true,
+   "pnl": 11.6,
+   "question": "Solana Up or Down - October 26, 10:00AM-10:05AM ET"
   }
  ]
 }
