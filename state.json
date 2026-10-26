@@ -1,5 +1,5 @@
 {
- "bankroll": 4186.799999999999,
+ "bankroll": 4192.119999999999,
  "positions": {},
  "closed": [
   {
@@ -10268,24 +10268,63 @@
    "won": true,
    "pnl": 21.62,
    "final": 2308.74
+  },
+  {
+   "market_id": "6181079",
+   "asset": "SOL",
+   "side": "DOWN",
+   "token": "36386598444804103680920225716717565345175756512273921917090441171732257498058",
+   "minutes": 15,
+   "start": "2026-10-26T07:00:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 189.83,
+   "hyp_shares": 306.18,
+   "depth_usd": 8.68,
+   "remaining_sec": 182.1,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.0012,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 100.83,
+   "entry": 0.62,
+   "best_ask": 0.61,
+   "cost": 8.68,
+   "shares": 14.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 8.68$ \u0438\u0437 189.83$",
+   "conf": 0.787,
+   "move": -0.00158,
+   "elapsed": 0.8,
+   "entry_bucket": "0.60\u20130.62",
+   "move_bucket": "0.15\u20130.20%",
+   "ref": 100.99000000000001,
+   "end": "2026-10-26T07:15:00+00:00",
+   "opened": "2026-10-26T07:11:58.291394+00:00",
+   "question": "Solana Up or Down - October 26, 3:00AM-3:15AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 14.0,
+   "requested_cost": 8.68,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 5.32,
+   "final": 100.80000000000001
   }
  ],
  "day": "2026-10-26",
- "day_pnl": 37.370000000000005,
+ "day_pnl": 42.690000000000005,
  "day_start_bankroll": 4149.429999999999,
  "execstats": {
-  "submitted": 254,
-  "filled": 254,
+  "submitted": 255,
+  "filled": 255,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.4925000000000015,
-  "slip_n": 254,
+  "slip_sum": 1.5025000000000015,
+  "slip_n": 255,
   "by_window": {
    "15m": {
-    "signal": 513,
-    "submitted": 160,
-    "filled": 160,
+    "signal": 515,
+    "submitted": 161,
+    "filled": 161,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -10303,5 +10342,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1792998718.291421
+ ]
 }
