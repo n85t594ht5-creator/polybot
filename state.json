@@ -1,5 +1,5 @@
 {
- "bankroll": 4205.45,
+ "bankroll": 4217.05,
  "positions": {},
  "closed": [
   {
@@ -10385,19 +10385,58 @@
    "won": true,
    "pnl": 2.52,
    "final": 1.2875
+  },
+  {
+   "market_id": "6197913",
+   "asset": "SOL",
+   "side": "DOWN",
+   "token": "58513376113163762782874702931715104247208304234184454797329143449232169753427",
+   "minutes": 5,
+   "start": "2026-10-26T14:00:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 210.27,
+   "hyp_shares": 350.45,
+   "depth_usd": 17.4,
+   "remaining_sec": 38.2,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.0012,
+   "elapsed_bucket": "85\u201390%",
+   "cur": 100.61,
+   "entry": 0.6,
+   "best_ask": 0.59,
+   "cost": 17.4,
+   "shares": 29.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 17.40$ \u0438\u0437 210.27$",
+   "conf": 0.801,
+   "move": -0.00129,
+   "elapsed": 0.87,
+   "entry_bucket": "0.55\u20130.60",
+   "move_bucket": "0.12\u20130.15%",
+   "ref": 100.74,
+   "end": "2026-10-26T14:05:00+00:00",
+   "opened": "2026-10-26T14:04:22.153866+00:00",
+   "question": "Solana Up or Down - October 26, 10:00AM-10:05AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 29.0,
+   "requested_cost": 17.4,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 11.6,
+   "final": 100.715
   }
  ],
  "day": "2026-10-26",
- "day_pnl": 56.02000000000001,
+ "day_pnl": 67.62,
  "day_start_bankroll": 4149.429999999999,
  "execstats": {
-  "submitted": 257,
-  "filled": 257,
+  "submitted": 258,
+  "filled": 258,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.5225000000000015,
-  "slip_n": 257,
+  "slip_sum": 1.5325000000000015,
+  "slip_n": 258,
   "by_window": {
    "15m": {
     "signal": 516,
@@ -10408,9 +10447,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 306,
-    "submitted": 95,
-    "filled": 95,
+    "signal": 307,
+    "submitted": 96,
+    "filled": 96,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -10420,5 +10459,7 @@
  "pending_signals": [],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1793023462.1538904
+ ]
 }
