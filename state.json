@@ -1,5 +1,5 @@
 {
- "bankroll": 4165.179999999999,
+ "bankroll": 4186.799999999999,
  "positions": {},
  "closed": [
   {
@@ -10229,19 +10229,58 @@
    "won": true,
    "pnl": 5.0,
    "final": 100.47999999999999
+  },
+  {
+   "market_id": "6170240",
+   "asset": "ETH",
+   "side": "DOWN",
+   "token": "55711975382375066601421082878100045072779389269704945090655003587613281492250",
+   "minutes": 5,
+   "start": "2026-10-26T03:05:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 204.98,
+   "hyp_shares": 379.59,
+   "depth_usd": 25.38,
+   "remaining_sec": 74.3,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "75\u201380%",
+   "cur": 2309.8,
+   "entry": 0.54,
+   "best_ask": 0.53,
+   "cost": 25.38,
+   "shares": 47.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 25.38$ \u0438\u0437 204.98$",
+   "conf": 0.761,
+   "move": -0.00119,
+   "elapsed": 0.75,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 2312.545,
+   "end": "2026-10-26T03:10:00+00:00",
+   "opened": "2026-10-26T03:08:46.152328+00:00",
+   "question": "Ethereum Up or Down - October 25, 11:05PM-11:10PM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 47.0,
+   "requested_cost": 25.38,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 21.62,
+   "final": 2308.74
   }
  ],
  "day": "2026-10-26",
- "day_pnl": 15.75,
+ "day_pnl": 37.370000000000005,
  "day_start_bankroll": 4149.429999999999,
  "execstats": {
-  "submitted": 253,
-  "filled": 253,
+  "submitted": 254,
+  "filled": 254,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.4825000000000015,
-  "slip_n": 253,
+  "slip_sum": 1.4925000000000015,
+  "slip_n": 254,
   "by_window": {
    "15m": {
     "signal": 513,
@@ -10252,9 +10291,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 303,
-    "submitted": 93,
-    "filled": 93,
+    "signal": 304,
+    "submitted": 94,
+    "filled": 94,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -10265,6 +10304,7 @@
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1792983380.232396
+  1792983380.232396,
+  1792984126.1523511
  ]
 }
