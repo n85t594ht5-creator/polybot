@@ -2045,3 +2045,8 @@
 2026-10-27 19:07:00,472 INFO  STATS trades=275 winrate=84% pnl=+4141.41 PF=5.95 bankroll=4241.41
 2026-10-27 19:09:08,259 INFO  STATS trades=275 winrate=84% pnl=+4141.41 PF=5.95 bankroll=4241.41
 2026-10-27 19:11:13,108 INFO  STATS trades=275 winrate=84% pnl=+4141.41 PF=5.95 bankroll=4241.41
+2026-10-27 19:12:34,968 ERROR loop error: 502 Server Error: Bad Gateway for url: https://api.exchange.coinbase.com/products/BTC-USD/ticker
+2026-10-27 19:14:04,913 INFO  STATS trades=275 winrate=84% pnl=+4141.41 PF=5.95 bankroll=4241.41
+2026-10-27 19:16:15,631 INFO  STATS trades=275 winrate=84% pnl=+4141.41 PF=5.95 bankroll=4241.41
+2026-10-27 19:18:16,869 INFO  STATS trades=275 winrate=84% pnl=+4141.41 PF=5.95 bankroll=4241.41
+2026-10-27 19:20:27,698 INFO  STATS trades=275 winrate=84% pnl=+4141.41 PF=5.95 bankroll=4241.41
