@@ -611,12 +611,22 @@
  },
  {
   "day": "2026-10-28",
+  "trades": 2,
+  "wins": 2,
+  "losses": 0,
+  "winrate": 1.0,
+  "pnl": 17.84,
+  "pf": 99.0,
+  "bankroll_end": 4263.149999999999
+ },
+ {
+  "day": "2026-10-29",
   "trades": 1,
   "wins": 1,
   "losses": 0,
   "winrate": 1.0,
-  "pnl": 4.4,
+  "pnl": 3.9,
   "pf": 99.0,
-  "bankroll_end": 4245.8099999999995
+  "bankroll_end": 4263.149999999999
  }
 ]
