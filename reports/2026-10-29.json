@@ -1,20 +1,20 @@
 {
  "day": "2026-10-29",
- "generated": "2026-10-29T10:22:15.402120+00:00",
- "trades": 1,
- "wins": 1,
+ "generated": "2026-10-29T18:05:02.627836+00:00",
+ "trades": 2,
+ "wins": 2,
  "losses": 0,
  "winrate": 1.0,
- "pnl": 3.9,
- "gross_win": 3.9,
+ "pnl": 8.16,
+ "gross_win": 8.16,
  "gross_loss": 0,
  "pf": 99.0,
- "bankroll_end": 4263.149999999999,
+ "bankroll_end": 4267.409999999999,
  "by_asset": {
   "XRP": {
-   "n": 1,
-   "w": 1,
-   "pnl": 3.9
+   "n": 2,
+   "w": 2,
+   "pnl": 8.16
   }
  },
  "by_window": {
@@ -22,6 +22,11 @@
    "n": 1,
    "w": 1,
    "pnl": 3.9
+  },
+  "15m": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.26
   }
  },
  "by_hour": {
@@ -29,20 +34,25 @@
    "n": 1,
    "w": 1,
    "pnl": 3.9
+  },
+  "14": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.26
   }
  },
  "by_entry": {
   "0.60–0.62": {
-   "n": 1,
-   "w": 1,
-   "pnl": 3.9
+   "n": 2,
+   "w": 2,
+   "pnl": 8.16
   }
  },
  "by_move": {
   "0.12–0.15%": {
-   "n": 1,
-   "w": 1,
-   "pnl": 3.9
+   "n": 2,
+   "w": 2,
+   "pnl": 8.16
   }
  },
  "by_side": {
@@ -50,27 +60,32 @@
    "n": 1,
    "w": 1,
    "pnl": 3.9
+  },
+  "DOWN": {
+   "n": 1,
+   "w": 1,
+   "pnl": 4.26
   }
  },
  "execstats": {
-  "submitted": 262,
-  "filled": 262,
+  "submitted": 263,
+  "filled": 263,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.5725000000000016,
-  "slip_n": 262,
+  "slip_sum": 1.5825000000000016,
+  "slip_n": 263,
   "by_window": {
    "15m": {
-    "signal": 525,
-    "submitted": 164,
-    "filled": 164,
+    "signal": 526,
+    "submitted": 165,
+    "filled": 165,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    },
    "5m": {
-    "signal": 310,
+    "signal": 312,
     "submitted": 98,
     "filled": 98,
     "partial": 0,
@@ -79,57 +94,75 @@
    }
   }
  },
- "signals": 2,
- "signals_executed": 1,
- "signals_blocked": 1,
- "hypothetical_pnl": 233.2,
+ "signals": 5,
+ "signals_executed": 2,
+ "signals_blocked": 3,
+ "hypothetical_pnl": 706.29,
  "signals_by_window": {
   "5m": {
-   "n": 1,
-   "w": 1,
-   "hyp": 117.68,
+   "n": 3,
+   "w": 3,
+   "hyp": 479.62,
    "real": 3.9
   },
   "15m": {
-   "n": 1,
-   "w": 1,
-   "hyp": 115.52,
-   "real": 0.0
+   "n": 2,
+   "w": 2,
+   "hyp": 226.67,
+   "real": 4.26
   }
  },
  "signals_by_asset": {
   "XRP": {
-   "n": 1,
-   "w": 1,
-   "hyp": 117.68,
-   "real": 3.9
+   "n": 2,
+   "w": 2,
+   "hyp": 228.83,
+   "real": 8.16
   },
   "ETH": {
    "n": 1,
    "w": 1,
    "hyp": 115.52,
    "real": 0.0
+  },
+  "SOL": {
+   "n": 1,
+   "w": 1,
+   "hyp": 172.72,
+   "real": 0.0
+  },
+  "BTC": {
+   "n": 1,
+   "w": 1,
+   "hyp": 189.22,
+   "real": 0.0
   }
  },
  "signals_by_entry": {
   "0.60–0.62": {
+   "n": 3,
+   "w": 3,
+   "hyp": 344.35,
+   "real": 8.16
+  },
+  "0.50–0.55": {
    "n": 2,
    "w": 2,
-   "hyp": 233.2,
-   "real": 3.9
+   "hyp": 361.94,
+   "real": 0.0
   }
  },
  "signals_by_gate": {
   "—": {
-   "n": 1,
-   "w": 1,
-   "hyp": 117.68,
-   "real": 3.9
+   "n": 2,
+   "w": 2,
+   "hyp": 228.83,
+   "real": 8.16
   },
   "NO_LIQUIDITY": {
-   "n": 1,
-   "w": 1,
-   "hyp": 115.52,
+   "n": 3,
+   "w": 3,
+   "hyp": 477.46,
    "real": 0.0
   }
  },
@@ -147,6 +180,20 @@
    "won": true,
    "pnl": 3.9,
    "question": "XRP Up or Down - October 28, 10:20PM-10:25PM ET"
+  },
+  {
+   "opened": "2026-10-29T14:56:15.863931+00:00",
+   "asset": "XRP",
+   "side": "DOWN",
+   "minutes": 15,
+   "entry": 0.61,
+   "cost": 6.67,
+   "shares": 10.93,
+   "conf": 0.763,
+   "move": -0.00126,
+   "won": true,
+   "pnl": 4.26,
+   "question": "XRP Up or Down - October 29, 10:45AM-11:00AM ET"
   }
  ]
 }
