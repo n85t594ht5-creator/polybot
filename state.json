@@ -1,6 +1,43 @@
 {
  "bankroll": 4307.409999999999,
- "positions": {},
+ "positions": {
+  "6389883": {
+   "market_id": "6389883",
+   "asset": "ETH",
+   "side": "DOWN",
+   "token": "61040567599391445485369393833474884530436220823321587812494007749205674559764",
+   "minutes": 5,
+   "start": "2026-10-30T15:50:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 215.37,
+   "hyp_shares": 398.83,
+   "depth_usd": 10.8,
+   "remaining_sec": 30.6,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "85\u201390%",
+   "cur": 2223.9,
+   "entry": 0.54,
+   "best_ask": 0.53,
+   "cost": 10.8,
+   "shares": 20.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 10.80$ \u0438\u0437 215.37$",
+   "conf": 0.804,
+   "move": -0.00115,
+   "elapsed": 0.9,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 2226.45,
+   "end": "2026-10-30T15:55:00+00:00",
+   "opened": "2026-10-30T15:54:29.848674+00:00",
+   "question": "Ethereum Up or Down - October 30, 11:50AM-11:55AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 20.0,
+   "requested_cost": 10.8,
+   "remaining_shares": 0.0
+  }
+ },
  "closed": [
   {
    "market_id": "3919352",
@@ -10742,13 +10779,13 @@
  "day_pnl": 40.0,
  "day_start_bankroll": 4267.409999999999,
  "execstats": {
-  "submitted": 266,
-  "filled": 266,
+  "submitted": 267,
+  "filled": 267,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.5903000000000016,
-  "slip_n": 266,
+  "slip_sum": 1.6003000000000016,
+  "slip_n": 267,
   "by_window": {
    "15m": {
     "signal": 533,
@@ -10759,17 +10796,68 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 324,
-    "submitted": 101,
-    "filled": 101,
+    "signal": 325,
+    "submitted": 102,
+    "filled": 102,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
    }
   }
  },
- "pending_signals": [],
+ "pending_signals": [
+  {
+   "row": {
+    "timestamp": "2026-10-30T15:54:29.848674+00:00",
+    "asset": "ETH",
+    "window": "5m",
+    "market_id": "6389883",
+    "elapsed": 0.9,
+    "remaining_seconds": 30.6,
+    "reference_price": 2226.45,
+    "current_price": 2223.9,
+    "move_pct": -0.115,
+    "direction": "DOWN",
+    "entry_price": 0.54,
+    "bid": "",
+    "ask": 0.53,
+    "spread": "",
+    "confidence": 0.804,
+    "required_move": 0.1,
+    "entry_bucket": "0.50\u20130.55",
+    "move_bucket": "0.10\u20130.12%",
+    "elapsed_bucket": "85\u201390%",
+    "risk_gate": "",
+    "signal_status": "EXECUTED",
+    "order_status": "PAPER",
+    "execution_quality": "MARGINAL",
+    "requested_shares": 20.0,
+    "filled_shares": 20.0,
+    "remaining_shares": 0.0,
+    "average_fill_price": 0.54,
+    "best_ask": 0.53,
+    "slippage": 0.01,
+    "hyp_cost": 215.37,
+    "hyp_shares": 398.83,
+    "resolution": "",
+    "hypothetical_pnl": "",
+    "realized_pnl": "",
+    "bankroll_at_signal": 4307.41,
+    "daily_pnl": 40.0,
+    "exposure_at_signal": 10.8,
+    "consecutive_losses": 0,
+    "end": "2026-10-30T15:55:00+00:00"
+   },
+   "side": "DOWN",
+   "ref": 2226.45,
+   "asset": "ETH",
+   "end": "2026-10-30T15:55:00+00:00",
+   "executed": true
+  }
+ ],
  "consec_losses": 0,
  "cooldown_until": null,
- "trade_times": []
+ "trade_times": [
+  1793375669.8486953
+ ]
 }
