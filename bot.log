@@ -2052,3 +2052,8 @@
 2026-10-30 06:29:55,674 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
 2026-10-30 06:31:56,617 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
 2026-10-30 06:34:07,395 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
+2026-10-30 06:36:12,061 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
+2026-10-30 06:38:13,024 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
+2026-10-30 06:40:18,003 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
+2026-10-30 06:42:46,096 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
+2026-10-30 06:44:08,124 ERROR loop error: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
