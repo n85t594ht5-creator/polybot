@@ -1,5 +1,5 @@
 {
- "bankroll": 4304.959999999999,
+ "bankroll": 4307.409999999999,
  "positions": {},
  "closed": [
   {
@@ -10697,22 +10697,61 @@
    "won": true,
    "pnl": 19.0,
    "final": 94.905
+  },
+  {
+   "market_id": "6388181",
+   "asset": "XRP",
+   "side": "DOWN",
+   "token": "13750277981062651965895158140482913811842954387023217071697361804711555783174",
+   "minutes": 5,
+   "start": "2026-10-30T14:20:00+00:00",
+   "risk_gate": "",
+   "hyp_cost": 215.25,
+   "hyp_shares": 422.05,
+   "depth_usd": 2.55,
+   "remaining_sec": 56.9,
+   "execution_quality": "MARGINAL",
+   "required_move": 0.001,
+   "elapsed_bucket": "80\u201385%",
+   "cur": 1.2312,
+   "entry": 0.51,
+   "best_ask": 0.5,
+   "cost": 2.55,
+   "shares": 5.0,
+   "depth_note": "\u0441\u0442\u0430\u043a\u0430\u043d \u0434\u0430\u043b 2.55$ \u0438\u0437 215.25$",
+   "conf": 0.775,
+   "move": -0.00105,
+   "elapsed": 0.81,
+   "entry_bucket": "0.50\u20130.55",
+   "move_bucket": "0.10\u20130.12%",
+   "ref": 1.2325,
+   "end": "2026-10-30T14:25:00+00:00",
+   "opened": "2026-10-30T14:24:03.517886+00:00",
+   "question": "XRP Up or Down - October 30, 10:20AM-10:25AM ET",
+   "order_id": "PAPER",
+   "order_status": "PAPER",
+   "requested_shares": 5.0,
+   "requested_cost": 2.55,
+   "remaining_shares": 0.0,
+   "won": true,
+   "pnl": 2.45,
+   "final": 1.2306
   }
  ],
  "day": "2026-10-30",
- "day_pnl": 37.55,
+ "day_pnl": 40.0,
  "day_start_bankroll": 4267.409999999999,
  "execstats": {
-  "submitted": 265,
-  "filled": 265,
+  "submitted": 266,
+  "filled": 266,
   "partial": 0,
   "unfilled": 0,
   "cancelled": 0,
-  "slip_sum": 1.5803000000000016,
-  "slip_n": 265,
+  "slip_sum": 1.5903000000000016,
+  "slip_n": 266,
   "by_window": {
    "15m": {
-    "signal": 531,
+    "signal": 533,
     "submitted": 165,
     "filled": 165,
     "partial": 0,
@@ -10720,9 +10759,9 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 319,
-    "submitted": 100,
-    "filled": 100,
+    "signal": 321,
+    "submitted": 101,
+    "filled": 101,
     "partial": 0,
     "unfilled": 0,
     "cancelled": 0
@@ -10733,6 +10772,7 @@
  "consec_losses": 0,
  "cooldown_until": null,
  "trade_times": [
-  1793368452.764913
+  1793368452.764913,
+  1793370243.51791
  ]
 }
