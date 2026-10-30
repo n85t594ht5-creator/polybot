@@ -2037,3 +2037,8 @@
 2026-10-30 13:34:30,021 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
 2026-10-30 13:36:31,220 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
 2026-10-30 13:38:32,587 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
+2026-10-30 13:40:50,117 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
+2026-10-30 13:41:44,589 ERROR loop error: 502 Server Error: Bad Gateway for url: https://clob.polymarket.com/price?token_id=57945926807848131707427027072136533662965555996512956030375931840234047179109&side=BUY
+2026-10-30 13:43:58,170 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
+2026-10-30 13:46:16,216 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
+2026-10-30 13:48:17,662 INFO  STATS trades=280 winrate=84% pnl=+4185.96 PF=6.00 bankroll=4285.96
