@@ -1,6 +1,6 @@
 {
  "day": "2026-10-31",
- "generated": "2026-10-31T03:39:02.337607+00:00",
+ "generated": "2026-10-31T10:06:27.147058+00:00",
  "trades": 0,
  "wins": 0,
  "losses": 0,
@@ -34,7 +34,7 @@
     "cancelled": 0
    },
    "5m": {
-    "signal": 325,
+    "signal": 326,
     "submitted": 102,
     "filled": 102,
     "partial": 0,
@@ -43,13 +43,41 @@
    }
   }
  },
- "signals": 0,
+ "signals": 1,
  "signals_executed": 0,
- "signals_blocked": 0,
- "hypothetical_pnl": 0,
- "signals_by_window": {},
- "signals_by_asset": {},
- "signals_by_entry": {},
- "signals_by_gate": {},
+ "signals_blocked": 1,
+ "hypothetical_pnl": 192.59,
+ "signals_by_window": {
+  "5m": {
+   "n": 1,
+   "w": 1,
+   "hyp": 192.59,
+   "real": 0.0
+  }
+ },
+ "signals_by_asset": {
+  "ETH": {
+   "n": 1,
+   "w": 1,
+   "hyp": 192.59,
+   "real": 0.0
+  }
+ },
+ "signals_by_entry": {
+  "0.50–0.55": {
+   "n": 1,
+   "w": 1,
+   "hyp": 192.59,
+   "real": 0.0
+  }
+ },
+ "signals_by_gate": {
+  "NO_LIQUIDITY": {
+   "n": 1,
+   "w": 1,
+   "hyp": 192.59,
+   "real": 0.0
+  }
+ },
  "trade_list": []
 }
